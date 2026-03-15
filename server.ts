@@ -83,7 +83,7 @@ app.post('/api/subscribe', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Kit-Api-Key': KIT_API_KEY,
+        'Authorization': `Bearer ${KIT_API_KEY}`,
       },
       body: JSON.stringify({
         first_name: firstName,
@@ -92,9 +92,9 @@ app.post('/api/subscribe', async (req, res) => {
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      console.error('Kit.com error:', error);
-      return res.status(response.status).json({ error: 'Subscription failed.' });
+      const errorBody = await response.text();
+      console.error(`Kit.com error ${response.status}:`, errorBody);
+      return res.status(response.status).json({ error: `Kit.com: ${errorBody}` });
     }
 
     return res.json({ success: true });
