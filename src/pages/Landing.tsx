@@ -647,7 +647,7 @@ export default function Landing() {
       {/* Section: Final CTA */}
       <Section className="bg-terracotta text-white text-center overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-5xl md:text-8xl font-display font-extrabold mb-12 leading-[0.9] tracking-tighter">
+          <h2 className="text-5xl md:text-7xl font-display font-extrabold mb-12 leading-[0.9] tracking-tighter">
             The Price of Ideas Without Action Is Always the Same.
           </h2>
           <div className="text-xl md:text-2xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
