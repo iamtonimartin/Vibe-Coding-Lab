@@ -259,7 +259,7 @@ export default function Landing() {
             </h1>
 
             <p className="text-xl md:text-3xl font-medium max-w-3xl mx-auto mb-12 leading-relaxed opacity-90">
-              Stop outsourcing. Start building. Join the Vibe Coding Lab and build your own AI-powered Founder Co-Pilot in 3 days using no-code tools, with direct support from Toni. Lifetime access for £97.
+              The tools to build anything you can imagine now exist, are accessible to everyone and cost almost nothing to use. The only thing missing is knowing how. That is what we are here for.
             </p>
 
             <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
@@ -347,13 +347,13 @@ export default function Landing() {
                 Built by Toni Martin, Digital Growth Architect and AI Consultant.
               </p>
               <p>
-                I build real AI-powered SaaS products using no-code AI tools. Not as a side project. As actual client work, deployed and in use right now.
+                I build real AI-powered SaaS products using no-code AI tools. Not as a side project. As fully functional, deployed products that demonstrate exactly what is possible with these tools.
               </p>
               <p>
-                Relay is my AI assistant builder. Insights is my diagnostic and quiz platform. Both built using the exact method I am teaching inside The Vibe Coding Lab.
+                Relay is my AI assistant builder. Insights is my diagnostic and quiz platform. Both built using the exact method I am teaching inside the Vibe Coding Lab.
               </p>
               <p>
-                I build in public. I share every step. And inside this community you get to build alongside me.
+                I build in public. I share every step. Inside this community you build alongside me.
               </p>
             </div>
           </div>

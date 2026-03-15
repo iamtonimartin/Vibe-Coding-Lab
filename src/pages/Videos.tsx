@@ -159,33 +159,27 @@ export default function Videos() {
 
       {/* Final CTA Section */}
       <Section className="bg-forest-green text-white">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-7xl font-display font-extrabold leading-tight">
-              Ready to Build It?
-            </h2>
-            <p className="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto">
-              You have your idea. Now come build it with me.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed">
-              Join The Vibe Coding Lab and get lifetime access to the community, the live sprint, Vibe Coding 101, Relay, Insights and direct support from Toni. All for a founding price of £97.
-            </p>
-            <p className="text-2xl font-bold text-terracotta">
-              This price closes when the sprint closes.
-            </p>
+        <div className="max-w-4xl mx-auto text-center space-y-10">
+          <h2 className="text-4xl md:text-7xl font-display font-extrabold leading-tight">
+            Ready to Start Building?
+          </h2>
+          <div className="space-y-5 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto text-left">
+            <p className="font-bold">The best way to learn vibe coding is to actually build something. So that is exactly what we do.</p>
+            <p className="opacity-80">Three days. Live sessions. Me in the room answering your questions every step of the way.</p>
+            <p className="opacity-80">You will leave with a working AI-powered Founder Co-Pilot and the skills to build whatever comes next.</p>
+            <p className="font-bold">Two ways to join:</p>
+            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 27 March. Never available again.</span></p>
+            <p>💛 <strong className="font-bold">Monthly at £35/month ($47/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
+            <p className="opacity-80">Sprint starts 25 March. Both options get you full access.</p>
           </div>
-          
-          <div className="space-y-6">
-            <Link 
-              to="/"
-              className="inline-flex items-center gap-3 bg-terracotta text-white px-12 py-6 rounded-2xl text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
-            >
-              I'm Ready. Secure My Lifetime Access for £97. <ArrowRight />
-            </Link>
-            <p className="text-sm font-bold uppercase tracking-widest opacity-60">
-              Sprint runs live 25 to 27 March. All sessions recorded. Lifetime community access.
-            </p>
-          </div>
+
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="inline-flex items-center gap-3 bg-terracotta text-white px-12 py-6 rounded-2xl text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
+          >
+            Join the Vibe Coding Lab <ArrowRight />
+          </Link>
         </div>
       </Section>
 
