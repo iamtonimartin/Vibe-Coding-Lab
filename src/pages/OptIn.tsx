@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CheckCircle2, ArrowLeft, Play } from 'lucide-react';
+import { CheckCircle2, Play } from 'lucide-react';
 
 export default function OptIn() {
   const [submitted, setSubmitted] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
@@ -58,36 +61,58 @@ export default function OptIn() {
 
           <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-forest-green/5 max-w-lg mx-auto">
             {submitted ? (
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="bg-forest-green text-warm-cream p-8 rounded-3xl font-bold"
               >
-                Success! Check your email for the first video.
+                You're in! Check your inbox for the first video.
               </motion.div>
             ) : (
-              <form 
-                className="space-y-4" 
-                onSubmit={(e) => {
+              <form
+                className="space-y-4"
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  setSubmitted(true);
-                  // In a real scenario, this would POST to the Kit.com endpoint
+                  setError('');
+                  setLoading(true);
+                  try {
+                    const res = await fetch('/api/subscribe', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ firstName, email }),
+                    });
+                    if (!res.ok) throw new Error('Subscription failed');
+                    setSubmitted(true);
+                  } catch {
+                    setError('Something went wrong. Please try again.');
+                  } finally {
+                    setLoading(false);
+                  }
                 }}
               >
-                <input 
-                  type="text" 
-                  placeholder="First Name" 
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
                   required
                 />
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
                   required
                 />
-                <button className="w-full bg-terracotta text-white px-8 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange transition-all shadow-xl shadow-terracotta/20">
-                  Get Instant Access
+                {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-terracotta text-white px-8 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange transition-all shadow-xl shadow-terracotta/20 disabled:opacity-60"
+                >
+                  {loading ? 'Signing you up...' : 'Get Instant Access'}
                 </button>
                 <p className="text-sm font-bold opacity-40 mt-4">no spam, unsubscribe any time</p>
               </form>

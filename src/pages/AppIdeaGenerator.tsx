@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Sparkles, Loader2, Rocket } from 'lucide-react';
+import { Sparkles, Loader2, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
@@ -17,66 +17,38 @@ export default function AppIdeaGenerator() {
   const [result, setResult] = useState('');
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // --- CONFIGURATION ---
-  // Add your OpenAI API Key here
-  const OPENAI_API_KEY = ''; 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
     setResult('');
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    if (!OPENAI_API_KEY) {
-      // SIMULATE MOCK RESPONSE FOR PREVIEW
-      setTimeout(() => {
-        setStatus('streaming');
-        simulateStreaming(`## The Vibe Architect AI
-
-You have a deep understanding of **${formData.q1}**, and your clients are always asking **"${formData.q2}"**. This tells me you are sitting on a goldmine of expertise that needs a scalable home.
-
-Your app, **The Vibe Architect**, is a high-energy strategic companion for entrepreneurs who want to master ${formData.q1} without the overwhelm. It uses AI to turn your "unfair advantage" of **${formData.q3}** into a daily actionable roadmap for your users. Unlike generic tools that focus on the wrong metrics (the thing people always get wrong: **${formData.q4}**), this app prioritises **${formData.q5}** energy and precise execution.
-
-What makes this genuinely different is the "Vibe-Check" engine — it doesn't just give data; it filters every decision through your specific business philosophy, ensuring that everything built feels authentic to the user's brand.
-
-This idea is perfect for you because it directly addresses the ${formData.q6} you want to be known for, while leveraging your unique ability to talk for hours about ${formData.q1} into a structured, AI-powered mentor.`);
-      }, 2000);
-      return;
-    }
 
     const systemPrompt = "You are a brilliant, creative product strategist who specialises in helping entrepreneurs build AI-powered apps and tools. Based on the answers provided, generate an exciting, specific and genuinely useful app idea for this person. Your response must include: a suggested app name (wrap in ##), a one paragraph description of what the app does, who would use it and why they would love it, what makes it genuinely different from everything else out there, and one sentence on why this idea is perfect for this specific person based on their answers. Tone should be high energy, exciting and encouraging. British English spelling throughout. No em dashes. Write directly to the person in second person. Use markdown for structure.";
 
-    const userPrompt = `
-      Here are my answers:
-      1. I know this inside out: ${formData.q1}
-      2. My clients always ask: ${formData.q2}
-      3. The unfair advantage I'd give: ${formData.q3}
-      4. People always get this wrong: ${formData.q4}
-      5. My business energy: ${formData.q5}
-      6. I want to be known for building: ${formData.q6}
-    `;
+    const userPrompt = `Here are my answers:
+1. I know this inside out: ${formData.q1}
+2. My clients always ask: ${formData.q2}
+3. The unfair advantage I'd give: ${formData.q3}
+4. People always get this wrong: ${formData.q4}
+5. My business energy: ${formData.q5}
+6. I want to be known for building: ${formData.q6}`;
 
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('/api/generate-idea', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-4o',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
           ],
-          stream: true
-        })
+        }),
       });
 
       if (!response.ok) throw new Error('API request failed');
@@ -94,12 +66,12 @@ This idea is perfect for you because it directly addresses the ${formData.q6} yo
 
           const chunk = decoder.decode(value);
           const lines = chunk.split('\n');
-          
+
           for (const line of lines) {
             if (line.startsWith('data: ')) {
               const data = line.slice(6);
               if (data === '[DONE]') break;
-              
+
               try {
                 const json = JSON.parse(data);
                 const content = json.choices[0].delta.content;
@@ -107,7 +79,7 @@ This idea is perfect for you because it directly addresses the ${formData.q6} yo
                   fullText += content;
                   setResult(fullText);
                 }
-              } catch (e) {}
+              } catch (_) {}
             }
           }
         }
@@ -115,22 +87,9 @@ This idea is perfect for you because it directly addresses the ${formData.q6} yo
       setStatus('done');
     } catch (error) {
       console.error(error);
-      alert('Something went wrong. Please check your API key and connection.');
+      alert('Something went wrong. Please make sure the server is running.');
       setStatus('idle');
     }
-  };
-
-  const simulateStreaming = (text: string) => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setResult(text.slice(0, i));
-      i += 5;
-      if (i > text.length) {
-        clearInterval(interval);
-        setResult(text);
-        setStatus('done');
-      }
-    }, 20);
   };
 
   useEffect(() => {
