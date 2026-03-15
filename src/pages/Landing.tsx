@@ -555,14 +555,14 @@ export default function Landing() {
             transition={{ duration: 4, repeat: Infinity }}
             className="bg-white p-12 md:p-20 rounded-[4rem] border border-forest-green/5 shadow-2xl relative z-10"
           >
-            <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-8 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-8 leading-tight">
               One Price. No Subscriptions. No Upsells.
             </h2>
-            
-            <div className="text-6xl md:text-9xl font-display font-black text-terracotta mb-6">
+
+            <div className="text-5xl md:text-7xl font-display font-black text-terracotta mb-6">
               £97
             </div>
-            <p className="text-2xl font-bold uppercase tracking-[0.2em] mb-12 opacity-60">founding lifetime access</p>
+            <p className="text-lg font-bold uppercase tracking-[0.2em] mb-12 opacity-60">founding lifetime access</p>
 
             <div className="max-w-2xl mx-auto text-left mb-16 space-y-6 text-xl md:text-2xl opacity-80">
               <p>
@@ -588,15 +588,26 @@ export default function Landing() {
             </div>
 
             <div className="space-y-6">
-              <p className="text-2xl font-bold">All of it. Forever. £97.</p>
-              <a 
+              <p className="text-xl font-bold">All of it. Forever. £97.</p>
+              <a
                 href="https://store.ascendz.co/vibecodinglab-founders/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-terracotta text-white px-8 md:px-12 py-6 md:py-8 rounded-3xl text-lg md:text-3xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] transition-all shadow-2xl shadow-terracotta/30 text-center"
+                className="block w-full bg-terracotta text-white px-8 md:px-10 py-5 md:py-6 rounded-3xl text-lg md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] transition-all shadow-2xl shadow-terracotta/30 text-center"
               >
                 I'm Ready. Secure My Lifetime Access for £97.
               </a>
+              <p className="text-sm font-medium opacity-50 text-center pt-2">
+                Prefer to start smaller?{' '}
+                <a
+                  href="https://www.skool.com/vibecodinglab/about"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:opacity-80 transition-opacity"
+                >
+                  Join on the monthly plan for £35/$47
+                </a>
+              </p>
             </div>
           </motion.div>
         </div>
