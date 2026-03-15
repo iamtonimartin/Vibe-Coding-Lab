@@ -65,23 +65,27 @@ export default function AppIdeaGenerator() {
       const reader = response.body?.getReader();
       const decoder = new TextDecoder('utf-8');
       let fullText = '';
+      let buffer = '';
 
       if (reader) {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
+          // Accumulate into buffer to handle lines split across chunks
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          // Keep the last (potentially incomplete) line in the buffer
+          buffer = lines.pop() ?? '';
 
           for (const line of lines) {
             if (line.startsWith('data: ')) {
-              const data = line.slice(6);
-              if (data === '[DONE]') break;
+              const data = line.slice(6).trim();
+              if (data === '[DONE]') continue;
 
               try {
                 const json = JSON.parse(data);
-                const content = json.choices[0].delta.content;
+                const content = json.choices?.[0]?.delta?.content;
                 if (content) {
                   fullText += content;
                   setResult(fullText);
