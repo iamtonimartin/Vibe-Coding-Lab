@@ -113,6 +113,21 @@ export default function Videos() {
         </div>
       </Section>
 
+      {/* Video 3 */}
+      <Section className="bg-white/50">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+              Video 3. Behind the Scenes. The Apps and Tools That Started It All.
+            </h2>
+            <p className="text-lg md:text-xl opacity-80 leading-relaxed">
+              Get an exclusive look at Relay and Insights, two fully functional SaaS apps built using Google AI Studio, Antigravity and Claude Code so you can see how it all comes together for yourself.
+            </p>
+          </div>
+          <VideoPlaceholder label="VIDEO 3 PLACEHOLDER" />
+        </div>
+      </Section>
+
       {/* App Idea Section */}
       <Section className="bg-sand/30">
         <div className="max-w-4xl mx-auto text-center space-y-12">
