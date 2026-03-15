@@ -79,15 +79,13 @@ app.post('/api/subscribe', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.kit.com/v4/forms/${KIT_FORM_ID}/subscribers`, {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${KIT_API_KEY}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        api_key: KIT_API_KEY,
         first_name: firstName,
-        email_address: email,
+        email: email,
       }),
     });
 
