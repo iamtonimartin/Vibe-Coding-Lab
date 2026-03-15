@@ -650,7 +650,7 @@ export default function Landing() {
           <h2 className="text-5xl md:text-8xl font-display font-extrabold mb-12 leading-[0.9] tracking-tighter">
             The Price of Ideas Without Action Is Always the Same.
           </h2>
-          <div className="text-2xl md:text-3xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
+          <div className="text-xl md:text-2xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
             <p>You have had the idea. You just did not have the tools, the method or the budget to make it real.</p>
             <p className="font-bold">That excuse no longer exists.</p>
             <p>AI and no-code tools have made building genuinely accessible for the first time. You do not need a technical co-founder. You do not need tens of thousands of pounds. You do not need to wait for anyone or anything.</p>
