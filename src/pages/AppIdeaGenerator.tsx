@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Loader2, Rocket } from 'lucide-react';
+import { Sparkles, Loader2, Rocket, Copy, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
@@ -15,7 +15,14 @@ export default function AppIdeaGenerator() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'streaming' | 'done'>('idle');
   const [result, setResult] = useState('');
+  const [copied, setCopied] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(result);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -29,7 +36,7 @@ export default function AppIdeaGenerator() {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const systemPrompt = "You are a brilliant, creative product strategist who specialises in helping entrepreneurs build AI-powered apps and tools. Based on the answers provided, generate an exciting, specific and genuinely useful app idea for this person. Your response must include: a suggested app name (wrap in ##), a one paragraph description of what the app does, who would use it and why they would love it, what makes it genuinely different from everything else out there, and one sentence on why this idea is perfect for this specific person based on their answers. Tone should be high energy, exciting and encouraging. British English spelling throughout. No em dashes. Write directly to the person in second person. Use markdown for structure.";
+    const systemPrompt = "You are a brilliant, creative product strategist who specialises in helping entrepreneurs build AI-powered apps and tools. Based on the answers provided, generate an exciting, specific and genuinely useful app idea for this person. Your response must include: a suggested app name as a markdown h2 heading (e.g. ## App Name), a one paragraph description of what the app does, who would use it and why they would love it, what makes it genuinely different from everything else out there, and one sentence on why this idea is perfect for this specific person based on their answers. Tone should be high energy, exciting and encouraging. British English spelling throughout. No em dashes. Write directly to the person in second person. Use markdown for structure.";
 
     const userPrompt = `Here are my answers:
 1. I know this inside out: ${formData.q1}
@@ -267,6 +274,14 @@ export default function AppIdeaGenerator() {
             >
               <div className="bg-white p-8 md:p-12 rounded-[3.5rem] shadow-2xl border-2 border-terracotta/20 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-terracotta/5 rounded-bl-full"></div>
+                {status === 'done' && (
+                  <button
+                    onClick={handleCopy}
+                    className="absolute top-6 right-6 flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl bg-forest-green/5 hover:bg-forest-green/10 transition-colors"
+                  >
+                    {copied ? <><Check size={16} className="text-terracotta" /> Copied!</> : <><Copy size={16} /> Copy</>}
+                  </button>
+                )}
                 <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-terracotta prose-strong:text-forest-green prose-p:leading-relaxed">
                   <ReactMarkdown
                     components={{
