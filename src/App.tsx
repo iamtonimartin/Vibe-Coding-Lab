@@ -12,7 +12,7 @@ export default function App() {
       <ChatWidget />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/opt-in" element={<OptIn />} />
+        <Route path="/freetraining" element={<OptIn />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/app-idea" element={<AppIdeaGenerator />} />
         <Route path="/logo" element={<LogoExport />} />

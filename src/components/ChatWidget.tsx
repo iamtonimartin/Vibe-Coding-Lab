@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function ChatWidget() {
   const location = useLocation();
-  const isOptInPage = location.pathname === '/opt-in';
+  const isOptInPage = location.pathname === '/freetraining';
 
   useEffect(() => {
     if (isOptInPage) {
