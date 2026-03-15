@@ -36,7 +36,7 @@ export default function AppIdeaGenerator() {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const systemPrompt = "You are a brilliant, creative product strategist who specialises in helping entrepreneurs build AI-powered apps and tools. Based on the answers provided, generate an exciting, specific and genuinely useful app idea for this person. Your response must include: a suggested app name as a markdown h2 heading (e.g. ## App Name), a one paragraph description of what the app does, who would use it and why they would love it, what makes it genuinely different from everything else out there, and one sentence on why this idea is perfect for this specific person based on their answers. Tone should be high energy, exciting and encouraging. British English spelling throughout. No em dashes. Write directly to the person in second person. Use markdown for structure.";
+    const systemPrompt = "You are a brilliant, creative product strategist who specialises in helping entrepreneurs build AI-powered apps and tools. Based on the answers provided, generate an exciting, specific and genuinely useful app idea for this person. Structure your response using the following markdown headings in this exact order: ## [App Name] (the app name as the main heading), ### What It Is (2-3 sentences on what the app does and how it works), ### Who It's For (2-3 sentences on the ideal user and why they would love it), ### What Makes It Different (2-3 sentences on what sets it apart from everything else out there), ### Why This Is Perfect For You (1-2 sentences personalised to this person based on their answers). Tone should be high energy, exciting and encouraging. British English spelling throughout. No em dashes. Write directly to the person in second person.";
 
     const userPrompt = `Here are my answers:
 1. I know this inside out: ${formData.q1}
@@ -285,8 +285,9 @@ export default function AppIdeaGenerator() {
                 <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-terracotta prose-strong:text-forest-green prose-p:leading-relaxed">
                   <ReactMarkdown
                     components={{
-                      h2: ({node, ...props}) => <h2 className="text-3xl font-display font-black text-terracotta mb-6 mt-0" {...props} />,
-                      p: ({node, ...props}) => <p className="mb-6 last:mb-0" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="text-3xl font-display font-black text-terracotta mb-4 mt-0" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="text-lg font-bold uppercase tracking-widest text-forest-green/50 mb-3 mt-8 first:mt-0" {...props} />,
+                      p: ({node, ...props}) => <p className="mb-4 last:mb-0" {...props} />,
                       strong: ({node, ...props}) => <strong className="font-bold text-forest-green" {...props} />
                     }}
                   >
