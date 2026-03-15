@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CheckCircle2, Play } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function OptIn() {
   const navigate = useNavigate();
@@ -32,14 +32,8 @@ export default function OptIn() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 items-center max-w-3xl mx-auto mb-12">
-            <div className="aspect-video bg-sand/50 rounded-3xl border-2 border-forest-green/5 flex items-center justify-center group cursor-pointer overflow-hidden relative shadow-lg hover:shadow-xl transition-all duration-500">
-              <div className="absolute inset-0 bg-forest-green/5 group-hover:bg-forest-green/0 transition-colors duration-500" />
-              <div className="w-16 h-16 bg-terracotta text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 z-10">
-                <Play size={24} fill="currentColor" />
-              </div>
-              <div className="absolute bottom-4 left-4 text-[10px] font-bold uppercase tracking-widest opacity-40">
-                Preview Video
-              </div>
+            <div className="aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
+              <img src="/video-thumbnail.jpg" alt="Free training preview" className="w-full h-full object-cover" />
             </div>
 
             <ul className="flex flex-col items-start gap-4 text-left">
