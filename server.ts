@@ -89,10 +89,13 @@ app.post('/api/subscribe', async (req, res) => {
       }),
     });
 
-    if (!response.ok) {
-      const errorBody = await response.text();
-      console.error(`Kit.com error ${response.status}:`, errorBody);
-      return res.status(response.status).json({ error: `Kit.com: ${errorBody}` });
+    const kitBody = await response.json().catch(() => null);
+    console.log('Kit.com response:', response.status, JSON.stringify(kitBody));
+
+    if (!response.ok || kitBody?.error) {
+      const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
+      console.error(`Kit.com error ${response.status}:`, msg);
+      return res.status(response.ok ? 400 : response.status).json({ error: `Kit.com: ${msg}` });
     }
 
     return res.json({ success: true });

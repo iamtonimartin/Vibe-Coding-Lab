@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2, Play } from 'lucide-react';
 
 export default function OptIn() {
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -60,15 +61,6 @@ export default function OptIn() {
           </p>
 
           <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-forest-green/5 max-w-lg mx-auto">
-            {submitted ? (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="bg-forest-green text-warm-cream p-8 rounded-3xl font-bold"
-              >
-                You're in! Check your inbox for the first video.
-              </motion.div>
-            ) : (
               <form
                 className="space-y-4"
                 onSubmit={async (e) => {
@@ -85,7 +77,7 @@ export default function OptIn() {
                       const data = await res.json().catch(() => ({}));
                       throw new Error(data.error || 'Subscription failed');
                     }
-                    setSubmitted(true);
+                    navigate('/videos');
                   } catch (err) {
                     setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
                   } finally {
@@ -119,7 +111,6 @@ export default function OptIn() {
                 </button>
                 <p className="text-sm font-bold opacity-40 mt-4">no spam, unsubscribe any time</p>
               </form>
-            )}
           </div>
         </motion.div>
       </div>
