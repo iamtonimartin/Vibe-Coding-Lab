@@ -36,6 +36,7 @@ app.post('/api/generate-idea', async (req, res) => {
         model: 'gpt-4o',
         messages,
         stream: true,
+        temperature: 0.6,
       }),
     });
 
