@@ -259,7 +259,7 @@ export default function Landing() {
             </h1>
 
             <p className="text-xl md:text-3xl font-medium max-w-3xl mx-auto mb-12 leading-relaxed opacity-90">
-              Stop outsourcing. Start building. Ship your first AI-powered project in hours with no-code tools and direct support from Toni. Lifetime access for £97.
+              Stop outsourcing. Start building. Join the Vibe Coding Lab and build your own AI-powered Founder Co-Pilot in 3 days using no-code tools, with direct support from Toni. Lifetime access for £97.
             </p>
 
             <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
@@ -648,20 +648,23 @@ export default function Landing() {
       <Section className="bg-terracotta text-white text-center overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
           <h2 className="text-5xl md:text-8xl font-display font-extrabold mb-12 leading-[0.9] tracking-tighter">
-            The Era of Waiting for Developers Is Over.
+            The Price of Ideas Without Action Is Always the Same.
           </h2>
-          <p className="text-2xl md:text-3xl font-medium mb-12 opacity-90 leading-relaxed">
-            You have the ideas. You have the ambition. Now you have the method, the tools and a community of builders doing exactly what you are about to do.
-          </p>
-          
+          <div className="text-2xl md:text-3xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
+            <p>You have had the idea. You just did not have the tools, the method or the budget to make it real.</p>
+            <p className="font-bold">That excuse no longer exists.</p>
+            <p>AI and no-code tools have made building genuinely accessible for the first time. You do not need a technical co-founder. You do not need tens of thousands of pounds. You do not need to wait for anyone or anything.</p>
+            <p>You need the right method, three days and the willingness to build.</p>
+          </div>
+
           <div className="space-y-12">
             <div className="inline-block bg-white/10 px-8 py-3 rounded-full text-xl font-bold uppercase tracking-widest">
               The sprint starts 25 March.
             </div>
-            
+
             <p className="text-2xl font-bold italic opacity-80">Founding lifetime access closes when it closes.</p>
-            
-            <button 
+
+            <button
               onClick={scrollToOffer}
               className="w-full md:w-auto bg-white text-terracotta px-12 md:px-16 py-6 md:py-8 rounded-3xl text-xl md:text-3xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
             >
