@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -110,8 +111,35 @@ app.post('/api/subscribe', async (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   const distPath = join(__dirname, 'dist');
   app.use(express.static(distPath));
-  app.get('*', (_req, res) => {
-    res.sendFile(join(distPath, 'index.html'));
+
+  const BASE_URL = 'https://vibecodinglab.co';
+
+  // Per-route OG tag overrides (crawlers read the initial HTML, not JS)
+  const routeMeta: Record<string, { title: string; description: string; image: string }> = {
+    '/freetraining': {
+      title: 'Free Video Series — Vibe Coding Lab',
+      description: 'Watch the free series: how I built my first AI app in a week using no-code AI tools. Get instant access plus a personalised app idea in 60 seconds.',
+      image: `${BASE_URL}/og-video-series.jpg`,
+    },
+  };
+
+  app.get('*', (req, res) => {
+    const meta = routeMeta[req.path];
+    if (!meta) {
+      return res.sendFile(join(distPath, 'index.html'));
+    }
+    const pageUrl = `${BASE_URL}${req.path}`;
+    let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
+    html = html
+      .replace(/(<meta property="og:url" content=")[^"]*(")/g, `$1${pageUrl}$2`)
+      .replace(/(<meta property="og:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
+      .replace(/(<meta property="og:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
+      .replace(/(<meta property="og:image" content=")[^"]*(")/g, `$1${meta.image}$2`)
+      .replace(/(<meta name="twitter:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
+      .replace(/(<meta name="twitter:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
+      .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`)
+      .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`);
+    res.send(html);
   });
 }
 
