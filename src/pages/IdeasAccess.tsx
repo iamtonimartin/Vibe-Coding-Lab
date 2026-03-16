@@ -650,12 +650,12 @@ export default function IdeasAccess() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex flex-col sm:flex-row gap-3 flex-1">
             {/* Industry filter */}
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <label className="sr-only">Industry</label>
               <select
                 value={selectedIndustry}
                 onChange={(e) => setSelectedIndustry(e.target.value)}
-                className="appearance-none bg-white border border-forest-green/15 text-forest-green rounded-2xl pl-5 pr-10 py-3 text-sm font-bold focus:outline-none focus:border-terracotta transition-colors cursor-pointer"
+                className="appearance-none w-full sm:w-auto bg-white border border-forest-green/15 text-forest-green rounded-2xl pl-5 pr-10 py-3 text-sm font-bold focus:outline-none focus:border-terracotta transition-colors cursor-pointer"
               >
                 {INDUSTRIES.map((ind) => (
                   <option key={ind} value={ind}>{ind}</option>
@@ -669,12 +669,12 @@ export default function IdeasAccess() {
             </div>
 
             {/* Tool type filter */}
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <label className="sr-only">Tool Type</label>
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="appearance-none bg-white border border-forest-green/15 text-forest-green rounded-2xl pl-5 pr-10 py-3 text-sm font-bold focus:outline-none focus:border-terracotta transition-colors cursor-pointer"
+                className="appearance-none w-full sm:w-auto bg-white border border-forest-green/15 text-forest-green rounded-2xl pl-5 pr-10 py-3 text-sm font-bold focus:outline-none focus:border-terracotta transition-colors cursor-pointer"
               >
                 {TOOL_TYPES.map((type) => (
                   <option key={type} value={type}>{type}</option>
