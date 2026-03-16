@@ -112,7 +112,7 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = join(__dirname, 'dist');
   app.use(express.static(distPath));
 
-  const BASE_URL = 'https://vibecodinglab.co';
+  const BASE_URL = 'https://thevibecodinglab.co';
 
   // Per-route OG tag overrides (crawlers read the initial HTML, not JS)
   const routeMeta: Record<string, { title: string; description: string; image: string }> = {
