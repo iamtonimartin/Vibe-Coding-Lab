@@ -533,16 +533,10 @@ const TOOL_TYPES = [
   'Analyser',
 ];
 
-const INTRO_PARAGRAPHS = [
-  'One of the biggest barriers to building is not technical ability. It is imagination. Most people struggle to picture what they could actually create, so they never start.',
-  'This list exists to fix that.',
-  'Every single tool below is buildable using vibe coding and no-code AI tools. Some could be built in an afternoon. Others might take a few days. All of them solve a real problem, serve a specific audience and have a clear path to generating revenue.',
-  'A few things worth knowing before you dive in:',
+const THREE_POINTS = [
   'You do not need to build something complicated. The best tools do one thing brilliantly. Simple, focused and genuinely useful beats complex and overwhelming every time.',
   'You do not need a huge audience to monetise. At £47/month you only need 22 paying users to generate £1,000/month. At £97/month you need 11. These are achievable numbers.',
   'You do not need to build for everyone. Pick a niche you understand, a problem you have personally experienced and an audience you can reach. That is your starting point.',
-  'The pricing suggestions are starting points based on what similar tools charge in the market right now. Your pricing will depend on your audience, your positioning and how much value the tool genuinely delivers. Always test before you settle.',
-  'Now find your idea. Then come build it.',
 ];
 
 export default function IdeasAccess() {
@@ -606,31 +600,44 @@ export default function IdeasAccess() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-left max-w-3xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-12"
+            className="text-left max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
           >
-            {INTRO_PARAGRAPHS.map((para, i) => (
-              <p
-                key={i}
-                className={
-                  para === 'This list exists to fix that.' || para === 'Now find your idea. Then come build it.'
-                    ? 'font-bold text-xl md:text-2xl'
-                    : para === 'A few things worth knowing before you dive in:'
-                    ? 'font-bold'
-                    : para.startsWith('You do not need')
-                    ? 'pl-5 border-l-4 border-terracotta/30 opacity-90'
-                    : 'opacity-80'
-                }
-              >
-                {para}
-              </p>
+            <p className="opacity-80">One of the biggest barriers to building is not technical ability. It is imagination. Most people struggle to picture what they could actually create, so they never start.</p>
+            <p className="font-bold text-xl md:text-2xl">This list exists to fix that.</p>
+            <p className="opacity-80">Every single tool below is buildable using vibe coding and no-code AI tools. Some could be built in an afternoon. Others might take a few days. All of them solve a real problem, serve a specific audience and have a clear path to generating revenue.</p>
+            <p className="font-bold">A few things worth knowing before you dive in:</p>
+          </motion.div>
+
+          {/* Three-column points */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 mb-10"
+          >
+            {THREE_POINTS.map((point, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 text-left border border-forest-green/5 shadow-sm">
+                <div className="w-8 h-8 bg-terracotta/10 text-terracotta rounded-full flex items-center justify-center text-sm font-extrabold mb-4">{i + 1}</div>
+                <p className="text-base leading-relaxed opacity-80">{point}</p>
+              </div>
             ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="text-left max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
+          >
+            <p className="opacity-80">The pricing suggestions are starting points based on what similar tools charge in the market right now. Your pricing will depend on your audience, your positioning and how much value the tool genuinely delivers. Always test before you settle.</p>
+            <p className="font-bold text-xl md:text-2xl">Now find your idea. Then come build it.</p>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-xl opacity-70 max-w-2xl mx-auto"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg md:text-xl opacity-70 max-w-4xl mx-auto"
           >
             Filter by your industry and tool type to find the ideas most relevant to you. Each one is buildable using no-code AI tools with a clear path to generating revenue.
           </motion.p>
