@@ -104,20 +104,20 @@ export default function Ideas() {
           </div>
         </motion.div>
 
-        {/* Bullets — 3 columns */}
+        {/* Bullets */}
         <motion.ul
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mb-10"
+          className="flex flex-col gap-4 mb-10 w-full max-w-sm"
         >
           {[
             '70 ideas across 14 industries',
             'Filter by your niche and tool type',
             'Clear monetisation potential for every single idea',
           ].map((text, i) => (
-            <li key={i} className="flex items-start gap-2 text-base font-bold">
-              <CheckCircle2 className="text-terracotta w-5 h-5 shrink-0 mt-0.5" />
+            <li key={i} className="flex items-center gap-3 text-lg font-bold">
+              <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0" />
               {text}
             </li>
           ))}
