@@ -600,7 +600,7 @@ export default function IdeasAccess() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-left max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
+            className="text-center max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
           >
             <p className="opacity-80">One of the biggest barriers to building is not technical ability. It is imagination. Most people struggle to picture what they could actually create, so they never start.</p>
             <p className="font-bold text-xl md:text-2xl">This list exists to fix that.</p>
@@ -627,20 +627,21 @@ export default function IdeasAccess() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="text-left max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
+            className="text-center max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
           >
             <p className="opacity-80">The pricing suggestions are starting points based on what similar tools charge in the market right now. Your pricing will depend on your audience, your positioning and how much value the tool genuinely delivers. Always test before you settle.</p>
             <p className="font-bold text-xl md:text-2xl">Now find your idea. Then come build it.</p>
           </motion.div>
+        </div>
+      </section>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl opacity-70 max-w-4xl mx-auto"
-          >
-            Filter by your industry and tool type to find the ideas most relevant to you. Each one is buildable using no-code AI tools with a clear path to generating revenue.
-          </motion.p>
+      {/* Filter intro — visually distinct section break */}
+      <section className="px-6 py-12 bg-sand/40 border-y border-forest-green/8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Browse the Ideas</p>
+          <p className="text-xl md:text-2xl font-bold">
+            Filter by your industry and tool type to find the ideas most relevant to you.
+          </p>
         </div>
       </section>
 
@@ -754,25 +755,13 @@ export default function IdeasAccess() {
             Every tool on this list is buildable using vibe coding and no-code AI tools. No development team. No huge budget. Just you, the right method and the willingness to start. Join the Vibe Coding Lab and learn exactly how.
           </p>
           <div className="flex flex-col items-center gap-4">
-            <a
-              href="https://store.ascendz.co/vibecodinglab-founders/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-terracotta text-white px-10 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30 w-full sm:w-auto justify-center"
+            <Link
+              to="/"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="inline-flex items-center gap-3 bg-terracotta text-white px-10 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
             >
-              Secure Lifetime Access for £97 <ArrowRight size={20} />
-            </a>
-            <a
-              href="https://www.skool.com/vibecodinglab/about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-white/10 text-white border border-white/20 px-10 py-5 rounded-2xl text-xl font-extrabold hover:bg-white/20 hover:scale-105 transition-all w-full sm:w-auto justify-center"
-            >
-              Join Monthly for £35
-            </a>
-            <p className="text-sm font-bold opacity-40 pt-2">
-              Sprint runs live 25 to 27 March. Founding lifetime price closes 25 March.
-            </p>
+              Join the Vibe Coding Lab <ArrowRight size={20} />
+            </Link>
           </div>
         </div>
       </section>
