@@ -71,6 +71,7 @@ export default function OptIn() {
                       const data = await res.json().catch(() => ({}));
                       throw new Error(data.error || 'Subscription failed');
                     }
+                    window.scrollTo(0, 0);
                     navigate('/videos');
                   } catch (err) {
                     setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
