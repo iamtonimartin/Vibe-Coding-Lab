@@ -73,7 +73,7 @@ export default function Videos() {
             You Are In. Here Is Everything.
           </div>
           <h1 className="text-5xl md:text-8xl font-display font-extrabold leading-[0.9] mb-8 tracking-tighter">
-            Two Videos. Fifteen Minutes. <span className="text-terracotta">Everything changes.</span>
+            Three Videos. Twenty Minutes. <span className="text-terracotta">Everything Changes.</span>
           </h1>
           <p className="text-xl md:text-2xl font-medium opacity-80 max-w-2xl mx-auto">
             Watch the videos, find your app idea, then come build with{"\u00A0"}us.
