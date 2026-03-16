@@ -88,40 +88,33 @@ export default function Ideas() {
           Browse 70 ideas across 14 industries, filtered by niche and tool type, each with a clear monetisation angle. Find your idea in minutes.
         </motion.p>
 
-        {/* Preview image */}
+        {/* Preview image + Bullets side by side */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full max-w-2xl mb-12"
+          className="grid md:grid-cols-2 gap-8 items-center w-full max-w-3xl mb-12"
         >
-          <div className="aspect-[16/9] rounded-3xl overflow-hidden bg-sand border-2 border-forest-green/5 shadow-xl flex items-center justify-center">
+          <div className="aspect-[16/9] rounded-3xl overflow-hidden bg-sand border-2 border-forest-green/5 shadow-xl">
             <img
               src="/ideas-thumbnail.jpg"
               alt="70 AI-powered tool ideas preview"
               className="w-full h-full object-cover"
             />
           </div>
+          <ul className="flex flex-col gap-5">
+            {[
+              '70 ideas across 14 industries',
+              'Filter by your niche and tool type',
+              'Clear monetisation potential for every single idea',
+            ].map((text, i) => (
+              <li key={i} className="flex items-center gap-3 text-lg font-bold">
+                <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0" />
+                {text}
+              </li>
+            ))}
+          </ul>
         </motion.div>
-
-        {/* Bullets */}
-        <motion.ul
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-          className="flex flex-col gap-4 mb-10"
-        >
-          {[
-            '70 ideas across 14 industries',
-            'Filter by your niche and tool type',
-            'Clear monetisation potential for every single idea',
-          ].map((text, i) => (
-            <li key={i} className="flex items-center gap-3 text-lg font-bold">
-              <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0" />
-              {text}
-            </li>
-          ))}
-        </motion.ul>
 
         {/* Credibility line */}
         <motion.p
