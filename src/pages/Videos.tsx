@@ -92,15 +92,27 @@ export default function Videos() {
               Start here. This is why vibe coding changes everything for ambitious entrepreneurs and why right now is the moment to pay attention.
             </p>
           </div>
-          <VideoPlaceholder label="VIDEO 1 PLACEHOLDER" />
+          <div className="aspect-video rounded-[2rem] overflow-hidden shadow-xl">
+            <iframe
+              src="https://player.vimeo.com/video/1173833089?badge=0&autopause=0&player_id=0&app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              className="w-full h-full"
+              title="Video 1"
+            />
+          </div>
         </div>
       </Section>
 
       {/* Video 2 */}
       <Section>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
-            <VideoPlaceholder label="VIDEO 2 PLACEHOLDER" />
+          <div className="order-2 md:order-1 aspect-video rounded-[2rem] overflow-hidden shadow-xl">
+            <iframe
+              src="https://player.vimeo.com/video/1173842937?badge=0&autopause=0&player_id=0&app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              className="w-full h-full"
+              title="Video 2"
+            />
           </div>
           <div className="space-y-6 order-1 md:order-2">
             <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
