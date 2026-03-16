@@ -1,24 +1,17 @@
 import { useState, useEffect, useRef, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'motion/react';
-import { 
-  Plus, 
-  Minus, 
+import {
+  Plus,
+  Minus,
   ArrowRight,
   Zap,
-  Rocket,
-  Code,
-  Cpu,
-  Users,
-  ChevronLeft,
-  ChevronRight,
   Hammer,
   BookOpen,
   Layout,
   BarChart,
   MessageSquare,
-  Eye,
-  Flame
+  Eye
 } from 'lucide-react';
 
 const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
@@ -130,41 +123,6 @@ const GrainOverlay = () => (
 
 export default function Landing() {
   const sprintStartDate = "2026-03-25T09:00:00";
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    
-    const cards = container.children;
-    const containerCenter = container.getBoundingClientRect().left + container.offsetWidth / 2;
-    
-    let closestIndex = 0;
-    let minDistance = Infinity;
-    
-    for (let i = 0; i < cards.length; i++) {
-      const card = cards[i] as HTMLElement;
-      const cardCenter = card.getBoundingClientRect().left + card.offsetWidth / 2;
-      const distance = Math.abs(containerCenter - cardCenter);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = i;
-      }
-    }
-    
-    for (let i = 0; i < cards.length; i++) {
-      (cards[i] as HTMLElement).setAttribute('data-active', (i === closestIndex).toString());
-    }
-  };
-
-  useEffect(() => {
-    // Initial check
-    handleScroll();
-    
-    // Add a small delay to ensure layout is stable
-    const timer = setTimeout(handleScroll, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   const scrollToOffer = () => {
     document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
@@ -361,122 +319,83 @@ export default function Landing() {
       </Section>
 
       {/* Section: What You Get */}
-      <Section className="bg-warm-cream overflow-hidden">
+      <Section className="bg-sand/30">
         <GrainOverlay />
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-16 text-center leading-tight">
-            Everything You Need to Go From Idea to Builder.
-          </h2>
-          
-          <div className="relative group">
-            {/* Navigation Arrows */}
-            <button 
-              onClick={() => {
-                const container = document.getElementById('scroll-container');
-                if (container) container.scrollBy({ left: -424, behavior: 'smooth' });
-              }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 w-12 h-12 rounded-full bg-white border border-forest-green/10 shadow-lg flex items-center justify-center text-forest-green hover:bg-forest-green hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button 
-              onClick={() => {
-                const container = document.getElementById('scroll-container');
-                if (container) container.scrollBy({ left: 424, behavior: 'smooth' });
-              }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 w-12 h-12 rounded-full bg-white border border-forest-green/10 shadow-lg flex items-center justify-center text-forest-green hover:bg-forest-green hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
-            >
-              <ChevronRight size={24} />
-            </button>
-
-            <div 
-              id="scroll-container"
-              ref={scrollContainerRef}
-              className="flex overflow-x-auto pb-12 gap-6 snap-x no-scrollbar px-[10vw] md:px-[calc(50%-200px)]"
-              onScroll={handleScroll}
-            >
-              {[
-                { 
-                  title: "Live Vibe Coding Sprint", 
-                  desc: "25 to 27 March. Build your first AI-powered project with Toni live. Ship something real.",
-                  features: ["Daily building prompts", "Live Q&A sessions"],
-                  icon: <Hammer size={28} />,
-                },
-                { 
-                  title: "Vibe Coding 101", 
-                  desc: "The complete starter course covering tools, prompting, building and deploying.",
-                  features: ["Full library of tutorials", "Step-by-step guides"],
-                  icon: <BookOpen size={28} />,
-                },
-                { 
-                  title: "Access to Relay", 
-                  desc: "My AI assistant builder. Use it, study it, get inspired by it.",
-                  features: ["AI Assistant Builder", "Visual logic editor"],
-                  icon: <Layout size={28} />,
-                },
-                { 
-                  title: "Access to Insights", 
-                  desc: "My diagnostic and quiz platform. Yours to use from day one.",
-                  features: ["Diagnostic Platform", "Quiz builder"],
-                  icon: <BarChart size={28} />,
-                },
-                { 
-                  title: "Direct Support from Toni", 
-                  desc: "Ask questions, get unstuck, keep moving. Direct access for troubleshooting.",
-                  features: ["Direct Skool community access", "Personal feedback"],
-                  icon: <MessageSquare size={28} />,
-                },
-                { 
-                  title: "Behind the Scenes", 
-                  desc: "Every new app, every new tool, every new method. You get it all as I build it.",
-                  features: ["Build-in-public updates", "Early tool access"],
-                  icon: <Eye size={28} />,
-                },
-                { 
-                  title: "Lifetime Community Access", 
-                  desc: "Every session recorded. Learn at your pace, build on your schedule.",
-                  features: ["Recorded session library", "Lifetime membership"],
-                  icon: <Flame size={28} />,
-                }
-              ].map((card, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  data-active="false"
-                  className="flex-none w-[300px] md:w-[400px] snap-center p-8 md:p-10 rounded-[2.5rem] border border-forest-green/5 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col gap-8 bg-white text-forest-green data-[active=true]:bg-forest-green data-[active=true]:text-white group/card"
-                >
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-terracotta/5 group-data-[active=true]/card:bg-white/10 text-terracotta group-data-[active=true]/card:text-white transition-colors">
-                    {card.icon}
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-2xl md:text-3xl font-display font-bold leading-tight">
-                      {card.title}
-                    </h3>
-                    <p className="text-lg leading-relaxed opacity-80">
-                      {card.desc}
-                    </p>
-                  </div>
-
-                  <div className="mt-auto space-y-3">
-                    {card.features.map((feature, j) => (
-                      <div key={j} className="flex items-center gap-3">
-                        <Zap size={16} className="text-terracotta group-data-[active=true]/card:text-white shrink-0" fill="currentColor" />
-                        <span className="text-sm md:text-base font-semibold opacity-90">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-6 leading-tight">
+              Everything You Need to Go From Idea to Builder.
+            </h2>
+            <p className="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">
+              The Vibe Coding Lab gives you the skills, the tools, the community and the live experience to go from complete beginner to confident builder. Here is everything that is waiting for you inside.
+            </p>
           </div>
-          
-          <div className="flex justify-center gap-2 mt-4">
-            {[0, 1, 2, 3, 4, 5, 6].map((dot) => (
-              <div key={dot} className="w-2 h-2 rounded-full bg-forest-green/20" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: "The Command Centre Sprint",
+                desc: "Learn the skills behind vibe coding whilst building your first AI-powered tool from scratch. Three live sessions with Toni's direct support, 25 to 27 March.",
+                icon: <Hammer size={26} />,
+                bg: "bg-forest-green text-white",
+                iconBg: "bg-white/10 text-white",
+              },
+              {
+                title: "A Growing Classroom",
+                desc: "Courses, tools and resources that will have you vibing with ease. New content added regularly as the space evolves.",
+                icon: <BookOpen size={26} />,
+                bg: "bg-white text-forest-green",
+                iconBg: "bg-terracotta/10 text-terracotta",
+              },
+              {
+                title: "Access to Relay",
+                desc: "My AI assistant builder. Use it, explore it and get inspired by what is possible when you build with no-code AI tools.",
+                icon: <Layout size={26} />,
+                bg: "bg-white text-forest-green",
+                iconBg: "bg-terracotta/10 text-terracotta",
+              },
+              {
+                title: "Access to Insights",
+                desc: "My diagnostic and quiz platform. Yours to use from day one. Study it, use it, build something similar yourself.",
+                icon: <BarChart size={26} />,
+                bg: "bg-white text-forest-green",
+                iconBg: "bg-terracotta/10 text-terracotta",
+              },
+              {
+                title: "Direct Support from Toni",
+                desc: "Ask questions, get unstuck and keep moving. Direct access inside the community throughout the sprint and beyond.",
+                icon: <MessageSquare size={26} />,
+                bg: "bg-terracotta text-white",
+                iconBg: "bg-white/20 text-white",
+              },
+              {
+                title: "Behind the Scenes",
+                desc: "Every app and tool I build, you see the process as it happens. No gatekeeping on the journey.",
+                icon: <Eye size={26} />,
+                bg: "bg-white text-forest-green",
+                iconBg: "bg-terracotta/10 text-terracotta",
+              },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className={`p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col gap-6 ${card.bg}`}
+              >
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.iconBg}`}>
+                  {card.icon}
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl md:text-2xl font-display font-bold leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="text-base md:text-lg leading-relaxed opacity-80">
+                    {card.desc}
+                  </p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
