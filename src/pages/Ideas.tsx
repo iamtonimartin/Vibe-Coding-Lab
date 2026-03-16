@@ -1,14 +1,14 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
 
 export default function Ideas() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   const formRef = useRef(null);
   const formInView = useInView(formRef, { once: true, margin: '-80px' });
@@ -27,7 +27,8 @@ export default function Ideas() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || 'Subscription failed');
       }
-      setSubmitted(true);
+      window.scrollTo(0, 0);
+      navigate('/ideas-access');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
@@ -96,7 +97,7 @@ export default function Ideas() {
         >
           <div className="aspect-[16/9] rounded-3xl overflow-hidden bg-sand border-2 border-forest-green/5 shadow-xl flex items-center justify-center">
             <img
-              src="/ideas-preview.jpg"
+              src="/ideas-thumbnail.jpg"
               alt="70 AI-powered tool ideas preview"
               className="w-full h-full object-cover"
             />
@@ -140,44 +141,36 @@ export default function Ideas() {
           transition={{ duration: 0.7 }}
           className="w-full max-w-md"
         >
-          {submitted ? (
-            <div className="bg-white rounded-[2.5rem] shadow-xl border border-forest-green/5 p-10 text-center space-y-4">
-              <CheckCircle2 className="text-terracotta w-12 h-12 mx-auto" />
-              <p className="text-2xl font-extrabold">You are in.</p>
-              <p className="opacity-60 text-lg">Check your inbox for the ideas doc.</p>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-forest-green/5 space-y-4"
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-forest-green/5 space-y-4"
+          >
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
+            />
+            {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-terracotta text-white px-8 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-xl shadow-terracotta/20 disabled:opacity-60"
             >
-              <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-                className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
-              />
-              {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-terracotta text-white px-8 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-xl shadow-terracotta/20 disabled:opacity-60"
-              >
-                {loading ? 'Sending...' : 'Show Me The Ideas'}
-              </button>
-              <p className="text-sm font-bold opacity-40 text-center">No spam. Unsubscribe any time.</p>
-            </form>
-          )}
+              {loading ? 'Sending...' : 'Show Me The Ideas'}
+            </button>
+            <p className="text-sm font-bold opacity-40 text-center">No spam. Unsubscribe any time.</p>
+          </form>
         </motion.div>
       </main>
 
