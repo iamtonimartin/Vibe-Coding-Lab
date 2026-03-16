@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
   Plus,
@@ -122,7 +121,7 @@ const GrainOverlay = () => (
 );
 
 export default function Landing() {
-  const sprintStartDate = "2026-03-25T09:00:00";
+  const sprintStartDate = "2026-03-24T23:59:00";
 
   const scrollToOffer = () => {
     document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
@@ -466,69 +465,84 @@ export default function Landing() {
       {/* Section: Pricing */}
       <Section id="offer" className="bg-warm-cream overflow-hidden">
         <GrainOverlay />
-        <div className="max-w-5xl mx-auto text-center relative">
+        <div className="max-w-3xl mx-auto text-center relative">
+          <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
+            Two Ways In. One Community.
+          </h2>
+          <p className="text-xl md:text-2xl opacity-80 mb-10 leading-relaxed">
+            Inside you get the same community, the same sprint, the same support and the same content whichever option you choose.
+          </p>
+
+          {/* Countdown */}
+          <div className="bg-forest-green text-white rounded-3xl px-8 py-6 mb-10">
+            <p className="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">Founding lifetime price closes in</p>
+            <CountdownTimer targetDate="2026-03-24T23:59:00" />
+          </div>
+
+          {/* Main card */}
           <motion.div
-            animate={{ 
-              boxShadow: ["0 0 0px rgba(242, 125, 38, 0)", "0 0 50px rgba(242, 125, 38, 0.15)", "0 0 0px rgba(242, 125, 38, 0)"] 
+            animate={{
+              boxShadow: ["0 0 0px rgba(194, 94, 68, 0)", "0 0 50px rgba(194, 94, 68, 0.15)", "0 0 0px rgba(194, 94, 68, 0)"]
             }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="bg-white p-12 md:p-20 rounded-[4rem] border border-forest-green/5 shadow-2xl relative z-10"
+            className="bg-white rounded-[3rem] border border-forest-green/5 shadow-2xl overflow-hidden"
           >
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-8 leading-tight">
-              One Price. No Subscriptions. No Upsells.
-            </h2>
-
-            <div className="text-5xl md:text-7xl font-display font-black text-terracotta mb-6">
-              £97
-            </div>
-            <p className="text-lg font-bold uppercase tracking-[0.2em] mb-12 opacity-60">founding lifetime access</p>
-
-            <div className="max-w-2xl mx-auto text-left mb-16 space-y-6 text-xl md:text-2xl opacity-80">
-              <p>
-                This price exists because you are joining at the very beginning. It will not be available once the sprint closes. Everyone who joins after pays more. Probably significantly more.
+            {/* Lifetime section */}
+            <div className="p-10 md:p-14">
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-terracotta mb-4">Founding Lifetime Access</p>
+              <div className="text-5xl md:text-7xl font-display font-black text-forest-green mb-2">£97</div>
+              <p className="text-base font-semibold opacity-50 uppercase tracking-widest mb-8">one time</p>
+              <p className="text-lg md:text-xl opacity-80 leading-relaxed mb-10 max-w-xl mx-auto">
+                Join before 25 March and lock in lifetime access forever. The lowest price this community will ever be. After 25 March this option is gone permanently.
               </p>
-              
-              <ul className="flex flex-col gap-4 pt-8 max-w-md mx-auto">
+              <ul className="flex flex-col gap-4 mb-10 text-left max-w-sm mx-auto">
                 {[
                   "Live sprint, 25 to 27 March",
                   "Vibe Coding 101",
-                  "Relay access",
-                  "Insights access",
+                  "Access to Relay",
+                  "Access to Insights",
                   "Direct support from Toni",
                   "Lifetime community access",
                   "Every future build and tool"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-4 font-bold text-lg">
-                    <Zap size={20} className="text-terracotta shrink-0" fill="currentColor" />
+                  <li key={i} className="flex items-center gap-3 font-bold text-base md:text-lg">
+                    <Zap size={18} className="text-terracotta shrink-0" fill="currentColor" />
                     {item}
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-xl font-bold">All of it. Forever. £97.</p>
               <a
                 href="https://store.ascendz.co/vibecodinglab-founders/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-terracotta text-white px-8 md:px-10 py-5 md:py-6 rounded-3xl text-lg md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] transition-all shadow-2xl shadow-terracotta/30 text-center"
+                className="block w-full bg-terracotta text-white px-8 py-5 md:py-6 rounded-2xl text-lg md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-terracotta/30 text-center"
               >
                 I'm Ready. Secure My Lifetime Access for £97.
               </a>
-              <p className="text-sm font-medium opacity-50 text-center pt-2">
-                Prefer to start smaller?{' '}
-                <a
-                  href="https://www.skool.com/vibecodinglab/about"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:opacity-80 transition-opacity"
-                >
-                  Join on the monthly plan for £35/$47
-                </a>
+            </div>
+
+            {/* Monthly section */}
+            <div className="border-t border-forest-green/5 bg-sand/40 px-10 md:px-14 py-10">
+              <p className="text-sm font-bold uppercase tracking-widest opacity-50 mb-3">Prefer to start monthly?</p>
+              <div className="text-3xl md:text-4xl font-display font-black text-forest-green mb-1">£35<span className="text-xl font-bold opacity-60">/month</span></div>
+              <p className="text-sm font-semibold opacity-40 uppercase tracking-widest mb-6">$47/month</p>
+              <p className="text-base md:text-lg opacity-70 leading-relaxed mb-8 max-w-xl mx-auto">
+                Full community access, all the same content and direct support from Toni. Join now and take part in the sprint live on 25 March. Cancel any time.
               </p>
+              <a
+                href="https://www.skool.com/vibecodinglab/about"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-forest-green text-white px-10 py-4 rounded-2xl text-base md:text-lg font-extrabold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg text-center"
+              >
+                Join Monthly.
+              </a>
             </div>
           </motion.div>
+
+          <p className="text-sm font-semibold opacity-40 mt-8 uppercase tracking-widest">
+            Founding lifetime price closes 25 March. Sprint runs live 25 to 27 March. All sessions recorded.
+          </p>
         </div>
       </Section>
 
@@ -539,25 +553,25 @@ export default function Landing() {
             Still on the Fence? Let's Sort That.
           </h2>
           <div className="space-y-2">
-            <FAQItem 
-              question="I have never built anything technical before." 
+            <FAQItem
+              question="I have never built anything technical before."
               answer="Good. You are not learning to code. You are learning to direct AI to build for you. If you can describe what you want in plain English you can build with these tools."
             />
-            <FAQItem 
-              question="I do not know what to build." 
-              answer={
-                <>
-                  That is exactly what the free <Link to="/app-idea" className="text-terracotta underline font-bold hover:text-burnt-orange transition-colors">App Idea Generator</Link> is for. Use it before you join and you will arrive on day one with a clear idea ready to go.
-                </>
-              }
+            <FAQItem
+              question="I do not have time."
+              answer="The initial sprint is just three days and will teach you skills you can use for a lifetime. Your continued access to the community, resources and recordings means you can fit things around your schedule, so you never have to choose between building and life. Dip in, build something, come back when you are ready."
             />
-            <FAQItem 
-              question="I do not have time." 
-              answer="The sprint runs over three days. You can ship your first project in a couple of hours. This is not a commitment, it is a fast start."
+            <FAQItem
+              question="How much does it cost to use the tools?"
+              answer="Most of the tools we use have generous free tiers. The main additional cost is AI API usage for the apps you build. A starting top-up of around £5 goes a long way. You are not looking at significant ongoing costs to get started."
             />
-            <FAQItem 
-              question="Will this still be relevant in six months?" 
-              answer="Vibe coding is not a trend. It is a fundamental shift in how software gets built. The method works across web pages, tools, apps, automations and everything being built right now. The Vibe Coding Lab evolves as the space evolves. Your lifetime access means you are always inside."
+            <FAQItem
+              question="What if I miss a live session?"
+              answer="Every session is recorded and available inside the community. You will never miss anything permanently."
+            />
+            <FAQItem
+              question="Will this still be relevant in six months?"
+              answer="Vibe coding is not a trend. It is a fundamental shift in how software gets built. The method works across web pages, tools, apps, automations and everything being built right now. The Vibe Coding Lab evolves as the space evolves and so will you."
             />
           </div>
         </div>
@@ -576,19 +590,18 @@ export default function Landing() {
             <p>You need the right method, three days and the willingness to build.</p>
           </div>
 
-          <div className="space-y-12">
-            <div className="inline-block bg-white/10 px-8 py-3 rounded-full text-xl font-bold uppercase tracking-widest">
-              The sprint starts 25 March.
-            </div>
-
-            <p className="text-2xl font-bold italic opacity-80">Founding lifetime access closes when it closes.</p>
-
-            <button
-              onClick={scrollToOffer}
-              className="w-full md:w-auto bg-white text-terracotta px-12 md:px-16 py-6 md:py-8 rounded-3xl text-xl md:text-3xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
+          <div className="space-y-8">
+            <a
+              href="https://store.ascendz.co/vibecodinglab-founders/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white text-terracotta px-12 md:px-16 py-6 md:py-8 rounded-3xl text-xl md:text-3xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
             >
-              I'm Ready. Let's Build.
-            </button>
+              Join the Vibe Coding Lab.
+            </a>
+            <p className="text-base md:text-lg font-semibold opacity-70">
+              The sprint starts 25 March. After that the founding lifetime offer is gone forever.
+            </p>
           </div>
         </div>
         
