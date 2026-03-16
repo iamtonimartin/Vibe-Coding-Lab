@@ -1,7 +1,7 @@
 import { useRef, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const GrainOverlay = () => (
   <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-50 overflow-hidden">
@@ -32,17 +32,6 @@ const Section = ({ children, className = "", id = "" }: { children: ReactNode, c
   );
 };
 
-const VideoPlaceholder = ({ label }: { label: string }) => (
-  <div className="aspect-video bg-sand/50 rounded-[2rem] border-2 border-forest-green/5 flex items-center justify-center group cursor-pointer overflow-hidden relative shadow-xl hover:shadow-2xl transition-all duration-500">
-    <div className="absolute inset-0 bg-forest-green/5 group-hover:bg-forest-green/0 transition-colors duration-500" />
-    <div className="w-20 h-20 bg-terracotta text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 z-10">
-      <Play size={32} fill="currentColor" />
-    </div>
-    <div className="absolute bottom-8 left-8 text-sm font-bold uppercase tracking-widest opacity-40">
-      {label}
-    </div>
-  </div>
-);
 
 export default function Videos() {
   return (
@@ -136,7 +125,14 @@ export default function Videos() {
               Get an exclusive look at Relay and Insights, two fully functional SaaS apps built using Google AI Studio, Antigravity and Claude Code so you can see how it all comes together for yourself.
             </p>
           </div>
-          <VideoPlaceholder label="VIDEO 3 PLACEHOLDER" />
+          <div className="aspect-video rounded-[2rem] overflow-hidden shadow-xl">
+            <iframe
+              src="https://player.vimeo.com/video/1173970978?badge=0&autopause=0&player_id=0&app_id=58479"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              className="w-full h-full"
+              title="Video 3"
+            />
+          </div>
         </div>
       </Section>
 
