@@ -423,13 +423,15 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-2 gap-12">
             {[
-              { 
-                name: "Relay", 
-                image: "https://ascendz.co/wp-content/uploads/2026/03/Relay-Assistant-Set-Up-scaled.png" 
+              {
+                name: "Relay",
+                subtitle: "A SaaS tool for building AI chatbot assistants",
+                image: "https://ascendz.co/wp-content/uploads/2026/03/Relay-Assistant-Set-Up-scaled.png"
               },
-              { 
-                name: "Insights", 
-                image: "https://ascendz.co/wp-content/uploads/2026/03/Insights-Results-Page-scaled.png" 
+              {
+                name: "Insights",
+                subtitle: "A SaaS tool for creating quizzes and diagnostics with AI",
+                image: "https://ascendz.co/wp-content/uploads/2026/03/Insights-Results-Page-scaled.png"
               }
             ].map((app) => (
               <motion.div 
@@ -454,7 +456,7 @@ export default function Landing() {
                 </div>
                 <div className="px-4 pb-4">
                   <h3 className="text-3xl font-display font-extrabold mb-2">{app.name}</h3>
-                  <p className="opacity-60 font-bold uppercase tracking-widest text-sm">Deployed SaaS Product — Click to Expand</p>
+                  <p className="opacity-60 font-bold uppercase tracking-widest text-sm">{app.subtitle}</p>
                 </div>
               </motion.div>
             ))}
@@ -591,14 +593,12 @@ export default function Landing() {
           </div>
 
           <div className="space-y-8">
-            <a
-              href="https://store.ascendz.co/vibecodinglab-founders/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={scrollToOffer}
               className="inline-block bg-white text-terracotta px-12 md:px-16 py-6 md:py-8 rounded-3xl text-xl md:text-3xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
             >
               Join the Vibe Coding Lab.
-            </a>
+            </button>
             <p className="text-base md:text-lg font-semibold opacity-70">
               The sprint starts 25 March. After that the founding lifetime offer is gone forever.
             </p>

@@ -48,7 +48,7 @@ export default function Videos() {
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
       <GrainOverlay />
-      
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
@@ -56,7 +56,7 @@ export default function Videos() {
             VIBE<span className="text-terracotta">CODING</span>LAB
           </Link>
           <div className="flex items-center gap-3 md:gap-8">
-            <Link 
+            <Link
               to="/"
               className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
             >
@@ -142,9 +142,9 @@ export default function Videos() {
               Answer six quick questions and get a personalised AI-powered app idea in 60 seconds.
             </p>
           </div>
-          
+
           <div className="space-y-6">
-            <Link 
+            <Link
               to="/app-idea"
               className="inline-block bg-terracotta text-white px-12 py-6 rounded-2xl text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
             >
@@ -168,7 +168,7 @@ export default function Videos() {
             <p className="opacity-80">Three days. Live sessions. Me in the room answering your questions every step of the way.</p>
             <p className="opacity-80">You will leave with a working AI-powered Founder Co-Pilot and the skills to build whatever comes next.</p>
             <p className="font-bold">Two ways to join:</p>
-            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 27 March. Never available again.</span></p>
+            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 11:59pm 24 March. Never available again.</span></p>
             <p>💛 <strong className="font-bold">Monthly at £35/month ($47/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
             <p className="opacity-80">Sprint starts 25 March. Both options get you full access.</p>
           </div>
