@@ -38,12 +38,12 @@ export default function OptIn() {
 
             <ul className="flex flex-col items-start gap-4 text-left">
               {[
-                "The complete video series",
-                "The live build watch-along",
-                "The personalised app idea generator"
+                "Video 1: Why this is the most exciting time to be building with AI",
+                "Video 2: The exact tech stack I use to build micro SaaS apps",
+                "Video 3: Behind the scenes of Relay and Insights, two fully functional apps I built myself"
               ].map((text, i) => (
-                <li key={i} className="flex items-center gap-3 text-lg font-bold">
-                  <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0" />
+                <li key={i} className="flex items-start gap-3 text-lg font-bold">
+                  <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0 mt-0.5" />
                   {text}
                 </li>
               ))}
@@ -51,7 +51,7 @@ export default function OptIn() {
           </div>
 
           <p className="text-lg font-medium max-w-xl mx-auto mb-12 italic opacity-70 leading-relaxed">
-            "Built by a Digital Growth Architect who went from idea to deployed app in a week. No developer. No agency. Just AI tools and a process that works."
+            Built by Toni Martin, Digital Growth Architect and AI Consultant who went from idea to deployed app in a week. No developer. No agency. Just AI tools and a process that works.
           </p>
 
           <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-forest-green/5 max-w-lg mx-auto">
