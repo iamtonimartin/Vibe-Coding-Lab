@@ -602,7 +602,7 @@ export default function IdeasAccess() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-center max-w-4xl mx-auto space-y-5 text-lg md:text-xl leading-relaxed mb-10"
           >
-            <p className="opacity-80">One of the biggest barriers to building is not technical ability. It is imagination. Most people struggle to picture what they could actually create, so they never start.</p>
+            <p className="opacity-80">One of the biggest barriers to building an AI-powered tool or micro SaaS product is not technical ability. It is imagination. Most people struggle to picture what they could actually create, so they never start.</p>
             <p className="font-bold text-xl md:text-2xl">This list exists to fix that.</p>
             <p className="opacity-80">Every single tool below is buildable using vibe coding and no-code AI tools. Some could be built in an afternoon. Others might take a few days. All of them solve a real problem, serve a specific audience and have a clear path to generating revenue.</p>
             <p className="font-bold">A few things worth knowing before you dive in:</p>
