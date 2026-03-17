@@ -171,12 +171,13 @@ export default function Videos() {
           <h2 className="text-4xl md:text-7xl font-display font-extrabold leading-tight">
             Ready to Start Building?
           </h2>
-          <div className="space-y-5 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto text-left">
+          <div className="space-y-5 text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto text-left">
             <p className="font-bold">The best way to learn vibe coding is to actually build something. So that is exactly what we do.</p>
             <p className="opacity-80">Three days. Live sessions. Me in the room answering your questions every step of the way.</p>
-            <p className="opacity-80">You will leave with a working AI-powered Founder Co-Pilot and the skills to build whatever comes next.</p>
+            <p className="opacity-80">You will leave with your own Personal AI Command Centre. Ask it for marketing ideas, a recipe based on what is in your fridge, customer feedback analysed in seconds or a shopping list built from your meal plan. Whatever you need, whenever you need it. Built by you, for you.</p>
+            <p className="opacity-80">Plus you will have the skills to build whatever comes next.</p>
             <p className="font-bold">Two ways to join:</p>
-            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 11:59pm 24 March. Never available again.</span></p>
+            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 25 March. Never available again.</span></p>
             <p>💛 <strong className="font-bold">Monthly at £35/month ($47/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
             <p className="opacity-80">Sprint starts 25 March. Both options get you full access.</p>
           </div>
