@@ -224,7 +224,7 @@ export default function Landing() {
                 onClick={scrollToOffer}
                 className="w-full md:w-auto bg-terracotta text-white px-8 md:px-12 py-5 md:py-6 rounded-2xl text-xl md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-2xl shadow-terracotta/30"
               >
-                Secure Lifetime Access £97 <ArrowRight />
+                Join Vibe Coding Lab <ArrowRight />
               </button>
             </div>
 

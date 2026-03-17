@@ -563,14 +563,13 @@ export default function IdeasAccess() {
           <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
             VIBE<span className="text-terracotta">CODING</span>LAB
           </Link>
-          <a
-            href="https://store.ascendz.co/vibecodinglab-founders/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
           >
             Get Lifetime Access
-          </a>
+          </Link>
         </div>
       </nav>
 
