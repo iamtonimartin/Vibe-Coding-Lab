@@ -334,7 +334,7 @@ export default function Landing() {
             {[
               {
                 title: "The Command Centre Sprint",
-                desc: "Learn the skills behind vibe coding whilst building your first AI-powered tool from scratch. Three live sessions with Toni's direct support, 25 to 27 March.",
+                desc: "Learn the skills behind vibe coding whilst building your own Personal AI Command Centre from scratch. Three live sessions with Toni's direct support, 25 to 27 March.",
                 icon: <Hammer size={26} />,
                 bg: "bg-forest-green text-white",
                 iconBg: "bg-white/10 text-white",
@@ -396,6 +396,29 @@ export default function Landing() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Section: Not a Course */}
+      <Section className="bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 leading-tight">
+            This Is Not a Course You Watch and Forget.
+          </h2>
+          <div className="space-y-8 text-xl md:text-2xl leading-relaxed opacity-80 text-left max-w-3xl mx-auto">
+            <p>
+              The best way to learn vibe coding is to actually build something. So that is exactly what we do.
+            </p>
+            <p>
+              The Command Centre Sprint is three days of live building with Toni. She shares her screen, you build alongside her and she answers your questions in real time. By the end you will have your own Personal AI Command Centre and the skills to build whatever you want next.
+            </p>
+            <p>
+              Your Personal AI Command Centre is exactly what it sounds like. A tool built around how you actually live and work. Ask it for marketing ideas, a recipe based on what is in your fridge, customer feedback analysed in seconds or a shopping list built from your meal plan. Whatever you need, whenever you need it. Built by you, for you.
+            </p>
+            <p className="font-bold text-terracotta text-2xl md:text-3xl">
+              Teach a person to fish and all that.
+            </p>
           </div>
         </div>
       </Section>
@@ -543,7 +566,7 @@ export default function Landing() {
           </motion.div>
 
           <p className="text-sm font-semibold opacity-40 mt-8 uppercase tracking-widest">
-            Founding lifetime price closes 25 March. Sprint runs live 25 to 27 March. All sessions recorded.
+            Founding lifetime price closes 11:59pm 24 March. Sprint runs live 25 to 27 March. All sessions recorded.
           </p>
         </div>
       </Section>
@@ -586,7 +609,7 @@ export default function Landing() {
             The Price of Ideas Without Action Is Always the Same.
           </h2>
           <div className="text-xl md:text-2xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
-            <p>You have had the idea. You just did not have the tools, the method or the budget to make it real.</p>
+            <p>You have had the idea. You simply didn't have the tools, the method or the budget to make it real.</p>
             <p className="font-bold">That excuse no longer exists.</p>
             <p>AI and no-code tools have made building genuinely accessible for the first time. You do not need a technical co-founder. You do not need tens of thousands of pounds. You do not need to wait for anyone or anything.</p>
             <p>You need the right method, three days and the willingness to build.</p>
