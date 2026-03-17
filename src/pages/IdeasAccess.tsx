@@ -745,6 +745,29 @@ export default function IdeasAccess() {
         </div>
       </section>
 
+      {/* App Idea Generator Section */}
+      <section className="px-6 py-24 bg-sand/30">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight tracking-tighter">
+            Didn't Find Your Idea in the List?
+          </h2>
+          <p className="text-xl md:text-2xl opacity-80 leading-relaxed max-w-2xl mx-auto">
+            Sometimes the best idea is the one nobody has thought of yet. Answer six quick questions about your expertise, your clients and what you want to build and get a personalised AI-powered app idea generated just for you in 60 seconds.
+          </p>
+          <div className="flex flex-col items-center gap-4">
+            <Link
+              to="/app-idea"
+              className="inline-flex items-center gap-3 bg-terracotta text-white px-10 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
+            >
+              Find My Personalised App Idea <ArrowRight size={20} />
+            </Link>
+            <p className="text-sm font-bold uppercase tracking-widest opacity-60">
+              Free. No sign up required. Takes 60 seconds.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="px-6 py-24 bg-forest-green text-white">
         <div className="max-w-3xl mx-auto text-center space-y-10">
