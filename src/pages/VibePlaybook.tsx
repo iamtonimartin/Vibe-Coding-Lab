@@ -788,8 +788,8 @@ function GlossaryTab() {
       </p>
 
       {/* Search + Filter row */}
-      <div className="flex gap-3 mb-6">
-        <div className="relative flex-1 max-w-sm">
+      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <div className="relative w-full sm:max-w-sm">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-forest-green/40 w-4 h-4 pointer-events-none" />
           <input
             type="text"
@@ -802,7 +802,7 @@ function GlossaryTab() {
         <select
           value={activeCategory}
           onChange={e => setActiveCategory(e.target.value)}
-          className="px-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-sm font-bold text-forest-green cursor-pointer appearance-none pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23163020%22%20fill-opacity%3D%220.4%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center]"
+          className="w-full sm:w-auto px-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-sm font-bold text-forest-green cursor-pointer appearance-none pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23163020%22%20fill-opacity%3D%220.4%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center]"
         >
           {GLOSSARY_CATEGORIES.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
@@ -822,7 +822,7 @@ function GlossaryTab() {
           {filtered.map(t => (
             <div key={t.term} className="bg-white rounded-2xl p-6 border border-forest-green/5 shadow-sm flex flex-col gap-3 hover:shadow-md transition-shadow duration-300">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-lg font-display font-extrabold text-forest-green leading-tight">{t.term}</h3>
+                <h3 className="text-lg font-display font-extrabold text-forest-green leading-tight min-w-0">{t.term}</h3>
                 <span className="bg-sand text-forest-green/60 text-xs font-bold px-3 py-1 rounded-full shrink-0 mt-0.5 whitespace-nowrap">{t.category}</span>
               </div>
               <p className="text-base opacity-80 leading-relaxed">{t.definition}</p>
@@ -1081,7 +1081,7 @@ export default function VibePlaybook() {
         <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-6">
           Free Resource
         </div>
-        <h1 className="text-5xl md:text-8xl font-display font-extrabold leading-[0.9] tracking-tighter mb-6">
+        <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[0.95] tracking-tighter mb-6">
           The Vibe Playbook
         </h1>
         <p className="text-xl md:text-2xl font-medium opacity-80 max-w-2xl mx-auto leading-relaxed">
@@ -1092,7 +1092,7 @@ export default function VibePlaybook() {
       {/* Sticky Tab Bar */}
       <div className="sticky top-[65px] z-40 bg-warm-cream/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
         <div className="max-w-5xl mx-auto">
-          <div className="flex justify-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex justify-start sm:justify-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {TABS.map(tab => (
               <button
                 key={tab.id}
