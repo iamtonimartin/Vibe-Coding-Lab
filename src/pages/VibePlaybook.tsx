@@ -540,7 +540,7 @@ const AI_PROVIDERS: AIProvider[] = [
   {
     name: 'Google Gemini',
     docsUrl: 'https://ai.google.dev/gemini-api/docs/models',
-    notice: 'Gemini 3 models are currently in preview. Stable pricing may change. Gemini 2.5 models remain fully available and production-ready.',
+    notice: 'Note: Gemini 3 Pro Preview was deprecated and shut down on March 9, 2026. The current flagship is Gemini 3.1 Pro Preview, listed below. All Gemini 3 pricing remains subject to change as models move from preview to stable.',
     models: [
       {
         name: 'Gemini 3.1 Pro (Preview)',
