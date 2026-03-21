@@ -5,6 +5,7 @@ import Videos from './pages/Videos';
 import AppIdeaGenerator from './pages/AppIdeaGenerator';
 import Ideas from './pages/Ideas';
 import IdeasAccess from './pages/IdeasAccess';
+import VibePlaybook from './pages/VibePlaybook';
 import LogoExport from './pages/LogoExport';
 import ChatWidget from './components/ChatWidget';
 
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/app-idea" element={<AppIdeaGenerator />} />
         <Route path="/ideas" element={<Ideas />} />
         <Route path="/ideas-access" element={<IdeasAccess />} />
+        <Route path="/vibeplaybook" element={<VibePlaybook />} />
         <Route path="/logo" element={<LogoExport />} />
       </Routes>
     </Router>
