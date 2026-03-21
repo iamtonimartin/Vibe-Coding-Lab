@@ -787,33 +787,27 @@ function GlossaryTab() {
         Every term you will encounter on your vibe coding journey, explained in plain English with real examples. Search for a term or filter by category.
       </p>
 
-      {/* Search */}
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-forest-green/40 w-5 h-5 pointer-events-none" />
-        <input
-          type="text"
-          placeholder="Search for a term..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
-        />
-      </div>
-
-      {/* Category filters */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {GLOSSARY_CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
-              activeCategory === cat
-                ? 'bg-terracotta text-white'
-                : 'bg-warm-cream border border-forest-green/15 text-forest-green hover:border-terracotta/40'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      {/* Search + Filter row */}
+      <div className="flex gap-3 mb-6">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-forest-green/40 w-4 h-4 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Search for a term..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-base"
+          />
+        </div>
+        <select
+          value={activeCategory}
+          onChange={e => setActiveCategory(e.target.value)}
+          className="px-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-sm font-bold text-forest-green cursor-pointer appearance-none pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23163020%22%20fill-opacity%3D%220.4%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center]"
+        >
+          {GLOSSARY_CATEGORIES.map(cat => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
       </div>
 
       <p className="text-sm font-bold opacity-50 mb-8">{resultLabel}</p>
