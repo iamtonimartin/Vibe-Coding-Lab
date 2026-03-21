@@ -1098,7 +1098,7 @@ export default function VibePlaybook() {
       {/* Sticky Tab Bar */}
       <div className="sticky top-[65px] z-40 bg-warm-cream/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
         <div className="max-w-5xl mx-auto">
-          <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex justify-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {TABS.map(tab => (
               <button
                 key={tab.id}
