@@ -742,6 +742,14 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
 
 // ─── HELPER COMPONENTS ────────────────────────────────────────────────────────
 
+function parseFreeTier(freeTier: string): { label: string; detail: string } {
+  const dotIdx = freeTier.indexOf('. ');
+  if (dotIdx !== -1) {
+    return { label: freeTier.substring(0, dotIdx), detail: freeTier.substring(dotIdx + 2) };
+  }
+  return { label: freeTier.replace(/\.$/, ''), detail: '' };
+}
+
 function FreeTierPill({ text }: { text: string }) {
   let cls = '';
   if (text.startsWith('Yes') || text.startsWith('Free')) {
@@ -984,29 +992,48 @@ function ToolkitTab() {
         <div key={section.heading} className="mb-14">
           <h2 className="text-2xl md:text-3xl font-display font-extrabold mb-6">{section.heading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {section.tools.map(tool => (
-              <div key={tool.name} className="bg-white rounded-2xl p-6 border border-forest-green/5 shadow-sm flex flex-col gap-4 hover:shadow-md transition-shadow duration-300">
-                <div className="flex items-start gap-3 flex-wrap">
-                  <h3 className="text-lg font-display font-extrabold">{tool.name}</h3>
-                  {tool.weUseThis && (
-                    <span className="bg-terracotta text-white text-xs font-bold px-3 py-1 rounded-full shrink-0">We Use This</span>
-                  )}
+            {section.tools.map(tool => {
+              const { label: ftLabel, detail: ftDetail } = parseFreeTier(tool.freeTier);
+              return (
+                <div key={tool.name} className="bg-white rounded-2xl p-6 border border-forest-green/5 shadow-sm flex flex-col gap-4 hover:shadow-md transition-shadow duration-300">
+                  {/* Name + badge */}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h3 className="text-lg font-display font-extrabold">{tool.name}</h3>
+                    {tool.weUseThis && (
+                      <span className="bg-terracotta text-white text-xs font-bold px-3 py-1 rounded-full shrink-0">We Use This</span>
+                    )}
+                  </div>
+                  {/* Description */}
+                  <p className="text-base opacity-80 leading-relaxed">{tool.description}</p>
+                  {/* Free tier */}
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm font-bold">Free tier:</span>
+                      <FreeTierPill text={ftLabel} />
+                    </div>
+                    {ftDetail && (
+                      <p className="text-xs opacity-50 leading-relaxed mt-1">{ftDetail}</p>
+                    )}
+                  </div>
+                  {/* Best for */}
+                  <p className="text-sm opacity-70 leading-relaxed">
+                    <span className="font-bold">Best for:</span> {tool.bestFor}
+                  </p>
+                  {/* Official site */}
+                  <p className="text-sm">
+                    <span className="font-bold">Official site:</span>{' '}
+                    <a
+                      href={`https://${tool.site}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-terracotta hover:text-burnt-orange transition-colors font-bold inline-flex items-center gap-1"
+                    >
+                      {tool.site} <ExternalLink size={13} />
+                    </a>
+                  </p>
                 </div>
-                <p className="text-base opacity-80 leading-relaxed flex-1">{tool.description}</p>
-                <FreeTierPill text={tool.freeTier} />
-                <p className="text-sm opacity-70 leading-relaxed">
-                  <span className="font-bold">Best for:</span> {tool.bestFor}
-                </p>
-                <a
-                  href={`https://${tool.site}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-bold text-terracotta hover:text-burnt-orange flex items-center gap-1 transition-colors self-start"
-                >
-                  {tool.site} <ExternalLink size={13} />
-                </a>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
