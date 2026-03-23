@@ -766,21 +766,19 @@ function FreeTierPill({ text }: { text: string }) {
 
 function PlaybookCTA() {
   return (
-    <div className="max-w-5xl mx-auto px-6 pb-16">
-      <div className="bg-forest-green text-warm-cream rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center">
-        <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
-          Ready to Build?
-        </h2>
-        <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto mb-10">
-          The Vibe Playbook is just the starting point. Join the Vibe Coding Lab to put this knowledge into practice, access real AI-powered tools and build alongside a community of entrepreneurs who are done watching from the sidelines.
-        </p>
-        <a
-          href="https://thevibecodinglab.co"
-          className="inline-flex items-center bg-terracotta text-white px-10 py-5 rounded-2xl text-lg font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-black/20"
-        >
-          Join the Vibe Coding Lab
-        </a>
-      </div>
+    <div className="bg-forest-green text-warm-cream px-8 py-16 md:px-16 md:py-24 text-center">
+      <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
+        Ready to Build?
+      </h2>
+      <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto mb-10">
+        The Vibe Playbook is just the starting point. Join the Vibe Coding Lab to put this knowledge into practice, access real AI-powered tools and build alongside a community of entrepreneurs who are done watching from the sidelines.
+      </p>
+      <a
+        href="https://thevibecodinglab.co"
+        className="inline-flex items-center bg-terracotta text-white px-10 py-5 rounded-2xl text-lg font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-black/20"
+      >
+        Join the Vibe Coding Lab
+      </a>
     </div>
   );
 }
@@ -805,6 +803,7 @@ function GlossaryTab() {
     : `Showing ${filtered.length} terms in ${activeCategory}`;
 
   return (
+    <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-10 leading-relaxed">
         Every term you will encounter on your vibe coding journey, explained in plain English with real examples. Search for a term or filter by category.
@@ -856,8 +855,9 @@ function GlossaryTab() {
           ))}
         </div>
       )}
-      <PlaybookCTA />
     </div>
+    <PlaybookCTA />
+    </>
   );
 }
 
@@ -865,6 +865,7 @@ function GlossaryTab() {
 
 function FileTypesTab() {
   return (
+    <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-12 leading-relaxed">
         Every file you encounter when vibe coding belongs to a category. Understanding what each file type does and when you will encounter it removes a lot of the mystery from building. Use this as a quick reference when you see an unfamiliar extension in your project.
@@ -887,8 +888,9 @@ function FileTypesTab() {
           </div>
         </div>
       ))}
-      <PlaybookCTA />
     </div>
+    <PlaybookCTA />
+    </>
   );
 }
 
@@ -896,6 +898,7 @@ function FileTypesTab() {
 
 function AIModelsTab() {
   return (
+    <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-8 leading-relaxed">
         Every time your app calls an AI model it uses tokens and every token costs money. Understanding which models exist, what they are good at and how much they cost is one of the most important skills you will develop as a vibe coder. Use the cheapest model that can do the job well enough. Save the powerful models for tasks that genuinely need them.
@@ -995,8 +998,9 @@ function AIModelsTab() {
           ))}
         </div>
       </div>
-      <PlaybookCTA />
     </div>
+    <PlaybookCTA />
+    </>
   );
 }
 
@@ -1004,6 +1008,7 @@ function AIModelsTab() {
 
 function ToolkitTab() {
   return (
+    <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-12 leading-relaxed">
         A growing reference of the tools that power modern vibe coded projects. What each one does, whether it has a free tier and what it is best used for. Tools marked with a We Use This badge are ones we actively use inside the Vibe Coding Lab.
@@ -1057,8 +1062,9 @@ function ToolkitTab() {
           </div>
         </div>
       ))}
-      <PlaybookCTA />
     </div>
+    <PlaybookCTA />
+    </>
   );
 }
 
