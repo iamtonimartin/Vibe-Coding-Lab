@@ -20,10 +20,8 @@ export default function Unsubscribe() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-[560px]"
+          className="text-center max-w-[680px]"
         >
-          <div className="text-6xl mb-8">✓</div>
-
           <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-8 tracking-tight">
             You are all set.
           </h1>
@@ -42,7 +40,7 @@ export default function Unsubscribe() {
 
           <div className="text-base opacity-50 leading-snug">
             <p className="font-bold">Toni</p>
-            <p>Founder, Ascendz</p>
+            <p>Creator of Vibe Coding Lab | Founder of Ascendz</p>
           </div>
         </motion.div>
       </div>
