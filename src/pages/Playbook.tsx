@@ -51,7 +51,7 @@ export default function Playbook() {
               <img src="/vibe-playbook-cover.jpg" alt="The Vibe Playbook preview" className="w-full h-auto" />
             </div>
 
-            <ul className="grid grid-cols-2 gap-5 text-left">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-left">
               {([
                 <>A searchable glossary of <strong>over 50 terms</strong> explained in plain English with real examples.</>,
                 <>A complete file types reference so nothing in your project feels mysterious.</>,
