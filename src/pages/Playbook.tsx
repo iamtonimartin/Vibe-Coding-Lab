@@ -60,7 +60,7 @@ export default function Playbook() {
               ] as React.ReactNode[]).map((text, i) => (
                 <li key={i} className="flex items-start gap-3 text-lg font-bold">
                   <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0 mt-0.5" />
-                  {text}
+                  <span>{text}</span>
                 </li>
               ))}
             </ul>
