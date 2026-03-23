@@ -23,7 +23,7 @@ export default function Playbook() {
         </a>
       </div>
 
-      <div className="container mx-auto max-w-4xl px-6 py-16 flex-1 flex flex-col justify-center text-center">
+      <div className="container mx-auto max-w-5xl px-6 py-16 flex-1 flex flex-col justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function Playbook() {
 
           <div className="grid md:grid-cols-2 gap-8 items-center max-w-3xl mx-auto mb-12">
             <div className="aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
-              <img src="/playbook-preview.jpg" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
+              <img src="/vibe-playbook.png" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
             </div>
 
             <ul className="flex flex-col items-start gap-4 text-left">
