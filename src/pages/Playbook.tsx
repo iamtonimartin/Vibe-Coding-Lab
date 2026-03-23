@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
@@ -51,12 +52,12 @@ export default function Playbook() {
             </div>
 
             <ul className="flex flex-col items-start gap-4 text-left">
-              {[
-                "A searchable glossary of over 50 terms explained in plain English with real examples.",
-                "A complete file types reference so nothing in your project feels mysterious.",
-                "A breakdown of every major AI model, what each one is good for and how to choose between them.",
-                "A curated toolkit of the tools that power modern vibe coded projects."
-              ].map((text, i) => (
+              {([
+                <>A searchable glossary of <strong>over 50 terms</strong> explained in plain English with real examples.</>,
+                <>A complete file types reference so nothing in your project feels mysterious.</>,
+                <>A breakdown of every major AI model, what each one is good for and how to choose between them.</>,
+                <>A curated toolkit of the tools that power modern vibe coded projects.</>
+              ] as React.ReactNode[]).map((text, i) => (
                 <li key={i} className="flex items-start gap-3 text-lg font-bold">
                   <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0 mt-0.5" />
                   {text}
