@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function Playbook() {
   const navigate = useNavigate();
+  const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,15 +37,37 @@ export default function Playbook() {
             Your Free Vibe Coding Reference Guide
           </h1>
 
-          <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
+          <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-6 opacity-90">
             Everything you need to understand the language, tools and technology behind vibe coding. All in one place. All in plain English.
           </p>
 
-          <div className="text-left max-w-2xl mx-auto space-y-5 mb-12 text-lg leading-relaxed opacity-80">
-            <p>The Vibe Playbook covers everything you will encounter on your vibe coding journey.</p>
-            <p>A searchable glossary of over 50 terms explained in plain English with real examples. A complete file types reference so nothing in your project feels mysterious. A breakdown of every major AI model, what each one is good for and how to choose between them. A curated toolkit of the tools that power modern vibe coded projects.</p>
-            <p>Whether you are just getting started or actively building, this is the reference guide you will keep coming back to.</p>
+          <p className="text-lg font-medium max-w-xl mx-auto mb-12 italic opacity-70 leading-relaxed">
+            The Vibe Playbook covers everything you will encounter on your vibe coding journey.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center max-w-3xl mx-auto mb-12">
+            <div className="aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
+              <img src="/playbook-preview.jpg" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
+            </div>
+
+            <ul className="flex flex-col items-start gap-4 text-left">
+              {[
+                "A searchable glossary of over 50 terms explained in plain English with real examples.",
+                "A complete file types reference so nothing in your project feels mysterious.",
+                "A breakdown of every major AI model, what each one is good for and how to choose between them.",
+                "A curated toolkit of the tools that power modern vibe coded projects."
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-lg font-bold">
+                  <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0 mt-0.5" />
+                  {text}
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <p className="text-lg font-medium max-w-xl mx-auto mb-12 italic opacity-70 leading-relaxed">
+            Whether you are just getting started or actively building, this is the reference guide you will keep coming back to.
+          </p>
 
           <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-forest-green/5 max-w-lg mx-auto">
             <form
@@ -56,7 +80,7 @@ export default function Playbook() {
                   const res = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email }),
+                    body: JSON.stringify({ firstName, email }),
                   });
                   if (!res.ok) {
                     const data = await res.json().catch(() => ({}));
@@ -72,8 +96,16 @@ export default function Playbook() {
               }}
             >
               <input
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
+                required
+              />
+              <input
                 type="email"
-                placeholder="Your email address"
+                placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
