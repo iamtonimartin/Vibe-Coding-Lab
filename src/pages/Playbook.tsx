@@ -46,12 +46,12 @@ export default function Playbook() {
             The Vibe Playbook covers everything you will encounter on your vibe coding journey.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center max-w-3xl mx-auto mb-12">
-            <div className="aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
-              <img src="/vibe-playbook-cover.jpg" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
+          <div className="max-w-3xl mx-auto mb-12">
+            <div className="rounded-3xl overflow-hidden shadow-2xl shadow-forest-green/25 mb-10">
+              <img src="/vibe-playbook-cover.jpg" alt="The Vibe Playbook preview" className="w-full h-auto" />
             </div>
 
-            <ul className="flex flex-col items-start gap-4 text-left">
+            <ul className="grid grid-cols-2 gap-5 text-left">
               {([
                 <>A searchable glossary of <strong>over 50 terms</strong> explained in plain English with real examples.</>,
                 <>A complete file types reference so nothing in your project feels mysterious.</>,
