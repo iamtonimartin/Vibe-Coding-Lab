@@ -21,34 +21,31 @@ export default function Playbook() {
         </a>
       </div>
 
-      {/* Main content */}
-      <div className="container mx-auto max-w-2xl px-6 py-10 flex-1 flex flex-col items-center text-center">
+      <div className="container mx-auto max-w-4xl px-6 py-16 flex-1 flex flex-col justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full"
         >
           <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-8">
             Free Resource
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[1.1] mb-6 tracking-tight">
             Your Free Vibe Coding Reference Guide
           </h1>
 
-          <p className="text-xl md:text-2xl font-medium mb-10 opacity-90 leading-relaxed">
+          <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
             Everything you need to understand the language, tools and technology behind vibe coding. All in one place. All in plain English.
           </p>
 
-          <div className="text-left max-w-xl mx-auto space-y-5 mb-12 text-lg leading-relaxed opacity-80">
+          <div className="text-left max-w-2xl mx-auto space-y-5 mb-12 text-lg leading-relaxed opacity-80">
             <p>The Vibe Playbook covers everything you will encounter on your vibe coding journey.</p>
             <p>A searchable glossary of over 50 terms explained in plain English with real examples. A complete file types reference so nothing in your project feels mysterious. A breakdown of every major AI model, what each one is good for and how to choose between them. A curated toolkit of the tools that power modern vibe coded projects.</p>
             <p>Whether you are just getting started or actively building, this is the reference guide you will keep coming back to.</p>
           </div>
 
-          {/* Form */}
-          <div className="w-full max-w-[480px] mx-auto">
+          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-forest-green/5 max-w-lg mx-auto">
             <form
               className="space-y-4"
               onSubmit={async (e) => {
@@ -79,7 +76,7 @@ export default function Playbook() {
                 placeholder="Your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
+                className="w-full px-6 py-4 rounded-2xl bg-warm-cream border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-lg"
                 required
               />
               {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
@@ -90,7 +87,7 @@ export default function Playbook() {
               >
                 {loading ? 'Sending...' : 'Send Me the Playbook'}
               </button>
-              <p className="text-sm font-medium opacity-50 leading-relaxed pt-1">
+              <p className="text-sm font-bold opacity-40 mt-4">
                 You will also receive occasional emails about vibe coding, building with AI and what we are working on inside the Vibe Coding Lab. No spam, unsubscribe any time.
               </p>
             </form>
