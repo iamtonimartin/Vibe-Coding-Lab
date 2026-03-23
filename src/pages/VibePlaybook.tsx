@@ -1112,7 +1112,7 @@ export default function VibePlaybook() {
         className="pt-32 pb-12 px-6 text-center"
       >
         <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-6">
-          Free Resource
+          Handy Resource
         </div>
         <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[0.95] tracking-tighter mb-6">
           The Vibe Playbook
