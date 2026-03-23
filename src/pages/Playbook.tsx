@@ -77,7 +77,7 @@ export default function Playbook() {
                 setError('');
                 setLoading(true);
                 try {
-                  const res = await fetch('/api/subscribe', {
+                  const res = await fetch('/api/subscribe-playbook', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ firstName, email }),

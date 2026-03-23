@@ -15,6 +15,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const KIT_API_KEY = process.env.KIT_API_KEY || '';
 const KIT_FORM_ID = process.env.KIT_FORM_ID || '';
 const KIT_IDEAS_FORM_ID = process.env.KIT_IDEAS_FORM_ID || '';
+const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
 
 app.use(express.json());
 
@@ -134,6 +135,46 @@ app.post('/api/subscribe', async (req, res) => {
 
     const kitBody = await response.json().catch(() => null);
     console.log('Kit.com response:', response.status, JSON.stringify(kitBody));
+
+    if (!response.ok || kitBody?.error) {
+      const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
+      console.error(`Kit.com error ${response.status}:`, msg);
+      return res.status(response.ok ? 400 : response.status).json({ error: `Kit.com: ${msg}` });
+    }
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('Error calling Kit.com:', error);
+    return res.status(500).json({ error: 'Failed to subscribe.' });
+  }
+});
+
+// POST /api/subscribe-playbook
+// Subscribes a user to the Vibe Playbook Kit.com form
+app.post('/api/subscribe-playbook', async (req, res) => {
+  const { firstName, email } = req.body;
+
+  if (!firstName || !email) {
+    return res.status(400).json({ error: 'firstName and email are required.' });
+  }
+
+  if (!KIT_API_KEY || !KIT_PLAYBOOK_FORM_ID) {
+    return res.status(500).json({ error: 'Kit.com credentials not configured on server.' });
+  }
+
+  try {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_PLAYBOOK_FORM_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: KIT_API_KEY,
+        first_name: firstName,
+        email: email,
+      }),
+    });
+
+    const kitBody = await response.json().catch(() => null);
+    console.log('Kit.com playbook response:', response.status, JSON.stringify(kitBody));
 
     if (!response.ok || kitBody?.error) {
       const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
