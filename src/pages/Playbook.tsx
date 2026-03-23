@@ -48,7 +48,7 @@ export default function Playbook() {
 
           <div className="grid md:grid-cols-2 gap-8 items-center max-w-3xl mx-auto mb-12">
             <div className="aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
-              <img src="/vibe-playbook.png" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
+              <img src="/Vibe%20Playbook.jpg" alt="The Vibe Playbook preview" className="w-full h-full object-cover" />
             </div>
 
             <ul className="flex flex-col items-start gap-4 text-left">
