@@ -762,6 +762,29 @@ function FreeTierPill({ text }: { text: string }) {
   return <span className={`text-xs font-bold px-3 py-1 rounded-full inline-block ${cls}`}>{text}</span>;
 }
 
+// ─── SHARED CTA ───────────────────────────────────────────────────────────────
+
+function PlaybookCTA() {
+  return (
+    <div className="max-w-5xl mx-auto px-6 pb-16">
+      <div className="bg-forest-green text-warm-cream rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center">
+        <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
+          Ready to Build?
+        </h2>
+        <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto mb-10">
+          The Vibe Playbook is just the starting point. Join the Vibe Coding Lab to put this knowledge into practice, access real AI-powered tools and build alongside a community of entrepreneurs who are done watching from the sidelines.
+        </p>
+        <a
+          href="https://thevibecodinglab.co"
+          className="inline-flex items-center bg-terracotta text-white px-10 py-5 rounded-2xl text-lg font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-black/20"
+        >
+          Join the Vibe Coding Lab
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ─── GLOSSARY TAB ─────────────────────────────────────────────────────────────
 
 function GlossaryTab() {
@@ -833,6 +856,7 @@ function GlossaryTab() {
           ))}
         </div>
       )}
+      <PlaybookCTA />
     </div>
   );
 }
@@ -863,6 +887,7 @@ function FileTypesTab() {
           </div>
         </div>
       ))}
+      <PlaybookCTA />
     </div>
   );
 }
@@ -970,6 +995,7 @@ function AIModelsTab() {
           ))}
         </div>
       </div>
+      <PlaybookCTA />
     </div>
   );
 }
@@ -1031,6 +1057,7 @@ function ToolkitTab() {
           </div>
         </div>
       ))}
+      <PlaybookCTA />
     </div>
   );
 }
