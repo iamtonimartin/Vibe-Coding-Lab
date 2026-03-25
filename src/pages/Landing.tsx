@@ -519,13 +519,13 @@ export default function Landing() {
               </p>
               <ul className="flex flex-col gap-4 mb-10 text-left max-w-sm mx-auto">
                 {[
-                  "Live sprint, 25 to 27 March",
+                  "Command Centre Sprint replay, available immediately",
                   "Vibe Coding 101",
                   "Access to Relay",
                   "Access to Insights",
                   "Direct support from Toni",
                   "Lifetime community access",
-                  "Every future build and tool"
+                  "Every future build, tool and live sprint"
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 font-bold text-base md:text-lg">
                     <Zap size={18} className="text-terracotta shrink-0" fill="currentColor" />
