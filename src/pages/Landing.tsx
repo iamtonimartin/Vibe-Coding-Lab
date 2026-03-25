@@ -121,7 +121,7 @@ const GrainOverlay = () => (
 );
 
 export default function Landing() {
-  const sprintStartDate = "2026-03-24T23:59:00";
+  const sprintStartDate = "2026-03-31T23:59:00";
 
   const scrollToOffer = () => {
     document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
@@ -198,7 +198,7 @@ export default function Landing() {
             transition={{ duration: 0.5 }}
           >
             <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-8">
-              Founding Lifetime Access. Sprint Starts 25 March.
+              Lifetime Access. Offer Closes 31 March.
             </div>
             
             <h1 className="text-6xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 tracking-tighter">
@@ -229,7 +229,7 @@ export default function Landing() {
             </div>
 
             <div className="pt-8 border-t border-forest-green/5">
-              <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4 opacity-60">Sprint starts 25 March</p>
+              <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4 opacity-60">Lifetime offer closes 31 March</p>
               <CountdownTimer targetDate={sprintStartDate} />
             </div>
           </motion.div>
@@ -500,8 +500,8 @@ export default function Landing() {
 
           {/* Countdown */}
           <div className="bg-forest-green text-white rounded-3xl px-8 py-6 mb-10">
-            <p className="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">Founding lifetime price closes in</p>
-            <CountdownTimer targetDate="2026-03-24T23:59:00" />
+            <p className="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">Lifetime access offer closes in</p>
+            <CountdownTimer targetDate="2026-03-31T23:59:00" />
           </div>
 
           {/* Main card */}
@@ -514,11 +514,11 @@ export default function Landing() {
           >
             {/* Lifetime section */}
             <div className="p-10 md:p-14">
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-terracotta mb-4">Founding Lifetime Access</p>
-              <div className="text-5xl md:text-7xl font-display font-black text-forest-green mb-2">£97</div>
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-terracotta mb-4">Lifetime Access</p>
+              <div className="text-5xl md:text-7xl font-display font-black text-forest-green mb-2">£197</div>
               <p className="text-base font-semibold opacity-50 uppercase tracking-widest mb-8">one time</p>
               <p className="text-lg md:text-xl opacity-80 leading-relaxed mb-10 max-w-xl mx-auto">
-                Join before 25 March and lock in lifetime access forever. The lowest price this community will ever be. After 25 March this option is gone permanently.
+                Join before 11:59pm 31 March and lock in lifetime access.
               </p>
               <ul className="flex flex-col gap-4 mb-10 text-left max-w-sm mx-auto">
                 {[
@@ -542,7 +542,7 @@ export default function Landing() {
                 rel="noopener noreferrer"
                 className="block w-full bg-terracotta text-white px-8 py-5 md:py-6 rounded-2xl text-lg md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-terracotta/30 text-center"
               >
-                I'm Ready. Secure My Lifetime Access for £97.
+                I'm Ready. Secure My Lifetime Access for £197.
               </a>
             </div>
 
@@ -552,7 +552,7 @@ export default function Landing() {
               <div className="text-3xl md:text-4xl font-display font-black text-forest-green mb-1">£35<span className="text-xl font-bold opacity-60">/month</span></div>
               <p className="text-sm font-semibold opacity-40 uppercase tracking-widest mb-6">$47/month</p>
               <p className="text-base md:text-lg opacity-70 leading-relaxed mb-8 max-w-xl mx-auto">
-                Full community access, all the same content and direct support from Toni. Join now and take part in the sprint live on 25 March. Cancel any time.
+                Full community access, all the same content and direct support from Toni. Cancel any time.
               </p>
               <a
                 href="https://www.skool.com/vibecodinglab/about"
@@ -566,7 +566,7 @@ export default function Landing() {
           </motion.div>
 
           <p className="text-sm font-semibold opacity-40 mt-8 uppercase tracking-widest">
-            Founding lifetime price closes 11:59pm 24 March. Sprint runs live 25 to 27 March. All sessions recorded.
+            Lifetime access offer closes 11:59pm 31 March. All sessions recorded.
           </p>
         </div>
       </Section>
@@ -623,7 +623,7 @@ export default function Landing() {
               Join the Vibe Coding Lab.
             </button>
             <p className="text-base md:text-lg font-semibold opacity-70">
-              The sprint starts 25 March. After that the founding lifetime offer is gone forever.
+              Join before 11:59pm 31 March to lock in lifetime access.
             </p>
           </div>
         </div>
@@ -643,7 +643,7 @@ export default function Landing() {
             VIBE<span className="text-terracotta">CODING</span>LAB
           </div>
           <p className="text-lg font-bold opacity-60 max-w-2xl mx-auto leading-relaxed">
-            All sessions recorded. Community access is lifetime. Sprint runs 25 to 27 March live via The Vibe Coding Lab on Skool.
+            Community access is lifetime. All sessions recorded. The Vibe Coding Lab is on Skool.
           </p>
           <div className="mt-12 pt-12 border-t border-forest-green/5 text-sm font-bold uppercase tracking-widest opacity-30">
             © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved

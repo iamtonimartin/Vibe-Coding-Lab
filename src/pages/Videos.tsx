@@ -177,9 +177,9 @@ export default function Videos() {
             <p className="opacity-80">You will leave with your own Personal AI Command Centre. Ask it for marketing ideas, a recipe based on what is in your fridge, customer feedback analysed in seconds or a shopping list built from your meal plan. Whatever you need, whenever you need it. Built by you, for you.</p>
             <p className="opacity-80">Plus you will have the skills to build whatever comes next.</p>
             <p className="font-bold">Two ways to join:</p>
-            <p>🔥 <strong className="font-bold">Lifetime access at £97.</strong> <span className="opacity-80">Available until 25 March. Never available again.</span></p>
+            <p>🔥 <strong className="font-bold">Lifetime access at £197.</strong> <span className="opacity-80">Join before 11:59pm 31 March to lock in lifetime access.</span></p>
             <p>💛 <strong className="font-bold">Monthly at £35/month ($47/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
-            <p className="opacity-80">Sprint starts 25 March. Both options get you full access.</p>
+            <p className="opacity-80">Both options get you full access.</p>
           </div>
 
           <Link
