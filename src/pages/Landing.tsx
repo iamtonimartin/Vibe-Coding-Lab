@@ -404,20 +404,17 @@ export default function Landing() {
       <Section className="bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 leading-tight">
-            This Is Not a Course You Watch and Forget.
+            The Command Centre Sprint Is Live Right Now.
           </h2>
           <div className="space-y-8 text-xl md:text-2xl leading-relaxed opacity-80 text-left max-w-3xl mx-auto">
             <p>
-              The best way to learn vibe coding is to actually build something. So that is exactly what we do.
+              Join today and you can jump straight in. The Command Centre Sprint is running live this week and every session is recorded. That means you can watch along as it happens, dip in and out around your schedule and access every replay the moment it goes up.
             </p>
             <p>
-              The Command Centre Sprint is three days of live building with Toni. She shares her screen, you build alongside her and she answers your questions in real time. By the end you will have your own Personal AI Command Centre and the skills to build whatever you want next.
-            </p>
-            <p>
-              Your Personal AI Command Centre is exactly what it sounds like. A tool built around how you actually live and work. Ask it for marketing ideas, a recipe based on what is in your fridge, customer feedback analysed in seconds or a shopping list built from your meal plan. Whatever you need, whenever you need it. Built by you, for you.
+              Over three days we are building a fully functioning personal AI Command Centre from scratch. Your own bespoke platform that manages your tasks, drafts your content, tracks your finances and chats with your own knowledge base. Built by you. For you.
             </p>
             <p className="font-bold text-terracotta text-2xl md:text-3xl">
-              Teach a person to fish and all that.
+              You will not be starting from zero. You will be starting from today.
             </p>
           </div>
         </div>
