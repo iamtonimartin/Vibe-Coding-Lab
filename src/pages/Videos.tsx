@@ -178,7 +178,7 @@ export default function Videos() {
             <p className="opacity-80">Plus you will have the skills to build whatever comes next.</p>
             <p className="font-bold">Two ways to join:</p>
             <p>🔥 <strong className="font-bold">Lifetime access at £197.</strong> <span className="opacity-80">Join before 11:59pm 31 March to lock in lifetime access.</span></p>
-            <p>💛 <strong className="font-bold">Monthly at £35/month ($47/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
+            <p>💛 <strong className="font-bold">Monthly at £25/month ($33/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
             <p className="opacity-80">Both options get you full access.</p>
           </div>
 

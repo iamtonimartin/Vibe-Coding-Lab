@@ -546,8 +546,8 @@ export default function Landing() {
             {/* Monthly section */}
             <div className="border-t border-forest-green/5 bg-sand/40 px-10 md:px-14 py-10">
               <p className="text-sm font-bold uppercase tracking-widest opacity-50 mb-3">Prefer to start monthly?</p>
-              <div className="text-3xl md:text-4xl font-display font-black text-forest-green mb-1">£35<span className="text-xl font-bold opacity-60">/month</span></div>
-              <p className="text-sm font-semibold opacity-40 uppercase tracking-widest mb-6">$47/month</p>
+              <div className="text-3xl md:text-4xl font-display font-black text-forest-green mb-1">£25<span className="text-xl font-bold opacity-60">/month</span></div>
+              <p className="text-sm font-semibold opacity-40 uppercase tracking-widest mb-6">$33/month</p>
               <p className="text-base md:text-lg opacity-70 leading-relaxed mb-8 max-w-xl mx-auto">
                 Full community access, all the same content and direct support from Toni. Cancel any time.
               </p>
