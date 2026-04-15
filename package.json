@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "server": "tsx server.ts",
-    "build": "vite build && vite build --ssr src/entry-server.tsx",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
     "start": "NODE_ENV=production tsx server.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist",

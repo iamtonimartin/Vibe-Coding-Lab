@@ -190,19 +190,21 @@ app.post('/api/subscribe-playbook', async (req, res) => {
 });
 
 // Serve Vite build in production
-if (process.env.NODE_ENV === 'production') {
-  const distPath = join(__dirname, 'dist');
-  app.use(express.static(distPath));
-
-  // Load SSR render function from the Vite SSR bundle
+async function startServer() {
   let renderApp: ((url: string) => string) | null = null;
-  try {
-    const ssrBundle = await import(join(__dirname, 'dist/entry-server.js'));
-    renderApp = ssrBundle.render;
-    console.log('SSR enabled');
-  } catch {
-    console.warn('SSR bundle not found — serving SPA fallback');
-  }
+
+  if (process.env.NODE_ENV === 'production') {
+    const distPath = join(__dirname, 'dist');
+    app.use(express.static(distPath, { index: false }));
+
+    // Load SSR render function from the Vite SSR bundle
+    try {
+      const ssrBundle = await import(join(__dirname, 'dist/server/entry-server.js'));
+      renderApp = ssrBundle.render;
+      console.log('SSR enabled');
+    } catch (e) {
+      console.warn('SSR bundle not found — serving SPA fallback:', (e as Error).message);
+    }
 
   const BASE_URL = 'https://thevibecodinglab.co';
 
@@ -277,8 +279,11 @@ if (process.env.NODE_ENV === 'production') {
 
     res.send(html);
   });
+  }
+
+  app.listen(PORT, () => {
+    console.log(`API server running on http://localhost:${PORT}`);
+  });
 }
 
-app.listen(PORT, () => {
-  console.log(`API server running on http://localhost:${PORT}`);
-});
+startServer();
