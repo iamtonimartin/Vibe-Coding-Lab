@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import { useState, useRef, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
@@ -11,83 +11,35 @@ import {
   Layout,
   BarChart,
   MessageSquare,
-  Eye
+  Eye,
+  Play,
+  Lightbulb,
+  Sparkles
 } from 'lucide-react';
-
-const CountdownTimer = ({ targetDate }: { targetDate: string }) => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const difference = +new Date(targetDate) - +new Date();
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60)
-        });
-      }
-    };
-
-    const timer = setInterval(calculateTimeLeft, 1000);
-    calculateTimeLeft();
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
-  return (
-    <div className="flex gap-4 md:gap-8 justify-center items-center py-8">
-      {[
-        { label: 'Days', value: timeLeft.days },
-        { label: 'Hours', value: timeLeft.hours },
-        { label: 'Mins', value: timeLeft.minutes },
-        { label: 'Secs', value: timeLeft.seconds }
-      ].map((item) => (
-        <div key={item.label} className="text-center">
-          <motion.div 
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-4xl md:text-6xl font-display font-extrabold text-terracotta tabular-nums"
-          >
-            {String(item.value).padStart(2, '0')}
-          </motion.div>
-          <div className="text-xs md:text-sm uppercase tracking-widest font-semibold opacity-60 mt-1">
-            {item.label}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const FAQItem = ({ question, answer }: { question: string, answer: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b border-forest-green/10 py-6">
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left group"
       >
-        <h3 className="text-xl font-bold group-hover:text-terracotta transition-colors">{question}</h3>
+        <h3 className="text-base md:text-xl font-bold group-hover:text-terracotta transition-colors pr-4">{question}</h3>
         <div className="text-terracotta">
           {isOpen ? <Minus size={24} /> : <Plus size={24} />}
         </div>
       </button>
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="pt-4 pb-2 text-forest-green/80 leading-relaxed text-lg">
+            <div className="pt-4 pb-2 text-forest-green/80 leading-relaxed text-sm md:text-lg">
               {answer}
             </div>
           </motion.div>
@@ -108,7 +60,7 @@ const Section = ({ children, className = "", id = "" }: { children: ReactNode, c
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`py-24 px-6 relative ${className}`}
+      className={`py-14 md:py-24 px-4 md:px-6 relative ${className}`}
     >
       {children}
     </motion.section>
@@ -116,29 +68,76 @@ const Section = ({ children, className = "", id = "" }: { children: ReactNode, c
 };
 
 const GrainOverlay = () => (
-  <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply" 
+  <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply"
     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
   />
 );
 
 export default function Landing() {
-  const sprintStartDate = "2026-03-31T23:59:00";
-
-  const scrollToOffer = () => {
-    document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const [selectedImage, setSelectedImage] = useState<{ name: string, image: string } | null>(null);
 
-  const headlineWords = "Stop Waiting. Start Building.".split(" ");
+  const scrollToResources = () => {
+    document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
       <Helmet>
         <title>Vibe Coding Lab — Build AI-Powered Apps Without Code</title>
-        <meta name="description" content="Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab — live sprints, community, tools and lifetime access." />
+        <meta name="description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade. Built by Toni Martin." />
         <link rel="canonical" href="https://thevibecodinglab.co/" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Toni Martin" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://thevibecodinglab.co/" />
+        <meta property="og:site_name" content="Vibe Coding Lab" />
+        <meta property="og:title" content="Vibe Coding Lab — Build AI-Powered Apps Without Code" />
+        <meta property="og:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade." />
+        <meta property="og:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_GB" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Vibe Coding Lab — Build AI-Powered Apps Without Code" />
+        <meta name="twitter:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade." />
+        <meta name="twitter:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
+
+        {/* JSON-LD Structured Data */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://thevibecodinglab.co/#website",
+              "url": "https://thevibecodinglab.co/",
+              "name": "Vibe Coding Lab",
+              "description": "Learn to build AI-powered apps without code. Free resources, community and live sessions.",
+              "publisher": { "@id": "https://thevibecodinglab.co/#organization" }
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://thevibecodinglab.co/#organization",
+              "name": "Vibe Coding Lab",
+              "url": "https://thevibecodinglab.co/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg"
+              },
+              "founder": {
+                "@type": "Person",
+                "name": "Toni Martin",
+                "jobTitle": "Digital Growth Architect and AI Consultant"
+              },
+              "sameAs": ["https://www.skool.com/vibecodinglab/about"]
+            }
+          ]
+        })}</script>
       </Helmet>
+
       {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
@@ -156,13 +155,13 @@ export default function Landing() {
               className="relative max-w-7xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
-                src={selectedImage.image} 
-                alt={selectedImage.name} 
+              <img
+                src={selectedImage.image}
+                alt={selectedImage.name}
                 className="w-full h-auto shadow-2xl"
                 referrerPolicy="no-referrer"
               />
-              <button 
+              <button
                 onClick={() => setSelectedImage(null)}
                 className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors flex items-center gap-2 font-bold uppercase tracking-widest"
               >
@@ -183,72 +182,182 @@ export default function Landing() {
             VIBE<span className="text-terracotta">CODING</span>LAB
           </div>
           <div className="flex items-center gap-3 md:gap-8">
-            <button 
-              onClick={scrollToOffer}
+            <a
+              href="https://www.skool.com/vibecodinglab/about"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
             >
               <span className="sm:hidden">Join Now</span>
-              <span className="hidden sm:inline">Secure Lifetime Access</span>
-            </button>
+              <span className="hidden sm:inline">Join the Community</span>
+            </a>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-24 px-6 relative">
+      <section className="pt-28 pb-14 md:pt-36 md:pb-20 px-4 md:px-6 relative">
         <GrainOverlay />
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-8">
-              Lifetime Access. Offer Closes 31 March.
+            <div className="inline-block bg-sand px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-8">
+              Free resources + community membership
             </div>
-            
-            <h1 className="text-6xl md:text-9xl font-display font-extrabold leading-[0.85] mb-10 tracking-tighter">
-              {headlineWords.map((word, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.15, duration: 0.5, ease: "easeOut" }}
-                  className={`inline-block mr-4 last:mr-0 ${i >= 2 ? 'text-terracotta' : ''}`}
-                >
-                  {word}
-                </motion.span>
-              ))}
+
+            <h1 className="text-5xl md:text-7xl font-display font-extrabold leading-tight mb-6 tracking-tight">
+              <motion.span
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
+                className="block"
+              >
+                Build Your First AI App.
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
+                className="block text-terracotta"
+              >
+                No Code. No Agency. No Excuses.
+              </motion.span>
             </h1>
 
-            <p className="text-xl md:text-3xl font-medium max-w-3xl mx-auto mb-12 leading-relaxed opacity-90">
-              The tools to build anything you can imagine now exist, are accessible to everyone and cost almost nothing to use. The only thing missing is knowing how. That is what we are here for.
+            <p className="text-lg md:text-xl font-medium max-w-2xl mx-auto mb-10 leading-relaxed opacity-70">
+              The tools to build anything you can imagine now exist, are accessible to everyone and cost almost nothing to use. The only thing missing is knowing how.
             </p>
 
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
-              <button 
-                onClick={scrollToOffer}
-                className="w-full md:w-auto bg-terracotta text-white px-8 md:px-12 py-5 md:py-6 rounded-2xl text-xl md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-2xl shadow-terracotta/30"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={scrollToResources}
+                className="w-full sm:w-auto bg-terracotta text-white px-8 py-4 rounded-xl text-base font-bold hover:bg-burnt-orange hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg shadow-terracotta/20"
               >
-                Join Vibe Coding Lab <ArrowRight />
+                Explore Free Resources <ArrowRight />
               </button>
-            </div>
-
-            <div className="pt-8 border-t border-forest-green/5">
-              <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4 opacity-60">Lifetime offer closes 31 March</p>
-              <CountdownTimer targetDate={sprintStartDate} />
+              <a
+                href="https://www.skool.com/vibecodinglab/about"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto border-2 border-forest-green text-forest-green px-8 py-4 rounded-xl text-base font-bold hover:bg-forest-green hover:text-white transition-all flex items-center justify-center gap-2"
+              >
+                Join the Community <ArrowRight />
+              </a>
             </div>
           </motion.div>
         </div>
       </section>
 
+      {/* Free Resources Section */}
+      <Section id="resources" className="bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-6 leading-tight">
+              Start Here. Everything's Free.
+            </h2>
+            <p className="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed">
+              No commitment required. Pick the resource that fits where you are right now.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: <Play size={26} />,
+                badge: "Free Video Series",
+                title: "How I Built My First AI App in a Week",
+                desc: "Watch the 3-part video series showing the exact tools, stack and process behind Relay and Insights.",
+                cta: "Watch Free",
+                href: "/freetraining",
+                bg: "bg-forest-green text-white",
+                iconBg: "bg-white/10 text-white",
+                badgeBg: "bg-white/10 text-white",
+                btnBg: "bg-white text-forest-green hover:bg-warm-cream",
+              },
+              {
+                icon: <Lightbulb size={26} />,
+                badge: "Free Tool",
+                title: "Find Your App Idea",
+                desc: "Answer 6 questions and get an AI-generated app concept tailored to your expertise and goals.",
+                cta: "Generate My Idea",
+                href: "/app-idea",
+                bg: "bg-white text-forest-green border border-forest-green/5",
+                iconBg: "bg-terracotta/10 text-terracotta",
+                badgeBg: "bg-sand text-forest-green",
+                btnBg: "bg-terracotta text-white hover:bg-burnt-orange",
+              },
+              {
+                icon: <BookOpen size={26} />,
+                badge: "Free Guide",
+                title: "The Vibe Coding Playbook",
+                desc: "Everything you need to understand the language, tools and technology behind vibe coding. In plain English.",
+                cta: "Get the Playbook",
+                href: "/playbook",
+                bg: "bg-white text-forest-green border border-forest-green/5",
+                iconBg: "bg-terracotta/10 text-terracotta",
+                badgeBg: "bg-sand text-forest-green",
+                btnBg: "bg-terracotta text-white hover:bg-burnt-orange",
+              },
+              {
+                icon: <Sparkles size={26} />,
+                badge: "Free Resource",
+                title: "The Ideas Resource",
+                desc: "A curated resource to help you find, shape and validate your next AI app idea.",
+                cta: "Access Free",
+                href: "/ideas",
+                bg: "bg-forest-green text-white",
+                iconBg: "bg-white/10 text-white",
+                badgeBg: "bg-white/10 text-white",
+                btnBg: "bg-white text-forest-green hover:bg-warm-cream",
+              },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className={`p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col gap-6 ${card.bg}`}
+              >
+                <div className="flex items-start justify-between">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.iconBg}`}>
+                    {card.icon}
+                  </div>
+                  <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${card.badgeBg}`}>
+                    {card.badge}
+                  </span>
+                </div>
+                <div className="space-y-3 flex-1">
+                  <h3 className="text-xl md:text-2xl font-display font-bold leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="text-base md:text-lg leading-relaxed opacity-80">
+                    {card.desc}
+                  </p>
+                </div>
+                <a
+                  href={card.href}
+                  className={`inline-flex items-center gap-2 font-extrabold px-6 py-3 rounded-xl transition-all hover:scale-105 self-start ${card.btnBg}`}
+                >
+                  {card.cta} <ArrowRight size={18} />
+                </a>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       {/* Section: Future */}
-      <Section className="bg-white">
+      <Section className="bg-warm-cream">
+        <GrainOverlay />
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-8 md:mb-12 leading-tight">
             You Already Know This Is the Future.
           </h2>
-          <div className="space-y-8 text-xl md:text-2xl leading-relaxed opacity-80">
+          <div className="space-y-6 text-base md:text-xl lg:text-2xl leading-relaxed opacity-80">
             <p>
               You have seen the screenshots. The tools. The people building products from their kitchen table that used to require a full development team and a five figure budget.
             </p>
@@ -266,13 +375,12 @@ export default function Landing() {
       </Section>
 
       {/* Section: Builders */}
-      <Section className="bg-warm-cream">
-        <GrainOverlay />
+      <Section className="bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-8 md:mb-12 leading-tight">
             The Builders Are Not Smarter Than You. <span className="text-terracotta">They Just Started.</span>
           </h2>
-          <div className="space-y-8 text-xl md:text-2xl leading-relaxed opacity-80">
+          <div className="space-y-6 text-base md:text-xl lg:text-2xl leading-relaxed opacity-80">
             <p>
               Vibe coding is not a secret. It is not reserved for developers or technical people.
             </p>
@@ -290,22 +398,23 @@ export default function Landing() {
       </Section>
 
       {/* Section: Meet Toni */}
-      <Section className="bg-white">
+      <Section className="bg-warm-cream">
+        <GrainOverlay />
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="relative group">
             <div className="absolute -inset-4 bg-sand rounded-[3rem] rotate-2 group-hover:rotate-0 transition-transform duration-500" />
-            <img 
-              src="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" 
-              alt="Toni Martin" 
+            <img
+              src="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg"
+              alt="Toni Martin — founder of Vibe Coding Lab, Digital Growth Architect and AI Consultant"
               className="relative rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-700 w-full aspect-[4/5] object-cover"
               referrerPolicy="no-referrer"
             />
           </div>
           <div className="space-y-8">
-            <h2 className="text-4xl md:text-7xl font-display font-extrabold leading-tight">
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight">
               Behind The Vibe <span className="text-terracotta">Coding</span> Lab.
             </h2>
-            <div className="space-y-6 text-xl leading-relaxed opacity-80">
+            <div className="space-y-5 text-base md:text-xl leading-relaxed opacity-80">
               <p className="font-bold text-terracotta">
                 Built by Toni Martin, Digital Growth Architect and AI Consultant.
               </p>
@@ -323,60 +432,60 @@ export default function Landing() {
         </div>
       </Section>
 
-      {/* Section: What You Get */}
+      {/* Section: What's Inside the Community */}
       <Section className="bg-sand/30">
         <GrainOverlay />
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
           <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-6 leading-tight">
-              Everything You Need to Go From Idea to Builder.
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-6 leading-tight">
+              Everything Inside the Community.
             </h2>
             <p className="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">
-              The Vibe Coding Lab gives you the skills, the tools, the community and the live experience to go from complete beginner to confident builder. Here is everything that is waiting for you inside.
+              Join free and upgrade whenever you're ready.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                title: "The Command Centre Sprint",
-                desc: "Learn the skills behind vibe coding whilst building your own Personal AI Command Centre from scratch. Three live sessions with Toni's direct support, 25 to 27 March.",
-                icon: <Hammer size={26} />,
+                title: "A Growing Classroom",
+                desc: "Courses, tutorials and step-by-step resources that grow as the space evolves. New content added regularly.",
+                icon: <BookOpen size={26} />,
                 bg: "bg-forest-green text-white",
                 iconBg: "bg-white/10 text-white",
               },
               {
-                title: "A Growing Classroom",
-                desc: "Courses, tools and resources that will have you vibing with ease. New content added regularly as the space evolves.",
-                icon: <BookOpen size={26} />,
-                bg: "bg-white text-forest-green",
-                iconBg: "bg-terracotta/10 text-terracotta",
-              },
-              {
                 title: "Access to Relay",
-                desc: "My AI assistant builder. Use it, explore it and get inspired by what is possible when you build with no-code AI tools.",
+                desc: "Toni's AI assistant builder. Explore it, use it and get inspired by what is possible when you build with no-code AI tools.",
                 icon: <Layout size={26} />,
                 bg: "bg-white text-forest-green",
                 iconBg: "bg-terracotta/10 text-terracotta",
               },
               {
                 title: "Access to Insights",
-                desc: "My diagnostic and quiz platform. Yours to use from day one. Study it, use it, build something similar yourself.",
+                desc: "The diagnostic and quiz platform. Yours from day one. Study it, use it, build something similar yourself.",
                 icon: <BarChart size={26} />,
                 bg: "bg-white text-forest-green",
                 iconBg: "bg-terracotta/10 text-terracotta",
               },
               {
                 title: "Direct Support from Toni",
-                desc: "Ask questions, get unstuck and keep moving. Direct access inside the community throughout the sprint and beyond.",
+                desc: "Ask questions, get unstuck and keep moving. Direct access to Toni inside the community.",
                 icon: <MessageSquare size={26} />,
                 bg: "bg-terracotta text-white",
                 iconBg: "bg-white/20 text-white",
               },
               {
                 title: "Behind the Scenes",
-                desc: "Every app and tool I build, you see the process as it happens. No gatekeeping on the journey.",
+                desc: "Every app and tool Toni builds, you see the process as it happens. No gatekeeping on the journey.",
                 icon: <Eye size={26} />,
+                bg: "bg-white text-forest-green",
+                iconBg: "bg-terracotta/10 text-terracotta",
+              },
+              {
+                title: "Live Build Sessions",
+                desc: "Regular live building sessions where new tools and apps are built in real time alongside the community.",
+                icon: <Hammer size={26} />,
                 bg: "bg-white text-forest-green",
                 iconBg: "bg-terracotta/10 text-terracotta",
               },
@@ -406,38 +515,18 @@ export default function Landing() {
         </div>
       </Section>
 
-      {/* Section: Not a Course */}
-      <Section className="bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 leading-tight">
-            The Command Centre Sprint Is Live Right Now.
-          </h2>
-          <div className="space-y-8 text-xl md:text-2xl leading-relaxed opacity-80 text-left max-w-3xl mx-auto">
-            <p>
-              Join today and you can jump straight in. The Command Centre Sprint is running live this week and every session is recorded. That means you can watch along as it happens, dip in and out around your schedule and access every replay the moment it goes up.
-            </p>
-            <p>
-              Over three days we are building a fully functioning personal AI Command Centre from scratch. Your own bespoke platform that manages your tasks, drafts your content, tracks your finances and chats with your own knowledge base. Built by you. For you.
-            </p>
-            <p className="font-bold text-terracotta text-2xl md:text-3xl">
-              You will not be starting from zero. You will be starting from today.
-            </p>
-          </div>
-        </div>
-      </Section>
-
       {/* Section: Proof */}
       <Section className="bg-forest-green text-warm-cream">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-12 text-center leading-tight">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-12 text-center leading-tight">
             Proof Over Hype.
           </h2>
-          <div className="max-w-3xl mx-auto text-center mb-20 space-y-6 text-xl md:text-2xl opacity-80">
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20 space-y-6 text-base md:text-xl lg:text-2xl opacity-80">
             <p>
               I do not teach things I have not done.
             </p>
             <p>
-              Relay and Insights are not mock-ups or demos. They are fully functional SaaS products built using the same no-code AI tools you will use inside the sprint.
+              Relay and Insights are not mock-ups or demos. They are fully functional SaaS products built using the same no-code AI tools taught inside the community.
             </p>
             <p className="font-bold text-terracotta">
               Google AI Studio. Antigravity IDE. Claude Code.
@@ -460,16 +549,16 @@ export default function Landing() {
                 image: "https://ascendz.co/wp-content/uploads/2026/03/Insights-Results-Page-scaled.png"
               }
             ].map((app) => (
-              <motion.div 
+              <motion.div
                 key={app.name}
                 whileHover={{ y: -10 }}
                 onClick={() => setSelectedImage(app)}
                 className="bg-white/5 p-4 rounded-t-2xl rounded-b-[2.5rem] border border-white/10 backdrop-blur-sm group cursor-zoom-in"
               >
                 <div className="aspect-video bg-sand/20 rounded-t-xl overflow-hidden mb-8 relative">
-                  <img 
-                    src={app.image} 
-                    alt={`${app.name} App Screenshot`} 
+                  <img
+                    src={app.image}
+                    alt={`${app.name} App Screenshot`}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
@@ -490,86 +579,133 @@ export default function Landing() {
         </div>
       </Section>
 
-      {/* Section: Pricing */}
-      <Section id="offer" className="bg-warm-cream overflow-hidden">
+      {/* Section: Join the Community */}
+      <Section id="join" className="bg-warm-cream overflow-hidden">
         <GrainOverlay />
-        <div className="max-w-3xl mx-auto text-center relative">
-          <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
-            Two Ways In. One Community.
-          </h2>
-          <p className="text-xl md:text-2xl opacity-80 mb-10 leading-relaxed">
-            Inside you get the same community, the same sprint, the same support and the same content whichever option you choose.
-          </p>
-
-          {/* Countdown */}
-          <div className="bg-forest-green text-white rounded-3xl px-8 py-6 mb-10">
-            <p className="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">Lifetime access offer closes in</p>
-            <CountdownTimer targetDate="2026-03-31T23:59:00" />
+        <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-4 leading-tight">
+              Join the Community. Build Something Real.
+            </h2>
+            <p className="text-lg md:text-xl opacity-70 leading-relaxed">
+              Start free. Upgrade when you're ready. Cancel any time.
+            </p>
           </div>
 
-          {/* Main card */}
-          <motion.div
-            animate={{
-              boxShadow: ["0 0 0px rgba(194, 94, 68, 0)", "0 0 50px rgba(194, 94, 68, 0.15)", "0 0 0px rgba(194, 94, 68, 0)"]
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="bg-white rounded-[3rem] border border-forest-green/5 shadow-2xl overflow-hidden"
-          >
-            {/* Lifetime section */}
-            <div className="p-10 md:p-14">
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-terracotta mb-4">Lifetime Access</p>
-              <div className="text-5xl md:text-7xl font-display font-black text-forest-green mb-2">£197</div>
-              <p className="text-base font-semibold opacity-50 uppercase tracking-widest mb-8">one time</p>
-              <p className="text-lg md:text-xl opacity-80 leading-relaxed mb-10 max-w-xl mx-auto">
-                Join before 11:59pm 31 March and lock in lifetime access.
-              </p>
-              <ul className="flex flex-col gap-4 mb-10 text-left max-w-sm mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {/* Standard — Free */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0, duration: 0.5 }}
+              className="bg-white rounded-[2rem] border border-forest-green/8 shadow-sm flex flex-col p-8"
+            >
+              <div className="mb-6">
+                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Standard</p>
+                <div className="text-4xl font-display font-black text-forest-green">$0<span className="text-base font-bold opacity-50">/month</span></div>
+              </div>
+              <ul className="flex flex-col gap-3 flex-1 mb-8">
                 {[
-                  "Command Centre Sprint replay, available immediately",
-                  "Vibe Coding 101",
-                  "Access to Relay",
-                  "Access to Insights",
-                  "Direct support from Toni",
-                  "Lifetime community access",
-                  "Every future build, tool and live sprint"
+                  "Join a growing community of founders building with AI",
+                  "Vibe Coding 101: your foundation course for building AI apps without code",
+                  "Build Showcase: monthly call where members share what they have been building",
+                  "Command Centre Sprint: build your own AI command centre from scratch",
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 font-bold text-base md:text-lg">
-                    <Zap size={18} className="text-terracotta shrink-0" fill="currentColor" />
-                    {item}
+                  <li key={i} className="flex items-start gap-3 text-sm leading-snug">
+                    <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
+                    <span className="opacity-80">{item}</span>
                   </li>
                 ))}
               </ul>
               <a
-                href="https://store.ascendz.co/vibecodinglab-founders/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-terracotta text-white px-8 py-5 md:py-6 rounded-2xl text-lg md:text-2xl font-extrabold hover:bg-burnt-orange hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-terracotta/30 text-center"
-              >
-                I'm Ready. Secure My Lifetime Access for £197.
-              </a>
-            </div>
-
-            {/* Monthly section */}
-            <div className="border-t border-forest-green/5 bg-sand/40 px-10 md:px-14 py-10">
-              <p className="text-sm font-bold uppercase tracking-widest opacity-50 mb-3">Prefer to start monthly?</p>
-              <div className="text-3xl md:text-4xl font-display font-black text-forest-green mb-1">£25<span className="text-xl font-bold opacity-60">/month</span></div>
-              <p className="text-sm font-semibold opacity-40 uppercase tracking-widest mb-6">$33/month</p>
-              <p className="text-base md:text-lg opacity-70 leading-relaxed mb-8 max-w-xl mx-auto">
-                Full community access, all the same content and direct support from Toni. Cancel any time.
-              </p>
-              <a
                 href="https://www.skool.com/vibecodinglab/about"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-forest-green text-white px-10 py-4 rounded-2xl text-base md:text-lg font-extrabold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg text-center"
+                className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
               >
-                Join Monthly.
+                Join Free →
               </a>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          <p className="text-sm font-semibold opacity-40 mt-8 uppercase tracking-widest">
-            Lifetime access offer closes 11:59pm 31 March. All sessions recorded.
+            {/* Premium */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              animate={{
+                boxShadow: ["0 0 0px rgba(194, 94, 68, 0)", "0 0 40px rgba(194, 94, 68, 0.15)", "0 0 0px rgba(194, 94, 68, 0)"]
+              }}
+              className="bg-forest-green text-white rounded-[2rem] shadow-2xl flex flex-col p-8 relative overflow-hidden"
+            >
+              <div className="absolute top-4 right-4 bg-terracotta text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                Popular
+              </div>
+              <div className="mb-6">
+                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Premium</p>
+                <div className="text-4xl font-display font-black">$19<span className="text-base font-bold opacity-50">/month</span></div>
+              </div>
+              <ul className="flex flex-col gap-3 flex-1 mb-8">
+                {[
+                  "Everything in Standard +",
+                  "Vibe Lab: hands-on training for Antigravity, Claude Code and more",
+                  "Vibe Tribe: weekly co-working session, drop in and build alongside the community",
+                  "Stuck? Let's Fix It: weekly support for your blockers, bugs and automations",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-snug">
+                    <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
+                    <span className="opacity-80">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://www.skool.com/vibecodinglab/plans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-terracotta text-white px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-burnt-orange transition-all text-center shadow-lg shadow-terracotta/30"
+              >
+                Join Premium →
+              </a>
+            </motion.div>
+
+            {/* VIP */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="bg-white rounded-[2rem] border border-forest-green/8 shadow-sm flex flex-col p-8"
+            >
+              <div className="mb-6">
+                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">VIP</p>
+                <div className="text-4xl font-display font-black text-forest-green">$39<span className="text-base font-bold opacity-50">/month</span></div>
+              </div>
+              <ul className="flex flex-col gap-3 flex-1 mb-8">
+                {[
+                  "Everything in Premium +",
+                  "Access to all Vibed Apps including Relay and every future tool we build",
+                  "Monthly VIP-only session exclusively for VIP members",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-snug">
+                    <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
+                    <span className="opacity-80">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://www.skool.com/vibecodinglab/plans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
+              >
+                Join VIP →
+              </a>
+            </motion.div>
+          </div>
+
+          <p className="text-center mt-8 text-sm opacity-50 font-medium">
+            All paid plans billed monthly. Cancel any time.
           </p>
         </div>
       </Section>
@@ -577,7 +713,7 @@ export default function Landing() {
       {/* Section: FAQ */}
       <Section className="bg-white">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-16 text-center leading-tight">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-10 md:mb-16 text-center leading-tight">
             Still on the Fence? Let's Sort That.
           </h2>
           <div className="space-y-2">
@@ -587,7 +723,7 @@ export default function Landing() {
             />
             <FAQItem
               question="I do not have time."
-              answer="The initial sprint is just three days and will teach you skills you can use for a lifetime. Your continued access to the community, resources and recordings means you can fit things around your schedule, so you never have to choose between building and life. Dip in, build something, come back when you are ready."
+              answer="The resources are self-paced and the community is always on. Dip in, build something, come back when you are ready."
             />
             <FAQItem
               question="How much does it cost to use the tools?"
@@ -595,7 +731,7 @@ export default function Landing() {
             />
             <FAQItem
               question="What if I miss a live session?"
-              answer="Every session is recorded and available inside the community. You will never miss anything permanently."
+              answer="Every live session is recorded and available inside the community. You will never miss anything permanently."
             />
             <FAQItem
               question="Will this still be relevant in six months?"
@@ -608,31 +744,40 @@ export default function Landing() {
       {/* Section: Final CTA */}
       <Section className="bg-terracotta text-white text-center overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-5xl md:text-7xl font-display font-extrabold mb-12 leading-[0.9] tracking-tighter">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-8 md:mb-12 leading-tight tracking-tight">
             The Price of Ideas Without Action Is Always the Same.
           </h2>
-          <div className="text-xl md:text-2xl font-medium mb-12 opacity-90 leading-relaxed space-y-6 max-w-3xl mx-auto">
+          <div className="text-base md:text-xl lg:text-2xl font-medium mb-10 md:mb-12 opacity-90 leading-relaxed space-y-5 max-w-3xl mx-auto">
             <p>You have had the idea. You simply didn't have the tools, the method or the budget to make it real.</p>
             <p className="font-bold">That excuse no longer exists.</p>
             <p>AI and no-code tools have made building genuinely accessible for the first time. You do not need a technical co-founder. You do not need tens of thousands of pounds. You do not need to wait for anyone or anything.</p>
-            <p>You need the right method, three days and the willingness to build.</p>
+            <p>You need the right method, the right community and the willingness to start.</p>
           </div>
 
           <div className="space-y-8">
-            <button
-              onClick={scrollToOffer}
-              className="inline-block bg-white text-terracotta px-12 md:px-16 py-6 md:py-8 rounded-3xl text-xl md:text-3xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
-            >
-              Join the Vibe Coding Lab.
-            </button>
-            <p className="text-base md:text-lg font-semibold opacity-70">
-              Join before 11:59pm 31 March to lock in lifetime access.
-            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://www.skool.com/vibecodinglab/about"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-white text-terracotta px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
+              >
+                Join Free →
+              </a>
+              <a
+                href="https://www.skool.com/vibecodinglab/plans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border-2 border-white/40 text-white px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-white/10 transition-all"
+              >
+                See Paid Plans →
+              </a>
+            </div>
           </div>
         </div>
-        
+
         {/* Background Decorative Element */}
-        <motion.div 
+        <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           className="absolute -bottom-64 -right-64 w-[600px] h-[600px] border-[40px] border-white/5 rounded-full pointer-events-none"
@@ -646,7 +791,7 @@ export default function Landing() {
             VIBE<span className="text-terracotta">CODING</span>LAB
           </div>
           <p className="text-lg font-bold opacity-60 max-w-2xl mx-auto leading-relaxed">
-            Community access is lifetime. All sessions recorded. The Vibe Coding Lab is on Skool.
+            The Vibe Coding Lab is on Skool. Start free or join the community.
           </p>
           <div className="mt-12 pt-12 border-t border-forest-green/5 text-sm font-bold uppercase tracking-widest opacity-30">
             © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
