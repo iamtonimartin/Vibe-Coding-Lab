@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
@@ -38,6 +39,11 @@ export default function Ideas() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
+      <Helmet>
+        <title>Discover Your AI App Idea | Vibe Coding Lab</title>
+        <meta name="description" content="Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from Vibe Coding Lab." />
+        <link rel="canonical" href="https://thevibecodinglab.co/ideas" />
+      </Helmet>
 
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">

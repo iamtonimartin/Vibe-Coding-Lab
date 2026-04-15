@@ -1,8 +1,12 @@
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 
 export default function Unsubscribe() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
 
       {/* Wordmark */}
       <div className="w-full px-6 py-6 text-center">

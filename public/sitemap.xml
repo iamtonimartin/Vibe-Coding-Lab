@@ -7,13 +7,8 @@
   </url>
   <url>
     <loc>https://thevibecodinglab.co/freetraining</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://thevibecodinglab.co/app-idea</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://thevibecodinglab.co/ideas</loc>
@@ -21,7 +16,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://thevibecodinglab.co/ideas-access</loc>
+    <loc>https://thevibecodinglab.co/app-idea</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -29,5 +24,10 @@
     <loc>https://thevibecodinglab.co/vibeplaybook</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thevibecodinglab.co/playbook</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

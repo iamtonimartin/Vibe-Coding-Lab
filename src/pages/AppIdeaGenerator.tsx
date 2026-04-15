@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Loader2, Rocket, Copy, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -111,6 +112,11 @@ export default function AppIdeaGenerator() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta/20">
+      <Helmet>
+        <title>AI App Idea Generator | Vibe Coding Lab</title>
+        <meta name="description" content="Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals." />
+        <link rel="canonical" href="https://thevibecodinglab.co/app-idea" />
+      </Helmet>
       {/* Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 

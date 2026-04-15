@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Landing from './pages/Landing';
 import OptIn from './pages/OptIn';
 import Videos from './pages/Videos';
@@ -13,6 +14,7 @@ import ChatWidget from './components/ChatWidget';
 
 export default function App() {
   return (
+    <HelmetProvider>
     <Router>
       <ChatWidget />
       <Routes>
@@ -28,5 +30,6 @@ export default function App() {
         <Route path="/logo" element={<LogoExport />} />
       </Routes>
     </Router>
+    </HelmetProvider>
   );
 }

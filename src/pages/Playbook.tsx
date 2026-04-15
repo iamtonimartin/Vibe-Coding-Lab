@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
@@ -13,6 +14,11 @@ export default function Playbook() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
+      <Helmet>
+        <title>Get the Vibe Playbook | Vibe Coding Lab</title>
+        <meta name="description" content="Access the Vibe Playbook — a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code." />
+        <link rel="canonical" href="https://thevibecodinglab.co/playbook" />
+      </Helmet>
 
       {/* Wordmark */}
       <div className="w-full px-6 py-6 text-center">

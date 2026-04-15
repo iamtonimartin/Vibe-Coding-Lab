@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
@@ -12,6 +13,11 @@ export default function OptIn() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
+      <Helmet>
+        <title>Free Training — How to Build AI Apps Without Code | Vibe Coding Lab</title>
+        <meta name="description" content="Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed." />
+        <link rel="canonical" href="https://thevibecodinglab.co/freetraining" />
+      </Helmet>
       <div className="container mx-auto max-w-4xl px-6 py-16 flex-1 flex flex-col justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

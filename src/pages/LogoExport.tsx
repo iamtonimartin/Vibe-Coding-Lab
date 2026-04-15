@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -16,6 +17,9 @@ export default function LogoExport() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green p-8 md:p-20 flex flex-col items-center justify-center">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Link to="/" className="fixed top-8 left-8 flex items-center gap-2 font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">
         <ArrowLeft size={20} /> Back
       </Link>

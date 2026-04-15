@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, ReactNode } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
   Plus,
@@ -133,6 +134,11 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
+      <Helmet>
+        <title>Vibe Coding Lab — Build AI-Powered Apps Without Code</title>
+        <meta name="description" content="Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab — live sprints, community, tools and lifetime access." />
+        <link rel="canonical" href="https://thevibecodinglab.co/" />
+      </Helmet>
       {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (

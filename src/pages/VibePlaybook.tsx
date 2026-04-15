@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Search, ExternalLink } from 'lucide-react';
@@ -1087,6 +1088,11 @@ export default function VibePlaybook() {
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
+      <Helmet>
+        <title>The Vibe Coding Playbook — Tools, Models & Reference | Vibe Coding Lab</title>
+        <meta name="description" content="A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI." />
+        <link rel="canonical" href="https://thevibecodinglab.co/vibeplaybook" />
+      </Helmet>
 
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">

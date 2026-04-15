@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /videos
+Disallow: /ideas-access
+Disallow: /unsubscribe
+Disallow: /logo
 
 Sitemap: https://thevibecodinglab.co/sitemap.xml

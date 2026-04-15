@@ -1,4 +1,5 @@
 import { useRef, ReactNode } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
@@ -36,6 +37,9 @@ const Section = ({ children, className = "", id = "" }: { children: ReactNode, c
 export default function Videos() {
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <GrainOverlay />
 
       {/* Navigation */}
