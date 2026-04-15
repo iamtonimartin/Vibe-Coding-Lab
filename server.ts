@@ -194,6 +194,16 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = join(__dirname, 'dist');
   app.use(express.static(distPath));
 
+  // Load SSR render function from the Vite SSR bundle
+  let renderApp: ((url: string) => string) | null = null;
+  try {
+    const ssrBundle = await import(join(__dirname, 'dist/entry-server.js'));
+    renderApp = ssrBundle.render;
+    console.log('SSR enabled');
+  } catch {
+    console.warn('SSR bundle not found — serving SPA fallback');
+  }
+
   const BASE_URL = 'https://thevibecodinglab.co';
 
   // Per-route meta overrides injected server-side so crawlers get correct tags without executing JS
@@ -239,6 +249,8 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     const meta = routeMeta[req.path];
     let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
+
+    // Inject server-side meta tags
     if (meta) {
       html = html
         .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`)
@@ -252,6 +264,17 @@ if (process.env.NODE_ENV === 'production') {
         .replace(/(<meta name="twitter:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
         .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`);
     }
+
+    // Inject server-rendered app HTML so crawlers get full page content
+    if (renderApp) {
+      try {
+        const appHtml = renderApp(req.path);
+        html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+      } catch (err) {
+        console.error('SSR render error for', req.path, err);
+      }
+    }
+
     res.send(html);
   });
 }

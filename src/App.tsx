@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Landing from './pages/Landing';
 import OptIn from './pages/OptIn';
@@ -15,7 +15,6 @@ import ChatWidget from './components/ChatWidget';
 export default function App() {
   return (
     <HelmetProvider>
-    <Router>
       <ChatWidget />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -29,7 +28,6 @@ export default function App() {
         <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="/logo" element={<LogoExport />} />
       </Routes>
-    </Router>
     </HelmetProvider>
   );
 }
