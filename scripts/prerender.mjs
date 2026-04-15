@@ -7,7 +7,7 @@
  */
 
 import puppeteer from 'puppeteer';
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -70,11 +70,35 @@ async function renderRoute(browser, route) {
   console.log(`  ✓ ${route}`);
 }
 
+function findChromiumExecutable() {
+  // Use env var if explicitly set (Railway/CI)
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    return process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
+  // Try to find system chromium on PATH (nixpacks installs it here)
+  try {
+    const found = execSync('which chromium || which chromium-browser || which google-chrome-stable || which google-chrome', {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n')[0];
+    if (found) return found;
+  } catch {}
+  // Fall back to Puppeteer's bundled Chrome (local dev)
+  return undefined;
+}
+
 async function main() {
   console.log('\nPrerendering routes...');
 
+  const executablePath = findChromiumExecutable();
+  if (executablePath) console.log(`  Using Chromium: ${executablePath}`);
+
   const server = await startPreviewServer();
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+  });
 
   try {
     for (const route of ROUTES) {
