@@ -196,31 +196,62 @@ if (process.env.NODE_ENV === 'production') {
 
   const BASE_URL = 'https://thevibecodinglab.co';
 
-  // Per-route OG tag overrides (crawlers read the initial HTML, not JS)
-  const routeMeta: Record<string, { title: string; description: string; image: string }> = {
+  // Per-route meta overrides injected server-side so crawlers get correct tags without executing JS
+  const routeMeta: Record<string, { title: string; description: string; canonical: string; image: string }> = {
+    '/': {
+      title: 'Vibe Coding Lab — Build AI-Powered Apps Without Code',
+      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab — live sprints, community, tools and lifetime access.',
+      canonical: `${BASE_URL}/`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
     '/freetraining': {
-      title: 'Free Video Series — Vibe Coding Lab',
-      description: 'Watch the free series: how I built my first AI app in a week using no-code AI tools. Get instant access plus a personalised app idea in 60 seconds.',
+      title: 'Free Training — How to Build AI Apps Without Code | Vibe Coding Lab',
+      description: 'Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed.',
+      canonical: `${BASE_URL}/freetraining`,
       image: `${BASE_URL}/og-video-series.jpg`,
+    },
+    '/ideas': {
+      title: 'Discover Your AI App Idea | Vibe Coding Lab',
+      description: 'Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from Vibe Coding Lab.',
+      canonical: `${BASE_URL}/ideas`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/app-idea': {
+      title: 'AI App Idea Generator | Vibe Coding Lab',
+      description: 'Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals.',
+      canonical: `${BASE_URL}/app-idea`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/vibeplaybook': {
+      title: 'The Vibe Coding Playbook — Tools, Models & Reference | Vibe Coding Lab',
+      description: 'A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI.',
+      canonical: `${BASE_URL}/vibeplaybook`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/playbook': {
+      title: 'Get the Vibe Playbook | Vibe Coding Lab',
+      description: 'Access the Vibe Playbook — a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code.',
+      canonical: `${BASE_URL}/playbook`,
+      image: `${BASE_URL}/og-image.jpg`,
     },
   };
 
   app.get('*', (req, res) => {
     const meta = routeMeta[req.path];
-    if (!meta) {
-      return res.sendFile(join(distPath, 'index.html'));
-    }
-    const pageUrl = `${BASE_URL}${req.path}`;
     let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
-    html = html
-      .replace(/(<meta property="og:url" content=")[^"]*(")/g, `$1${pageUrl}$2`)
-      .replace(/(<meta property="og:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
-      .replace(/(<meta property="og:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
-      .replace(/(<meta property="og:image" content=")[^"]*(")/g, `$1${meta.image}$2`)
-      .replace(/(<meta name="twitter:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
-      .replace(/(<meta name="twitter:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
-      .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`)
-      .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`);
+    if (meta) {
+      html = html
+        .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`)
+        .replace(/(<meta name="description" content=")[^"]*(")/g, `$1${meta.description}$2`)
+        .replace(/(<link rel="canonical" href=")[^"]*(")/g, `$1${meta.canonical}$2`)
+        .replace(/(<meta property="og:url" content=")[^"]*(")/g, `$1${meta.canonical}$2`)
+        .replace(/(<meta property="og:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
+        .replace(/(<meta property="og:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
+        .replace(/(<meta property="og:image" content=")[^"]*(")/g, `$1${meta.image}$2`)
+        .replace(/(<meta name="twitter:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
+        .replace(/(<meta name="twitter:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
+        .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`);
+    }
     res.send(html);
   });
 }
