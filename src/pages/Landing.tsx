@@ -132,7 +132,7 @@ export default function Landing() {
                 "name": "Toni Martin",
                 "jobTitle": "Digital Growth Architect and AI Consultant"
               },
-              "sameAs": ["https://www.skool.com/vibecodinglab/about"]
+              "sameAs": ["https://www.skool.com/the-vibe-coding-lab-7172/about"]
             }
           ]
         })}</script>
@@ -183,9 +183,7 @@ export default function Landing() {
           </div>
           <div className="flex items-center gap-3 md:gap-8">
             <a
-              href="https://www.skool.com/vibecodinglab/about"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#join"
               className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
             >
               <span className="sm:hidden">Join Now</span>
@@ -239,9 +237,7 @@ export default function Landing() {
                 Explore Free Resources <ArrowRight />
               </button>
               <a
-                href="https://www.skool.com/vibecodinglab/about"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#join"
                 className="w-full sm:w-auto border-2 border-forest-green text-forest-green px-8 py-4 rounded-xl text-base font-bold hover:bg-forest-green hover:text-white transition-all flex items-center justify-center gap-2"
               >
                 Join the Community <ArrowRight />
@@ -619,7 +615,7 @@ export default function Landing() {
                 ))}
               </ul>
               <a
-                href="https://www.skool.com/vibecodinglab/about"
+                href="https://www.skool.com/the-vibe-coding-lab-7172/about"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
@@ -660,7 +656,7 @@ export default function Landing() {
                 ))}
               </ul>
               <a
-                href="https://www.skool.com/vibecodinglab/plans"
+                href="https://www.skool.com/the-vibe-coding-lab-7172/plans"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-terracotta text-white px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-burnt-orange transition-all text-center shadow-lg shadow-terracotta/30"
@@ -694,7 +690,7 @@ export default function Landing() {
                 ))}
               </ul>
               <a
-                href="https://www.skool.com/vibecodinglab/plans"
+                href="https://www.skool.com/the-vibe-coding-lab-7172/plans"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
@@ -757,17 +753,13 @@ export default function Landing() {
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://www.skool.com/vibecodinglab/about"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#join"
                 className="inline-block bg-white text-terracotta px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
               >
                 Join Free →
               </a>
               <a
-                href="https://www.skool.com/vibecodinglab/plans"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#join"
                 className="inline-block border-2 border-white/40 text-white px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-white/10 transition-all"
               >
                 See Paid Plans →
