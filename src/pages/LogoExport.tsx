@@ -8,9 +8,9 @@ export default function LogoExport() {
     <svg width="800" height="200" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="800" height="200" fill="#F5F5F0"/>
       <text x="40" y="140" font-family="Outfit, sans-serif" font-weight="800" font-size="120" letter-spacing="-0.05em">
-        <tspan fill="#163020">VIBE</tspan>
+        <tspan fill="#0e1f16">VIBE</tspan>
         <tspan fill="#C25E44">CODING</tspan>
-        <tspan fill="#163020">LAB</tspan>
+        <tspan fill="#0e1f16">LAB</tspan>
       </text>
     </svg>
   `;
@@ -58,7 +58,7 @@ export default function LogoExport() {
               </div>
               <div className="flex justify-between text-xs font-bold uppercase tracking-widest opacity-40">
                 <span>Secondary</span>
-                <span>#163020</span>
+                <span>#0e1f16</span>
               </div>
             </div>
           </div>

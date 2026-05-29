@@ -48,7 +48,7 @@
 - **Typography**: Outfit (Google Fonts) - Weight 800 for headers.
 - **Colors**:
     - **Terracotta**: `#C25E44` (Primary Action)
-    - **Forest Green**: `#163020` (Primary Text/Contrast)
+    - **Forest Green**: `#0e1f16` (Primary Text/Contrast)
     - **Warm Cream**: `#F5F5F0` (Background)
     - **Sand**: `#E4DCCF` (Accents)
 - **Aesthetic**: Editorial/Brutalist hybrid with grain overlays and bold typography.

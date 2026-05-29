@@ -825,7 +825,7 @@ function GlossaryTab() {
         <select
           value={activeCategory}
           onChange={e => setActiveCategory(e.target.value)}
-          className="w-full sm:w-auto px-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-sm font-bold text-forest-green cursor-pointer appearance-none pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23163020%22%20fill-opacity%3D%220.4%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center]"
+          className="w-full sm:w-auto px-4 py-3 rounded-2xl bg-white border border-forest-green/10 focus:outline-none focus:border-terracotta transition-colors text-sm font-bold text-forest-green cursor-pointer appearance-none pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%230e1f16%22%20fill-opacity%3D%220.4%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_1rem_center]"
         >
           {GLOSSARY_CATEGORIES.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
