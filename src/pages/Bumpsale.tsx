@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
+const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
 const PRICE_CAP = 99;
 const TOTAL_VALUE = 1715;
 const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
@@ -110,7 +111,7 @@ const BuyButton = ({
   size = 'lg',
   className = '',
   variant = 'terracotta',
-  label = 'Buy now — _PRICE_',
+  label = 'Buy now at _PRICE_',
 }: {
   size?: 'lg' | 'xl';
   className?: string;
@@ -125,12 +126,14 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
-  // dangerouslySetInnerHTML hands ownership of children to the widget — React skips
-  // reconciliation on re-renders (caused by the countdown ticking) so the widget's
-  // updates aren't wiped.
+  // href is the live checkout URL so clicks work even if the widget's click handler
+  // hasn't attached. dangerouslySetInnerHTML hands children ownership to the widget
+  // so React's re-renders (driven by the countdown) don't wipe the widget's price text.
   return (
     <a
-      href="#"
+      href={CHECKOUT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       data-bumpsale={BUMPSALE_ID}
       data-bumpsale-text={label}
       className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
@@ -169,7 +172,7 @@ const BUNDLE: BundleItem[] = [
       body: (
         <>
           <p>
-            Relavo helps you manage AI conversations across your business — client work, customer
+            Relavo helps you manage AI conversations across your business: client work, customer
             support, or your own AI-powered service. A single place to handle conversations, track
             usage, and bill for credits. Stripe built in.
           </p>
@@ -195,7 +198,7 @@ const BUNDLE: BundleItem[] = [
         <>
           <p>
             Turn your expertise into an AI-powered diagnostic. Build quizzes and assessments that
-            score people, qualify leads, or deliver personalised results — all driven by AI.
+            score people, qualify leads, or deliver personalised results, all driven by AI.
           </p>
           <p className="mt-4 text-sm opacity-70">Launching soon. Preview coming inside VCL.</p>
         </>
@@ -220,7 +223,7 @@ const BUNDLE: BundleItem[] = [
         <>
           <p>
             The community for founders building with AI. Vibe Lab training, weekly Vibe Tribe
-            co-working, Stuck? Let's Fix It weekly support — all yours, lifetime.
+            co-working, Stuck? Let's Fix It weekly support. All yours, lifetime.
           </p>
           <p className="mt-4 text-sm opacity-70">Tour of the community coming soon.</p>
         </>
@@ -302,7 +305,7 @@ export default function Bumpsale() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
-        <title>Build with AI Bundle — Lifetime Access from £1 | Vibe Coding Lab</title>
+        <title>Build with AI Bundle: Lifetime Access from £1 | Vibe Coding Lab</title>
         <meta
           name="description"
           content="Lifetime access to two AI products, lifetime VCL Premium, live workshops, and the ICI Framework. Bumpsale starts at £1, caps at £99. Ends 11:59pm Wednesday 3 June."
@@ -313,13 +316,13 @@ export default function Bumpsale() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://thevibecodinglab.co/bumpsale" />
         <meta property="og:site_name" content="Vibe Coding Lab" />
-        <meta property="og:title" content="Build with AI Bundle — Lifetime Access from £1" />
+        <meta property="og:title" content="Build with AI Bundle: Lifetime Access from £1" />
         <meta
           property="og:description"
           content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Build with AI Bundle — Lifetime Access from £1" />
+        <meta name="twitter:title" content="Build with AI Bundle: Lifetime Access from £1" />
         <meta
           name="twitter:description"
           content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
@@ -328,26 +331,18 @@ export default function Bumpsale() {
 
       {/* Sticky urgency bar */}
       <div className="sticky top-0 z-40 bg-forest-green text-white border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 md:gap-3 min-w-0">
-            <Flame className="text-terracotta shrink-0 animate-pulse" size={18} />
-            <div className="text-[11px] md:text-sm font-bold truncate">
-              <span className="opacity-70">Current price</span>{' '}
-              <span
-                data-bumpsale={BUMPSALE_ID}
-                data-bumpsale-text="£_PRICE_"
-                className="text-terracotta cursor-pointer"
-                dangerouslySetInnerHTML={{ __html: '£1' }}
-              />
-              <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center gap-4">
+          <Flame className="text-terracotta shrink-0 animate-pulse" size={18} />
+          <div className="text-[11px] md:text-sm font-bold truncate">
+            <span className="opacity-70">Current price</span>{' '}
+            <span
+              data-bumpsale={BUMPSALE_ID}
+              data-bumpsale-text="£_PRICE_"
+              className="text-terracotta"
+              dangerouslySetInnerHTML={{ __html: '£1' }}
+            />
+            <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
           </div>
-          <a
-            href="#"
-            data-bumpsale={BUMPSALE_ID}
-            data-bumpsale-text="Buy for _PRICE_"
-            className="bumpsale_button bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/30 whitespace-nowrap"
-          />
         </div>
       </div>
 
@@ -404,7 +399,7 @@ export default function Bumpsale() {
               <div
                 data-bumpsale={BUMPSALE_ID}
                 data-bumpsale-text="£_PRICE_"
-                className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none cursor-pointer"
+                className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none"
                 dangerouslySetInnerHTML={{ __html: '£1' }}
               />
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
@@ -769,7 +764,7 @@ export default function Bumpsale() {
             <span
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
-              className="text-terracotta cursor-pointer"
+              className="text-terracotta"
               dangerouslySetInnerHTML={{ __html: '£1' }}
             />
           </div>
