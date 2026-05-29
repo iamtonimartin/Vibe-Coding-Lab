@@ -19,8 +19,6 @@ import {
 } from 'lucide-react';
 
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
-// Standalone price displays (not on widget buttons) still need manual updates.
-const CURRENT_PRICE = 12;
 const PRICE_CAP = 99;
 const TOTAL_VALUE = 1715;
 const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
@@ -127,12 +125,16 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
+  // dangerouslySetInnerHTML hands ownership of children to the widget — React skips
+  // reconciliation on re-renders (caused by the countdown ticking) so the widget's
+  // updates aren't wiped.
   return (
     <a
       href="#"
       data-bumpsale={BUMPSALE_ID}
       data-bumpsale-text={label}
       className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
+      dangerouslySetInnerHTML={{ __html: label.replace('_PRICE_', '£1') }}
     />
   );
 };
@@ -335,9 +337,8 @@ export default function Bumpsale() {
                 data-bumpsale={BUMPSALE_ID}
                 data-bumpsale-text="£_PRICE_"
                 className="text-terracotta cursor-pointer"
-              >
-                £{CURRENT_PRICE}
-              </span>
+                dangerouslySetInnerHTML={{ __html: '£1' }}
+              />
               <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
             </div>
           </div>
@@ -404,9 +405,8 @@ export default function Bumpsale() {
                 data-bumpsale={BUMPSALE_ID}
                 data-bumpsale-text="£_PRICE_"
                 className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none cursor-pointer"
-              >
-                £{CURRENT_PRICE}
-              </div>
+                dangerouslySetInnerHTML={{ __html: '£1' }}
+              />
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
                 Price climbs by £1 with every sale
               </div>
@@ -770,9 +770,8 @@ export default function Bumpsale() {
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
               className="text-terracotta cursor-pointer"
-            >
-              £{CURRENT_PRICE}
-            </span>
+              dangerouslySetInnerHTML={{ __html: '£1' }}
+            />
           </div>
 
           <BuyButton size="xl" />
