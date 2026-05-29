@@ -21,7 +21,9 @@ import {
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
 const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
 const PRICE_CAP = 99;
-const TOTAL_VALUE = 1715;
+const READY_VALUE = 1021;
+const SHIPPING_VALUE = 594;
+const TOTAL_VALUE = 1615;
 const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
 
 const useCountdown = () => {
@@ -111,7 +113,7 @@ const BuyButton = ({
   size = 'lg',
   className = '',
   variant = 'terracotta',
-  label = 'Buy now at _PRICE_',
+  label = 'Buy now at _PRICE_ →',
   onClick,
 }: {
   size?: 'lg' | 'xl';
@@ -145,7 +147,7 @@ const BuyButton = ({
   );
 };
 
-type VisualKind = 'chat' | 'quiz' | 'community' | 'code' | 'browser' | 'doc';
+type VisualKind = 'chat' | 'quiz' | 'community' | 'code' | 'browser' | 'sessions';
 
 type BundleItem = {
   index: string;
@@ -301,21 +303,23 @@ const BundleVisual = ({ kind, accent }: { kind: VisualKind; accent: 'terracotta'
         </div>
       );
 
-    case 'doc': // ICI Framework: 3-column doc
+    case 'sessions': // Claude OS: 4 session cards in 2x2 grid
       return (
-        <div className={`${wrap} grid grid-cols-3 gap-2`}>
-          {['I', 'C', 'I'].map((letter, i) => (
+        <div className={`${wrap} grid grid-cols-2 gap-2`}>
+          {[1, 2, 3, 4].map((n) => (
             <div
-              key={i}
+              key={n}
               className={`rounded-xl p-2 flex flex-col ${dark ? 'bg-white/8 border border-white/10' : 'bg-white/70 border border-forest-green/5'}`}
             >
-              <div className={`text-base md:text-lg font-display font-black ${i === 1 ? 'text-terracotta' : dark ? 'text-white' : 'text-forest-green'} leading-none mb-1.5`}>
-                {letter}
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className={`w-5 h-5 rounded-md flex items-center justify-center text-[9px] font-display font-black ${accentBg} text-white`}>
+                  {n}
+                </div>
+                <div className={`h-1 flex-1 rounded ${dim}`} />
               </div>
-              <div className="space-y-1 flex-1">
-                <div className={`h-1 w-full rounded ${dim}`} />
-                <div className={`h-1 w-3/4 rounded ${dimSoft}`} />
-                <div className={`h-1 w-5/6 rounded ${dimSoft}`} />
+              <div className="space-y-0.5">
+                <div className={`h-1 w-full rounded ${dimSoft}`} />
+                <div className={`h-1 w-2/3 rounded ${dimSoft}`} />
               </div>
             </div>
           ))}
@@ -338,8 +342,9 @@ const READY_BUNDLE: BundleItem[] = [
     accent: 'forest',
     kind: 'community',
     paragraphs: [
-      "VCL is the community for founders building with AI. Premium is normally $19/month, you'll get lifetime access at this tier as part of the bundle.",
-      "Inside Premium you'll get everything in the free Standard tier, plus the Vibe Lab (hands-on training for Antigravity, Claude Code and more), Vibe Tribe (weekly co-working sessions where you build alongside the community), and Stuck? Let's Fix It (weekly support for your blockers, bugs and automations).",
+      "You'll never build alone.",
+      "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders), and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
+      "The community is the difference between \"I tried for two hours and gave up\" and \"someone showed me the fix in three minutes.\"",
     ],
     cta: 'See inside VCL',
     modal: {
@@ -357,43 +362,108 @@ const READY_BUNDLE: BundleItem[] = [
   },
   {
     index: '02',
-    title: 'The ICI Framework',
-    tag: 'Documented edition',
-    worth: '£97',
-    worthValue: 97,
-    icon: <Wrench />,
-    accent: 'sand',
-    kind: 'doc',
+    title: 'Claude OS',
+    tag: '4 live build-alongs · Lifetime access',
+    worth: '£497',
+    worthValue: 497,
+    icon: <Sparkles />,
+    accent: 'terracotta',
+    kind: 'sessions',
     paragraphs: [
-      'The proprietary prompt engineering framework behind every product Toni builds. Identity, Capability, Interaction. Packaged as a working document you can use immediately.',
+      "Run your business on Claude.",
+      "Most people use Claude like a chatbot. They open the app, ask a question, close it. They're using maybe 5% of what's actually possible.",
+      "Claude OS is the programme that teaches you to use Claude as the operating system your business runs on. Personalisation, Projects, Skills, Artifacts, connectors, the lot. Not as a feature list. As a system that compounds.",
+      "Each session is a live build-along, up to 2 hours, with an optional 1 hour of implementation co-work after. You'll never sit through padding.",
     ],
+    cta: 'See the 4 sessions',
+    modal: {
+      title: 'Claude OS · The 4 sessions',
+      body: (
+        <>
+          <div className="space-y-5">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                Session 1 · Wed 11 June · 10am UK
+              </div>
+              <p className="font-bold text-base md:text-lg">Make Claude yours</p>
+              <p className="text-sm md:text-base opacity-80 mt-1">
+                Build a Claude that knows who you are, talks to you the way you want, and
+                remembers what matters. Personal context, preferences, custom instructions,
+                memory, importing context from other LLMs. We'll apply the ICI Framework
+                (Identity, Capability, Interaction) as we go, the proprietary prompt engineering
+                methodology behind every product Toni builds.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                Session 2 · Wed 18 June · 10am UK
+              </div>
+              <p className="font-bold text-base md:text-lg">Run your business inside Projects</p>
+              <p className="text-sm md:text-base opacity-80 mt-1">
+                Set up the 2-3 Claude Projects that mirror the most important parts of your
+                business. System prompts that actually work, knowledge bases Claude can use, and
+                a starter pack of Project templates designed for non-technical founders.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                Session 3 · Wed 25 June · 10am UK
+              </div>
+              <p className="font-bold text-base md:text-lg">Make Claude produce your work</p>
+              <p className="text-sm md:text-base opacity-80 mt-1">
+                Use Skills to produce real, polished business output that pulls from your
+                Projects. Documents, slide decks, spreadsheets. Branded and accurate, because by
+                now Claude knows your business.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                Session 4 · Wed 2 July · 10am UK
+              </div>
+              <p className="font-bold text-base md:text-lg">Connect Claude to your stack</p>
+              <p className="text-sm md:text-base opacity-80 mt-1">
+                Connect Claude to the tools you use every day. Google Drive, Gmail, Calendar, the
+                Cowork tools, Artifacts, the Claude + Canva workflow. Build one connected
+                workflow that uses everything from the previous sessions.
+              </p>
+            </div>
+            <p className="text-sm opacity-70 pt-2 border-t border-forest-green/10">
+              The 4 build-alongs above are the foundation. As Claude evolves and new features
+              ship, new sessions get added to Claude OS. Lifetime access means you get them all.
+            </p>
+          </div>
+        </>
+      ),
+    },
   },
   {
     index: '03',
-    title: 'Zero to Deployed',
-    tag: 'Live workshop series',
-    worth: '£297',
-    worthValue: 297,
-    icon: <Code />,
-    accent: 'terracotta',
-    kind: 'code',
-    paragraphs: [
-      "Two live workshops in July, hosted inside VCL. You'll learn the exact tools and workflow Toni uses to build the products clients have paid premium rates to commission.",
-      "You'll learn how to plan a build with AI, build it out with Claude Code, connect a database with Supabase, and deploy to Vercel. By the end, you'll have a working, deployed web app and a repeatable process you can use on every project after this one.",
-      'Live with Toni, recordings included in your VCL access.',
-    ],
-  },
-  {
-    index: '04',
-    title: 'The Build Your Website Workshop',
-    tag: 'Live session',
+    title: 'The Site Sprint',
+    tag: 'Live workshop · Thu 12 June',
     worth: '£147',
     worthValue: 147,
     icon: <Globe />,
     accent: 'sand',
     kind: 'browser',
     paragraphs: [
-      'One live session in July, hosted inside VCL. Build and deploy a real website with AI, from blank page to live URL. Recording included in your VCL access.',
+      "Stop paying for things you could build in an afternoon.",
+      "One live session. Build and deploy a real website with AI, from blank page to live URL. The skill that turns \"I need to hire a developer\" into \"I'll just make it myself this weekend.\"",
+      "Live with Toni Thursday 12 June, 11am UK. Recording included in your VCL access.",
+    ],
+  },
+  {
+    index: '04',
+    title: 'The Ship Sprint',
+    tag: 'Live workshop series · 7 + 9 July',
+    worth: '£297',
+    worthValue: 297,
+    icon: <Code />,
+    accent: 'terracotta',
+    kind: 'code',
+    paragraphs: [
+      "Ship your first web app. For real.",
+      "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase, and deploy to Vercel. By the end, you have a real, working, deployed web app, and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
+      "Live with Toni Monday 7 July and Wednesday 9 July, 11am UK. Recordings included in your VCL access.",
     ],
   },
 ];
@@ -402,15 +472,16 @@ const SHIPPING_BUNDLE: BundleItem[] = [
   {
     index: '05',
     title: 'Relavo',
-    tag: 'Lifetime access, growing fast',
-    worth: '£497',
-    worthValue: 497,
+    tag: 'Lifetime access',
+    worth: '£297',
+    worthValue: 297,
     icon: <Layers />,
     accent: 'terracotta',
     kind: 'chat',
     paragraphs: [
-      "Relavo helps you manage AI conversations across your business. Whether you're running client work, customer support, or building your own AI-powered service, Relavo gives you a single place to handle conversations, track usage, and bill for credits. Stripe is built in.",
-      "Lifetime access locked in at the bundle tier. New features ship continuously, you get them all.",
+      "The custom GPT replacement.",
+      "Build AI assistants trained on your content, deployed on your website or inside your course portal, fully branded as you. Your audience never sees Relavo. They see your assistant. The same capability as a custom GPT, without the OpenAI login wall, the ChatGPT branding, or losing your audience the moment they want to use it.",
+      "Lifetime access means new features keep shipping. You keep getting them. Forever.",
     ],
     cta: 'See Relavo in action',
     modal: {
@@ -418,9 +489,9 @@ const SHIPPING_BUNDLE: BundleItem[] = [
       body: (
         <>
           <p>
-            Relavo helps you manage AI conversations across your business: client work, customer
-            support, or your own AI-powered service. A single place to handle conversations, track
-            usage, and bill for credits. Stripe built in.
+            Build AI assistants trained on your content, deployed on your website or inside your
+            course portal, fully branded as you. Your audience sees your assistant, not Relavo.
+            Custom GPT capability without the OpenAI login wall or the ChatGPT branding.
           </p>
           <p className="mt-4 text-sm opacity-70">Full product walkthrough coming soon.</p>
         </>
@@ -431,13 +502,14 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     index: '06',
     title: 'Zenitro',
     tag: 'Lifetime access at launch',
-    worth: '£497',
-    worthValue: 497,
+    worth: '£297',
+    worthValue: 297,
     icon: <Sparkles />,
     accent: 'forest',
     kind: 'quiz',
     paragraphs: [
-      "Zenitro turns your expertise into a diagnostic tool. Build interactive quizzes and assessments that score people, qualify leads, or deliver personalised results, all driven by AI.",
+      "Turn your expertise into a diagnostic product.",
+      "If you're a coach, consultant, or expert, you've answered the same questions a hundred times. Zenitro lets you turn that expertise into an interactive AI-powered quiz, assessment, or diagnostic tool, branded as yours, scoring and segmenting your audience while you sleep.",
       "Launching soon. The moment it ships, you're in for life at the bundle tier.",
     ],
     cta: 'See Zenitro in action',
@@ -455,9 +527,6 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     },
   },
 ];
-
-const READY_VALUE = READY_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
-const SHIPPING_VALUE = SHIPPING_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
 
 const accentClasses = {
   terracotta: {
@@ -604,10 +673,10 @@ export default function Bumpsale() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
-        <title>Build with AI Bundle: Lifetime Access from £1 | Vibe Coding Lab</title>
+        <title>The ultimate AI build bundle for non-technical founders | Vibe Coding Lab</title>
         <meta
           name="description"
-          content="Lifetime access to two AI products, lifetime VCL Premium, live workshops, and the ICI Framework. Bumpsale starts at £1, caps at £99. Ends 11:59pm Wednesday 3 June."
+          content="The training, the community, the support, and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £99. Ends 11:59pm Wednesday 3 June."
         />
         <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
         <meta name="robots" content="index, follow" />
@@ -615,16 +684,16 @@ export default function Bumpsale() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://thevibecodinglab.co/bumpsale" />
         <meta property="og:site_name" content="Vibe Coding Lab" />
-        <meta property="og:title" content="Build with AI Bundle: Lifetime Access from £1" />
+        <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,615. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Build with AI Bundle: Lifetime Access from £1" />
+        <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,615. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
       </Helmet>
 
@@ -660,17 +729,17 @@ export default function Bumpsale() {
             className="text-center"
           >
             <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8">
-              <Flame size={12} className="text-terracotta" /> Bumpsale live
+              <Flame size={12} className="text-terracotta" /> A Vibe Coding Lab Bumpsale
             </div>
 
-            <h1 className="text-5xl md:text-8xl font-display font-extrabold leading-[0.95] tracking-tight mb-6">
-              Build with AI
-              <span className="block text-terracotta">Bundle.</span>
+            <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[1.02] tracking-tight mb-6 max-w-4xl mx-auto">
+              The ultimate bundle for non-technical founders who want to
+              <span className="text-terracotta"> actually build with AI.</span>
             </h1>
 
             <p className="text-lg md:text-2xl font-medium opacity-80 leading-relaxed max-w-3xl mx-auto mb-10">
-              Lifetime access to two AI products, lifetime VCL Premium, live workshops, and the ICI
-              Framework. Starting from £1.
+              Stop watching everyone else ship products. The training, the community, the support,
+              and two AI tools you'll keep forever. Starting from £1.
             </p>
 
             {/* Value stack */}
@@ -714,7 +783,7 @@ export default function Bumpsale() {
             <div className="flex items-center justify-center gap-2 text-xs md:text-sm opacity-70 mb-4">
               <Clock size={14} />
               <span className="font-bold uppercase tracking-widest">
-                {expired ? 'Campaign ended' : 'Ends 11:59pm Wed 3 June'}
+                {expired ? 'Campaign ended' : 'Ends in · 11:59pm Wed 3 June'}
               </span>
             </div>
             {!expired && (
@@ -803,27 +872,40 @@ export default function Bumpsale() {
       <Section className="bg-sand overflow-hidden">
         <GrainOverlay />
         <div className="max-w-6xl mx-auto relative">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-10 md:mb-14">
             <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
               What you're getting
             </div>
             <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight">
-              Locked in today.
-              <span className="block">Growing tomorrow.</span>
+              Everything you need to go from
+              <span className="block text-terracotta">watching to building.</span>
             </h2>
           </div>
 
-          {/* Group 1: Yours today */}
+          <div className="max-w-3xl mx-auto text-base md:text-lg leading-relaxed opacity-80 space-y-4 mb-16 md:mb-20">
+            <p>
+              Most non-technical founders get stuck in the same place. They know AI is changing
+              everything. They've watched other people ship products. But every time they try to
+              start, they hit a wall. They don't know which tools to use. They don't know how to
+              talk to AI to get what they want. And they have no one to ask when they're stuck at
+              11pm.
+            </p>
+            <p className="font-bold text-forest-green">
+              This bundle removes every one of those walls.
+            </p>
+          </div>
+
+          {/* Tier 1: The Core */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
             <div>
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
-                Tier 1 · Yours from day one
+                Tier 1 · The skill, the system, the support
               </div>
               <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
-                Four things in your hands within 48 hours.
+                Build with AI properly. From your very first prompt.
               </h3>
             </div>
-            <div className="text-right">
+            <div className="text-right shrink-0">
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1">
                 Stated value
               </div>
@@ -833,22 +915,43 @@ export default function Bumpsale() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mb-16 md:mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mb-8 md:mb-10">
             {READY_BUNDLE.map((item, i) => renderBundleCard(item, i))}
           </div>
 
-          {/* Group 2: Lifetime SaaS */}
+          {/* Flexible attendance note */}
+          <div className="bg-white border border-forest-green/10 rounded-2xl p-5 md:p-7 mb-16 md:mb-20 max-w-4xl mx-auto">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="w-9 h-9 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+                <Check size={18} strokeWidth={3} />
+              </div>
+              <div>
+                <h4 className="text-base md:text-lg font-display font-extrabold mb-2">
+                  Flexible attendance
+                </h4>
+                <p className="text-sm md:text-base leading-relaxed opacity-80">
+                  Claude OS, The Site Sprint and The Ship Sprint are all included in the bundle.
+                  Each one stands on its own. Come to everything, come to some, come to one. You
+                  decide what's useful for you. Every session is recorded and lives inside VCL, so
+                  missing a live one isn't the end of the world.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tier 2: The Bonuses */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
             <div>
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
                 Tier 2 · Lifetime SaaS upside
               </div>
               <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
-                Two AI products. Lifetime access as they ship and grow.
+                Two AI products. Yours forever. Growing with you.
               </h3>
               <p className="text-sm md:text-base opacity-70 mt-2 max-w-2xl">
-                Relavo is live and improving. Zenitro launches soon. Lock in lifetime access now
-                at the bundle tier and you ride every release for the price of one bundle.
+                These weren't in the original plan. We added them because if you're going to learn
+                to build with AI, you may as well have tools to build with too. Both are Toni's
+                own products. Both are yours for life.
               </p>
             </div>
             <div className="text-right shrink-0">
@@ -877,8 +980,8 @@ export default function Bumpsale() {
               The honest maths
             </div>
             <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
-              Even if both SaaS products went nowhere.
-              <span className="block text-terracotta">You're still ahead.</span>
+              Even if the bonuses went nowhere.
+              <span className="block text-terracotta">You'd still be ahead.</span>
             </h2>
           </div>
 
@@ -891,7 +994,8 @@ export default function Bumpsale() {
                 £{READY_VALUE.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
-                VCL Premium, ICI Framework, both workshops.
+                VCL Premium, Claude OS, The Site Sprint, The Ship Sprint. Live programme starts
+                Wednesday 11 June.
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
@@ -902,7 +1006,7 @@ export default function Bumpsale() {
                 £{SHIPPING_VALUE.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
-                Relavo + Zenitro, growing forever at this tier.
+                Relavo lifetime, Zenitro lifetime at launch. Growing forever.
               </div>
             </div>
             <div className="bg-terracotta rounded-2xl p-6 md:p-7">
@@ -919,11 +1023,11 @@ export default function Bumpsale() {
           </div>
 
           <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed max-w-3xl mx-auto text-center">
-            The certain stack alone is worth{' '}
+            The core stack alone is worth{' '}
             <span className="text-terracotta font-bold">
               {Math.round(READY_VALUE / PRICE_CAP)}× the top price
             </span>
-            . Everything else is upside.
+            . The bonuses are upside.
           </p>
         </div>
       </Section>
@@ -932,6 +1036,15 @@ export default function Bumpsale() {
       <Section className="bg-warm-cream">
         <GrainOverlay />
         <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-10 md:mb-14">
+            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
+              Who this is for
+            </div>
+            <h2 className="text-4xl md:text-5xl font-display font-extrabold leading-tight">
+              Honest about fit.
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div className="bg-white border border-forest-green/10 rounded-[2rem] p-8 md:p-10">
               <div className="flex items-center gap-3 mb-6">
@@ -939,15 +1052,23 @@ export default function Bumpsale() {
                   <Check size={20} strokeWidth={3} />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-display font-extrabold">
-                  Who this is for
+                  This is for you if
                 </h3>
               </div>
-              <p className="text-base md:text-lg leading-relaxed opacity-80">
-                Non-technical founders who want to build with AI without learning to code the
-                traditional way. People who've watched the vibe coding movement happen and want a
-                way in. Anyone who wants lifetime access to two AI products and the VCL community
-                locked in at this bundle's tier.
-              </p>
+              <ul className="space-y-3 text-base md:text-lg leading-relaxed opacity-90">
+                {[
+                  "You're a non-technical founder who wants to build with AI without learning to code the traditional way",
+                  "You've watched the vibe coding movement happen and you want a way in",
+                  'You want to actually use Claude properly, not just chat to it',
+                  'You want lifetime access to two AI products you can use across your own work and your clients',
+                  'You want to lock in lifetime VCL Premium access at a one-off price',
+                ].map((line, i) => (
+                  <li key={i} className="flex gap-3">
+                    <Check size={20} className="text-terracotta shrink-0 mt-1" strokeWidth={3} />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="bg-forest-green text-white rounded-[2rem] p-8 md:p-10">
@@ -956,14 +1077,21 @@ export default function Bumpsale() {
                   <X size={20} strokeWidth={3} />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-display font-extrabold">
-                  Who this isn't for
+                  This is not for you if
                 </h3>
               </div>
-              <p className="text-base md:text-lg leading-relaxed opacity-80">
-                People looking for done-for-you services. People who don't want to actually build
-                anything. VCL VIP lifetime deal holders, who already have access to Relavo and
-                Zenitro through their LTD.
-              </p>
+              <ul className="space-y-3 text-base md:text-lg leading-relaxed opacity-90">
+                {[
+                  "You're looking for done-for-you services",
+                  "You don't want to actually build anything",
+                  "You're a VCL VIP lifetime deal holder, you already have access to Relavo and Zenitro through your LTD",
+                ].map((line, i) => (
+                  <li key={i} className="flex gap-3">
+                    <X size={20} className="text-terracotta shrink-0 mt-1" strokeWidth={3} />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
@@ -1031,11 +1159,12 @@ export default function Bumpsale() {
           <div className="bg-white border border-forest-green/10 rounded-[2rem] p-8 md:p-10">
             <ul className="space-y-5">
               {[
+                { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
+                { label: 'Claude OS', detail: 'first live session Wednesday 11 June. Full schedule sent on access.' },
+                { label: 'The Site Sprint', detail: 'live Thursday 12 June.' },
+                { label: 'The Ship Sprint', detail: 'live Monday 7 July and Wednesday 9 July.' },
                 { label: 'Relavo access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Zenitro access', detail: 'emailed when the product launches.' },
-                { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
-                { label: 'Workshops', detail: 'dates announced inside VCL in early July.' },
-                { label: 'ICI Framework', detail: 'delivered immediately on purchase.' },
               ].map((d, i) => (
                 <li key={i} className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0 mt-0.5">
@@ -1048,6 +1177,9 @@ export default function Bumpsale() {
                 </li>
               ))}
             </ul>
+            <p className="text-sm md:text-base opacity-70 mt-6 pt-6 border-t border-forest-green/10">
+              All sessions recorded and stored inside VCL.
+            </p>
           </div>
         </div>
       </Section>
@@ -1069,8 +1201,8 @@ export default function Bumpsale() {
               answer="Lifetime access to the product at the tier specified. If the product is sunset or fundamentally changes, we'll honour the spirit of the deal."
             />
             <FAQItem
-              question="Can I miss the workshops and still get value?"
-              answer="Yes. Every workshop is recorded and available inside VCL."
+              question="Can I miss the live sessions and still get value?"
+              answer="Yes. Every session is recorded and available inside VCL. Some sessions may suit you more than others, come to the ones you want."
             />
             <FAQItem
               question="Can I get a refund?"
@@ -1078,7 +1210,15 @@ export default function Bumpsale() {
             />
             <FAQItem
               question="I'm already in VCL. Should I still buy this?"
-              answer="If you're a VCL VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or you're a free Standard member, this is a way to lock in lifetime Premium access plus both SaaS products at one shot."
+              answer="If you're a VCL VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or a free Standard member, this is a way to lock in lifetime Premium access, Claude OS, and both SaaS products at one shot."
+            />
+            <FAQItem
+              question="When does Claude OS start?"
+              answer="Wednesday 11 June, 10am UK. Four live sessions across the following four weeks. Full schedule visible inside VCL within 48 hours of your purchase."
+            />
+            <FAQItem
+              question="I've never built anything before. Will I be lost?"
+              answer="No. The whole bundle is designed for non-technical founders. Claude OS starts at the foundations. The Site Sprint and The Ship Sprint are live, so you can ask questions as you go."
             />
           </div>
         </div>
