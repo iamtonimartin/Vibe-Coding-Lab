@@ -238,7 +238,7 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
         src={src}
         alt={`${title} screen ${idx + 1}`}
         loading="lazy"
-        className="w-full h-auto block transition-transform group-hover:scale-[1.01]"
+        className="w-full h-auto block bg-white transition-transform group-hover:scale-[1.01]"
       />
     </button>
   );
@@ -288,7 +288,7 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
               transition={{ duration: 0.2 }}
               src={lightbox}
               alt={`${title} enlarged`}
-              className="max-w-full max-h-full rounded-xl shadow-2xl cursor-default"
+              className="max-w-full max-h-full rounded-xl shadow-2xl cursor-default bg-white"
               onClick={(e) => e.stopPropagation()}
             />
             <button
@@ -311,11 +311,11 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
 const BundleVisual = ({ kind, accent, heroImage, title }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest'; heroImage?: string; title?: string }) => {
   if (heroImage) {
     return (
-      <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-forest-green/10 bg-warm-cream mb-6 shadow-sm">
+      <div className="rounded-2xl overflow-hidden border border-forest-green/10 bg-white mb-6 shadow-sm">
         <img
           src={heroImage}
           alt={title ? `${title} preview` : ''}
-          className="w-full h-full object-cover object-top"
+          className="w-full h-auto block bg-white"
           loading="lazy"
         />
       </div>
