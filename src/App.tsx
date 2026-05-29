@@ -10,6 +10,7 @@ import VibePlaybook from './pages/VibePlaybook';
 import Playbook from './pages/Playbook';
 import Unsubscribe from './pages/Unsubscribe';
 import LogoExport from './pages/LogoExport';
+import Bumpsale from './pages/Bumpsale';
 import ChatWidget from './components/ChatWidget';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/playbook" element={<Playbook />} />
         <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="/logo" element={<LogoExport />} />
+        <Route path="/bumpsale" element={<Bumpsale />} />
       </Routes>
     </HelmetProvider>
   );
