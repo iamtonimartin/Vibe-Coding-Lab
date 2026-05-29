@@ -50,7 +50,7 @@
     - **Terracotta**: `#C25E44` (Primary Action)
     - **Forest Green**: `#0e1f16` (Primary Text/Contrast)
     - **Warm Cream**: `#F5F5F0` (Background)
-    - **Sand**: `#E4DCCF` (Accents)
+    - **Sand**: `#EDE7DE` (Accents)
 - **Aesthetic**: Editorial/Brutalist hybrid with grain overlays and bold typography.
 
 ---
