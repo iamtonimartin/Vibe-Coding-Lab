@@ -157,6 +157,172 @@ type BundleItem = {
   modal?: { title: string; body: ReactNode };
 };
 
+const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' | 'sand' | 'forest' }) => {
+  const dark = accent === 'forest';
+  // On dark (forest) cards: light tokens. On light cards: dark tokens.
+  const frame = dark
+    ? 'bg-white/5 border border-white/10'
+    : 'bg-warm-cream border border-forest-green/10';
+  const dim = dark ? 'bg-white/20' : 'bg-forest-green/20';
+  const dimSoft = dark ? 'bg-white/10' : 'bg-forest-green/10';
+  const accentBg = 'bg-terracotta';
+  const accentSoft = dark ? 'bg-terracotta/60' : 'bg-terracotta/40';
+  const label = dark ? 'text-white/60' : 'text-forest-green/60';
+
+  const wrap = `aspect-[16/10] rounded-2xl ${frame} p-3 md:p-4 mb-6 overflow-hidden relative`;
+
+  switch (index) {
+    case '01': // Relavo: chat dashboard
+      return (
+        <div className={`${wrap} flex gap-2`}>
+          <div className="w-2/5 space-y-1.5">
+            {[true, false, false].map((active, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-1.5 p-1.5 rounded-lg ${active ? (dark ? 'bg-white/10' : 'bg-terracotta/10') : ''}`}
+              >
+                <div className={`w-5 h-5 rounded-full ${accentSoft} shrink-0`} />
+                <div className="flex-1 space-y-1">
+                  <div className={`h-1 w-3/4 rounded ${dim}`} />
+                  <div className={`h-1 w-1/2 rounded ${dimSoft}`} />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex-1 flex flex-col justify-end gap-1.5">
+            <div className={`h-2 w-2/3 rounded-full ${dimSoft}`} />
+            <div className={`h-2 w-1/2 rounded-full ${accentBg} self-end`} />
+            <div className={`h-2 w-3/4 rounded-full ${dimSoft}`} />
+            <div className={`h-2 w-2/5 rounded-full ${accentBg} self-end`} />
+          </div>
+        </div>
+      );
+
+    case '02': // Zenitro: quiz
+      return (
+        <div className={`${wrap} flex flex-col`}>
+          <div className="flex gap-1.5 mb-3">
+            {[true, true, false, false, false].map((filled, i) => (
+              <div
+                key={i}
+                className={`h-1.5 flex-1 rounded-full ${filled ? accentBg : dimSoft}`}
+              />
+            ))}
+          </div>
+          <div className={`h-2 w-3/4 rounded-full ${dim} mb-3`} />
+          <div className="space-y-1.5 flex-1">
+            {[false, true, false].map((selected, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-2 p-1.5 rounded-lg border ${selected ? `border-transparent ${accentBg}` : dark ? 'border-white/15 bg-white/5' : 'border-forest-green/15 bg-white/60'}`}
+              >
+                <div className={`w-3 h-3 rounded-full ${selected ? 'bg-white' : dimSoft}`} />
+                <div className={`h-1.5 flex-1 rounded ${selected ? 'bg-white/80' : dim}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+    case '03': // VCL Premium: community feed
+      return (
+        <div className={`${wrap} grid grid-cols-2 gap-2`}>
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className={`${dark ? 'bg-white/8' : 'bg-white/70'} rounded-xl p-2 border ${dark ? 'border-white/10' : 'border-forest-green/5'}`}>
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className={`w-4 h-4 rounded-full ${i % 2 === 0 ? accentBg : accentSoft}`} />
+                <div className={`h-1 flex-1 rounded ${dim}`} />
+              </div>
+              <div className="space-y-0.5">
+                <div className={`h-1 w-full rounded ${dimSoft}`} />
+                <div className={`h-1 w-3/4 rounded ${dimSoft}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+
+    case '04': // Zero to Deployed: code editor
+      return (
+        <div className={`${wrap} flex flex-col`}>
+          <div className="flex gap-1 mb-2">
+            <div className={`px-2 py-0.5 rounded-t text-[8px] font-mono ${dark ? 'bg-white/10 text-white/70' : 'bg-forest-green text-warm-cream'}`}>
+              app.tsx
+            </div>
+            <div className={`px-2 py-0.5 rounded-t text-[8px] font-mono ${dimSoft} ${label}`}>
+              api.ts
+            </div>
+          </div>
+          <div className="flex-1 space-y-1 font-mono">
+            {[
+              { indent: 0, w: '40%', color: 'accent' },
+              { indent: 1, w: '70%', color: 'dim' },
+              { indent: 2, w: '55%', color: 'dimSoft' },
+              { indent: 2, w: '65%', color: 'accent' },
+              { indent: 1, w: '35%', color: 'dim' },
+              { indent: 0, w: '50%', color: 'accent' },
+            ].map((line, i) => (
+              <div key={i} className="flex items-center gap-1.5">
+                <div className={`text-[7px] ${label} w-2`}>{i + 1}</div>
+                <div style={{ marginLeft: line.indent * 8 }} className="flex-1">
+                  <div
+                    className={`h-1.5 rounded ${line.color === 'accent' ? accentBg : line.color === 'dim' ? dim : dimSoft}`}
+                    style={{ width: line.w }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+    case '05': // Build Your Website: browser preview
+      return (
+        <div className={`${wrap} flex flex-col`}>
+          <div className={`flex items-center gap-1.5 pb-2 border-b ${dark ? 'border-white/10' : 'border-forest-green/10'}`}>
+            <div className={`w-2 h-2 rounded-full ${accentSoft}`} />
+            <div className={`w-2 h-2 rounded-full ${dimSoft}`} />
+            <div className={`w-2 h-2 rounded-full ${dimSoft}`} />
+            <div className={`ml-1 h-2 flex-1 rounded-full ${dimSoft}`} />
+          </div>
+          <div className="flex-1 pt-2 flex flex-col gap-1.5">
+            <div className={`h-3 w-1/2 rounded ${dim}`} />
+            <div className={`h-1.5 w-3/4 rounded ${dimSoft}`} />
+            <div className="flex gap-1 mt-1">
+              <div className={`flex-1 h-6 rounded ${accentBg}`} />
+              <div className={`flex-1 h-6 rounded ${dimSoft}`} />
+              <div className={`flex-1 h-6 rounded ${dimSoft}`} />
+            </div>
+          </div>
+        </div>
+      );
+
+    case '06': // ICI Framework: 3-column doc
+      return (
+        <div className={`${wrap} grid grid-cols-3 gap-2`}>
+          {['I', 'C', 'I'].map((letter, i) => (
+            <div
+              key={i}
+              className={`rounded-xl p-2 flex flex-col ${dark ? 'bg-white/8 border border-white/10' : 'bg-white/70 border border-forest-green/5'}`}
+            >
+              <div className={`text-base md:text-lg font-display font-black ${i === 1 ? 'text-terracotta' : dark ? 'text-white' : 'text-forest-green'} leading-none mb-1.5`}>
+                {letter}
+              </div>
+              <div className="space-y-1 flex-1">
+                <div className={`h-1 w-full rounded ${dim}`} />
+                <div className={`h-1 w-3/4 rounded ${dimSoft}`} />
+                <div className={`h-1 w-5/6 rounded ${dimSoft}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+
+    default:
+      return null;
+  }
+};
+
 const BUNDLE: BundleItem[] = [
   {
     index: '01',
@@ -580,6 +746,8 @@ export default function Bumpsale() {
                   transition={{ delay: i * 0.06, duration: 0.5 }}
                   className={`relative rounded-[2rem] border p-7 md:p-9 flex flex-col ${a.card}`}
                 >
+                  <BundleVisual index={item.index} accent={item.accent} />
+
                   <div className="flex items-start justify-between gap-4 mb-5">
                     <div className="flex items-center gap-3">
                       <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${a.iconWrap}`}>
