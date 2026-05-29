@@ -243,7 +243,7 @@ export default function Complete() {
           <p className="text-base md:text-lg opacity-80 leading-relaxed mb-8">
             Reply to your order confirmation email and I'll personally sort it. The Bumpsale model
             relies on every sale counting toward the price for the next buyer, so refunds aren't
-            possible — but I will make sure you get everything you paid for.
+            possible, but I will make sure you get everything you paid for.
           </p>
           <Link
             to="/"
