@@ -112,11 +112,13 @@ const BuyButton = ({
   className = '',
   variant = 'terracotta',
   label = 'Buy now at _PRICE_',
+  onClick,
 }: {
   size?: 'lg' | 'xl';
   className?: string;
   variant?: 'terracotta' | 'white';
   label?: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   const sizing =
     size === 'xl'
@@ -126,14 +128,15 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
-  // href is the live checkout URL so clicks work even if the widget's click handler
-  // hasn't attached. dangerouslySetInnerHTML hands children ownership to the widget
-  // so React's re-renders (driven by the countdown) don't wipe the widget's price text.
+  // onClick opens the in-page overlay; href + target="_blank" is the fallback if
+  // React hasn't hydrated yet. dangerouslySetInnerHTML hands children ownership to
+  // the widget so React's per-second re-renders don't wipe the live price text.
   return (
     <a
       href={CHECKOUT_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={onClick}
       data-bumpsale={BUMPSALE_ID}
       data-bumpsale-text={label}
       className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
@@ -287,7 +290,35 @@ const accentClasses = {
 
 export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const { days, hours, mins, secs, expired } = useCountdown();
+
+  const openCheckout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setCheckoutOpen(true);
+  };
+
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.data === 'close' || e.data?.type === 'close') setCheckoutOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCheckoutOpen(false);
+    };
+    window.addEventListener('message', onMessage);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('message', onMessage);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = checkoutOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [checkoutOpen]);
 
   const TimeCell = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
@@ -408,7 +439,7 @@ export default function Bumpsale() {
             </motion.div>
 
             <div className="flex justify-center mb-10">
-              <BuyButton size="xl" />
+              <BuyButton size="xl" onClick={openCheckout} />
             </div>
 
             {/* Countdown */}
@@ -477,7 +508,7 @@ export default function Bumpsale() {
             className="max-w-2xl mx-auto mb-10"
           />
 
-          <BuyButton />
+          <BuyButton onClick={openCheckout} />
         </div>
       </Section>
 
@@ -672,7 +703,7 @@ export default function Bumpsale() {
             Whatever you pay, you get exactly the same bundle.
           </p>
 
-          <BuyButton size="xl" variant="white" />
+          <BuyButton size="xl" variant="white" onClick={openCheckout} />
         </div>
       </Section>
 
@@ -769,7 +800,7 @@ export default function Bumpsale() {
             />
           </div>
 
-          <BuyButton size="xl" />
+          <BuyButton size="xl" onClick={openCheckout} />
 
           <div className="mt-12 text-xs md:text-sm opacity-50 font-medium">
             Built and hosted by Vibe Coding Lab.
@@ -811,6 +842,33 @@ export default function Bumpsale() {
                 {modal.body}
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Checkout overlay */}
+      <AnimatePresence>
+        {checkoutOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[2147483647] bg-forest-green/90 backdrop-blur-sm"
+          >
+            <button
+              onClick={() => setCheckoutOpen(false)}
+              className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
+              aria-label="Close checkout"
+            >
+              <X size={20} strokeWidth={3} />
+            </button>
+            <iframe
+              src={CHECKOUT_URL}
+              title="Bumpsale checkout"
+              className="w-full h-full border-0 bg-white"
+              allow="payment"
+            />
           </motion.div>
         )}
       </AnimatePresence>
