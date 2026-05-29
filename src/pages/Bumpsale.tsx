@@ -145,19 +145,23 @@ const BuyButton = ({
   );
 };
 
+type VisualKind = 'chat' | 'quiz' | 'community' | 'code' | 'browser' | 'doc';
+
 type BundleItem = {
   index: string;
   title: string;
   tag: string;
   worth: string;
+  worthValue: number;
   paragraphs: string[];
   cta?: string;
   icon: ReactNode;
   accent: 'terracotta' | 'sand' | 'forest';
+  kind: VisualKind;
   modal?: { title: string; body: ReactNode };
 };
 
-const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' | 'sand' | 'forest' }) => {
+const BundleVisual = ({ kind, accent }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest' }) => {
   const dark = accent === 'forest';
   // On dark (forest) cards: light tokens. On light cards: dark tokens.
   const frame = dark
@@ -171,8 +175,8 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
 
   const wrap = `aspect-[16/10] rounded-2xl ${frame} p-3 md:p-4 mb-6 overflow-hidden relative`;
 
-  switch (index) {
-    case '01': // Relavo: chat dashboard
+  switch (kind) {
+    case 'chat': // Relavo: chat dashboard
       return (
         <div className={`${wrap} flex gap-2`}>
           <div className="w-2/5 space-y-1.5">
@@ -198,7 +202,7 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
         </div>
       );
 
-    case '02': // Zenitro: quiz
+    case 'quiz': // Zenitro: quiz
       return (
         <div className={`${wrap} flex flex-col`}>
           <div className="flex gap-1.5 mb-3">
@@ -224,7 +228,7 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
         </div>
       );
 
-    case '03': // VCL Premium: community feed
+    case 'community': // VCL Premium: community feed
       return (
         <div className={`${wrap} grid grid-cols-2 gap-2`}>
           {[0, 1, 2, 3].map((i) => (
@@ -242,7 +246,7 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
         </div>
       );
 
-    case '04': // Zero to Deployed: code editor
+    case 'code': // Zero to Deployed: code editor
       return (
         <div className={`${wrap} flex flex-col`}>
           <div className="flex gap-1 mb-2">
@@ -276,7 +280,7 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
         </div>
       );
 
-    case '05': // Build Your Website: browser preview
+    case 'browser': // Build Your Website: browser preview
       return (
         <div className={`${wrap} flex flex-col`}>
           <div className={`flex items-center gap-1.5 pb-2 border-b ${dark ? 'border-white/10' : 'border-forest-green/10'}`}>
@@ -297,7 +301,7 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
         </div>
       );
 
-    case '06': // ICI Framework: 3-column doc
+    case 'doc': // ICI Framework: 3-column doc
       return (
         <div className={`${wrap} grid grid-cols-3 gap-2`}>
           {['I', 'C', 'I'].map((letter, i) => (
@@ -323,64 +327,16 @@ const BundleVisual = ({ index, accent }: { index: string; accent: 'terracotta' |
   }
 };
 
-const BUNDLE: BundleItem[] = [
+const READY_BUNDLE: BundleItem[] = [
   {
     index: '01',
-    title: 'Relavo',
-    tag: 'Lifetime access',
-    worth: '£497',
-    icon: <Layers />,
-    accent: 'terracotta',
-    paragraphs: [
-      "Relavo helps you manage AI conversations across your business. Whether you're running client work, customer support, or building your own AI-powered service, Relavo gives you a single place to handle conversations, track usage, and bill for credits. Stripe is built in, so you can charge for access from day one.",
-      'You get lifetime access at the tier locked in for this bundle. No monthly fees, no renewal, no surprises.',
-    ],
-    cta: 'See Relavo in action',
-    modal: {
-      title: 'Relavo',
-      body: (
-        <>
-          <p>
-            Relavo helps you manage AI conversations across your business: client work, customer
-            support, or your own AI-powered service. A single place to handle conversations, track
-            usage, and bill for credits. Stripe built in.
-          </p>
-          <p className="mt-4 text-sm opacity-70">Full product walkthrough coming soon.</p>
-        </>
-      ),
-    },
-  },
-  {
-    index: '02',
-    title: 'Zenitro',
-    tag: 'Lifetime access at launch',
-    worth: '£497',
-    icon: <Sparkles />,
-    accent: 'sand',
-    paragraphs: [
-      "Zenitro turns your expertise into a diagnostic tool. Build interactive quizzes and assessments that score people, qualify leads, or deliver personalised results, all driven by AI. The moment it ships, you're in for life. Locked in at the bundle tier, never billed again.",
-    ],
-    cta: 'See Zenitro in action',
-    modal: {
-      title: 'Zenitro',
-      body: (
-        <>
-          <p>
-            Turn your expertise into an AI-powered diagnostic. Build quizzes and assessments that
-            score people, qualify leads, or deliver personalised results, all driven by AI.
-          </p>
-          <p className="mt-4 text-sm opacity-70">Launching soon. Preview coming inside VCL.</p>
-        </>
-      ),
-    },
-  },
-  {
-    index: '03',
     title: 'Vibe Coding Lab Premium',
     tag: 'Lifetime access',
     worth: '£180/year',
+    worthValue: 180,
     icon: <Lock />,
     accent: 'forest',
+    kind: 'community',
     paragraphs: [
       "VCL is the community for founders building with AI. Premium is normally $19/month, you'll get lifetime access at this tier as part of the bundle.",
       "Inside Premium you'll get everything in the free Standard tier, plus the Vibe Lab (hands-on training for Antigravity, Claude Code and more), Vibe Tribe (weekly co-working sessions where you build alongside the community), and Stuck? Let's Fix It (weekly support for your blockers, bugs and automations).",
@@ -400,12 +356,27 @@ const BUNDLE: BundleItem[] = [
     },
   },
   {
-    index: '04',
+    index: '02',
+    title: 'The ICI Framework',
+    tag: 'Documented edition',
+    worth: '£97',
+    worthValue: 97,
+    icon: <Wrench />,
+    accent: 'sand',
+    kind: 'doc',
+    paragraphs: [
+      'The proprietary prompt engineering framework behind every product Toni builds. Identity, Capability, Interaction. Packaged as a working document you can use immediately.',
+    ],
+  },
+  {
+    index: '03',
     title: 'Zero to Deployed',
     tag: 'Live workshop series',
     worth: '£297',
+    worthValue: 297,
     icon: <Code />,
     accent: 'terracotta',
+    kind: 'code',
     paragraphs: [
       "Two live workshops in July, hosted inside VCL. You'll learn the exact tools and workflow Toni uses to build the products clients have paid premium rates to commission.",
       "You'll learn how to plan a build with AI, build it out with Claude Code, connect a database with Supabase, and deploy to Vercel. By the end, you'll have a working, deployed web app and a repeatable process you can use on every project after this one.",
@@ -413,28 +384,80 @@ const BUNDLE: BundleItem[] = [
     ],
   },
   {
-    index: '05',
+    index: '04',
     title: 'The Build Your Website Workshop',
     tag: 'Live session',
     worth: '£147',
+    worthValue: 147,
     icon: <Globe />,
     accent: 'sand',
+    kind: 'browser',
     paragraphs: [
       'One live session in July, hosted inside VCL. Build and deploy a real website with AI, from blank page to live URL. Recording included in your VCL access.',
     ],
   },
+];
+
+const SHIPPING_BUNDLE: BundleItem[] = [
+  {
+    index: '05',
+    title: 'Relavo',
+    tag: 'Lifetime access, growing fast',
+    worth: '£497',
+    worthValue: 497,
+    icon: <Layers />,
+    accent: 'terracotta',
+    kind: 'chat',
+    paragraphs: [
+      "Relavo helps you manage AI conversations across your business. Whether you're running client work, customer support, or building your own AI-powered service, Relavo gives you a single place to handle conversations, track usage, and bill for credits. Stripe is built in.",
+      "Lifetime access locked in at the bundle tier. New features ship continuously, you get them all.",
+    ],
+    cta: 'See Relavo in action',
+    modal: {
+      title: 'Relavo',
+      body: (
+        <>
+          <p>
+            Relavo helps you manage AI conversations across your business: client work, customer
+            support, or your own AI-powered service. A single place to handle conversations, track
+            usage, and bill for credits. Stripe built in.
+          </p>
+          <p className="mt-4 text-sm opacity-70">Full product walkthrough coming soon.</p>
+        </>
+      ),
+    },
+  },
   {
     index: '06',
-    title: 'The ICI Framework',
-    tag: 'Documented edition',
-    worth: '£97',
-    icon: <Wrench />,
+    title: 'Zenitro',
+    tag: 'Lifetime access at launch',
+    worth: '£497',
+    worthValue: 497,
+    icon: <Sparkles />,
     accent: 'forest',
+    kind: 'quiz',
     paragraphs: [
-      'The proprietary prompt engineering framework behind every product Toni builds. Identity, Capability, Interaction. Packaged as a working document you can use immediately.',
+      "Zenitro turns your expertise into a diagnostic tool. Build interactive quizzes and assessments that score people, qualify leads, or deliver personalised results, all driven by AI.",
+      "Launching soon. The moment it ships, you're in for life at the bundle tier.",
     ],
+    cta: 'See Zenitro in action',
+    modal: {
+      title: 'Zenitro',
+      body: (
+        <>
+          <p>
+            Turn your expertise into an AI-powered diagnostic. Build quizzes and assessments that
+            score people, qualify leads, or deliver personalised results, all driven by AI.
+          </p>
+          <p className="mt-4 text-sm opacity-70">Launching soon. Preview coming inside VCL.</p>
+        </>
+      ),
+    },
   },
 ];
+
+const READY_VALUE = READY_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
+const SHIPPING_VALUE = SHIPPING_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
 
 const accentClasses = {
   terracotta: {
@@ -519,6 +542,64 @@ export default function Bumpsale() {
       </div>
     </div>
   );
+
+  const renderBundleCard = (item: BundleItem, i: number) => {
+    const a = accentClasses[item.accent];
+    return (
+      <motion.div
+        key={item.index}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ delay: i * 0.06, duration: 0.5 }}
+        className={`relative rounded-[2rem] border p-7 md:p-9 flex flex-col ${a.card}`}
+      >
+        <BundleVisual kind={item.kind} accent={item.accent} />
+
+        <div className="flex items-start justify-between gap-4 mb-5">
+          <div className="flex items-center gap-3">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${a.iconWrap}`}>
+              {item.icon}
+            </div>
+            <div className="text-xs font-bold uppercase tracking-widest opacity-50">
+              {item.index}
+            </div>
+          </div>
+          <div className={`text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${a.badge}`}>
+            Worth {item.worth}
+          </div>
+        </div>
+
+        <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-1">
+          {item.title}
+        </h3>
+        <div className="text-sm font-bold uppercase tracking-widest opacity-60 mb-5">
+          {item.tag}
+        </div>
+
+        <div className="space-y-4 mb-6 flex-1">
+          {item.paragraphs.map((p, idx) => (
+            <p key={idx} className="text-sm md:text-base leading-relaxed opacity-90">
+              {p}
+            </p>
+          ))}
+        </div>
+
+        {item.cta && item.modal && (
+          <button
+            onClick={() => setModal(item.modal!)}
+            className={`inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest self-start transition-colors ${
+              item.accent === 'forest'
+                ? 'text-terracotta hover:text-white'
+                : 'text-terracotta hover:text-burnt-orange'
+            }`}
+          >
+            {item.cta} <ArrowRight size={16} />
+          </button>
+        )}
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
@@ -693,7 +774,7 @@ export default function Bumpsale() {
           <div className="max-w-2xl mx-auto mb-4 grid grid-cols-2 gap-4 md:gap-6">
             <div className="bg-white border border-forest-green/10 rounded-2xl px-5 py-4 md:px-6 md:py-5">
               <div className="text-3xl md:text-5xl font-display font-black text-terracotta tabular-nums leading-none">
-                {orders ?? '—'}
+                {orders ?? '…'}
               </div>
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
                 {orders === 1 ? 'Bundle sold' : 'Bundles sold'}
@@ -701,7 +782,7 @@ export default function Bumpsale() {
             </div>
             <div className="bg-forest-green text-white rounded-2xl px-5 py-4 md:px-6 md:py-5">
               <div className="text-3xl md:text-5xl font-display font-black tabular-nums leading-none">
-                {orders === null ? '—' : Math.max(0, TOTAL_SLOTS - orders)}
+                {orders === null ? '…' : Math.max(0, TOTAL_SLOTS - orders)}
               </div>
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
                 Spots remaining
@@ -722,76 +803,66 @@ export default function Bumpsale() {
       <Section className="bg-sand overflow-hidden">
         <GrainOverlay />
         <div className="max-w-6xl mx-auto relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
               What you're getting
             </div>
             <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight">
-              Six things. One bundle.
-              <span className="block">
-                Worth <span className="text-terracotta">£{TOTAL_VALUE.toLocaleString()}.</span>
-              </span>
+              Locked in today.
+              <span className="block">Growing tomorrow.</span>
             </h2>
           </div>
 
+          {/* Group 1: Yours today */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
+            <div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                Tier 1 · Yours from day one
+              </div>
+              <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
+                Four things in your hands within 48 hours.
+              </h3>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1">
+                Stated value
+              </div>
+              <div className="text-2xl md:text-3xl font-display font-black text-terracotta">
+                £{READY_VALUE.toLocaleString()}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mb-16 md:mb-20">
+            {READY_BUNDLE.map((item, i) => renderBundleCard(item, i))}
+          </div>
+
+          {/* Group 2: Lifetime SaaS */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
+            <div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                Tier 2 · Lifetime SaaS upside
+              </div>
+              <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
+                Two AI products. Lifetime access as they ship and grow.
+              </h3>
+              <p className="text-sm md:text-base opacity-70 mt-2 max-w-2xl">
+                Relavo is live and improving. Zenitro launches soon. Lock in lifetime access now
+                at the bundle tier and you ride every release for the price of one bundle.
+              </p>
+            </div>
+            <div className="text-right shrink-0">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1">
+                Stated value
+              </div>
+              <div className="text-2xl md:text-3xl font-display font-black text-terracotta">
+                £{SHIPPING_VALUE.toLocaleString()}
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            {BUNDLE.map((item, i) => {
-              const a = accentClasses[item.accent];
-              return (
-                <motion.div
-                  key={item.index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ delay: i * 0.06, duration: 0.5 }}
-                  className={`relative rounded-[2rem] border p-7 md:p-9 flex flex-col ${a.card}`}
-                >
-                  <BundleVisual index={item.index} accent={item.accent} />
-
-                  <div className="flex items-start justify-between gap-4 mb-5">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${a.iconWrap}`}>
-                        {item.icon}
-                      </div>
-                      <div className="text-xs font-bold uppercase tracking-widest opacity-50">
-                        {item.index}
-                      </div>
-                    </div>
-                    <div className={`text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${a.badge}`}>
-                      Worth {item.worth}
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-1">
-                    {item.title}
-                  </h3>
-                  <div className="text-sm font-bold uppercase tracking-widest opacity-60 mb-5">
-                    {item.tag}
-                  </div>
-
-                  <div className="space-y-4 mb-6 flex-1">
-                    {item.paragraphs.map((p, idx) => (
-                      <p key={idx} className="text-sm md:text-base leading-relaxed opacity-90">
-                        {p}
-                      </p>
-                    ))}
-                  </div>
-
-                  {item.cta && item.modal && (
-                    <button
-                      onClick={() => setModal(item.modal!)}
-                      className={`inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest self-start transition-colors ${
-                        item.accent === 'forest'
-                          ? 'text-terracotta hover:text-white'
-                          : 'text-terracotta hover:text-burnt-orange'
-                      }`}
-                    >
-                      {item.cta} <ArrowRight size={16} />
-                    </button>
-                  )}
-                </motion.div>
-              );
-            })}
+            {SHIPPING_BUNDLE.map((item, i) => renderBundleCard(item, i))}
           </div>
         </div>
       </Section>
@@ -800,30 +871,59 @@ export default function Bumpsale() {
       <Section className="bg-forest-green text-white overflow-hidden">
         <GrainOverlay />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-terracotta/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative text-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-12">
-            <div>
-              <div className="text-xs md:text-sm font-bold uppercase tracking-widest opacity-60 mb-3">
-                Total face value
+        <div className="max-w-4xl mx-auto relative">
+          <div className="text-center mb-10 md:mb-14">
+            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
+              The honest maths
+            </div>
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+              Even if both SaaS products went nowhere.
+              <span className="block text-terracotta">You're still ahead.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-10">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-3">
+                Locked in today
               </div>
-              <div className="text-5xl md:text-7xl font-display font-black line-through opacity-60">
-                £{TOTAL_VALUE.toLocaleString()}
+              <div className="text-4xl md:text-5xl font-display font-black text-terracotta tabular-nums">
+                £{READY_VALUE.toLocaleString()}
+              </div>
+              <div className="text-xs md:text-sm opacity-70 mt-2">
+                VCL Premium, ICI Framework, both workshops.
               </div>
             </div>
-            <div>
-              <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-3">
-                Top price in this campaign
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-3">
+                Lifetime SaaS upside
               </div>
-              <div className="text-5xl md:text-7xl font-display font-black text-terracotta">
+              <div className="text-4xl md:text-5xl font-display font-black tabular-nums opacity-80">
+                £{SHIPPING_VALUE.toLocaleString()}
+              </div>
+              <div className="text-xs md:text-sm opacity-70 mt-2">
+                Relavo + Zenitro, growing forever at this tier.
+              </div>
+            </div>
+            <div className="bg-terracotta rounded-2xl p-6 md:p-7">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-90 mb-3">
+                Top price you'd pay
+              </div>
+              <div className="text-4xl md:text-5xl font-display font-black tabular-nums">
                 £{PRICE_CAP}
+              </div>
+              <div className="text-xs md:text-sm opacity-90 mt-2">
+                Even if you're the last buyer through the door.
               </div>
             </div>
           </div>
 
-          <p className="text-lg md:text-2xl font-medium opacity-90 leading-relaxed max-w-3xl mx-auto">
-            That's the entire bundle for{' '}
-            <span className="text-terracotta font-bold">less than 6% of its value</span>, even if
-            you're the last one through the door.
+          <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed max-w-3xl mx-auto text-center">
+            The certain stack alone is worth{' '}
+            <span className="text-terracotta font-bold">
+              {Math.round(READY_VALUE / PRICE_CAP)}× the top price
+            </span>
+            . Everything else is upside.
           </p>
         </div>
       </Section>
