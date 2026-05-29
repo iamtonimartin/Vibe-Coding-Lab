@@ -274,23 +274,27 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[200] bg-forest-green/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
+            className="fixed inset-0 z-[200] bg-forest-green flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
             onClick={(e) => {
               e.stopPropagation();
               setLightbox(null);
             }}
           >
-            <motion.img
+            <motion.div
               key={lightbox}
               initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.96, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              src={lightbox}
-              alt={`${title} enlarged`}
-              className="max-w-full max-h-full rounded-xl shadow-2xl cursor-default bg-white"
+              className="bg-white rounded-xl shadow-2xl overflow-hidden cursor-default max-w-full max-h-full"
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <img
+                src={lightbox}
+                alt={`${title} enlarged`}
+                className="max-w-full max-h-[90vh] block bg-white"
+              />
+            </motion.div>
             <button
               onClick={(e) => {
                 e.stopPropagation();
