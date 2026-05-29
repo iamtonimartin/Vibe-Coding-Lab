@@ -21,9 +21,6 @@ import {
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
 const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
 const PRICE_CAP = 99;
-const READY_VALUE = 1021;
-const SHIPPING_VALUE = 594;
-const TOTAL_VALUE = 1615;
 const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
 
 const useCountdown = () => {
@@ -528,6 +525,10 @@ const SHIPPING_BUNDLE: BundleItem[] = [
   },
 ];
 
+const READY_VALUE = READY_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
+const SHIPPING_VALUE = SHIPPING_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
+const TOTAL_VALUE = READY_VALUE + SHIPPING_VALUE;
+
 const accentClasses = {
   terracotta: {
     card: 'bg-white border-terracotta/20',
@@ -687,13 +688,13 @@ export default function Bumpsale() {
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,615. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,615. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
       </Helmet>
 
