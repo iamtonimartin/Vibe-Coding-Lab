@@ -106,6 +106,55 @@ const FAQItem = ({ question, answer }: { question: string; answer: ReactNode }) 
   );
 };
 
+const SessionItem = ({
+  session,
+  when,
+  title,
+  body,
+}: {
+  session: string;
+  when: string;
+  title: string;
+  body: ReactNode;
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-forest-green/10 last:border-b-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full text-left py-4 flex items-start justify-between gap-4 group"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+            {session} · {when}
+          </div>
+          <h4 className="text-base md:text-lg font-display font-extrabold group-hover:text-terracotta transition-colors">
+            {title}
+          </h4>
+        </div>
+        <div className="text-terracotta shrink-0 mt-1">
+          {open ? <Minus size={20} /> : <Plus size={20} />}
+        </div>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="pb-5 text-sm md:text-base leading-relaxed opacity-80">
+              {body}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 const BuyButton = ({
   size = 'lg',
   className = '',
@@ -377,58 +426,36 @@ const READY_BUNDLE: BundleItem[] = [
       title: 'Claude OS · The 4 sessions',
       body: (
         <>
-          <div className="space-y-5">
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
-                Session 1 · Wed 11 June · 10am UK
-              </div>
-              <p className="font-bold text-base md:text-lg">Make Claude yours</p>
-              <p className="text-sm md:text-base opacity-80 mt-1">
-                Build a Claude that knows who you are, talks to you the way you want, and
-                remembers what matters. Personal context, preferences, custom instructions,
-                memory, importing context from other LLMs. We'll apply the ICI Framework
-                (Identity, Capability, Interaction) as we go, the proprietary prompt engineering
-                methodology behind every product Toni builds.
-              </p>
-            </div>
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
-                Session 2 · Wed 18 June · 10am UK
-              </div>
-              <p className="font-bold text-base md:text-lg">Run your business inside Projects</p>
-              <p className="text-sm md:text-base opacity-80 mt-1">
-                Set up the 2-3 Claude Projects that mirror the most important parts of your
-                business. System prompts that actually work, knowledge bases Claude can use, and
-                a starter pack of Project templates designed for non-technical founders.
-              </p>
-            </div>
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
-                Session 3 · Wed 25 June · 10am UK
-              </div>
-              <p className="font-bold text-base md:text-lg">Make Claude produce your work</p>
-              <p className="text-sm md:text-base opacity-80 mt-1">
-                Use Skills to produce real, polished business output that pulls from your
-                Projects. Documents, slide decks, spreadsheets. Branded and accurate, because by
-                now Claude knows your business.
-              </p>
-            </div>
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
-                Session 4 · Wed 2 July · 10am UK
-              </div>
-              <p className="font-bold text-base md:text-lg">Connect Claude to your stack</p>
-              <p className="text-sm md:text-base opacity-80 mt-1">
-                Connect Claude to the tools you use every day. Google Drive, Gmail, Calendar, the
-                Cowork tools, Artifacts, the Claude + Canva workflow. Build one connected
-                workflow that uses everything from the previous sessions.
-              </p>
-            </div>
-            <p className="text-sm opacity-70 pt-2 border-t border-forest-green/10">
-              The 4 build-alongs above are the foundation. As Claude evolves and new features
-              ship, new sessions get added to Claude OS. Lifetime access means you get them all.
-            </p>
+          <div className="-mt-2">
+            <SessionItem
+              session="Session 1"
+              when="Wed 11 June · 10am UK"
+              title="Make Claude yours"
+              body="Build a Claude that knows who you are, talks to you the way you want, and remembers what matters. Personal context, preferences, custom instructions, memory, importing context from other LLMs. We'll apply the ICI Framework (Identity, Capability, Interaction) as we go, the proprietary prompt engineering methodology behind every product Toni builds."
+            />
+            <SessionItem
+              session="Session 2"
+              when="Wed 18 June · 10am UK"
+              title="Run your business inside Projects"
+              body="Set up the 2-3 Claude Projects that mirror the most important parts of your business. System prompts that actually work, knowledge bases Claude can use, and a starter pack of Project templates designed for non-technical founders."
+            />
+            <SessionItem
+              session="Session 3"
+              when="Wed 25 June · 10am UK"
+              title="Make Claude produce your work"
+              body="Use Skills to produce real, polished business output that pulls from your Projects. Documents, slide decks, spreadsheets. Branded and accurate, because by now Claude knows your business."
+            />
+            <SessionItem
+              session="Session 4"
+              when="Wed 2 July · 10am UK"
+              title="Connect Claude to your stack"
+              body="Connect Claude to the tools you use every day. Google Drive, Gmail, Calendar, the Cowork tools, Artifacts, the Claude + Canva workflow. Build one connected workflow that uses everything from the previous sessions."
+            />
           </div>
+          <p className="text-sm opacity-70 mt-6 pt-5 border-t border-forest-green/10">
+            The 4 build-alongs above are the foundation. As Claude evolves and new features ship,
+            new sessions get added to Claude OS. Lifetime access means you get them all.
+          </p>
         </>
       ),
     },
@@ -1271,7 +1298,7 @@ export default function Bumpsale() {
               initial={{ scale: 0.92, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.92, opacity: 0, y: 20 }}
-              className="relative bg-warm-cream text-forest-green rounded-[2rem] p-8 md:p-12 max-w-2xl w-full cursor-default"
+              className="relative bg-warm-cream text-forest-green rounded-[2rem] p-8 md:p-12 max-w-2xl w-full max-h-[88vh] overflow-y-auto cursor-default"
               onClick={(e) => e.stopPropagation()}
             >
               <button
