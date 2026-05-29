@@ -322,7 +322,6 @@ export default function Bumpsale() {
           name="twitter:description"
           content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
         />
-        <script src="https://widgets.bumpsale.co/button.js"></script>
       </Helmet>
 
       {/* Sticky urgency bar */}

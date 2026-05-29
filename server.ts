@@ -267,6 +267,16 @@ async function startServer() {
         .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`);
     }
 
+    // Inject the Bumpsale widget script for /bumpsale only.
+    // Must be in the static HTML (not via Helmet) so its DOMContentLoaded listener
+    // is registered before the event fires.
+    if (req.path === '/bumpsale') {
+      html = html.replace(
+        '</head>',
+        '<script src="https://widgets.bumpsale.co/button.js"></script></head>'
+      );
+    }
+
     // Inject server-rendered app HTML so crawlers get full page content
     if (renderApp) {
       try {
