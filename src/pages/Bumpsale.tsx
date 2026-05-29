@@ -288,10 +288,31 @@ const accentClasses = {
   },
 };
 
+const TOTAL_SLOTS = 99;
+
 export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [orders, setOrders] = useState<number | null>(null);
   const { days, hours, mins, secs, expired } = useCountdown();
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchCount = () => {
+      fetch(`https://app.bumpsale.co/buttons/${BUMPSALE_ID}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (!cancelled) setOrders(d?.bumpsale?.orders_count ?? 0);
+        })
+        .catch(() => {});
+    };
+    fetchCount();
+    const id = setInterval(fetchCount, 30_000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
 
   const openCheckout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -501,6 +522,25 @@ export default function Bumpsale() {
             >
               £{PRICE_CAP}
             </motion.div>
+          </div>
+
+          <div className="max-w-2xl mx-auto mb-4 grid grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-white border border-forest-green/10 rounded-2xl px-5 py-4 md:px-6 md:py-5">
+              <div className="text-3xl md:text-5xl font-display font-black text-terracotta tabular-nums leading-none">
+                {orders ?? '—'}
+              </div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
+                {orders === 1 ? 'Bundle sold' : 'Bundles sold'}
+              </div>
+            </div>
+            <div className="bg-forest-green text-white rounded-2xl px-5 py-4 md:px-6 md:py-5">
+              <div className="text-3xl md:text-5xl font-display font-black tabular-nums leading-none">
+                {orders === null ? '—' : Math.max(0, TOTAL_SLOTS - orders)}
+              </div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
+                Spots remaining
+              </div>
+            </div>
           </div>
 
           <div
