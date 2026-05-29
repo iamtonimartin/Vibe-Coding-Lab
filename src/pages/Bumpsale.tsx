@@ -733,7 +733,7 @@ export default function Bumpsale() {
               <Flame size={12} className="text-terracotta" /> A Vibe Coding Lab Bumpsale
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[1.02] tracking-tight mb-6 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] tracking-tight mb-6 max-w-4xl mx-auto">
               The ultimate bundle for non-technical founders who want to
               <span className="text-terracotta"> actually build with AI.</span>
             </h1>
@@ -807,8 +807,8 @@ export default function Bumpsale() {
             Here's what's happening
           </div>
           <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight mb-8">
-            Every time someone buys this bundle,
-            <span className="block text-terracotta">the price goes up by £1.</span>
+            Every time someone buys this bundle,{' '}
+            <span className="text-terracotta">the price goes up by £1.</span>
           </h2>
           <p className="text-lg md:text-xl leading-relaxed opacity-80 max-w-3xl mx-auto mb-12">
             The first buyer paid £1. The second paid £2. The price climbs with every sale until it
