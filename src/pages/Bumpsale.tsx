@@ -211,29 +211,100 @@ type BundleItem = {
 };
 
 const ImageGallery = ({ images, title }: { images: string[]; title: string }) => {
-  if (images.length === 1) {
-    return (
-      <div className="rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream mb-6">
-        <img src={images[0]} alt={`${title} preview`} className="w-full h-auto block" loading="lazy" />
-      </div>
-    );
-  }
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
+
+  const openLightbox = (e: React.MouseEvent, src: string) => {
+    e.stopPropagation();
+    setLightbox(src);
+  };
+
+  const Thumb = ({ src, idx }: { src: string; idx: number }) => (
+    <button
+      type="button"
+      onClick={(e) => openLightbox(e, src)}
+      className="block w-full text-left cursor-zoom-in group"
+      aria-label={`Open ${title} screen ${idx + 1} larger`}
+    >
+      <img
+        src={src}
+        alt={`${title} screen ${idx + 1}`}
+        loading="lazy"
+        className="w-full h-auto block transition-transform group-hover:scale-[1.01]"
+      />
+    </button>
+  );
+
   return (
-    <div className="mb-6 -mx-2 px-2">
-      <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 scroll-px-2">
-        {images.map((src, i) => (
-          <div
-            key={src}
-            className="shrink-0 snap-center w-[88%] md:w-[80%] rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream shadow-sm"
-          >
-            <img src={src} alt={`${title} screen ${i + 1}`} className="w-full h-auto block" loading="lazy" />
+    <>
+      {images.length === 1 ? (
+        <div className="rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream mb-6">
+          <Thumb src={images[0]} idx={0} />
+        </div>
+      ) : (
+        <div className="mb-6 -mx-2 px-2">
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 scroll-px-2">
+            {images.map((src, i) => (
+              <div
+                key={src}
+                className="shrink-0 snap-center w-[88%] md:w-[80%] rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream shadow-sm"
+              >
+                <Thumb src={src} idx={i} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <p className="text-xs opacity-50 text-center mt-1">
-        Swipe for more · {images.length} screens
-      </p>
-    </div>
+          <p className="text-xs opacity-50 text-center mt-1">
+            Swipe for more · tap any screen to enlarge · {images.length} screens
+          </p>
+        </div>
+      )}
+
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[200] bg-forest-green/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox(null);
+            }}
+          >
+            <motion.img
+              key={lightbox}
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              src={lightbox}
+              alt={`${title} enlarged`}
+              className="max-w-full max-h-full rounded-xl shadow-2xl cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox(null);
+              }}
+              className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
+              aria-label="Close enlarged image"
+            >
+              <X size={20} strokeWidth={3} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
