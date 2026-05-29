@@ -206,10 +206,51 @@ type BundleItem = {
   icon: ReactNode;
   accent: 'terracotta' | 'sand' | 'forest';
   kind: VisualKind;
+  images?: string[];
   modal?: { title: string; body: ReactNode };
 };
 
-const BundleVisual = ({ kind, accent }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest' }) => {
+const ImageGallery = ({ images, title }: { images: string[]; title: string }) => {
+  if (images.length === 1) {
+    return (
+      <div className="rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream mb-6">
+        <img src={images[0]} alt={`${title} preview`} className="w-full h-auto block" loading="lazy" />
+      </div>
+    );
+  }
+  return (
+    <div className="mb-6 -mx-2 px-2">
+      <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 scroll-px-2">
+        {images.map((src, i) => (
+          <div
+            key={src}
+            className="shrink-0 snap-center w-[88%] md:w-[80%] rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream shadow-sm"
+          >
+            <img src={src} alt={`${title} screen ${i + 1}`} className="w-full h-auto block" loading="lazy" />
+          </div>
+        ))}
+      </div>
+      <p className="text-xs opacity-50 text-center mt-1">
+        Swipe for more · {images.length} screens
+      </p>
+    </div>
+  );
+};
+
+const BundleVisual = ({ kind, accent, heroImage, title }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest'; heroImage?: string; title?: string }) => {
+  if (heroImage) {
+    return (
+      <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-forest-green/10 bg-warm-cream mb-6 shadow-sm">
+        <img
+          src={heroImage}
+          alt={title ? `${title} preview` : ''}
+          className="w-full h-full object-cover object-top"
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
   const dark = accent === 'forest';
   // On dark (forest) cards: light tokens. On light cards: dark tokens.
   const frame = dark
@@ -387,6 +428,7 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Lock />,
     accent: 'forest',
     kind: 'community',
+    images: ['/vcl-community.png'],
     paragraphs: [
       "You'll never build alone.",
       "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders), and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
@@ -397,11 +439,11 @@ const READY_BUNDLE: BundleItem[] = [
       title: 'Vibe Coding Lab Premium',
       body: (
         <>
+          <ImageGallery images={['/vcl-community.png']} title="VCL Premium" />
           <p>
             The community for founders building with AI. Vibe Lab training, weekly Vibe Tribe
             co-working, Stuck? Let's Fix It weekly support. All yours, lifetime.
           </p>
-          <p className="mt-4 text-sm opacity-70">Tour of the community coming soon.</p>
         </>
       ),
     },
@@ -502,6 +544,7 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     icon: <Layers />,
     accent: 'terracotta',
     kind: 'chat',
+    images: ['/relavo-3.png', '/relavo-2.png', '/relavo-1.png'],
     paragraphs: [
       "The custom GPT replacement.",
       "Build AI assistants trained on your content, deployed on your website or inside your course portal, fully branded as you. Your audience never sees Relavo. They see your assistant. The same capability as a custom GPT, without the OpenAI login wall, the ChatGPT branding, or losing your audience the moment they want to use it.",
@@ -512,12 +555,15 @@ const SHIPPING_BUNDLE: BundleItem[] = [
       title: 'Relavo',
       body: (
         <>
+          <ImageGallery
+            images={['/relavo-3.png', '/relavo-2.png', '/relavo-1.png']}
+            title="Relavo"
+          />
           <p>
             Build AI assistants trained on your content, deployed on your website or inside your
             course portal, fully branded as you. Your audience sees your assistant, not Relavo.
             Custom GPT capability without the OpenAI login wall or the ChatGPT branding.
           </p>
-          <p className="mt-4 text-sm opacity-70">Full product walkthrough coming soon.</p>
         </>
       ),
     },
@@ -531,6 +577,7 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     icon: <Sparkles />,
     accent: 'forest',
     kind: 'quiz',
+    images: ['/zenitro-3.png', '/zenitro-2.png', '/zenitro-1.png', '/zenitro-4.png'],
     paragraphs: [
       "Turn your expertise into a diagnostic product.",
       "If you're a coach, consultant, or expert, you've answered the same questions a hundred times. Zenitro lets you turn that expertise into an interactive AI-powered quiz, assessment, or diagnostic tool, branded as yours, scoring and segmenting your audience while you sleep.",
@@ -541,11 +588,14 @@ const SHIPPING_BUNDLE: BundleItem[] = [
       title: 'Zenitro',
       body: (
         <>
+          <ImageGallery
+            images={['/zenitro-3.png', '/zenitro-2.png', '/zenitro-1.png', '/zenitro-4.png']}
+            title="Zenitro"
+          />
           <p>
             Turn your expertise into an AI-powered diagnostic. Build quizzes and assessments that
             score people, qualify leads, or deliver personalised results, all driven by AI.
           </p>
-          <p className="mt-4 text-sm opacity-70">Launching soon. Preview coming inside VCL.</p>
         </>
       ),
     },
@@ -651,7 +701,7 @@ export default function Bumpsale() {
         transition={{ delay: i * 0.06, duration: 0.5 }}
         className={`relative rounded-[2rem] border p-7 md:p-9 flex flex-col ${a.card}`}
       >
-        <BundleVisual kind={item.kind} accent={item.accent} />
+        <BundleVisual kind={item.kind} accent={item.accent} heroImage={item.images?.[0]} title={item.title} />
 
         <div className="flex items-start justify-between gap-4 mb-5">
           <div className="flex items-center gap-3">
