@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
@@ -208,8 +209,19 @@ type BundleItem = {
   modal?: { title: string; body: ReactNode };
 };
 
-const ImageGallery = ({ images, title }: { images: string[]; title: string }) => {
+const ImageGallery = ({
+  images,
+  title,
+  previewMode = 'static',
+}: {
+  images: string[];
+  title: string;
+  previewMode?: 'static' | 'scroll-browser';
+}) => {
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -225,20 +237,100 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
     setLightbox(src);
   };
 
-  const Thumb = ({ src, idx }: { src: string; idx: number }) => (
-    <button
-      type="button"
-      onClick={(e) => openLightbox(e, src)}
-      className="block w-full text-left cursor-zoom-in group"
-      aria-label={`Open ${title} screen ${idx + 1} larger`}
-    >
-      <img
-        src={src}
-        alt={`${title} screen ${idx + 1}`}
-        loading="lazy"
-        className="w-full h-auto block bg-white transition-transform group-hover:scale-[1.01]"
-      />
-    </button>
+  const Thumb = ({ src, idx }: { src: string; idx: number }) => {
+    if (previewMode === 'scroll-browser') {
+      return (
+        <button
+          type="button"
+          onClick={(e) => openLightbox(e, src)}
+          className="block w-full text-left cursor-zoom-in aspect-[16/10] relative overflow-hidden bg-white group"
+          aria-label={`Open ${title} screen ${idx + 1}`}
+          style={{ backgroundColor: 'white' }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-6 md:h-7 flex items-center gap-1.5 px-3 bg-warm-cream border-b border-forest-green/10 z-10">
+            <div className="w-2 h-2 rounded-full bg-terracotta/60" />
+            <div className="w-2 h-2 rounded-full bg-forest-green/15" />
+            <div className="w-2 h-2 rounded-full bg-forest-green/15" />
+          </div>
+          <div className="absolute inset-0 pt-6 md:pt-7 overflow-hidden bg-white" style={{ backgroundColor: 'white' }}>
+            <img
+              src={src}
+              alt={`${title} screen ${idx + 1}`}
+              loading="lazy"
+              className="w-full block animate-site-scroll"
+              style={{ backgroundColor: 'white' }}
+            />
+          </div>
+        </button>
+      );
+    }
+    return (
+      <button
+        type="button"
+        onClick={(e) => openLightbox(e, src)}
+        className="block w-full text-left cursor-zoom-in group"
+        aria-label={`Open ${title} screen ${idx + 1} larger`}
+      >
+        <img
+          src={src}
+          alt={`${title} screen ${idx + 1}`}
+          loading="lazy"
+          className="w-full h-auto block transition-transform group-hover:scale-[1.01]"
+          style={{ backgroundColor: 'white' }}
+        />
+      </button>
+    );
+  };
+
+  const lightboxNode = (
+    <AnimatePresence>
+      {lightbox && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          className="fixed inset-0 z-[2147483646] flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
+          style={{ backgroundColor: '#0e1f16' }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setLightbox(null);
+          }}
+        >
+          <motion.div
+            key={lightbox}
+            initial={{ scale: 0.96, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.96, opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="rounded-xl shadow-2xl cursor-default overflow-y-auto"
+            style={{
+              backgroundColor: 'white',
+              maxWidth: 'min(900px, calc(100vw - 3rem))',
+              maxHeight: 'calc(100vh - 3rem)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightbox}
+              alt={`${title} enlarged`}
+              className="block w-full h-auto"
+              style={{ backgroundColor: 'white' }}
+            />
+          </motion.div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox(null);
+            }}
+            className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
+            aria-label="Close enlarged image"
+          >
+            <X size={20} strokeWidth={3} />
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 
   return (
@@ -254,6 +346,7 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
               <div
                 key={src}
                 className="shrink-0 snap-center w-[88%] md:w-[80%] rounded-xl overflow-hidden border border-forest-green/10 bg-warm-cream shadow-sm"
+                style={{ backgroundColor: 'white' }}
               >
                 <Thumb src={src} idx={i} />
               </div>
@@ -265,47 +358,7 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
         </div>
       )}
 
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[200] bg-forest-green flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
-            onClick={(e) => {
-              e.stopPropagation();
-              setLightbox(null);
-            }}
-          >
-            <motion.div
-              key={lightbox}
-              initial={{ scale: 0.96, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="bg-white rounded-xl shadow-2xl overflow-hidden cursor-default max-w-full max-h-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={lightbox}
-                alt={`${title} enlarged`}
-                className="max-w-full max-h-[90vh] block bg-white"
-              />
-            </motion.div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightbox(null);
-              }}
-              className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
-              aria-label="Close enlarged image"
-            >
-              <X size={20} strokeWidth={3} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && createPortal(lightboxNode, document.body)}
     </>
   );
 };
@@ -607,7 +660,6 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Globe />,
     accent: 'sand',
     kind: 'browser',
-    scrollImage: '/thevibed-scroll.jpg',
     images: ['/thevibed-hero.jpg', '/tonimartin-hero.jpg', '/thebuild-hero.jpg', '/fortivise-hero.jpg'],
     paragraphs: [
       "Stop paying for things you could build in an afternoon.",
@@ -620,7 +672,8 @@ const READY_BUNDLE: BundleItem[] = [
       body: (
         <>
           <ImageGallery
-            images={['/thevibed-hero.jpg', '/tonimartin-hero.jpg', '/thebuild-hero.jpg', '/fortivise-hero.jpg']}
+            images={['/thevibed-scroll.jpg', '/tonimartin-scroll.jpg', '/thebuild-scroll.jpg', '/fortivise-scroll.jpg']}
+            previewMode="scroll-browser"
             title="Site Sprint"
           />
           <p>
@@ -629,7 +682,7 @@ const READY_BUNDLE: BundleItem[] = [
             designed, built and shipped without a developer.
           </p>
           <p className="mt-4 text-sm opacity-70">
-            Tap any screen to enlarge. You'll build something at this standard in The Site Sprint.
+            Tap any preview to scroll the full page.
           </p>
         </>
       ),
