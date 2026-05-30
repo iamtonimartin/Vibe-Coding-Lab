@@ -21,7 +21,7 @@ import {
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
 const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
 const PRICE_CAP = 147;
-const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
+const DEADLINE = new Date('2026-06-04T23:59:00+01:00');
 
 const useCountdown = () => {
   const [diff, setDiff] = useState(() => DEADLINE.getTime() - Date.now());
@@ -506,7 +506,7 @@ const READY_BUNDLE: BundleItem[] = [
     images: ['/vcl-community.png'],
     paragraphs: [
       "You'll never build alone.",
-      "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders), and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
+      "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders) and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
       "You also get access to the VCL community and a library of vibe coding resources that grows every week.",
       "The community is the difference between \"I tried for two hours and gave up\" and \"someone showed me the fix in three minutes.\"",
     ],
@@ -550,13 +550,13 @@ const READY_BUNDLE: BundleItem[] = [
               session="Session 1"
               when="Wed 11 June · 10am UK"
               title="Make Claude yours"
-              body="Build a Claude that knows who you are, talks to you the way you want, and remembers what matters. Personal context, preferences, custom instructions, memory, importing context from other LLMs. We'll apply the ICI Framework (Identity, Capability, Interaction) as we go, the proprietary prompt engineering methodology behind every product Toni builds."
+              body="Build a Claude that knows who you are, talks to you the way you want and remembers what matters. Personal context, preferences, custom instructions, memory, importing context from other LLMs. We'll apply the ICI Framework (Identity, Capability, Interaction) as we go, the proprietary prompt engineering methodology behind every product Toni builds."
             />
             <SessionItem
               session="Session 2"
               when="Wed 18 June · 10am UK"
               title="Run your business inside Projects"
-              body="Set up the 2-3 Claude Projects that mirror the most important parts of your business. System prompts that actually work, knowledge bases Claude can use, and a starter pack of Project templates designed for non-technical founders."
+              body="Set up the 2-3 Claude Projects that mirror the most important parts of your business. System prompts that actually work, knowledge bases Claude can use and a starter pack of Project templates designed for non-technical founders."
             />
             <SessionItem
               session="Session 3"
@@ -605,7 +605,7 @@ const READY_BUNDLE: BundleItem[] = [
     kind: 'code',
     paragraphs: [
       "Ship your first web app. For real.",
-      "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase, and deploy to Vercel. By the end, you have a real, working, deployed web app, and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
+      "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase and deploy to Vercel. By the end, you have a real, working, deployed web app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
       "Live with Toni Monday 7 July and Wednesday 9 July, 11am UK. Recordings included in your VCL access.",
     ],
   },
@@ -624,7 +624,7 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     images: ['/relavo-3.png', '/relavo-2.png', '/relavo-1.png'],
     paragraphs: [
       "The custom GPT replacement.",
-      "Build AI assistants trained on your content, deployed on your website or inside your course portal, fully branded as you. Your audience never sees Relavo. They see your assistant. The same capability as a custom GPT, without the OpenAI login wall, the ChatGPT branding, or losing your audience the moment they want to use it.",
+      "Build AI assistants trained on your content, deployed on your website or inside your course portal, fully branded as you. Your audience never sees Relavo. They see your assistant. The same capability as a custom GPT, without the OpenAI login wall, the ChatGPT branding or losing your audience the moment they want to use it.",
       "Lifetime access means new features keep shipping. You keep getting them. Forever.",
     ],
     cta: 'See Relavo in action',
@@ -657,7 +657,7 @@ const SHIPPING_BUNDLE: BundleItem[] = [
     images: ['/zenitro-3.png', '/zenitro-2.png', '/zenitro-1.png', '/zenitro-4.png'],
     paragraphs: [
       "Turn your expertise into a diagnostic product.",
-      "If you're a coach, consultant, or expert, you've answered the same questions a hundred times. Zenitro lets you turn that expertise into an interactive AI-powered quiz, assessment, or diagnostic tool, branded as yours, scoring and segmenting your audience while you sleep.",
+      "If you're a coach, consultant or expert, you've answered the same questions a hundred times. Zenitro lets you turn that expertise into an interactive AI-powered quiz, assessment or diagnostic tool, branded as yours, scoring and segmenting your audience while you sleep.",
       "Launching soon. The moment it ships, you're in for life at the bundle tier.",
     ],
     cta: 'See Zenitro in action',
@@ -671,7 +671,7 @@ const SHIPPING_BUNDLE: BundleItem[] = [
           />
           <p>
             Turn your expertise into an AI-powered diagnostic. Build quizzes and assessments that
-            score people, qualify leads, or deliver personalised results, all driven by AI.
+            score people, qualify leads or deliver personalised results, all driven by AI.
           </p>
         </>
       ),
@@ -701,7 +701,7 @@ const accentClasses = {
   },
 };
 
-const TOTAL_SLOTS = 99;
+const TOTAL_SLOTS = PRICE_CAP;
 
 export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
@@ -831,7 +831,7 @@ export default function Bumpsale() {
         <title>The ultimate AI build bundle for non-technical founders | Vibe Coding Lab</title>
         <meta
           name="description"
-          content="The training, the community, the support, and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £147. Ends 11:59pm Wednesday 3 June."
+          content="The training, the community, the support and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £147. Ends 11:59pm Thursday 4 June."
         />
         <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
         <meta name="robots" content="index, follow" />
@@ -842,13 +842,13 @@ export default function Bumpsale() {
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
       </Helmet>
 
@@ -893,7 +893,7 @@ export default function Bumpsale() {
             </h1>
 
             <p className="text-lg md:text-2xl font-medium opacity-80 leading-relaxed max-w-3xl mx-auto mb-10">
-              Stop watching everyone else ship products. The training, the community, the support,
+              Stop watching everyone else ship products. The training, the community, the support
               and two AI tools you'll keep forever. Starting from £1.
             </p>
 
@@ -909,7 +909,7 @@ export default function Bumpsale() {
               </div>
             </div>
             <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/80 mb-10">
-              £197 from 4 June · £1 today
+              £197 from 5 June · £1 today
             </div>
 
             {/* Live price card */}
@@ -941,7 +941,7 @@ export default function Bumpsale() {
             <div className="flex items-center justify-center gap-2 text-xs md:text-sm opacity-70 mb-4">
               <Clock size={14} />
               <span className="font-bold uppercase tracking-widest">
-                {expired ? 'Campaign ended' : 'Ends in · 11:59pm Wed 3 June'}
+                {expired ? 'Campaign ended' : 'Ends in · 11:59pm Thu 4 June'}
               </span>
             </div>
             {!expired && (
@@ -969,7 +969,7 @@ export default function Bumpsale() {
           </h2>
           <p className="text-lg md:text-xl leading-relaxed opacity-80 max-w-3xl mx-auto mb-12">
             The first buyer paid £1. The second paid £2. The price climbs with every sale until it
-            caps at £147, or until 11:59pm on Wednesday 3 June, whichever comes first.
+            caps at £147, or until 11:59pm on Thursday 4 June, whichever comes first.
           </p>
 
           {/* Price ladder */}
@@ -1040,7 +1040,7 @@ export default function Bumpsale() {
             </h2>
           </div>
 
-          <div className="max-w-3xl mx-auto text-base md:text-lg leading-relaxed opacity-80 space-y-4 mb-16 md:mb-20">
+          <div className="max-w-3xl mx-auto text-center text-base md:text-lg leading-relaxed opacity-80 space-y-4 mb-16 md:mb-20">
             <p>
               Most non-technical founders get stuck in the same place. They know AI is changing
               everything. They've watched other people ship products. But every time they try to
@@ -1291,7 +1291,7 @@ export default function Bumpsale() {
 
           <p className="text-base md:text-lg opacity-90 mb-4 leading-relaxed">
             And that's where it stops. The campaign ends when {PRICE_CAP} bundles have sold or at
-            11:59pm on Wednesday 3 June 2026, whichever comes first.
+            11:59pm on Thursday 4 June 2026, whichever comes first.
           </p>
           <p className="text-base md:text-lg opacity-90 mb-2 leading-relaxed">
             After this Bumpsale closes, the exact same bundle goes on sale at £197 until the live
@@ -1372,7 +1372,7 @@ export default function Bumpsale() {
             />
             <FAQItem
               question="I'm already in VCL. Should I still buy this?"
-              answer="If you're a VCL VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or a free Standard member, this is a way to lock in lifetime Premium access, Claude OS, and both SaaS products at one shot."
+              answer="If you're a VCL VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or a free Standard member, this is a way to lock in lifetime Premium access, Claude OS and both SaaS products at one shot."
             />
             <FAQItem
               question="When does Claude OS start?"
@@ -1414,7 +1414,7 @@ export default function Bumpsale() {
             />
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
-            £197 from 4 June · After 11 June, this bundle is gone
+            £197 from 5 June · After 11 June, this bundle is gone
           </div>
 
           <BuyButton size="xl" onClick={openCheckout} />
