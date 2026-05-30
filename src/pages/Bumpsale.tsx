@@ -702,7 +702,7 @@ const READY_BUNDLE: BundleItem[] = [
     paragraphs: [
       "Ship your first web app. For real.",
       "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase and deploy to Vercel. By the end, you have a real, working, deployed web app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
-      "Live with Toni Monday 7 July and Wednesday 9 July, 11am UK. Recordings included in your VCL access.",
+      "Live with Toni Tuesday 7 July and Thursday 9 July, 10am UK. Recordings included in your VCL access.",
     ],
   },
 ];
@@ -1416,7 +1416,7 @@ export default function Bumpsale() {
                 { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Claude OS', detail: 'first live session Tuesday 9 June, 11:30am UK. Full schedule sent on access.' },
                 { label: 'The Site Sprint', detail: 'live Wednesday 10 June, 1pm UK.' },
-                { label: 'The Ship Sprint', detail: 'live Monday 7 July and Wednesday 9 July.' },
+                { label: 'The Ship Sprint', detail: 'live Tuesday 7 July and Thursday 9 July, 10am UK.' },
                 { label: 'Relavo access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Zenitro access', detail: 'emailed when the product launches.' },
               ].map((d, i) => (
