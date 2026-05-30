@@ -655,7 +655,7 @@ const READY_BUNDLE: BundleItem[] = [
   {
     index: '03',
     title: 'The Site Sprint',
-    tag: 'Live workshop · Thu 12 June',
+    tag: 'Live workshop · Wed 10 June',
     worth: '£147',
     worthValue: 147,
     icon: <Globe />,
@@ -665,7 +665,7 @@ const READY_BUNDLE: BundleItem[] = [
     paragraphs: [
       "Stop paying for things you could build in an afternoon.",
       "One live session. Build and deploy a real website with AI, from blank page to live URL. The skill that turns \"I need to hire a developer\" into \"I'll just make it myself this weekend.\"",
-      "Live with Toni Thursday 12 June, 11am UK. Recording included in your VCL access.",
+      "Live with Toni Wednesday 10 June, 1pm UK. Recording included in your VCL access.",
     ],
     cta: 'See sites built with vibe coding',
     modal: {
@@ -1415,7 +1415,7 @@ export default function Bumpsale() {
               {[
                 { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Claude OS', detail: 'first live session Tuesday 9 June, 11:30am UK. Full schedule sent on access.' },
-                { label: 'The Site Sprint', detail: 'live Thursday 12 June.' },
+                { label: 'The Site Sprint', detail: 'live Wednesday 10 June, 1pm UK.' },
                 { label: 'The Ship Sprint', detail: 'live Monday 7 July and Wednesday 9 July.' },
                 { label: 'Relavo access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Zenitro access', detail: 'emailed when the product launches.' },

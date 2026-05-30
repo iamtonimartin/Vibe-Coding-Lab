@@ -33,9 +33,9 @@ const DELIVERABLES: {
   },
   {
     title: 'The Site Sprint',
-    when: 'Thu 12 June',
+    when: 'Wed 10 June',
     status: 'soon',
-    detail: "One live session Thursday 12 June, 11am UK. Recording inside VCL if you can't make it.",
+    detail: "One live session Wednesday 10 June, 1pm UK. Recording inside VCL if you can't make it.",
   },
   {
     title: 'The Ship Sprint',
@@ -208,7 +208,7 @@ export default function Complete() {
               </h3>
               <p className="text-sm md:text-base leading-relaxed opacity-80 flex-1 mb-6">
                 Claude OS runs Tuesdays 9, 16, 23 and 30 June at 11:30am UK. The Site Sprint
-                is Thursday 12 June at 11am UK. The Ship Sprint is Monday 7 July and Wednesday 9
+                is Wednesday 10 June at 1pm UK. The Ship Sprint is Monday 7 July and Wednesday 9
                 July at 11am UK. Drop them in your calendar now.
               </p>
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-terracotta">
