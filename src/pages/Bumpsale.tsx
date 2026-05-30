@@ -678,9 +678,9 @@ const READY_BUNDLE: BundleItem[] = [
             title="Site Sprint"
           />
           <p>
-            Four real sites, all built with vibe coding. The Vibed (AI newsletter), Toni Martin
-            (founder portfolio), The Build (live event), Fortivise (consultancy). Each one
-            designed, built and shipped without a developer.
+            Four real sites, all built with vibe coding. The Vibed (publication for non-technical
+            founders building with AI), Toni Martin (founder portfolio), The Build (live event),
+            Fortivise (consultancy). Each one designed, built and shipped without a developer.
           </p>
           <p className="mt-4 text-sm opacity-70">
             Tap any preview to scroll the full page.
