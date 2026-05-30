@@ -6,7 +6,7 @@ import {
   Mail,
   Zap,
   Clock,
-  Sparkles,
+  Calendar,
   ArrowRight,
   Inbox,
 } from 'lucide-react';
@@ -20,40 +20,40 @@ const DELIVERABLES: {
   detail: string;
 }[] = [
   {
-    title: 'The ICI Framework',
-    when: 'Right now',
+    title: 'Vibe Coding Lab Premium',
+    when: '5 June',
     status: 'now',
-    detail: "Delivered immediately. The download link is in your order confirmation email.",
+    detail: "Your Premium upgrade invite lands on 5 June, the day after the Bumpsale closes. Standard members get bumped up; new members get a fresh login.",
   },
   {
-    title: 'Vibe Coding Lab Premium',
-    when: 'Within 48 hours',
+    title: 'Claude OS',
+    when: 'Starts Wed 11 June',
     status: 'soon',
-    detail: "I'll send your Premium upgrade invite by email. Standard members get bumped up; new members get a fresh login.",
+    detail: "Four live build-alongs starting Wednesday 11 June, 10am UK (then 18 + 25 June and 2 July). Full schedule and joining link land inside VCL with your Premium access.",
+  },
+  {
+    title: 'The Site Sprint',
+    when: 'Thu 12 June',
+    status: 'soon',
+    detail: "One live session Thursday 12 June, 11am UK. Recording inside VCL if you can't make it.",
+  },
+  {
+    title: 'The Ship Sprint',
+    when: '7 + 9 July',
+    status: 'later',
+    detail: "Two live workshops Monday 7 July and Wednesday 9 July, 11am UK. Recordings included.",
   },
   {
     title: 'Relavo',
-    when: 'Within 48 hours',
-    status: 'soon',
-    detail: "Your Relavo account details land in your inbox. Lifetime access locked in at the bundle tier.",
+    when: '5 June',
+    status: 'now',
+    detail: "Your Relavo account details land in your inbox on 5 June. Lifetime access locked in at the bundle tier.",
   },
   {
     title: 'Zenitro',
     when: 'At launch',
     status: 'later',
     detail: "Launching soon. The moment it ships, you're in for life. I'll email the access link.",
-  },
-  {
-    title: 'Zero to Deployed workshops',
-    when: 'July (2 live sessions)',
-    status: 'later',
-    detail: "Dates announced inside VCL Premium in early July. Recordings included if you can't make it live.",
-  },
-  {
-    title: 'Build Your Website Workshop',
-    when: 'July (1 live session)',
-    status: 'later',
-    detail: "Date announced inside VCL Premium. Recording included.",
   },
 ];
 
@@ -201,17 +201,18 @@ export default function Complete() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div className="bg-white rounded-[2rem] p-7 md:p-9 border border-forest-green/10 flex flex-col">
               <div className="w-12 h-12 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center mb-5">
-                <Sparkles size={22} />
+                <Calendar size={22} />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-extrabold leading-tight mb-3">
-                Start with the ICI Framework
+                Block out the live dates
               </h3>
               <p className="text-sm md:text-base leading-relaxed opacity-80 flex-1 mb-6">
-                It's already in your inbox. Read it before your first VCL session and you'll get
-                ten times more out of every build.
+                Claude OS runs Wednesdays 11, 18, 25 June and 2 July at 10am UK. The Site Sprint
+                is Thursday 12 June at 11am UK. The Ship Sprint is Monday 7 July and Wednesday 9
+                July at 11am UK. Drop them in your calendar now.
               </p>
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-terracotta">
-                <Clock size={14} /> 10 minute read
+                <Clock size={14} /> First session 11 June
               </div>
             </div>
 
@@ -220,14 +221,15 @@ export default function Complete() {
                 <Zap size={22} />
               </div>
               <h3 className="text-xl md:text-2xl font-display font-extrabold leading-tight mb-3">
-                Get set up for VCL Premium
+                Jot down your business
               </h3>
               <p className="text-sm md:text-base leading-relaxed opacity-80 flex-1 mb-6">
-                Your invite arrives within 48 hours. In the meantime, jot down the first project
-                you want to build so you can hit the ground running in the Vibe Tribe sessions.
+                Session 2 of Claude OS sets up the 2-3 Claude Projects that mirror the most
+                important parts of your business. Spend 10 minutes listing those parts now and
+                you'll fly through that session.
               </p>
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-terracotta">
-                <Clock size={14} /> Invite within 48 hours
+                <Clock size={14} /> 10 minute exercise
               </div>
             </div>
           </div>

@@ -23,6 +23,20 @@ const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts
 const PRICE_CAP = 147;
 const DEADLINE = new Date('2026-06-04T23:59:00+01:00');
 
+// Stable object references so React's dangerouslySetInnerHTML diff (which uses ===
+// on the object) doesn't reset the widget's live-updated innerHTML on every re-render.
+const PRICE_FALLBACK = { __html: '£1' };
+const buyLabelFallbackCache = new Map<string, { __html: string }>();
+const getBuyLabelFallback = (label: string) => {
+  const html = label.replace('_PRICE_', '£1');
+  let cached = buyLabelFallbackCache.get(html);
+  if (!cached) {
+    cached = { __html: html };
+    buyLabelFallbackCache.set(html, cached);
+  }
+  return cached;
+};
+
 const useCountdown = () => {
   const [diff, setDiff] = useState(() => DEADLINE.getTime() - Date.now());
   useEffect(() => {
@@ -188,7 +202,7 @@ const BuyButton = ({
       data-bumpsale={BUMPSALE_ID}
       data-bumpsale-text={label}
       className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
-      dangerouslySetInnerHTML={{ __html: label.replace('_PRICE_', '£1') }}
+      dangerouslySetInnerHTML={getBuyLabelFallback(label)}
     />
   );
 };
@@ -862,7 +876,7 @@ export default function Bumpsale() {
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
               className="text-terracotta"
-              dangerouslySetInnerHTML={{ __html: '£1' }}
+              dangerouslySetInnerHTML={PRICE_FALLBACK}
             />
             <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
           </div>
@@ -926,7 +940,7 @@ export default function Bumpsale() {
                 data-bumpsale={BUMPSALE_ID}
                 data-bumpsale-text="£_PRICE_"
                 className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none"
-                dangerouslySetInnerHTML={{ __html: '£1' }}
+                dangerouslySetInnerHTML={PRICE_FALLBACK}
               />
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
                 Price climbs by £1 with every sale
@@ -1410,7 +1424,7 @@ export default function Bumpsale() {
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
               className="text-terracotta"
-              dangerouslySetInnerHTML={{ __html: '£1' }}
+              dangerouslySetInnerHTML={PRICE_FALLBACK}
             />
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
