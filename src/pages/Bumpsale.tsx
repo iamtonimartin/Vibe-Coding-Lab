@@ -204,6 +204,7 @@ type BundleItem = {
   accent: 'terracotta' | 'sand' | 'forest';
   kind: VisualKind;
   images?: string[];
+  scrollImage?: string;
   modal?: { title: string; body: ReactNode };
 };
 
@@ -309,7 +310,28 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
   );
 };
 
-const BundleVisual = ({ kind, accent, heroImage, title }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest'; heroImage?: string; title?: string }) => {
+const BundleVisual = ({ kind, accent, heroImage, scrollImage, title }: { kind: VisualKind; accent: 'terracotta' | 'sand' | 'forest'; heroImage?: string; scrollImage?: string; title?: string }) => {
+  if (scrollImage) {
+    return (
+      <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-forest-green/10 bg-white mb-6 shadow-sm relative">
+        {/* Browser chrome */}
+        <div className="absolute top-0 left-0 right-0 h-6 md:h-7 flex items-center gap-1.5 px-3 bg-warm-cream border-b border-forest-green/10 z-10">
+          <div className="w-2 h-2 rounded-full bg-terracotta/60" />
+          <div className="w-2 h-2 rounded-full bg-forest-green/15" />
+          <div className="w-2 h-2 rounded-full bg-forest-green/15" />
+        </div>
+        {/* Scrolling content */}
+        <div className="absolute inset-0 pt-6 md:pt-7 overflow-hidden bg-white">
+          <img
+            src={scrollImage}
+            alt={title ? `${title} preview` : ''}
+            className="w-full block bg-white animate-site-scroll"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    );
+  }
   if (heroImage) {
     return (
       <div className="rounded-2xl overflow-hidden border border-forest-green/10 bg-white mb-6 shadow-sm">
@@ -585,11 +607,33 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Globe />,
     accent: 'sand',
     kind: 'browser',
+    scrollImage: '/thevibed-scroll.jpg',
+    images: ['/thevibed-hero.jpg', '/tonimartin-hero.jpg', '/thebuild-hero.jpg', '/fortivise-hero.jpg'],
     paragraphs: [
       "Stop paying for things you could build in an afternoon.",
       "One live session. Build and deploy a real website with AI, from blank page to live URL. The skill that turns \"I need to hire a developer\" into \"I'll just make it myself this weekend.\"",
       "Live with Toni Thursday 12 June, 11am UK. Recording included in your VCL access.",
     ],
+    cta: 'See sites built with vibe coding',
+    modal: {
+      title: 'Sites built with vibe coding',
+      body: (
+        <>
+          <ImageGallery
+            images={['/thevibed-hero.jpg', '/tonimartin-hero.jpg', '/thebuild-hero.jpg', '/fortivise-hero.jpg']}
+            title="Site Sprint"
+          />
+          <p>
+            Four real sites, all built with vibe coding. The Vibed (AI newsletter), Toni Martin
+            (founder portfolio), The Build (live event), Fortivise (consultancy). Each one
+            designed, built and shipped without a developer.
+          </p>
+          <p className="mt-4 text-sm opacity-70">
+            Tap any screen to enlarge. You'll build something at this standard in The Site Sprint.
+          </p>
+        </>
+      ),
+    },
   },
   {
     index: '04',
@@ -779,7 +823,7 @@ export default function Bumpsale() {
         transition={{ delay: i * 0.06, duration: 0.5 }}
         className={`relative rounded-[2rem] border p-7 md:p-9 flex flex-col ${a.card}`}
       >
-        <BundleVisual kind={item.kind} accent={item.accent} heroImage={item.images?.[0]} title={item.title} />
+        <BundleVisual kind={item.kind} accent={item.accent} heroImage={item.scrollImage ? undefined : item.images?.[0]} scrollImage={item.scrollImage} title={item.title} />
 
         <div className="flex items-start justify-between gap-4 mb-5">
           <div className="flex items-center gap-3">
