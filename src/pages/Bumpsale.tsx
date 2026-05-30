@@ -20,7 +20,7 @@ import {
 
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
 const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
-const PRICE_CAP = 99;
+const PRICE_CAP = 147;
 const DEADLINE = new Date('2026-06-03T23:59:00+01:00');
 
 const useCountdown = () => {
@@ -507,6 +507,7 @@ const READY_BUNDLE: BundleItem[] = [
     paragraphs: [
       "You'll never build alone.",
       "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders), and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
+      "You also get access to the VCL community and a library of vibe coding resources that grows every week.",
       "The community is the difference between \"I tried for two hours and gave up\" and \"someone showed me the fix in three minutes.\"",
     ],
     cta: 'See inside VCL',
@@ -537,6 +538,7 @@ const READY_BUNDLE: BundleItem[] = [
       "Most people use Claude like a chatbot. They open the app, ask a question, close it. They're using maybe 5% of what's actually possible.",
       "Claude OS is the programme that teaches you to use Claude as the operating system your business runs on. Personalisation, Projects, Skills, Artifacts, connectors, the lot. Not as a feature list. As a system that compounds.",
       "Each session is a live build-along, up to 2 hours, with an optional 1 hour of implementation co-work after. You'll never sit through padding.",
+      "Plus every template you need to implement it. The Prompt Architect tool, ready-to-use Project templates, Skills you can plug in, connected workflow recipes. Everything pre-built so you're never staring at a blank canvas in a session.",
     ],
     cta: 'See the 4 sessions',
     modal: {
@@ -829,7 +831,7 @@ export default function Bumpsale() {
         <title>The ultimate AI build bundle for non-technical founders | Vibe Coding Lab</title>
         <meta
           name="description"
-          content="The training, the community, the support, and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £99. Ends 11:59pm Wednesday 3 June."
+          content="The training, the community, the support, and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £147. Ends 11:59pm Wednesday 3 June."
         />
         <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
         <meta name="robots" content="index, follow" />
@@ -840,13 +842,13 @@ export default function Bumpsale() {
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 3 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £99. Ends 3 June."
+          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 3 June."
         />
       </Helmet>
 
@@ -896,7 +898,7 @@ export default function Bumpsale() {
             </p>
 
             {/* Value stack */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 mb-10">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 mb-3">
               <div className="flex items-baseline gap-3">
                 <span className="text-base md:text-xl font-bold opacity-50 line-through">
                   Worth £{TOTAL_VALUE.toLocaleString()}.
@@ -905,6 +907,9 @@ export default function Bumpsale() {
               <div className="text-2xl md:text-4xl font-display font-black text-terracotta">
                 Yours from £1.
               </div>
+            </div>
+            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/80 mb-10">
+              £197 from 4 June · £1 today
             </div>
 
             {/* Live price card */}
@@ -964,7 +969,7 @@ export default function Bumpsale() {
           </h2>
           <p className="text-lg md:text-xl leading-relaxed opacity-80 max-w-3xl mx-auto mb-12">
             The first buyer paid £1. The second paid £2. The price climbs with every sale until it
-            caps at £99, or until 11:59pm on Wednesday 3 June, whichever comes first.
+            caps at £147, or until 11:59pm on Wednesday 3 June, whichever comes first.
           </p>
 
           {/* Price ladder */}
@@ -1266,7 +1271,7 @@ export default function Bumpsale() {
             {[
               { label: 'Buyer #1 paid', price: '£1' },
               { label: 'Buyer #50 will pay', price: '£50' },
-              { label: 'Buyer #99 will pay', price: '£99' },
+              { label: `Buyer #${PRICE_CAP} will pay`, price: `£${PRICE_CAP}` },
             ].map((b, i) => (
               <motion.div
                 key={i}
@@ -1284,12 +1289,16 @@ export default function Bumpsale() {
             ))}
           </div>
 
+          <p className="text-base md:text-lg opacity-90 mb-4 leading-relaxed">
+            And that's where it stops. The campaign ends when {PRICE_CAP} bundles have sold or at
+            11:59pm on Wednesday 3 June 2026, whichever comes first.
+          </p>
           <p className="text-base md:text-lg opacity-90 mb-2 leading-relaxed">
-            And that's where it stops. The campaign ends when 99 bundles have sold or at 11:59pm on
-            Wednesday 3 June 2026, whichever comes first.
+            After this Bumpsale closes, the exact same bundle goes on sale at £197 until the live
+            programme starts on Wednesday 11 June. After that, the offer comes off entirely.
           </p>
           <p className="text-base md:text-lg font-bold mb-10">
-            Whatever you pay, you get exactly the same bundle.
+            Whatever you pay in the Bumpsale, you get exactly the same bundle.
           </p>
 
           <BuyButton size="xl" variant="white" onClick={openCheckout} />
@@ -1373,6 +1382,10 @@ export default function Bumpsale() {
               question="I've never built anything before. Will I be lost?"
               answer="No. The whole bundle is designed for non-technical founders. Claude OS starts at the foundations. The Site Sprint and The Ship Sprint are live, so you can ask questions as you go."
             />
+            <FAQItem
+              question="What happens after the Bumpsale closes?"
+              answer={`The exact same bundle stays available at £197 until Wednesday 11 June when the live programme kicks off. After that, the bundle comes off sale entirely. The Bumpsale is the only time you can get it for less than £${PRICE_CAP}.`}
+            />
           </div>
         </div>
       </Section>
@@ -1391,7 +1404,7 @@ export default function Bumpsale() {
             <span className="block text-terracotta">costs you £1.</span>
           </h2>
 
-          <div className="text-2xl md:text-4xl font-display font-black mb-10">
+          <div className="text-2xl md:text-4xl font-display font-black mb-4">
             Live price:{' '}
             <span
               data-bumpsale={BUMPSALE_ID}
@@ -1399,6 +1412,9 @@ export default function Bumpsale() {
               className="text-terracotta"
               dangerouslySetInnerHTML={{ __html: '£1' }}
             />
+          </div>
+          <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
+            £197 from 4 June · After 11 June, this bundle is gone
           </div>
 
           <BuyButton size="xl" onClick={openCheckout} />
