@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo, ReactNode } from 'react';
+import { useState, useRef, useEffect, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
@@ -160,13 +160,13 @@ const BuyButton = ({
   size = 'lg',
   className = '',
   variant = 'terracotta',
-  label = 'Buy now at _PRICE_ →',
+  currentPrice = '£1',
   onClick,
 }: {
   size?: 'lg' | 'xl';
   className?: string;
   variant?: 'terracotta' | 'white';
-  label?: string;
+  currentPrice?: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   const sizing =
@@ -177,21 +177,16 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
-  // useMemo gives us a stable object reference for dangerouslySetInnerHTML so React's
-  // diff doesn't re-apply innerHTML on every render (which would wipe the widget's
-  // live-updated price). The minifier can't fold useMemo's result back into a literal.
-  const fallback = useMemo(() => ({ __html: label.replace('_PRICE_', '£1') }), [label]);
   return (
     <a
       href={CHECKOUT_URL}
       target="_blank"
       rel="noopener noreferrer"
       onClick={onClick}
-      data-bumpsale={BUMPSALE_ID}
-      data-bumpsale-text={label}
-      className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
-      dangerouslySetInnerHTML={fallback}
-    />
+      className={`inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
+    >
+      Buy now at {currentPrice} →
+    </a>
   );
 };
 
@@ -709,24 +704,24 @@ export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [orders, setOrders] = useState<number | null>(null);
+  const [currentPrice, setCurrentPrice] = useState<string>('£1');
   const { days, hours, mins, secs, expired } = useCountdown();
-  // Stable object reference for dangerouslySetInnerHTML on the live-price spans.
-  // Module-level constants get inlined by the minifier (creating a new object per
-  // render after build), so we anchor the reference inside the component instead.
-  const priceFallback = useMemo(() => ({ __html: '£1' }), []);
 
   useEffect(() => {
     let cancelled = false;
-    const fetchCount = () => {
+    const fetchState = () => {
       fetch(`https://app.bumpsale.co/buttons/${BUMPSALE_ID}`)
         .then((r) => r.json())
         .then((d) => {
-          if (!cancelled) setOrders(d?.bumpsale?.orders_count ?? 0);
+          if (cancelled) return;
+          const bs = d?.bumpsale;
+          if (bs?.orders_count != null) setOrders(bs.orders_count);
+          if (bs?.current_price_formatted) setCurrentPrice(bs.current_price_formatted);
         })
         .catch(() => {});
     };
-    fetchCount();
-    const id = setInterval(fetchCount, 30_000);
+    fetchState();
+    const id = setInterval(fetchState, 15_000);
     return () => {
       cancelled = true;
       clearInterval(id);
@@ -864,12 +859,7 @@ export default function Bumpsale() {
           <Flame className="text-terracotta shrink-0 animate-pulse" size={18} />
           <div className="text-[11px] md:text-sm font-bold truncate">
             <span className="opacity-70">Current price</span>{' '}
-            <span
-              data-bumpsale={BUMPSALE_ID}
-              data-bumpsale-text="£_PRICE_"
-              className="text-terracotta"
-              dangerouslySetInnerHTML={priceFallback}
-            />
+            <span className="text-terracotta">{currentPrice}</span>
             <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
           </div>
         </div>
@@ -928,19 +918,16 @@ export default function Bumpsale() {
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-2">
                 Live price right now
               </div>
-              <div
-                data-bumpsale={BUMPSALE_ID}
-                data-bumpsale-text="£_PRICE_"
-                className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none"
-                dangerouslySetInnerHTML={priceFallback}
-              />
+              <div className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none">
+                {currentPrice}
+              </div>
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
                 Price climbs by £1 with every sale
               </div>
             </motion.div>
 
             <div className="flex justify-center mb-10">
-              <BuyButton size="xl" onClick={openCheckout} />
+              <BuyButton size="xl" onClick={openCheckout} currentPrice={currentPrice} />
             </div>
 
             {/* Countdown */}
@@ -1028,7 +1015,7 @@ export default function Bumpsale() {
             className="max-w-2xl mx-auto mb-10"
           />
 
-          <BuyButton onClick={openCheckout} />
+          <BuyButton onClick={openCheckout} currentPrice={currentPrice} />
         </div>
       </Section>
 
@@ -1307,7 +1294,7 @@ export default function Bumpsale() {
             Whatever you pay in the Bumpsale, you get exactly the same bundle.
           </p>
 
-          <BuyButton size="xl" variant="white" onClick={openCheckout} />
+          <BuyButton size="xl" variant="white" onClick={openCheckout} currentPrice={currentPrice} />
         </div>
       </Section>
 
@@ -1411,19 +1398,13 @@ export default function Bumpsale() {
           </h2>
 
           <div className="text-2xl md:text-4xl font-display font-black mb-4">
-            Live price:{' '}
-            <span
-              data-bumpsale={BUMPSALE_ID}
-              data-bumpsale-text="£_PRICE_"
-              className="text-terracotta"
-              dangerouslySetInnerHTML={priceFallback}
-            />
+            Live price: <span className="text-terracotta">{currentPrice}</span>
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
             £197 from 5 June · After 11 June, this bundle is gone
           </div>
 
-          <BuyButton size="xl" onClick={openCheckout} />
+          <BuyButton size="xl" onClick={openCheckout} currentPrice={currentPrice} />
 
           <div className="mt-12 text-xs md:text-sm opacity-50 font-medium">
             Built and hosted by Vibe Coding Lab.
