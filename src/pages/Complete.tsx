@@ -27,9 +27,9 @@ const DELIVERABLES: {
   },
   {
     title: 'Claude OS',
-    when: 'Starts Wed 11 June',
+    when: 'Starts Tue 9 June',
     status: 'soon',
-    detail: "Four live build-alongs starting Wednesday 11 June, 10am UK (then 18 + 25 June and 2 July). Full schedule and joining link land inside VCL with your Premium access.",
+    detail: "Four live build-alongs starting Tuesday 9 June, 11:30am-2:30pm UK (then 16, 23 and 30 June). Full schedule and joining link land inside VCL with your Premium access.",
   },
   {
     title: 'The Site Sprint',
@@ -207,12 +207,12 @@ export default function Complete() {
                 Block out the live dates
               </h3>
               <p className="text-sm md:text-base leading-relaxed opacity-80 flex-1 mb-6">
-                Claude OS runs Wednesdays 11, 18, 25 June and 2 July at 10am UK. The Site Sprint
+                Claude OS runs Tuesdays 9, 16, 23 and 30 June at 11:30am UK. The Site Sprint
                 is Thursday 12 June at 11am UK. The Ship Sprint is Monday 7 July and Wednesday 9
                 July at 11am UK. Drop them in your calendar now.
               </p>
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-terracotta">
-                <Clock size={14} /> First session 11 June
+                <Clock size={14} /> First session 9 June
               </div>
             </div>
 

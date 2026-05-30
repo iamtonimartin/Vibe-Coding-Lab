@@ -621,25 +621,25 @@ const READY_BUNDLE: BundleItem[] = [
           <div className="-mt-2">
             <SessionItem
               session="Session 1"
-              when="Wed 11 June · 10am UK"
+              when="Tue 9 June · 11:30am-2:30pm UK"
               title="Make Claude yours"
               body="Build a Claude that knows who you are, talks to you the way you want and remembers what matters. Personal context, preferences, custom instructions, memory, importing context from other LLMs. We'll apply the ICI Framework (Identity, Capability, Interaction) as we go, the proprietary prompt engineering methodology behind every product Toni builds."
             />
             <SessionItem
               session="Session 2"
-              when="Wed 18 June · 10am UK"
+              when="Tue 16 June · 11:30am-2:30pm UK"
               title="Run your business inside Projects"
               body="Set up the 2-3 Claude Projects that mirror the most important parts of your business. System prompts that actually work, knowledge bases Claude can use and a starter pack of Project templates designed for non-technical founders."
             />
             <SessionItem
               session="Session 3"
-              when="Wed 25 June · 10am UK"
+              when="Tue 23 June · 11:30am-2:30pm UK"
               title="Make Claude produce your work"
               body="Use Skills to produce real, polished business output that pulls from your Projects. Documents, slide decks, spreadsheets. Branded and accurate, because by now Claude knows your business."
             />
             <SessionItem
               session="Session 4"
-              when="Wed 2 July · 10am UK"
+              when="Tue 30 June · 11:30am-2:30pm UK"
               title="Connect Claude to your stack"
               body="Connect Claude to the tools you use every day. Google Drive, Gmail, Calendar, the Cowork tools, Artifacts, the Claude + Canva workflow. Build one connected workflow that uses everything from the previous sessions."
             />
@@ -1245,7 +1245,7 @@ export default function Bumpsale() {
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
                 VCL Premium, Claude OS, The Site Sprint, The Ship Sprint. Live programme starts
-                Wednesday 11 June.
+                Tuesday 9 June.
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
@@ -1387,7 +1387,7 @@ export default function Bumpsale() {
           </p>
           <p className="text-base md:text-lg opacity-90 mb-2 leading-relaxed">
             After this Bumpsale closes, the exact same bundle goes on sale at £197 until the live
-            programme starts on Wednesday 11 June. After that, the offer comes off entirely.
+            programme starts on Tuesday 9 June. After that, the offer comes off entirely.
           </p>
           <p className="text-base md:text-lg font-bold mb-10">
             Whatever you pay in the Bumpsale, you get exactly the same bundle.
@@ -1414,7 +1414,7 @@ export default function Bumpsale() {
             <ul className="space-y-5">
               {[
                 { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
-                { label: 'Claude OS', detail: 'first live session Wednesday 11 June. Full schedule sent on access.' },
+                { label: 'Claude OS', detail: 'first live session Tuesday 9 June, 11:30am UK. Full schedule sent on access.' },
                 { label: 'The Site Sprint', detail: 'live Thursday 12 June.' },
                 { label: 'The Ship Sprint', detail: 'live Monday 7 July and Wednesday 9 July.' },
                 { label: 'Relavo access', detail: 'emailed within 48 hours of purchase.' },
@@ -1468,7 +1468,7 @@ export default function Bumpsale() {
             />
             <FAQItem
               question="When does Claude OS start?"
-              answer="Wednesday 11 June, 10am UK. Four live sessions across the following four weeks. Full schedule visible inside VCL within 48 hours of your purchase."
+              answer="Tuesday 9 June, 11:30am-2:30pm UK. Four live sessions across the following four weeks (16, 23 and 30 June). Full schedule visible inside VCL within 48 hours of your purchase."
             />
             <FAQItem
               question="I've never built anything before. Will I be lost?"
@@ -1476,7 +1476,7 @@ export default function Bumpsale() {
             />
             <FAQItem
               question="What happens after the Bumpsale closes?"
-              answer={`The exact same bundle stays available at £197 until Wednesday 11 June when the live programme kicks off. After that, the bundle comes off sale entirely. The Bumpsale is the only time you can get it for less than £${PRICE_CAP}.`}
+              answer={`The exact same bundle stays available at £197 until Tuesday 9 June when the live programme kicks off. After that, the bundle comes off sale entirely. The Bumpsale is the only time you can get it for less than £${PRICE_CAP}.`}
             />
           </div>
         </div>
@@ -1500,7 +1500,7 @@ export default function Bumpsale() {
             Live price: <span className="text-terracotta">{currentPrice}</span>
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
-            £197 from 5 June · After 11 June, this bundle is gone
+            £197 from 5 June · After 9 June, this bundle is gone
           </div>
 
           <BuyButton size="xl" onClick={openCheckout} currentPrice={currentPrice} />
