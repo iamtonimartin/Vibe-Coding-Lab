@@ -68,7 +68,7 @@ export default function Complete() {
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
       <Helmet>
         <title>You're in! | Vibe Coding Lab</title>
-        <meta name="description" content="Your Build with AI Bundle is confirmed. Here's what's coming and when." />
+        <meta name="description" content="Your bundle is confirmed. Here's what's coming and when." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -102,7 +102,7 @@ export default function Complete() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-lg md:text-2xl font-medium opacity-80 leading-relaxed mb-10"
           >
-            Welcome to the Build with AI Bundle. Your lifetime access is locked in.
+            Welcome in. Your lifetime access is locked in.
           </motion.p>
 
           <motion.div
