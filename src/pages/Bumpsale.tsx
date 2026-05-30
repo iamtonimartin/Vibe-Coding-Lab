@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactNode } from 'react';
+import { useState, useRef, useEffect, useMemo, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
@@ -23,19 +23,6 @@ const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts
 const PRICE_CAP = 147;
 const DEADLINE = new Date('2026-06-04T23:59:00+01:00');
 
-// Stable object references so React's dangerouslySetInnerHTML diff (which uses ===
-// on the object) doesn't reset the widget's live-updated innerHTML on every re-render.
-const PRICE_FALLBACK = { __html: '£1' };
-const buyLabelFallbackCache = new Map<string, { __html: string }>();
-const getBuyLabelFallback = (label: string) => {
-  const html = label.replace('_PRICE_', '£1');
-  let cached = buyLabelFallbackCache.get(html);
-  if (!cached) {
-    cached = { __html: html };
-    buyLabelFallbackCache.set(html, cached);
-  }
-  return cached;
-};
 
 const useCountdown = () => {
   const [diff, setDiff] = useState(() => DEADLINE.getTime() - Date.now());
@@ -190,9 +177,10 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
-  // onClick opens the in-page overlay; href + target="_blank" is the fallback if
-  // React hasn't hydrated yet. dangerouslySetInnerHTML hands children ownership to
-  // the widget so React's per-second re-renders don't wipe the live price text.
+  // useMemo gives us a stable object reference for dangerouslySetInnerHTML so React's
+  // diff doesn't re-apply innerHTML on every render (which would wipe the widget's
+  // live-updated price). The minifier can't fold useMemo's result back into a literal.
+  const fallback = useMemo(() => ({ __html: label.replace('_PRICE_', '£1') }), [label]);
   return (
     <a
       href={CHECKOUT_URL}
@@ -202,7 +190,7 @@ const BuyButton = ({
       data-bumpsale={BUMPSALE_ID}
       data-bumpsale-text={label}
       className={`bumpsale_button inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
-      dangerouslySetInnerHTML={getBuyLabelFallback(label)}
+      dangerouslySetInnerHTML={fallback}
     />
   );
 };
@@ -722,6 +710,10 @@ export default function Bumpsale() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [orders, setOrders] = useState<number | null>(null);
   const { days, hours, mins, secs, expired } = useCountdown();
+  // Stable object reference for dangerouslySetInnerHTML on the live-price spans.
+  // Module-level constants get inlined by the minifier (creating a new object per
+  // render after build), so we anchor the reference inside the component instead.
+  const priceFallback = useMemo(() => ({ __html: '£1' }), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -876,7 +868,7 @@ export default function Bumpsale() {
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
               className="text-terracotta"
-              dangerouslySetInnerHTML={PRICE_FALLBACK}
+              dangerouslySetInnerHTML={priceFallback}
             />
             <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
           </div>
@@ -940,7 +932,7 @@ export default function Bumpsale() {
                 data-bumpsale={BUMPSALE_ID}
                 data-bumpsale-text="£_PRICE_"
                 className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none"
-                dangerouslySetInnerHTML={PRICE_FALLBACK}
+                dangerouslySetInnerHTML={priceFallback}
               />
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
                 Price climbs by £1 with every sale
@@ -1424,7 +1416,7 @@ export default function Bumpsale() {
               data-bumpsale={BUMPSALE_ID}
               data-bumpsale-text="£_PRICE_"
               className="text-terracotta"
-              dangerouslySetInnerHTML={PRICE_FALLBACK}
+              dangerouslySetInnerHTML={priceFallback}
             />
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
