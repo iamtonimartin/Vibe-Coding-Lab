@@ -575,7 +575,7 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Lock />,
     accent: 'forest',
     kind: 'community',
-    images: ['/vcl-community.png'],
+    images: ['/vcl-skool.jpg'],
     paragraphs: [
       "You'll never build alone.",
       "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders) and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
@@ -587,7 +587,7 @@ const READY_BUNDLE: BundleItem[] = [
       title: 'Vibe Coding Lab Premium',
       body: (
         <>
-          <ImageGallery images={['/vcl-community.png']} title="VCL Premium" />
+          <ImageGallery images={['/vcl-skool.jpg']} title="VCL Premium" />
           <p>
             The community for founders building with AI. Vibe Lab training, weekly Vibe Tribe
             co-working, Stuck? Let's Fix It weekly support. All yours, lifetime.
@@ -605,6 +605,7 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Sparkles />,
     accent: 'terracotta',
     kind: 'sessions',
+    images: ['/claude-os.jpg'],
     paragraphs: [
       "Run your business on Claude.",
       "Most people use Claude like a chatbot. They open the app, ask a question, close it. They're using maybe 5% of what's actually possible.",
@@ -660,7 +661,7 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Globe />,
     accent: 'sand',
     kind: 'browser',
-    images: ['/thevibed-hero.jpg', '/tonimartin-hero.jpg', '/thebuild-hero.jpg', '/fortivise-hero.jpg'],
+    images: ['/site-sprint.jpg'],
     paragraphs: [
       "Stop paying for things you could build in an afternoon.",
       "One live session. Build and deploy a real website with AI, from blank page to live URL. The skill that turns \"I need to hire a developer\" into \"I'll just make it myself this weekend.\"",
@@ -697,6 +698,7 @@ const READY_BUNDLE: BundleItem[] = [
     icon: <Code />,
     accent: 'terracotta',
     kind: 'code',
+    images: ['/ship-sprint.jpg'],
     paragraphs: [
       "Ship your first web app. For real.",
       "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase and deploy to Vercel. By the end, you have a real, working, deployed web app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
