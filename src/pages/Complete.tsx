@@ -44,6 +44,12 @@ const DELIVERABLES: {
     detail: "Two live workshops Tuesday 7 July and Thursday 9 July, 10am UK. Recordings included.",
   },
   {
+    title: 'The Audit & Consulting Playbook',
+    when: 'Date inside VCL',
+    status: 'later',
+    detail: "New bonus session: how to land £3,000+ day rate audits, the framework Toni runs onsite, and how to structure proposals that close six-figure engagements. Date and joining link announced inside VCL.",
+  },
+  {
     title: 'Relavo',
     when: '5 June',
     status: 'now',

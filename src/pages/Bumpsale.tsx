@@ -777,7 +777,8 @@ const SHIPPING_BUNDLE: BundleItem[] = [
 
 const READY_VALUE = READY_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
 const SHIPPING_VALUE = SHIPPING_BUNDLE.reduce((s, i) => s + i.worthValue, 0);
-const TOTAL_VALUE = READY_VALUE + SHIPPING_VALUE;
+const BONUS_VALUE = 247;
+const TOTAL_VALUE = READY_VALUE + SHIPPING_VALUE + BONUS_VALUE;
 
 const accentClasses = {
   terracotta: {
@@ -942,15 +943,37 @@ export default function Bumpsale() {
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
+          content="Worth £1,962. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,715. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
+          content="Worth £1,962. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
       </Helmet>
+
+      {/* Ticker tape: new bonus announcement */}
+      <div className="bg-terracotta text-white overflow-hidden border-b border-burnt-orange/40">
+        <div className="flex whitespace-nowrap animate-marquee py-2 md:py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider">
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex shrink-0 items-center">
+              {[
+                '🎁 Just added',
+                'The Audit & Consulting Playbook',
+                'How I charge £3,500/day',
+                'Worth £247',
+                'Yours free with every Bumpsale',
+              ].map((segment, i) => (
+                <span key={i} className="flex items-center">
+                  <span className="px-5 md:px-7">{segment}</span>
+                  <span className="opacity-50">·</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Sticky urgency bar */}
       <div className="sticky top-0 z-40 bg-forest-green text-white border-b border-white/10">
@@ -1169,6 +1192,72 @@ export default function Bumpsale() {
             {READY_BUNDLE.map((item, i) => renderBundleCard(item, i))}
           </div>
 
+          {/* Just-added bonus callout */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+            className="bg-forest-green text-white rounded-[2rem] p-7 md:p-10 mb-8 md:mb-10 relative overflow-hidden max-w-5xl mx-auto"
+          >
+            <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-terracotta/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-32 -left-20 w-[260px] h-[260px] bg-terracotta/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-5">
+                <Flame size={12} className="text-terracotta" /> Just added · 31 May
+              </div>
+              <h3 className="text-3xl md:text-5xl font-display font-extrabold leading-[1.05] mb-4">
+                I just earned £3,500 for a day's work.{' '}
+                <span className="text-terracotta italic">Here's how.</span>
+              </h3>
+              <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed mb-6 max-w-3xl">
+                A new bonus session walking through the exact audit and consulting playbook I use
+                with clients.
+              </p>
+              <div className="space-y-4 mb-6 text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">
+                <p>
+                  This morning I'm sending out a six-figure build proposal off the back of an
+                  onsite AI and Systems audit I ran yesterday in Middlesbrough. £3,500 for the
+                  day, with a much bigger engagement to follow.
+                </p>
+                <p>
+                  I realised I haven't packaged the audit and consulting side of what I do
+                  anywhere. The way I land these engagements. The framework I run during the
+                  audit. How AI Studio, Antigravity and Claude Code give me the foundation to put
+                  proposals like this together.
+                </p>
+                <p className="font-bold text-white">
+                  So I'm adding it to the Bumpsale. A live session covering:
+                </p>
+              </div>
+              <ul className="space-y-3 mb-6 text-sm md:text-base max-w-3xl">
+                {[
+                  { icon: '🔍', text: 'How I land £3,000+ day rates for audits' },
+                  { icon: '📋', text: 'The framework I use during the audit itself' },
+                  { icon: '🤖', text: 'How Claude, AI Studio and Antigravity produce findings clients actually act on' },
+                  { icon: '💼', text: 'How to structure proposals that close six-figure engagements' },
+                ].map((line, idx) => (
+                  <li key={idx} className="flex items-start gap-3 leading-relaxed opacity-90">
+                    <span className="text-lg md:text-xl shrink-0 mt-0.5">{line.icon}</span>
+                    <span>{line.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm md:text-base opacity-85 leading-relaxed mb-6 max-w-3xl">
+                If you bought the Bumpsale to build for yourself, the rest of the bundle is what
+                you need. If you also want to monetise these skills with clients at premium rates,
+                this is the bonus that pays for the entire bundle a hundred times over.
+              </p>
+              <div className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-5">
+                <Flame size={12} /> Worth £{BONUS_VALUE} · Free with any Bumpsale purchase
+              </div>
+              <p className="text-xs md:text-sm opacity-60 italic max-w-3xl">
+                Already bought? This is yours automatically. Check your email for the session date
+                and details.
+              </p>
+            </div>
+          </motion.div>
+
           {/* Flexible attendance note */}
           <div className="bg-white border border-forest-green/10 rounded-2xl p-5 md:p-7 mb-16 md:mb-20 max-w-4xl mx-auto">
             <div className="flex items-start gap-3 md:gap-4">
@@ -1235,7 +1324,7 @@ export default function Bumpsale() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-3">
                 Locked in today
@@ -1246,6 +1335,17 @@ export default function Bumpsale() {
               <div className="text-xs md:text-sm opacity-70 mt-2">
                 VCL Premium, Claude OS, The Site Sprint, The Ship Sprint. Live programme starts
                 Tuesday 9 June.
+              </div>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-3">
+                Just added bonus
+              </div>
+              <div className="text-4xl md:text-5xl font-display font-black text-terracotta tabular-nums">
+                £{BONUS_VALUE.toLocaleString()}
+              </div>
+              <div className="text-xs md:text-sm opacity-70 mt-2">
+                The Audit & Consulting Playbook. Live session for everyone who buys the Bumpsale.
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
@@ -1273,11 +1373,11 @@ export default function Bumpsale() {
           </div>
 
           <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed max-w-3xl mx-auto text-center">
-            The core stack alone is worth{' '}
+            The core stack plus the new bonus is worth{' '}
             <span className="text-terracotta font-bold">
-              {Math.round(READY_VALUE / PRICE_CAP)}× the top price
+              {Math.round((READY_VALUE + BONUS_VALUE) / PRICE_CAP)}× the top price
             </span>
-            . The bonuses are upside.
+            . The SaaS bonuses are pure upside.
           </p>
         </div>
       </Section>
