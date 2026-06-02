@@ -1190,13 +1190,57 @@ export default function Bumpsale() {
             {READY_BUNDLE.map((item, i) => renderBundleCard(item, i))}
           </div>
 
+          {/* Flexible attendance note */}
+          <div className="bg-white border border-forest-green/10 rounded-2xl p-5 md:p-7 mb-16 md:mb-20 max-w-4xl mx-auto">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="w-9 h-9 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+                <Check size={18} strokeWidth={3} />
+              </div>
+              <div>
+                <h4 className="text-base md:text-lg font-display font-extrabold mb-2">
+                  Flexible attendance
+                </h4>
+                <p className="text-sm md:text-base leading-relaxed opacity-80">
+                  Claude OS, The Site Sprint and The Ship Sprint are all included in the bundle.
+                  Each one stands on its own. Come to everything, come to some, come to one. You
+                  decide what's useful for you. Every session is recorded and lives inside VCL, so
+                  missing a live one isn't the end of the world.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tier 2: The Path to Monetisation */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
+            <div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                Tier 2 · The Path to Monetisation
+              </div>
+              <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
+                Turn the same skills into £3,000+ day rates.
+              </h3>
+              <p className="text-sm md:text-base opacity-70 mt-2 max-w-2xl">
+                One live masterclass on how Toni lands £3,000+ day rate audits and structures
+                proposals that close six-figure engagements. Just added.
+              </p>
+            </div>
+            <div className="text-right shrink-0">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1">
+                Stated value
+              </div>
+              <div className="text-2xl md:text-3xl font-display font-black text-terracotta">
+                £{BONUS_VALUE}
+              </div>
+            </div>
+          </div>
+
           {/* Just-added bonus callout */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5 }}
-            className="bg-forest-green text-white rounded-[2rem] p-7 md:p-10 mb-8 md:mb-10 relative overflow-hidden max-w-5xl mx-auto"
+            className="bg-forest-green text-white rounded-[2rem] p-7 md:p-10 mb-16 md:mb-20 relative overflow-hidden"
           >
             <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-terracotta/20 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-32 -left-20 w-[260px] h-[260px] bg-terracotta/10 rounded-full blur-3xl pointer-events-none" />
@@ -1204,14 +1248,10 @@ export default function Bumpsale() {
               <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-5">
                 <Flame size={12} className="text-terracotta" /> Just added · 31 May
               </div>
-              <h3 className="text-3xl md:text-5xl font-display font-extrabold leading-[1.05] mb-4">
+              <h3 className="text-3xl md:text-5xl font-display font-extrabold leading-[1.05] mb-6">
                 I just earned £3,500 for a day's work.{' '}
                 <span className="text-terracotta italic">Here's how.</span>
               </h3>
-              <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed mb-6 max-w-3xl">
-                A new bonus masterclass walking through the exact audit playbook I use with
-                clients.
-              </p>
               <div className="space-y-4 mb-6 text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">
                 <p>
                   This morning I'm sending out a six-figure build proposal off the back of an
@@ -1219,13 +1259,13 @@ export default function Bumpsale() {
                   day, with a much bigger engagement to follow.
                 </p>
                 <p>
-                  I realised I haven't packaged the audit side of what I do
-                  anywhere. The way I land these engagements. The framework I run during the
-                  audit. How AI Studio, Antigravity and Claude Code give me the foundation to put
-                  proposals like this together.
+                  I realised I haven't packaged the audit side of what I do anywhere. The way I
+                  land these engagements. The framework I run during the audit. How AI Studio,
+                  Antigravity and Claude Code give me the foundation to put proposals like this
+                  together.
                 </p>
                 <p className="font-bold text-white">
-                  So I'm adding it to the Bumpsale. A live session covering:
+                  So I'm adding it to the Bumpsale. A live masterclass covering:
                 </p>
               </div>
               <ul className="space-y-3 mb-6 text-sm md:text-base max-w-3xl">
@@ -1256,31 +1296,11 @@ export default function Bumpsale() {
             </div>
           </motion.div>
 
-          {/* Flexible attendance note */}
-          <div className="bg-white border border-forest-green/10 rounded-2xl p-5 md:p-7 mb-16 md:mb-20 max-w-4xl mx-auto">
-            <div className="flex items-start gap-3 md:gap-4">
-              <div className="w-9 h-9 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
-                <Check size={18} strokeWidth={3} />
-              </div>
-              <div>
-                <h4 className="text-base md:text-lg font-display font-extrabold mb-2">
-                  Flexible attendance
-                </h4>
-                <p className="text-sm md:text-base leading-relaxed opacity-80">
-                  Claude OS, The Site Sprint and The Ship Sprint are all included in the bundle.
-                  Each one stands on its own. Come to everything, come to some, come to one. You
-                  decide what's useful for you. Every session is recorded and lives inside VCL, so
-                  missing a live one isn't the end of the world.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Tier 2: The Bonuses */}
+          {/* Tier 3: Lifetime SaaS upside */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 md:mb-8 pb-4 border-b border-forest-green/15">
             <div>
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
-                Tier 2 · Lifetime SaaS upside
+                Tier 3 · Lifetime SaaS upside
               </div>
               <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight">
                 Two AI products. Yours forever. Growing with you.
