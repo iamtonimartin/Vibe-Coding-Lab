@@ -211,13 +211,13 @@ async function startServer() {
   // Per-route meta overrides injected server-side so crawlers get correct tags without executing JS
   const routeMeta: Record<string, { title: string; description: string; canonical: string; image: string }> = {
     '/': {
-      title: 'Vibe Coding Lab — Build AI-Powered Apps Without Code',
-      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab — live sprints, community, tools and lifetime access.',
+      title: 'Vibe Coding Lab: Build AI-Powered Apps Without Code',
+      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab. Live sprints, community, tools and lifetime access.',
       canonical: `${BASE_URL}/`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/freetraining': {
-      title: 'Free Training — How to Build AI Apps Without Code | Vibe Coding Lab',
+      title: 'Free Training: How to Build AI Apps Without Code | Vibe Coding Lab',
       description: 'Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed.',
       canonical: `${BASE_URL}/freetraining`,
       image: `${BASE_URL}/og-video-series.jpg`,
@@ -235,15 +235,21 @@ async function startServer() {
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/vibeplaybook': {
-      title: 'The Vibe Coding Playbook — Tools, Models & Reference | Vibe Coding Lab',
+      title: 'The Vibe Coding Playbook: Tools, Models & Reference | Vibe Coding Lab',
       description: 'A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI.',
       canonical: `${BASE_URL}/vibeplaybook`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/playbook': {
       title: 'Get the Vibe Playbook | Vibe Coding Lab',
-      description: 'Access the Vibe Playbook — a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code.',
+      description: 'Access the Vibe Playbook, a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code.',
       canonical: `${BASE_URL}/playbook`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/bumpsale': {
+      title: 'The ultimate AI build bundle for non-technical founders | Vibe Coding Lab',
+      description: 'Worth £1,962. Yours from £1. The price climbs £1 with every sale, capped at £147. Bumpsale ends 11:59pm Thursday 4 June.',
+      canonical: `${BASE_URL}/bumpsale`,
       image: `${BASE_URL}/og-image.jpg`,
     },
   };

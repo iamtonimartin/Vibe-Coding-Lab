@@ -12,6 +12,7 @@ import {
   Inbox,
   Twitter,
   Linkedin,
+  Facebook,
   Link2,
   Check,
   Heart,
@@ -95,6 +96,7 @@ export default function Complete() {
 
   const tweetHref = `https://x.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(SHARE_URL)}`;
   const linkedinHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_URL)}`;
+  const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}`;
   const emailHref = `mailto:?subject=${encodeURIComponent(SHARE_EMAIL_SUBJECT)}&body=${encodeURIComponent(SHARE_EMAIL_BODY)}`;
 
   return (
@@ -289,12 +291,12 @@ export default function Complete() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
               <a
-                href={tweetHref}
+                href={facebookHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
               >
-                <Twitter size={18} /> Share on X
+                <Facebook size={18} /> Share on Facebook
               </a>
               <a
                 href={linkedinHref}
@@ -303,6 +305,14 @@ export default function Complete() {
                 className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
               >
                 <Linkedin size={18} /> Share on LinkedIn
+              </a>
+              <a
+                href={tweetHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
+              >
+                <Twitter size={18} /> Share on X
               </a>
               <a
                 href={emailHref}
