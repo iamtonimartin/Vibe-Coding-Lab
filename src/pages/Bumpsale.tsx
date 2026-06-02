@@ -17,6 +17,10 @@ import {
   Wrench,
   Code,
   Globe,
+  Search,
+  ClipboardList,
+  Bot,
+  Briefcase,
 } from 'lucide-react';
 
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
@@ -1252,7 +1256,7 @@ export default function Bumpsale() {
                 I just earned £3,500 for a day's work.{' '}
                 <span className="text-terracotta italic">Here's how.</span>
               </h3>
-              <div className="space-y-4 mb-6 text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">
+              <div className="space-y-4 mb-6 text-sm md:text-base opacity-90 leading-relaxed">
                 <p>
                   This morning I'm sending out a six-figure build proposal off the back of an
                   onsite AI and Systems audit I ran yesterday in Middlesbrough. £3,500 for the
@@ -1268,20 +1272,22 @@ export default function Bumpsale() {
                   So I'm adding it to the Bumpsale. A live masterclass covering:
                 </p>
               </div>
-              <ul className="space-y-3 mb-6 text-sm md:text-base max-w-3xl">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6 text-sm md:text-base">
                 {[
-                  { icon: '🔍', text: 'How I land £3,000+ day rates for audits' },
-                  { icon: '📋', text: 'The framework I use during the audit itself' },
-                  { icon: '🤖', text: 'How Claude, AI Studio and Antigravity produce findings clients actually act on' },
-                  { icon: '💼', text: 'How to structure proposals that close six-figure engagements' },
+                  { Icon: Search, text: 'How I land £3,000+ day rates for audits' },
+                  { Icon: ClipboardList, text: 'The framework I use during the audit itself' },
+                  { Icon: Bot, text: 'How Claude, AI Studio and Antigravity produce findings clients actually act on' },
+                  { Icon: Briefcase, text: 'How to structure proposals that close six-figure engagements' },
                 ].map((line, idx) => (
                   <li key={idx} className="flex items-start gap-3 leading-relaxed opacity-90">
-                    <span className="text-lg md:text-xl shrink-0 mt-0.5">{line.icon}</span>
+                    <span className="text-terracotta shrink-0 mt-0.5">
+                      <line.Icon size={20} strokeWidth={2.25} />
+                    </span>
                     <span>{line.text}</span>
                   </li>
                 ))}
               </ul>
-              <p className="text-sm md:text-base opacity-85 leading-relaxed mb-6 max-w-3xl">
+              <p className="text-sm md:text-base opacity-85 leading-relaxed mb-6">
                 If you bought the Bumpsale to build for yourself, the rest of the bundle is what
                 you need. If you also want to monetise these skills with clients at premium rates,
                 this is the bonus that pays for the entire bundle a hundred times over.
@@ -1289,7 +1295,7 @@ export default function Bumpsale() {
               <div className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-5">
                 <Flame size={12} /> Worth £{BONUS_VALUE} · Free with any Bumpsale purchase
               </div>
-              <p className="text-xs md:text-sm opacity-60 italic max-w-3xl">
+              <p className="text-xs md:text-sm opacity-60 italic">
                 Already bought? This is yours automatically. Check your email for the session date
                 and details.
               </p>
