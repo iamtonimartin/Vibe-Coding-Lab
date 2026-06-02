@@ -1224,8 +1224,8 @@ export default function Bumpsale() {
                 Turn the same skills into £3,000+ day rates.
               </h3>
               <p className="text-sm md:text-base opacity-70 mt-2 max-w-2xl">
-                One live masterclass on how Toni lands £3,000+ day rate audits and structures
-                proposals that close six-figure engagements. Just added.
+                Live masterclass Thursday 16 July, 9:30am UK. How Toni lands £3,000+ day rate
+                audits and structures proposals that close six-figure engagements.
               </p>
             </div>
             <div className="text-right shrink-0">
@@ -1292,12 +1292,17 @@ export default function Bumpsale() {
                 you need. If you also want to monetise these skills with clients at premium rates,
                 this is the bonus that pays for the entire bundle a hundred times over.
               </p>
-              <div className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-5">
-                <Flame size={12} /> Worth £{BONUS_VALUE} · Free with any Bumpsale purchase
+              <div className="flex flex-wrap items-center gap-3 mb-5">
+                <div className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest">
+                  <Flame size={12} /> Worth £{BONUS_VALUE} · Free with any Bumpsale purchase
+                </div>
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest">
+                  <Clock size={12} className="text-terracotta" /> Live · Thu 16 July · 9:30am UK
+                </div>
               </div>
               <p className="text-xs md:text-sm opacity-60 italic">
-                Already bought? This is yours automatically. Check your email for the session date
-                and details.
+                Already bought? This is yours automatically. The masterclass is Thursday 16 July
+                at 9:30am UK. Joining link inside VCL.
               </p>
             </div>
           </motion.div>

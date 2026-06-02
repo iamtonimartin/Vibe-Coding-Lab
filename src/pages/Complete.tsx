@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
@@ -9,7 +10,17 @@ import {
   Calendar,
   ArrowRight,
   Inbox,
+  Twitter,
+  Linkedin,
+  Link2,
+  Check,
+  Heart,
 } from 'lucide-react';
+
+const SHARE_URL = 'https://thevibecodinglab.co/bumpsale';
+const SHARE_TEXT = 'Just locked in lifetime access to the Vibe Coding Lab Bumpsale. Worth £1,962. Same bundle whatever you pay, but the price climbs with every sale and it closes 11:59pm Thursday 4 June.';
+const SHARE_EMAIL_SUBJECT = 'You should see this before it closes';
+const SHARE_EMAIL_BODY = `I just locked in lifetime access via the Vibe Coding Lab Bumpsale. Same bundle whatever you pay, but the price climbs with every sale and the whole thing is gone after 11:59pm Thursday 4 June.\n\n${SHARE_URL}`;
 
 type Status = 'now' | 'soon' | 'later';
 
@@ -45,9 +56,9 @@ const DELIVERABLES: {
   },
   {
     title: 'The Art of the Audit Masterclass',
-    when: 'Date inside VCL',
+    when: 'Thu 16 July, 9:30am UK',
     status: 'later',
-    detail: "New bonus masterclass: how to land £3,000+ day rate audits, the framework Toni runs onsite, and how to structure proposals that close six-figure engagements. Date and joining link announced inside VCL.",
+    detail: "New bonus masterclass live Thursday 16 July at 9:30am UK. How to land £3,000+ day rate audits, the framework Toni runs onsite, and how to structure proposals that close six-figure engagements. Joining link inside VCL.",
   },
   {
     title: 'Relavo',
@@ -70,6 +81,22 @@ const statusStyles: Record<Status, { dot: string; label: string }> = {
 };
 
 export default function Complete() {
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(SHARE_URL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard not available; ignore
+    }
+  };
+
+  const tweetHref = `https://x.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(SHARE_URL)}`;
+  const linkedinHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_URL)}`;
+  const emailHref = `mailto:?subject=${encodeURIComponent(SHARE_EMAIL_SUBJECT)}&body=${encodeURIComponent(SHARE_EMAIL_BODY)}`;
+
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
       <Helmet>
@@ -237,6 +264,66 @@ export default function Complete() {
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-terracotta">
                 <Clock size={14} /> 10 minute exercise
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SHARE WITH A FRIEND */}
+      <section className="py-14 md:py-20 px-4 md:px-6">
+        <div className="max-w-4xl mx-auto bg-forest-green text-white rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-[320px] h-[320px] bg-terracotta/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-terracotta/20 border border-terracotta/40 mb-6">
+              <Heart size={22} className="text-terracotta" />
+            </div>
+            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
+              Share the love
+            </div>
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight mb-4">
+              Got a business bestie building with AI?
+            </h2>
+            <p className="text-base md:text-lg opacity-85 leading-relaxed mb-8 max-w-2xl mx-auto">
+              The Bumpsale is open until 11:59pm Thursday 4 June. Send them the page and they can
+              lock in the same bundle you just did. Same bundle whatever they pay.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+              <a
+                href={tweetHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
+              >
+                <Twitter size={18} /> Share on X
+              </a>
+              <a
+                href={linkedinHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
+              >
+                <Linkedin size={18} /> Share on LinkedIn
+              </a>
+              <a
+                href={emailHref}
+                className="inline-flex items-center gap-2 bg-white text-forest-green px-5 py-3 rounded-2xl text-sm font-bold hover:bg-warm-cream hover:scale-105 transition-all shadow-lg"
+              >
+                <Mail size={18} /> Email a friend
+              </a>
+              <button
+                onClick={copyLink}
+                className="inline-flex items-center gap-2 bg-terracotta text-white px-5 py-3 rounded-2xl text-sm font-bold hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/30"
+              >
+                {copied ? (
+                  <>
+                    <Check size={18} strokeWidth={3} /> Link copied
+                  </>
+                ) : (
+                  <>
+                    <Link2 size={18} /> Copy link
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
