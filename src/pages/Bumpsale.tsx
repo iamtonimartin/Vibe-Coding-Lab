@@ -957,19 +957,17 @@ export default function Bumpsale() {
       <div className="bg-terracotta text-white overflow-hidden border-b border-burnt-orange/40">
         <div className="flex whitespace-nowrap animate-marquee py-2 md:py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider">
           {[0, 1].map((dup) => (
-            <div key={dup} className="flex shrink-0 items-center">
-              {[
-                '🎁 Just added',
-                'The Audit & Consulting Playbook',
-                'How I charge £3,500/day',
-                'Worth £247',
-                'Yours free with every Bumpsale',
-              ].map((segment, i) => (
-                <span key={i} className="flex items-center">
-                  <span className="px-5 md:px-7">{segment}</span>
-                  <span className="opacity-50">·</span>
-                </span>
-              ))}
+            <div key={dup} className="flex shrink-0 items-center gap-8 md:gap-10 px-8 md:px-10">
+              <Sparkles size={14} className="shrink-0" />
+              <span>Just added to the Bumpsale</span>
+              <span className="opacity-50">·</span>
+              <span>The Art of the Audit Masterclass</span>
+              <span className="opacity-50">·</span>
+              <span>How I land £3,000+ day rates</span>
+              <span className="opacity-50">·</span>
+              <span>Worth £247</span>
+              <span className="opacity-50">·</span>
+              <span>Yours free with every purchase</span>
             </div>
           ))}
         </div>
@@ -1211,8 +1209,8 @@ export default function Bumpsale() {
                 <span className="text-terracotta italic">Here's how.</span>
               </h3>
               <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed mb-6 max-w-3xl">
-                A new bonus session walking through the exact audit and consulting playbook I use
-                with clients.
+                A new bonus masterclass walking through the exact audit playbook I use with
+                clients.
               </p>
               <div className="space-y-4 mb-6 text-sm md:text-base opacity-90 leading-relaxed max-w-3xl">
                 <p>
@@ -1221,7 +1219,7 @@ export default function Bumpsale() {
                   day, with a much bigger engagement to follow.
                 </p>
                 <p>
-                  I realised I haven't packaged the audit and consulting side of what I do
+                  I realised I haven't packaged the audit side of what I do
                   anywhere. The way I land these engagements. The framework I run during the
                   audit. How AI Studio, Antigravity and Claude Code give me the foundation to put
                   proposals like this together.
@@ -1345,7 +1343,7 @@ export default function Bumpsale() {
                 £{BONUS_VALUE.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
-                The Audit & Consulting Playbook. Live session for everyone who buys the Bumpsale.
+                The Art of the Audit Masterclass. Live session for everyone who buys the Bumpsale.
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
