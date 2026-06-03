@@ -667,8 +667,8 @@ const READY_BUNDLE: BundleItem[] = [
     kind: 'browser',
     images: ['/site-sprint.jpg'],
     paragraphs: [
-      "Stop paying for things you could build in an afternoon.",
-      "One live session. Build and deploy a real website with AI, from blank page to live URL. The skill that turns \"I need to hire a developer\" into \"I'll just make it myself this weekend.\"",
+      "Stop paying for landing pages you could ship in an afternoon.",
+      "One live session. Build and deploy a real landing page or funnel with AI, from blank page to live URL. The skill that turns \"I need to brief a designer for this campaign\" into \"I'll just ship it this weekend.\"",
       "Live with Toni Wednesday 10 June, 1pm UK. Recording included in your VCL access.",
     ],
     cta: 'See sites built with vibe coding',
@@ -704,8 +704,8 @@ const READY_BUNDLE: BundleItem[] = [
     kind: 'code',
     images: ['/ship-sprint.jpg'],
     paragraphs: [
-      "Ship your first web app. For real.",
-      "Two live workshops, hosted inside VCL. You'll plan a build with AI, build it out with Claude Code, connect a database with Supabase and deploy to Vercel. By the end, you have a real, working, deployed web app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
+      "Ship your first real app or tool. The kind that runs in your business or that you can sell.",
+      "Two live workshops, hosted inside VCL. Build and deploy a real app or tool with AI. Something that streamlines a part of your business, replaces a SaaS subscription you keep paying for, or becomes a product you can put a price on. By the end, you have a working, deployed app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
       "Live with Toni Tuesday 7 July and Thursday 9 July, 10am UK. Recordings included in your VCL access.",
     ],
   },
