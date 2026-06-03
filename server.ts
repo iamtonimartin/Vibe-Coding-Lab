@@ -189,6 +189,43 @@ app.post('/api/subscribe-playbook', async (req, res) => {
   }
 });
 
+// POST /api/referral
+// Captures a buyer crediting their referrer on the /complete page. Logs to stdout
+// (visible in Railway logs) and forwards to REFERRAL_WEBHOOK_URL if configured
+// (e.g. a Zapier/Make/Slack webhook).
+app.post('/api/referral', async (req, res) => {
+  const { referrerName, buyerEmail } = req.body ?? {};
+
+  if (!referrerName || typeof referrerName !== 'string' || !referrerName.trim()) {
+    return res.status(400).json({ error: 'referrerName is required.' });
+  }
+
+  const payload = {
+    referrerName: referrerName.trim(),
+    buyerEmail: (typeof buyerEmail === 'string' && buyerEmail.trim()) || null,
+    receivedAt: new Date().toISOString(),
+    userAgent: req.headers['user-agent'] ?? null,
+  };
+
+  console.log('REFERRAL_CREDIT', JSON.stringify(payload));
+
+  const webhook = process.env.REFERRAL_WEBHOOK_URL;
+  if (webhook) {
+    try {
+      await fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error('Referral webhook failed:', (err as Error).message);
+      // Still return success to the buyer since we have the log.
+    }
+  }
+
+  return res.json({ success: true });
+});
+
 // Serve Vite build in production
 async function startServer() {
   let renderApp: ((url: string) => string) | null = null;

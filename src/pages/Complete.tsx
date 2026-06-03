@@ -15,7 +15,12 @@ import {
   Facebook,
   Link2,
   Check,
-  Heart,
+  Gift,
+  Search,
+  Lightbulb,
+  Sparkles,
+  UserPlus,
+  Flame,
 } from 'lucide-react';
 
 const SHARE_URL = 'https://thevibecodinglab.co/bumpsale';
@@ -83,6 +88,10 @@ const statusStyles: Record<Status, { dot: string; label: string }> = {
 
 export default function Complete() {
   const [copied, setCopied] = useState(false);
+  const [referrerName, setReferrerName] = useState('');
+  const [buyerEmail, setBuyerEmail] = useState('');
+  const [referralStatus, setReferralStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [referralError, setReferralError] = useState<string | null>(null);
 
   const copyLink = async () => {
     try {
@@ -91,6 +100,31 @@ export default function Complete() {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // clipboard not available; ignore
+    }
+  };
+
+  const submitReferral = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!referrerName.trim()) return;
+    setReferralStatus('submitting');
+    setReferralError(null);
+    try {
+      const res = await fetch('/api/referral', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          referrerName: referrerName.trim(),
+          buyerEmail: buyerEmail.trim() || null,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || 'Something went wrong. Try again or reply to your order email.');
+      }
+      setReferralStatus('success');
+    } catch (err) {
+      setReferralStatus('error');
+      setReferralError(err instanceof Error ? err.message : 'Something went wrong.');
     }
   };
 
@@ -271,25 +305,78 @@ export default function Complete() {
         </div>
       </section>
 
-      {/* SHARE WITH A FRIEND */}
+      {/* REFER A FRIEND, BOOK A CALL */}
       <section className="py-14 md:py-20 px-4 md:px-6">
         <div className="max-w-4xl mx-auto bg-forest-green text-white rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
           <div className="absolute -top-24 -right-24 w-[320px] h-[320px] bg-terracotta/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-terracotta/20 border border-terracotta/40 mb-6">
-              <Heart size={22} className="text-terracotta" />
+          <div className="absolute -bottom-32 -left-20 w-[260px] h-[260px] bg-terracotta/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative">
+            <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-5">
+              <Flame size={12} className="text-terracotta" /> Just added
             </div>
-            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
-              Share the love
+            <div className="flex items-center gap-3 mb-4">
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-terracotta/20 border border-terracotta/40 shrink-0">
+                <Gift size={20} className="text-terracotta" />
+              </div>
+              <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta">
+                Refer a friend, book a call
+              </div>
             </div>
             <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight mb-4">
               Got a business bestie building with AI?
             </h2>
-            <p className="text-base md:text-lg opacity-85 leading-relaxed mb-8 max-w-2xl mx-auto">
-              The Bumpsale is open until 11:59pm Thursday 4 June. Send them the page and they can
-              lock in the same bundle you just did. Same bundle whatever they pay.
+            <p className="text-base md:text-lg opacity-85 leading-relaxed mb-8 max-w-3xl">
+              The Bumpsale is open until 11:59pm Thursday 4 June. If you share it and someone you
+              know buys before the deadline, I'll book you in for a free 30-minute strategy call
+              with me.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7 mb-8">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-4">
+                What we cover (your choice)
+              </div>
+              <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 text-sm md:text-base">
+                {[
+                  {
+                    Icon: Search,
+                    title: 'AI setup audit',
+                    body: "I look at how you're currently using AI and tell you what to fix, what to add, what to drop.",
+                  },
+                  {
+                    Icon: Lightbulb,
+                    title: 'App build strategy',
+                    body: "Bring an idea or a half-finished thought. I'll help you scope it and decide what to build first.",
+                  },
+                  {
+                    Icon: Sparkles,
+                    title: 'Personal Claude OS walkthrough',
+                    body: 'We set up Claude around your specific business together, live on the call.',
+                  },
+                ].map(({ Icon, title, body }) => (
+                  <li key={title} className="flex flex-col gap-2">
+                    <Icon size={20} className="text-terracotta shrink-0" strokeWidth={2.25} />
+                    <div className="font-bold">{title}</div>
+                    <div className="text-xs md:text-sm opacity-80 leading-relaxed">{body}</div>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs md:text-sm opacity-70 mt-5">
+                Redeem any time before the end of September 2026. One referral, one call. No cap.
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                How to claim
+              </div>
+              <p className="text-sm md:text-base opacity-85 leading-relaxed max-w-3xl">
+                Share the link. Ask whoever buys to mention your name on this page, or hit reply
+                on your order confirmation email and tell me yourself. I'll send your Calendly
+                link as soon as their purchase is confirmed.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
               <a
                 href={facebookHref}
                 target="_blank"
@@ -335,6 +422,92 @@ export default function Complete() {
                 )}
               </button>
             </div>
+            <p className="text-xs md:text-sm opacity-60 italic">
+              They get the same bundle as you, whatever they pay.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CREDIT YOUR REFERRER */}
+      <section className="px-4 md:px-6 pb-14 md:pb-20">
+        <div className="max-w-4xl mx-auto bg-white border border-forest-green/10 rounded-[2rem] p-8 md:p-12">
+          <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
+            <div className="md:w-1/2">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-terracotta/10 text-terracotta shrink-0">
+                  <UserPlus size={20} />
+                </div>
+                <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta">
+                  Were you referred?
+                </div>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-3">
+                Tell us who sent you.
+              </h3>
+              <p className="text-sm md:text-base opacity-80 leading-relaxed">
+                Drop the name of the person who sent you the Bumpsale and I'll book them in for
+                their free 30-minute strategy call. They earn the reward, you make their day.
+              </p>
+            </div>
+            <div className="md:w-1/2 md:pl-2">
+              {referralStatus === 'success' ? (
+                <div className="bg-forest-green text-white rounded-2xl p-6 md:p-7">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-terracotta mb-3">
+                    <Check size={20} strokeWidth={3} />
+                  </div>
+                  <h4 className="text-lg md:text-xl font-display font-extrabold mb-2">
+                    Thanks, logged.
+                  </h4>
+                  <p className="text-sm opacity-80 leading-relaxed">
+                    I'll reach out to them with their Calendly link as soon as your order is on
+                    my dashboard. Cheers for crediting them.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={submitReferral} className="space-y-3">
+                  <div>
+                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1.5">
+                      Who referred you?
+                    </label>
+                    <input
+                      type="text"
+                      value={referrerName}
+                      onChange={(e) => setReferrerName(e.target.value)}
+                      placeholder="Their name"
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1.5">
+                      Your email (optional)
+                    </label>
+                    <input
+                      type="email"
+                      value={buyerEmail}
+                      onChange={(e) => setBuyerEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
+                    />
+                    <p className="text-[11px] opacity-60 mt-1.5">
+                      Helps me match this to your order. Optional, you can also reply to your
+                      confirmation email.
+                    </p>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={referralStatus === 'submitting' || !referrerName.trim()}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-terracotta text-white px-5 py-3 rounded-2xl text-sm font-bold uppercase tracking-widest hover:bg-burnt-orange hover:scale-[1.01] transition-all shadow-lg shadow-terracotta/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  >
+                    {referralStatus === 'submitting' ? 'Sending…' : 'Credit my referrer'}
+                  </button>
+                  {referralStatus === 'error' && referralError && (
+                    <p className="text-sm text-terracotta">{referralError}</p>
+                  )}
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -343,12 +516,12 @@ export default function Complete() {
       <section className="py-14 md:py-20 px-4 md:px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <h3 className="text-2xl md:text-3xl font-display font-extrabold mb-4 leading-tight">
-            Something missing or off?
+            Need anything from me?
           </h3>
           <p className="text-base md:text-lg opacity-80 leading-relaxed mb-8">
-            Reply to your order confirmation email and I'll personally sort it. The Bumpsale model
-            relies on every sale counting toward the price for the next buyer, so refunds aren't
-            possible, but I will make sure you get everything you paid for.
+            Reply to your order confirmation email and I'll personally sort it. Quick reminder
+            that the Bumpsale model means every sale counts toward the price for the next buyer,
+            so refunds aren't possible. But if anything's missing or off, I want to know.
           </p>
           <Link
             to="/"
