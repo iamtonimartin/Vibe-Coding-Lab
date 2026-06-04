@@ -265,7 +265,7 @@ export default function Landing() {
                 icon: <Play size={26} />,
                 badge: "Free Video Series",
                 title: "How I Built My First AI App in a Week",
-                desc: "Watch the 3-part video series showing the exact tools, stack and process behind Relay and Insights.",
+                desc: "Watch the 3-part video series showing the exact tools, stack and process behind Relavo and Zenitro.",
                 cta: "Watch Free",
                 href: "/freetraining",
                 bg: "bg-forest-green text-white",
@@ -418,7 +418,7 @@ export default function Landing() {
                 I build real AI-powered SaaS products using no-code AI tools. Not as a side project. As fully functional, deployed products that demonstrate exactly what is possible with these tools.
               </p>
               <p>
-                Relay is my AI assistant builder. Insights is my diagnostic and quiz platform. Both built using the exact method I am teaching inside the Vibe Coding Lab.
+                Relavo is my AI assistant builder. Zenitro is my diagnostic and quiz platform. Both built using the exact method I am teaching inside the Vibe Coding Lab.
               </p>
               <p>
                 I build in public. I share every step. Inside this community you build alongside me.
@@ -451,14 +451,14 @@ export default function Landing() {
                 iconBg: "bg-white/10 text-white",
               },
               {
-                title: "Access to Relay",
+                title: "Access to Relavo",
                 desc: "Toni's AI assistant builder. Explore it, use it and get inspired by what is possible when you build with no-code AI tools.",
                 icon: <Layout size={26} />,
                 bg: "bg-white text-forest-green",
                 iconBg: "bg-terracotta/10 text-terracotta",
               },
               {
-                title: "Access to Insights",
+                title: "Access to Zenitro",
                 desc: "The diagnostic and quiz platform. Yours from day one. Study it, use it, build something similar yourself.",
                 icon: <BarChart size={26} />,
                 bg: "bg-white text-forest-green",
@@ -522,7 +522,7 @@ export default function Landing() {
               I do not teach things I have not done.
             </p>
             <p>
-              Relay and Insights are not mock-ups or demos. They are fully functional SaaS products built using the same no-code AI tools taught inside the community.
+              Relavo and Zenitro are not mock-ups or demos. They are fully functional SaaS products built using the same no-code AI tools taught inside the community.
             </p>
             <p className="font-bold text-terracotta">
               Google AI Studio. Antigravity IDE. Claude Code.
@@ -535,14 +535,14 @@ export default function Landing() {
           <div className="grid md:grid-cols-2 gap-12">
             {[
               {
-                name: "Relay",
+                name: "Relavo",
                 subtitle: "A SaaS tool for building AI chatbot assistants",
-                image: "https://ascendz.co/wp-content/uploads/2026/03/Relay-Assistant-Set-Up-scaled.png"
+                image: "/relavo-3.png"
               },
               {
-                name: "Insights",
+                name: "Zenitro",
                 subtitle: "A SaaS tool for creating quizzes and diagnostics with AI",
-                image: "https://ascendz.co/wp-content/uploads/2026/03/Insights-Results-Page-scaled.png"
+                image: "/zenitro-3.png"
               }
             ].map((app) => (
               <motion.div
@@ -680,7 +680,7 @@ export default function Landing() {
               <ul className="flex flex-col gap-3 flex-1 mb-8">
                 {[
                   "Everything in Premium +",
-                  "Access to all Vibed Apps including Relay and every future tool we build",
+                  "Access to all Vibed Apps including Relavo and every future tool we build",
                   "Monthly VIP-only session exclusively for VIP members",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm leading-snug">

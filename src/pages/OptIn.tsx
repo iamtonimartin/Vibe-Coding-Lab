@@ -46,7 +46,7 @@ export default function OptIn() {
               {[
                 "Video 1: Why this is the most exciting time to be building with AI",
                 "Video 2: The exact tech stack I use to build micro SaaS apps",
-                "Video 3: Behind the scenes of Relay and Insights, two fully functional apps I built myself"
+                "Video 3: Behind the scenes of Relavo and Zenitro, two fully functional apps I built myself"
               ].map((text, i) => (
                 <li key={i} className="flex items-start gap-3 text-lg font-bold">
                   <CheckCircle2 className="text-terracotta w-6 h-6 shrink-0 mt-0.5" />

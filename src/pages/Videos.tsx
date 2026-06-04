@@ -126,7 +126,7 @@ export default function Videos() {
               Video 3. Behind the Scenes. The Apps and Tools That Started It All.
             </h2>
             <p className="text-lg md:text-xl opacity-80 leading-relaxed">
-              Get an exclusive look at Relay and Insights, two fully functional SaaS apps built using Google AI Studio, Antigravity and Claude Code so you can see how it all comes together for yourself.
+              Get an exclusive look at Relavo and Zenitro, two fully functional SaaS apps built using Google AI Studio, Antigravity and Claude Code so you can see how it all comes together for yourself.
             </p>
           </div>
           <div className="aspect-video rounded-[2rem] overflow-hidden shadow-xl">
