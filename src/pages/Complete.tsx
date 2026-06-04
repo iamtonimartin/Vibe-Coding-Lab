@@ -21,6 +21,7 @@ import {
   Sparkles,
   UserPlus,
   Flame,
+  Crown,
 } from 'lucide-react';
 
 const SHARE_URL = 'https://thevibecodinglab.co/bumpsale';
@@ -319,7 +320,7 @@ export default function Complete() {
                 <Gift size={20} className="text-terracotta" />
               </div>
               <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta">
-                Refer a friend, book a call
+                Refer a friend, earn a reward
               </div>
             </div>
             <h2 className="text-3xl md:text-5xl font-display font-extrabold leading-tight mb-4">
@@ -327,29 +328,39 @@ export default function Complete() {
             </h2>
             <p className="text-base md:text-lg opacity-85 leading-relaxed mb-8 max-w-3xl">
               The Bumpsale is open until 11:59pm Thursday 4 June. If you share it and someone you
-              know buys before the deadline, I'll book you in for a free 30-minute strategy call
-              with me.
+              know buys before the deadline, you'll get something in return.
             </p>
 
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7 mb-8">
-              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-4">
-                What we cover (your choice)
+            {/* Reward tier 1: 1 referral */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7 mb-5">
+              <div className="flex items-start gap-4 mb-5">
+                <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-terracotta/20 text-terracotta shrink-0">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                    Refer 1 person
+                  </div>
+                  <p className="text-base md:text-lg font-bold leading-tight">
+                    A free 30-minute strategy call with me. You choose what we cover:
+                  </p>
+                </div>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 text-sm md:text-base">
                 {[
                   {
                     Icon: Search,
-                    title: 'AI setup audit',
+                    title: 'An AI setup audit',
                     body: "I look at how you're currently using AI and tell you what to fix, what to add, what to drop.",
                   },
                   {
                     Icon: Lightbulb,
-                    title: 'App build strategy',
-                    body: "Bring an idea or a half-finished thought. I'll help you scope it and decide what to build first.",
+                    title: 'An app build strategy session',
+                    body: "Bring me an idea or a half-finished thought. I'll help you scope it and decide what to build first.",
                   },
                   {
                     Icon: Sparkles,
-                    title: 'Personal Claude OS walkthrough',
+                    title: 'A personal Claude OS walkthrough',
                     body: 'We set up Claude around your specific business together, live on the call.',
                   },
                 ].map(({ Icon, title, body }) => (
@@ -360,20 +371,51 @@ export default function Complete() {
                   </li>
                 ))}
               </ul>
-              <p className="text-xs md:text-sm opacity-70 mt-5">
-                Redeem any time before the end of September 2026. One referral, one call. No cap.
-              </p>
             </div>
 
+            {/* Reward tier 2: 3+ referrals */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7 mb-5">
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-terracotta/20 text-terracotta shrink-0">
+                  <Crown size={20} />
+                </div>
+                <div>
+                  <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-1">
+                    Refer 3 or more people
+                  </div>
+                  <p className="text-base md:text-lg font-bold leading-tight">
+                    I'll upgrade you to VCL VIP for 12 months (worth almost $1,200).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs md:text-sm opacity-70 mb-8">
+              Call redeemable any time before the end of September 2026.
+            </p>
+
             <div className="mb-8">
-              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
                 How to claim
               </div>
-              <p className="text-sm md:text-base opacity-85 leading-relaxed max-w-3xl">
-                Share the link. Ask whoever buys to mention your name on this page, or hit reply
-                on your order confirmation email and tell me yourself. I'll send your Calendly
-                link as soon as their purchase is confirmed.
-              </p>
+              <ol className="space-y-2 text-sm md:text-base opacity-85 leading-relaxed max-w-3xl">
+                {[
+                  'Share the Bumpsale link with whoever you think would love it.',
+                  'Ask them to mention your name when they buy, or hit reply on your order confirmation and tell me yourself.',
+                  "I'll send your Calendly link (or VIP upgrade) as soon as their purchase is confirmed.",
+                ].map((step, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-terracotta/20 text-terracotta text-[11px] font-black shrink-0 mt-0.5">
+                      {i + 1}
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-6">
+              <Link2 size={14} className="text-terracotta" /> thevibecodinglab.co/bumpsale
             </div>
 
             <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
