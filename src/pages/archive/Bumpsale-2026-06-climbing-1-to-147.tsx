@@ -21,17 +21,12 @@ import {
   ClipboardList,
   Bot,
   Briefcase,
-  Trophy,
-  Gift,
-  Target,
-  Medal,
 } from 'lucide-react';
 
-const CHECKOUT_URL = 'https://store.ascendz.co/vcl-special/';
-const PRICE = 197;
-const SPLIT_TWO = '£99';
-const SPLIT_THREE = '£66';
-const DEADLINE = new Date('2026-06-09T11:30:00+01:00');
+const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
+const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
+const PRICE_CAP = 147;
+const DEADLINE = new Date('2026-06-04T23:59:00+01:00');
 
 
 const useCountdown = () => {
@@ -170,12 +165,14 @@ const BuyButton = ({
   size = 'lg',
   className = '',
   variant = 'terracotta',
-  label = `Get lifetime access · £${PRICE}`,
+  currentPrice = '£1',
+  onClick,
 }: {
   size?: 'lg' | 'xl';
   className?: string;
   variant?: 'terracotta' | 'white';
-  label?: string;
+  currentPrice?: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   const sizing =
     size === 'xl'
@@ -190,9 +187,10 @@ const BuyButton = ({
       href={CHECKOUT_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={onClick}
       className={`inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
     >
-      {label} →
+      Buy now at {currentPrice} →
     </a>
   );
 };
@@ -804,9 +802,62 @@ const accentClasses = {
   },
 };
 
+const TOTAL_SLOTS = PRICE_CAP;
+
 export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [orders, setOrders] = useState<number | null>(null);
+  const [currentPrice, setCurrentPrice] = useState<string>('£1');
   const { days, hours, mins, secs, expired } = useCountdown();
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchState = () => {
+      fetch(`https://app.bumpsale.co/buttons/${BUMPSALE_ID}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (cancelled) return;
+          const bs = d?.bumpsale;
+          if (bs?.orders_count != null) setOrders(bs.orders_count);
+          if (bs?.current_price_formatted) setCurrentPrice(bs.current_price_formatted);
+        })
+        .catch(() => {});
+    };
+    fetchState();
+    const id = setInterval(fetchState, 15_000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
+
+  const openCheckout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setCheckoutOpen(true);
+  };
+
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.data === 'close' || e.data?.type === 'close') setCheckoutOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCheckoutOpen(false);
+    };
+    window.addEventListener('message', onMessage);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('message', onMessage);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = checkoutOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [checkoutOpen]);
 
   const TimeCell = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
@@ -885,7 +936,7 @@ export default function Bumpsale() {
         <title>The ultimate AI build bundle for non-technical founders | Vibe Coding Lab</title>
         <meta
           name="description"
-          content="The training, the community, the support and two AI tools you'll keep forever. Lifetime access for a one-off £197, or split it. Closes 11:30am Tuesday 9 June."
+          content="The training, the community, the support and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £147. Ends 11:59pm Thursday 4 June."
         />
         <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
         <meta name="robots" content="index, follow" />
@@ -896,24 +947,44 @@ export default function Bumpsale() {
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
-          content="Worth £1,962. Yours for a one-off £197, or split into 2 × £99 or 3 × £66. Lifetime access. Closes 11:30am Tuesday 9 June."
+          content="Worth £1,962. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           name="twitter:description"
-          content="Worth £1,962. Yours for a one-off £197, or split into 2 × £99 or 3 × £66. Lifetime access. Closes 11:30am Tuesday 9 June."
+          content="Worth £1,962. Yours from £1. The price goes up £1 with every sale, capped at £147. Ends 4 June."
         />
       </Helmet>
+
+      {/* Ticker tape: new bonus announcement */}
+      <div className="bg-terracotta text-white overflow-hidden border-b border-burnt-orange/40">
+        <div className="flex whitespace-nowrap animate-marquee py-2 md:py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider">
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex shrink-0 items-center gap-8 md:gap-10 px-8 md:px-10">
+              <Sparkles size={14} className="shrink-0" />
+              <span>Just added to the Bumpsale</span>
+              <span className="opacity-50">·</span>
+              <span>The Art of the Audit Masterclass</span>
+              <span className="opacity-50">·</span>
+              <span>How I land £3,000+ day rates</span>
+              <span className="opacity-50">·</span>
+              <span>Worth £247</span>
+              <span className="opacity-50">·</span>
+              <span>Yours free with every purchase</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Sticky urgency bar */}
       <div className="sticky top-0 z-40 bg-forest-green text-white border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center gap-4">
           <Flame className="text-terracotta shrink-0 animate-pulse" size={18} />
           <div className="text-[11px] md:text-sm font-bold truncate">
-            <span className="opacity-70">Lifetime access</span>{' '}
-            <span className="text-terracotta">£{PRICE}</span>
-            <span className="opacity-50 hidden md:inline"> · or {SPLIT_TWO} × 2 / {SPLIT_THREE} × 3 · closes 11:30am Tue 9 June</span>
+            <span className="opacity-70">Current price</span>{' '}
+            <span className="text-terracotta">{currentPrice}</span>
+            <span className="opacity-50 hidden md:inline"> · climbs to £{PRICE_CAP}</span>
           </div>
         </div>
       </div>
@@ -933,7 +1004,7 @@ export default function Bumpsale() {
             className="text-center"
           >
             <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8">
-              <Flame size={12} className="text-terracotta" /> A Vibe Coding Lab lifetime deal
+              <Flame size={12} className="text-terracotta" /> A Vibe Coding Lab Bumpsale
             </div>
 
             <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] tracking-tight mb-6 max-w-4xl mx-auto">
@@ -943,22 +1014,25 @@ export default function Bumpsale() {
 
             <p className="text-lg md:text-2xl font-medium opacity-80 leading-relaxed max-w-3xl mx-auto mb-10">
               Stop watching everyone else ship products. The training, the community, the support
-              and two AI tools you'll keep forever. Yours for a one-off £197.
+              and two AI tools you'll keep forever. Starting from £1.
             </p>
 
             {/* Value stack */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 mb-10">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 mb-3">
               <div className="flex items-baseline gap-3">
                 <span className="text-base md:text-xl font-bold opacity-50 line-through">
                   Worth £{TOTAL_VALUE.toLocaleString()}.
                 </span>
               </div>
               <div className="text-2xl md:text-4xl font-display font-black text-terracotta">
-                Yours for life.
+                Yours from £1.
               </div>
             </div>
+            <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/80 mb-10">
+              £197 from 5 June · £1 today
+            </div>
 
-            {/* Price card */}
+            {/* Live price card */}
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -966,30 +1040,25 @@ export default function Bumpsale() {
               className="inline-block bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl px-8 md:px-12 py-8 md:py-10 mb-10"
             >
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-2">
-                Lifetime access
+                Live price right now
               </div>
               <div className="text-7xl md:text-9xl font-display font-black text-terracotta tabular-nums leading-none">
-                £{PRICE}
+                {currentPrice}
               </div>
               <div className="text-xs md:text-sm font-medium opacity-60 mt-3">
-                One-off payment, or split into 2 × {SPLIT_TWO} or 3 × {SPLIT_THREE}
+                Price climbs by £1 with every sale
               </div>
             </motion.div>
 
-            <div className="flex justify-center mb-5">
-              <BuyButton size="xl" />
-            </div>
-
-            <div className="flex items-center justify-center gap-2 text-xs md:text-sm font-bold opacity-80 mb-10">
-              <Flame size={14} className="text-terracotta" />
-              <span>40 founders locked this in during the launch</span>
+            <div className="flex justify-center mb-10">
+              <BuyButton size="xl" onClick={openCheckout} currentPrice={currentPrice} />
             </div>
 
             {/* Countdown */}
             <div className="flex items-center justify-center gap-2 text-xs md:text-sm opacity-70 mb-4">
               <Clock size={14} />
               <span className="font-bold uppercase tracking-widest">
-                {expired ? 'Offer closed' : 'Closes in · 11:30am Tue 9 June'}
+                {expired ? 'Campaign ended' : 'Ends in · 11:59pm Thu 4 June'}
               </span>
             </div>
             {!expired && (
@@ -1009,51 +1078,68 @@ export default function Bumpsale() {
         <GrainOverlay />
         <div className="max-w-4xl mx-auto relative text-center">
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
-            Here's the deal
+            Here's what's happening
           </div>
           <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight mb-8">
-            The entire bundle.{' '}
-            <span className="text-terracotta">One payment of £197.</span>
+            Every time someone buys this bundle,{' '}
+            <span className="text-terracotta">the price goes up by £1.</span>
           </h2>
           <p className="text-lg md:text-xl leading-relaxed opacity-80 max-w-3xl mx-auto mb-12">
-            Everything below is worth £{TOTAL_VALUE.toLocaleString()}. Until 11:30am on Tuesday 9 June
-            you can lock in lifetime access for a single payment of £197. Prefer to spread it? Split
-            into 2 × £99 or 3 × £66 at checkout. After 9 June, the bundle comes off sale entirely.
+            The first buyer paid £1. The second paid £2. The price climbs with every sale until it
+            caps at £147, or until 11:59pm on Thursday 4 June, whichever comes first.
           </p>
 
-          {/* Payment options */}
-          <div className="flex items-stretch justify-center flex-wrap gap-3 md:gap-4 mb-12">
-            {[
-              { label: 'Pay once', price: `£${PRICE}`, note: 'One payment' },
-              { label: 'Split into 2', price: SPLIT_TWO, note: '2 monthly payments' },
-              { label: 'Split into 3', price: SPLIT_THREE, note: '3 monthly payments' },
-            ].map((opt, i) => (
+          {/* Price ladder */}
+          <div className="flex items-center justify-center flex-wrap gap-2 md:gap-3 mb-12">
+            {[1, 2, 3].map((p, i) => (
               <motion.div
-                key={opt.label}
+                key={p}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`rounded-2xl px-6 md:px-8 py-5 md:py-6 min-w-[140px] ${
-                  i === 0
-                    ? 'bg-terracotta text-white shadow-lg shadow-terracotta/30'
-                    : 'bg-white border border-forest-green/10'
-                }`}
+                className="bg-white border border-forest-green/10 rounded-xl px-4 md:px-6 py-3 md:py-4 font-display font-black text-xl md:text-3xl"
               >
-                <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-70 mb-2">
-                  {opt.label}
-                </div>
-                <div className="font-display font-black text-3xl md:text-4xl tabular-nums leading-none">
-                  {opt.price}
-                </div>
-                <div className="text-[10px] md:text-xs font-medium opacity-70 mt-2">
-                  {opt.note}
-                </div>
+                £{p}
               </motion.div>
             ))}
+            <span className="text-2xl opacity-40 mx-2">···</span>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-terracotta text-white rounded-xl px-4 md:px-6 py-3 md:py-4 font-display font-black text-xl md:text-3xl shadow-lg shadow-terracotta/30"
+            >
+              £{PRICE_CAP}
+            </motion.div>
           </div>
 
-          <BuyButton />
+          <div className="max-w-2xl mx-auto mb-4 grid grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-white border border-forest-green/10 rounded-2xl px-5 py-4 md:px-6 md:py-5">
+              <div className="text-3xl md:text-5xl font-display font-black text-terracotta tabular-nums leading-none">
+                {orders ?? '…'}
+              </div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
+                {orders === 1 ? 'Bundle sold' : 'Bundles sold'}
+              </div>
+            </div>
+            <div className="bg-forest-green text-white rounded-2xl px-5 py-4 md:px-6 md:py-5">
+              <div className="text-3xl md:text-5xl font-display font-black tabular-nums leading-none">
+                {orders === null ? '…' : Math.max(0, TOTAL_SLOTS - orders)}
+              </div>
+              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mt-2">
+                Spots remaining
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-bumpsale-progress={BUMPSALE_ID}
+            className="max-w-2xl mx-auto mb-10"
+          />
+
+          <BuyButton onClick={openCheckout} currentPrice={currentPrice} />
         </div>
       </Section>
 
@@ -1183,7 +1269,7 @@ export default function Bumpsale() {
                   together.
                 </p>
                 <p className="font-bold text-white">
-                  So I'm adding it to the bundle. A live masterclass covering:
+                  So I'm adding it to the Bumpsale. A live masterclass covering:
                 </p>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6 text-sm md:text-base">
@@ -1202,13 +1288,13 @@ export default function Bumpsale() {
                 ))}
               </ul>
               <p className="text-sm md:text-base opacity-85 leading-relaxed mb-6">
-                If you bought this bundle to build for yourself, the rest of it is what
+                If you bought the Bumpsale to build for yourself, the rest of the bundle is what
                 you need. If you also want to monetise these skills with clients at premium rates,
                 this is the bonus that pays for the entire bundle a hundred times over.
               </p>
               <div className="flex flex-wrap items-center gap-3 mb-5">
                 <div className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest">
-                  <Flame size={12} /> Worth £{BONUS_VALUE} · Free with the bundle
+                  <Flame size={12} /> Worth £{BONUS_VALUE} · Free with any Bumpsale purchase
                 </div>
                 <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest">
                   <Clock size={12} className="text-terracotta" /> Live · Thu 16 July · 9:30am UK
@@ -1288,7 +1374,7 @@ export default function Bumpsale() {
                 £{BONUS_VALUE.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
-                The Art of the Audit Masterclass. Live session for everyone who buys the bundle.
+                The Art of the Audit Masterclass. Live session for everyone who buys the Bumpsale.
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7">
@@ -1304,13 +1390,13 @@ export default function Bumpsale() {
             </div>
             <div className="bg-terracotta rounded-2xl p-6 md:p-7">
               <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-90 mb-3">
-                Your price today
+                Top price you'd pay
               </div>
               <div className="text-4xl md:text-5xl font-display font-black tabular-nums">
-                £{PRICE}
+                £{PRICE_CAP}
               </div>
               <div className="text-xs md:text-sm opacity-90 mt-2">
-                One-off, or split into 2 × {SPLIT_TWO} or 3 × {SPLIT_THREE}.
+                Even if you're the last buyer through the door.
               </div>
             </div>
           </div>
@@ -1318,7 +1404,7 @@ export default function Bumpsale() {
           <p className="text-base md:text-xl font-medium opacity-90 leading-relaxed max-w-3xl mx-auto text-center">
             The core stack plus the new bonus is worth{' '}
             <span className="text-terracotta font-bold">
-              {Math.round((READY_VALUE + BONUS_VALUE) / PRICE)}× the price
+              {Math.round((READY_VALUE + BONUS_VALUE) / PRICE_CAP)}× the top price
             </span>
             . The SaaS bonuses are pure upside.
           </p>
@@ -1390,98 +1476,53 @@ export default function Bumpsale() {
         </div>
       </Section>
 
-      {/* THE BUILD JOURNEY */}
-      <Section className="bg-forest-green text-white overflow-hidden">
-        <GrainOverlay />
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-terracotta/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-5xl mx-auto relative">
-          <div className="text-center mb-10 md:mb-14">
-            <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6">
-              <Sparkles size={12} className="text-terracotta" /> New · The Build Journey
-            </div>
-            <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] mb-6 max-w-3xl mx-auto">
-              Bought a course before and never finished it?{' '}
-              <span className="text-terracotta">This is built so that doesn't happen.</span>
-            </h2>
-            <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-3xl mx-auto">
-              The Build Journey is your dashboard inside VCL. It turns the whole bundle into a set of
-              real challenges, tracks every win, and rewards you for actually doing the work. Most
-              bundles bank on you not using them. This one is designed to get you building from day one.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-10">
-            {[
-              {
-                Icon: Target,
-                title: 'Real challenges, not lessons',
-                body: 'Every challenge is something you build and ship for real. Set up Claude, launch a site, ship an app. Tick it off, earn the badge.',
-              },
-              {
-                Icon: Gift,
-                title: 'We pay you to take action',
-                body: 'Hit milestones and unlock real rewards, like a £5 digital gift card you can spend almost anywhere. Actual money for actual progress.',
-              },
-              {
-                Icon: Flame,
-                title: 'Streaks that keep you showing up',
-                body: 'Log one thing a week and your streak grows. The build streak never resets, so every time you show up, it counts.',
-              },
-              {
-                Icon: Trophy,
-                title: 'Bonuses unlock as you go',
-                body: 'Each challenge you complete unlocks a new bonus. The more you do, the more you get. Momentum built in.',
-              },
-            ].map((f) => (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5 }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-[1.75rem] p-7 md:p-8"
-              >
-                <div className="w-11 h-11 rounded-xl bg-terracotta/20 text-terracotta flex items-center justify-center mb-5">
-                  <f.Icon size={22} strokeWidth={2.25} />
-                </div>
-                <h3 className="text-xl md:text-2xl font-display font-extrabold mb-3">{f.title}</h3>
-                <p className="text-sm md:text-base leading-relaxed opacity-80">{f.body}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-center gap-3 text-center">
-            <Medal size={18} className="text-terracotta shrink-0" />
-            <p className="text-sm md:text-base font-bold">
-              Accountability built in, so the bundle you buy is the bundle you actually use.
-            </p>
-          </div>
-        </div>
-      </Section>
-
       {/* HOW THE PRICE WORKS */}
       <Section className="bg-terracotta text-white overflow-hidden">
         <GrainOverlay />
         <div className="max-w-4xl mx-auto relative text-center">
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest opacity-80 mb-4">
-            Zero risk
+            How the price works
           </div>
           <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight mb-8">
-            Try it for 7 days.
-            <span className="block">Money back if it's not for you.</span>
+            This is a Bumpsale.
+            <span className="block">The price increases by £1 with every purchase.</span>
           </h2>
 
-          <p className="text-base md:text-xl opacity-90 mb-4 leading-relaxed max-w-3xl mx-auto">
-            Get in, look around, come to the first session and start your first challenge. If you
-            decide it's not right for you within 7 days, email us and we'll refund you in full. No
-            hoops.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-3xl mx-auto">
+            {[
+              { label: 'Buyer #1 paid', price: '£1' },
+              { label: 'Buyer #50 will pay', price: '£50' },
+              { label: `Buyer #${PRICE_CAP} will pay`, price: `£${PRICE_CAP}` },
+            ].map((b, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6"
+              >
+                <div className="text-xs font-bold uppercase tracking-widest opacity-70 mb-2">
+                  {b.label}
+                </div>
+                <div className="text-4xl md:text-5xl font-display font-black">{b.price}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-base md:text-lg opacity-90 mb-4 leading-relaxed">
+            And that's where it stops. The campaign ends when {PRICE_CAP} bundles have sold or at
+            11:59pm on Thursday 4 June 2026, whichever comes first.
           </p>
-          <p className="text-base md:text-lg opacity-90 mb-10 leading-relaxed max-w-3xl mx-auto">
-            Pay once at £197, or split into 2 × {SPLIT_TWO} or 3 × {SPLIT_THREE}. Same bundle either
-            way, yours for life. The offer closes 11:30am Tuesday 9 June, then it comes off entirely.
+          <p className="text-base md:text-lg opacity-90 mb-2 leading-relaxed">
+            After this Bumpsale closes, the exact same bundle goes on sale at £197 until the live
+            programme starts on Tuesday 9 June. After that, the offer comes off entirely.
+          </p>
+          <p className="text-base md:text-lg font-bold mb-10">
+            Whatever you pay in the Bumpsale, you get exactly the same bundle.
           </p>
 
-          <BuyButton size="xl" variant="white" />
+          <BuyButton size="xl" variant="white" onClick={openCheckout} currentPrice={currentPrice} />
         </div>
       </Section>
 
@@ -1547,12 +1588,8 @@ export default function Bumpsale() {
               answer="Yes. Every session is recorded and available inside VCL. Some sessions may suit you more than others, come to the ones you want."
             />
             <FAQItem
-              question="Can I split the payment?"
-              answer="Yes. At checkout you can pay a one-off £197, or split it into 2 × £99 or 3 × £66. Whichever you choose, you get exactly the same bundle and lifetime access to everything in it."
-            />
-            <FAQItem
               question="Can I get a refund?"
-              answer="Yes. You're covered by a 7-day money-back guarantee. Get in, come to the first session, start a challenge, and if it's not right for you within 7 days just email us and we'll refund you in full."
+              answer="No. The Bumpsale model relies on every sale counting toward the price for the next buyer. By buying, you're locking in your spot in the sequence."
             />
             <FAQItem
               question="I'm already in VCL. Should I still buy this?"
@@ -1567,8 +1604,8 @@ export default function Bumpsale() {
               answer="No. The whole bundle is designed for non-technical founders. Claude OS starts at the foundations. The Site Sprint and The Ship Sprint are live, so you can ask questions as you go."
             />
             <FAQItem
-              question="What happens after 9 June?"
-              answer="The bundle comes off sale entirely at 11:30am on Tuesday 9 June, when the live programme kicks off. This is the last time it's available, so once it closes, it's gone."
+              question="What happens after the Bumpsale closes?"
+              answer={`The exact same bundle stays available at £197 until Tuesday 9 June when the live programme kicks off. After that, the bundle comes off sale entirely. The Bumpsale is the only time you can get it for less than £${PRICE_CAP}.`}
             />
           </div>
         </div>
@@ -1580,32 +1617,22 @@ export default function Bumpsale() {
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-terracotta/15 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto relative">
           <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8">
-            <Flame size={12} className="text-terracotta" /> Closes 11:30am Tue 9 June
+            <Flame size={12} className="text-terracotta" /> Price climbs with every sale
           </div>
 
           <h2 className="text-4xl md:text-7xl font-display font-extrabold leading-[0.95] tracking-tight mb-8">
-            After Tuesday,
-            <span className="block text-terracotta">this bundle is gone.</span>
+            Every second you wait
+            <span className="block text-terracotta">costs you £1.</span>
           </h2>
 
           <div className="text-2xl md:text-4xl font-display font-black mb-4">
-            Lifetime access: <span className="text-terracotta">£{PRICE}</span>
+            Live price: <span className="text-terracotta">{currentPrice}</span>
           </div>
           <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta/90 mb-10">
-            Or split it 2 × £99 / 3 × £66
+            £197 from 5 June · After 9 June, this bundle is gone
           </div>
 
-          <BuyButton size="xl" />
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-6 text-xs md:text-sm font-bold opacity-80">
-            <span className="inline-flex items-center gap-2">
-              <Flame size={14} className="text-terracotta" /> 40 founders already in
-            </span>
-            <span className="hidden sm:inline opacity-40">·</span>
-            <span className="inline-flex items-center gap-2">
-              <Check size={14} className="text-terracotta" strokeWidth={3} /> 7-day money-back guarantee
-            </span>
-          </div>
+          <BuyButton size="xl" onClick={openCheckout} currentPrice={currentPrice} />
 
           <div className="mt-12 text-xs md:text-sm opacity-50 font-medium">
             Built and hosted by Vibe Coding Lab.
@@ -1647,6 +1674,33 @@ export default function Bumpsale() {
                 {modal.body}
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Checkout overlay */}
+      <AnimatePresence>
+        {checkoutOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[2147483647] bg-forest-green/90 backdrop-blur-sm"
+          >
+            <button
+              onClick={() => setCheckoutOpen(false)}
+              className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
+              aria-label="Close checkout"
+            >
+              <X size={20} strokeWidth={3} />
+            </button>
+            <iframe
+              src={CHECKOUT_URL}
+              title="Bumpsale checkout"
+              className="w-full h-full border-0 bg-white"
+              allow="payment"
+            />
           </motion.div>
         )}
       </AnimatePresence>
