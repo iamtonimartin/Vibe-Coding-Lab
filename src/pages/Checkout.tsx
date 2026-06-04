@@ -7,7 +7,9 @@ import { ArrowLeft, Check, Flame, Lock, ShieldCheck, Loader2 } from 'lucide-reac
 const TC_SCRIPT_ID = 'tc-tonimartin-170-0QYQ8H';
 const TC_SCRIPT_SRC = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
 // Hosted ThriveCart checkout used as a fallback if the embed is slow/blocked.
-// NOTE: confirm this points at the same product (170) as the embed above.
+// This is a separate ThriveCart product from the embed above (embeddable
+// products can't be normal hosted ones) but is configured with identical
+// pricing, so either path charges the same.
 const HOSTED_CHECKOUT_URL = 'https://store.ascendz.co/vcl-special/';
 
 const INCLUDED = [
