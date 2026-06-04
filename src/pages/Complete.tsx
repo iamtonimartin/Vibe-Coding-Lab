@@ -91,7 +91,6 @@ export default function Complete() {
   const [copied, setCopied] = useState(false);
   const [buyerName, setBuyerName] = useState('');
   const [referrerName, setReferrerName] = useState('');
-  const [buyerEmail, setBuyerEmail] = useState('');
   const [referralStatus, setReferralStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [referralError, setReferralError] = useState<string | null>(null);
 
@@ -117,7 +116,6 @@ export default function Complete() {
         body: JSON.stringify({
           buyerName: buyerName.trim(),
           referrerName: referrerName.trim(),
-          buyerEmail: buyerEmail.trim() || null,
         }),
       });
       if (!res.ok) {
@@ -535,28 +533,6 @@ export default function Complete() {
                       required
                       className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1.5">
-                      Your email (optional)
-                    </label>
-                    <input
-                      type="email"
-                      value={buyerEmail}
-                      onChange={(e) => setBuyerEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
-                    />
-                    <p className="text-[11px] opacity-60 mt-1.5">
-                      Helps me match this to your order. Optional, you can also email{' '}
-                      <a
-                        href="mailto:clientsupport@ascendz.co"
-                        className="text-terracotta hover:underline"
-                      >
-                        clientsupport@ascendz.co
-                      </a>{' '}
-                      with the name.
-                    </p>
                   </div>
                   <button
                     type="submit"
