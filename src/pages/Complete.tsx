@@ -401,7 +401,7 @@ export default function Complete() {
               <ol className="space-y-2 text-sm md:text-base opacity-85 leading-relaxed max-w-3xl">
                 {[
                   'Share the Bumpsale link with whoever you think would love it.',
-                  'Ask them to mention your name when they buy, or hit reply on your order confirmation and tell me yourself.',
+                  'Ask them to mention your name on the next page when they buy, or email clientsupport@ascendz.co and tell me yourself.',
                   "I'll send your Calendly link (or VIP upgrade) as soon as their purchase is confirmed.",
                 ].map((step, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -533,8 +533,14 @@ export default function Complete() {
                       className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
                     />
                     <p className="text-[11px] opacity-60 mt-1.5">
-                      Helps me match this to your order. Optional, you can also reply to your
-                      confirmation email.
+                      Helps me match this to your order. Optional, you can also email{' '}
+                      <a
+                        href="mailto:clientsupport@ascendz.co"
+                        className="text-terracotta hover:underline"
+                      >
+                        clientsupport@ascendz.co
+                      </a>{' '}
+                      with the name.
                     </p>
                   </div>
                   <button
@@ -561,9 +567,16 @@ export default function Complete() {
             Need anything from me?
           </h3>
           <p className="text-base md:text-lg opacity-80 leading-relaxed mb-8">
-            Reply to your order confirmation email and I'll personally sort it. Quick reminder
-            that the Bumpsale model means every sale counts toward the price for the next buyer,
-            so refunds aren't possible. But if anything's missing or off, I want to know.
+            Drop me a line at{' '}
+            <a
+              href="mailto:clientsupport@ascendz.co"
+              className="text-terracotta font-bold hover:text-burnt-orange transition-colors"
+            >
+              clientsupport@ascendz.co
+            </a>{' '}
+            and I'll personally sort it. Quick reminder that the Bumpsale model means every sale
+            counts toward the price for the next buyer, so refunds aren't possible. But if
+            anything's missing or off, I want to know.
           </p>
           <Link
             to="/"
