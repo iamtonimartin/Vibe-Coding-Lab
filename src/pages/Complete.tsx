@@ -502,11 +502,11 @@ export default function Complete() {
                     On the list.
                   </h4>
                   <p className="text-sm opacity-80 leading-relaxed mb-3">
-                    Their reward goes out the moment your order shows up on my dashboard.
+                    Amazing! We have noted your referrer's details.
                   </p>
                   <p className="text-sm opacity-80 leading-relaxed mb-4">
-                    The same offer works the other way. Refer someone before the Bumpsale closes
-                    and you're in for the call. Three or more and you get the VIP upgrade.
+                    You can also refer someone before the Bumpsale closes and you're in for the
+                    call. Three or more and you get the VIP upgrade.
                   </p>
                   <button
                     onClick={copyLink}
