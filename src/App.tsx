@@ -12,6 +12,7 @@ import Unsubscribe from './pages/Unsubscribe';
 import LogoExport from './pages/LogoExport';
 import Bumpsale from './pages/Bumpsale';
 import Complete from './pages/Complete';
+import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/logo" element={<LogoExport />} />
         <Route path="/bumpsale" element={<Bumpsale />} />
         <Route path="/complete" element={<Complete />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </HelmetProvider>
   );
