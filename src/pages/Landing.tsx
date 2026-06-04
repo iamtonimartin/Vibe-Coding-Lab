@@ -675,7 +675,7 @@ export default function Landing() {
             >
               <div className="mb-6">
                 <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">VIP</p>
-                <div className="text-4xl font-display font-black text-forest-green">$39<span className="text-base font-bold opacity-50">/month</span></div>
+                <div className="text-4xl font-display font-black text-forest-green">$99<span className="text-base font-bold opacity-50">/month</span></div>
               </div>
               <ul className="flex flex-col gap-3 flex-1 mb-8">
                 {[
