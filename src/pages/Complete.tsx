@@ -384,7 +384,7 @@ export default function Complete() {
                     Refer 3 or more people
                   </div>
                   <p className="text-base md:text-lg font-bold leading-tight">
-                    I'll upgrade you to VCL VIP for 12 months (worth almost $1,200).
+                    I'll upgrade you to VCL VIP for 12 months (worth almost £600).
                   </p>
                 </div>
               </div>
