@@ -499,12 +499,29 @@ export default function Complete() {
                     <Check size={20} strokeWidth={3} />
                   </div>
                   <h4 className="text-lg md:text-xl font-display font-extrabold mb-2">
-                    Thanks, logged.
+                    On the list.
                   </h4>
-                  <p className="text-sm opacity-80 leading-relaxed">
-                    I'll reach out to them with their Calendly link as soon as your order is on
-                    my dashboard. Cheers for crediting them.
+                  <p className="text-sm opacity-80 leading-relaxed mb-3">
+                    Their reward goes out the moment your order shows up on my dashboard.
                   </p>
+                  <p className="text-sm opacity-80 leading-relaxed mb-4">
+                    The same offer works the other way. Refer someone before the Bumpsale closes
+                    and you're in for the call. Three or more and you get the VIP upgrade.
+                  </p>
+                  <button
+                    onClick={copyLink}
+                    className="inline-flex items-center gap-2 bg-terracotta text-white px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-burnt-orange transition-colors"
+                  >
+                    {copied ? (
+                      <>
+                        <Check size={14} strokeWidth={3} /> Link copied
+                      </>
+                    ) : (
+                      <>
+                        <Link2 size={14} /> Copy your link
+                      </>
+                    )}
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={submitReferral} className="space-y-3">
