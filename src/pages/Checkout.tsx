@@ -6,6 +6,9 @@ import { ArrowLeft, Check, Flame, Lock, ShieldCheck, Loader2 } from 'lucide-reac
 
 const TC_SCRIPT_ID = 'tc-tonimartin-170-0QYQ8H';
 const TC_SCRIPT_SRC = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
+// Hosted ThriveCart checkout used as a fallback if the embed is slow/blocked.
+// NOTE: confirm this points at the same product (170) as the embed above.
+const HOSTED_CHECKOUT_URL = 'https://store.ascendz.co/vcl-special/';
 
 const INCLUDED = [
   'Vibe Coding Lab Premium, lifetime access',
@@ -34,20 +37,27 @@ export default function Checkout() {
     script.id = TC_SCRIPT_ID;
     document.body.appendChild(script);
 
-    // Hide the loading state once ThriveCart injects its checkout iframe.
+    // Hide the loading state only once the checkout iframe has actually
+    // finished loading its content. ThriveCart injects the <iframe> element
+    // almost instantly, but the checkout inside it loads a moment later, so we
+    // wait for the iframe's own load event rather than its mere presence.
     const wrapper = embedRef.current;
-    const isMounted = () => !!wrapper?.querySelector('iframe');
     let observer: MutationObserver | undefined;
-    if (wrapper && !isMounted()) {
+    const watchIframe = (iframe: HTMLIFrameElement) => {
+      iframe.addEventListener('load', () => setLoaded(true), { once: true });
+    };
+    const existingIframe = wrapper?.querySelector('iframe');
+    if (existingIframe) {
+      watchIframe(existingIframe as HTMLIFrameElement);
+    } else if (wrapper) {
       observer = new MutationObserver(() => {
-        if (isMounted()) {
-          setLoaded(true);
+        const iframe = wrapper.querySelector('iframe');
+        if (iframe) {
+          watchIframe(iframe as HTMLIFrameElement);
           observer?.disconnect();
         }
       });
       observer.observe(wrapper, { childList: true, subtree: true });
-    } else if (wrapper) {
-      setLoaded(true);
     }
     // Fallback: stop showing the spinner after 15s no matter what.
     const fallback = setTimeout(() => setLoaded(true), 15000);
@@ -178,6 +188,19 @@ export default function Checkout() {
               data-thrivecart-embeddable={TC_SCRIPT_ID}
             />
           </div>
+
+          {/* Fallback: always-available direct path to the hosted checkout */}
+          <p className="lg:col-span-2 text-center text-xs md:text-sm opacity-70">
+            Trouble loading the checkout?{' '}
+            <a
+              href={HOSTED_CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-terracotta hover:text-burnt-orange underline underline-offset-2 transition-colors"
+            >
+              Open the secure checkout in a new tab →
+            </a>
+          </p>
         </div>
       </section>
     </div>
