@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check, Flame, Lock, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Check, Flame, Lock, ShieldCheck, Loader2 } from 'lucide-react';
 
 const TC_SCRIPT_ID = 'tc-tonimartin-170-0QYQ8H';
 const TC_SCRIPT_SRC = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
@@ -18,6 +18,9 @@ const INCLUDED = [
 ];
 
 export default function Checkout() {
+  const embedRef = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
     // ThriveCart's embed script scans the DOM for .tc-v2-embeddable-target
     // targets and mounts the checkout. The target div is already rendered, so
@@ -31,7 +34,27 @@ export default function Checkout() {
     script.id = TC_SCRIPT_ID;
     document.body.appendChild(script);
 
+    // Hide the loading state once ThriveCart injects its checkout iframe.
+    const wrapper = embedRef.current;
+    const isMounted = () => !!wrapper?.querySelector('iframe');
+    let observer: MutationObserver | undefined;
+    if (wrapper && !isMounted()) {
+      observer = new MutationObserver(() => {
+        if (isMounted()) {
+          setLoaded(true);
+          observer?.disconnect();
+        }
+      });
+      observer.observe(wrapper, { childList: true, subtree: true });
+    } else if (wrapper) {
+      setLoaded(true);
+    }
+    // Fallback: stop showing the spinner after 15s no matter what.
+    const fallback = setTimeout(() => setLoaded(true), 15000);
+
     return () => {
+      observer?.disconnect();
+      clearTimeout(fallback);
       document.getElementById(TC_SCRIPT_ID)?.remove();
     };
   }, []);
@@ -42,6 +65,11 @@ export default function Checkout() {
         <title>Checkout | Vibe Coding Lab</title>
         <meta name="description" content="Lifetime access to the Vibe Coding Lab bundle. One payment of £197, or split it." />
         <meta name="robots" content="noindex, nofollow" />
+        {/* Warm up the connection to ThriveCart so the embed loads faster */}
+        <link rel="preconnect" href="https://tinder.thrivecart.com" />
+        <link rel="preconnect" href="https://thrivecart.com" />
+        <link rel="dns-prefetch" href="https://tinder.thrivecart.com" />
+        <link rel="dns-prefetch" href="https://thrivecart.com" />
       </Helmet>
 
       {/* HERO */}
@@ -132,7 +160,16 @@ export default function Checkout() {
           </div>
 
           {/* ThriveCart embed */}
-          <div className="bg-white border border-forest-green/10 rounded-[2rem] p-4 md:p-6 min-h-[480px]">
+          <div ref={embedRef} className="relative bg-white border border-forest-green/10 rounded-[2rem] p-4 md:p-6 min-h-[480px]">
+            {!loaded && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-6">
+                <Loader2 size={32} className="text-terracotta animate-spin" />
+                <div className="text-sm md:text-base font-bold">Loading secure checkout</div>
+                <div className="text-xs md:text-sm opacity-60 max-w-xs">
+                  Powered by ThriveCart. This takes a few seconds.
+                </div>
+              </div>
+            )}
             <div
               className="tc-v2-embeddable-target"
               data-thrivecart-account="tonimartin"
