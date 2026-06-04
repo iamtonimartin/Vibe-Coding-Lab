@@ -294,8 +294,25 @@ async function startServer() {
     },
   };
 
+  // Known SPA routes (must mirror src/App.tsx). Anything outside this set is a 404.
+  const VALID_ROUTES = new Set([
+    '/',
+    '/freetraining',
+    '/videos',
+    '/app-idea',
+    '/ideas',
+    '/ideas-access',
+    '/vibeplaybook',
+    '/playbook',
+    '/unsubscribe',
+    '/logo',
+    '/bumpsale',
+    '/complete',
+  ]);
+
   app.get('*', (req, res) => {
     const meta = routeMeta[req.path];
+    const isKnownRoute = VALID_ROUTES.has(req.path);
     let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
 
     // Inject server-side meta tags
@@ -333,7 +350,7 @@ async function startServer() {
       }
     }
 
-    res.send(html);
+    res.status(isKnownRoute ? 200 : 404).send(html);
   });
   }
 
