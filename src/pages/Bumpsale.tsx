@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'motion/react';
 import {
   Plus,
@@ -27,7 +28,7 @@ import {
   Medal,
 } from 'lucide-react';
 
-const CHECKOUT_URL = 'https://store.ascendz.co/vcl-special/';
+const CHECKOUT_ROUTE = '/checkout';
 const PRICE = 197;
 const SPLIT_TWO = '£99';
 const SPLIT_THREE = '£66';
@@ -186,14 +187,12 @@ const BuyButton = ({
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
   return (
-    <a
-      href={CHECKOUT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      to={CHECKOUT_ROUTE}
       className={`inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
     >
       {label} →
-    </a>
+    </Link>
   );
 };
 
@@ -887,11 +886,11 @@ export default function Bumpsale() {
           name="description"
           content="The training, the community, the support and two AI tools you'll keep forever. Lifetime access for a one-off £197, or split it. Closes 11:30am Tuesday 9 June."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
+        <link rel="canonical" href="https://thevibecodinglab.co/bundle" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Toni Martin" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://thevibecodinglab.co/bumpsale" />
+        <meta property="og:url" content="https://thevibecodinglab.co/bundle" />
         <meta property="og:site_name" content="Vibe Coding Lab" />
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta

@@ -19,6 +19,10 @@ const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
 
 app.use(express.json());
 
+// Permanent redirect: the offer page moved from /bumpsale to /bundle.
+// Keeps old links, emails and shares working.
+app.get('/bumpsale', (_req, res) => res.redirect(301, '/bundle'));
+
 // POST /api/generate-idea
 // Proxies streaming OpenAI request server-side to keep API key secret
 app.post('/api/generate-idea', async (req, res) => {
@@ -286,10 +290,10 @@ async function startServer() {
       canonical: `${BASE_URL}/playbook`,
       image: `${BASE_URL}/og-image.jpg`,
     },
-    '/bumpsale': {
+    '/bundle': {
       title: 'The ultimate AI build bundle for non-technical founders | Vibe Coding Lab',
-      description: 'Worth £1,962. Yours from £1. The price climbs £1 with every sale, capped at £147. Bumpsale ends 11:59pm Thursday 4 June.',
-      canonical: `${BASE_URL}/bumpsale`,
+      description: 'Worth £1,962. Lifetime access for a one-off £197, or split into 2 × £99 or 3 × £66. Closes 11:30am Tuesday 9 June.',
+      canonical: `${BASE_URL}/bundle`,
       image: `${BASE_URL}/og-image.jpg`,
     },
   };
@@ -306,7 +310,8 @@ async function startServer() {
     '/playbook',
     '/unsubscribe',
     '/logo',
-    '/bumpsale',
+    '/bundle',
+    '/checkout',
     '/complete',
   ]);
 
@@ -328,16 +333,6 @@ async function startServer() {
         .replace(/(<meta name="twitter:title" content=")[^"]*(")/g, `$1${meta.title}$2`)
         .replace(/(<meta name="twitter:description" content=")[^"]*(")/g, `$1${meta.description}$2`)
         .replace(/(<meta name="twitter:image" content=")[^"]*(")/g, `$1${meta.image}$2`);
-    }
-
-    // Inject the Bumpsale widget script for /bumpsale only.
-    // Must be in the static HTML (not via Helmet) so its DOMContentLoaded listener
-    // is registered before the event fires.
-    if (req.path === '/bumpsale') {
-      html = html.replace(
-        '</head>',
-        '<script src="https://widgets.bumpsale.co/button.js"></script></head>'
-      );
     }
 
     // Inject server-rendered app HTML so crawlers get full page content

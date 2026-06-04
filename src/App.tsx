@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Landing from './pages/Landing';
 import OptIn from './pages/OptIn';
@@ -11,6 +11,7 @@ import Playbook from './pages/Playbook';
 import Unsubscribe from './pages/Unsubscribe';
 import LogoExport from './pages/LogoExport';
 import Bumpsale from './pages/Bumpsale';
+import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
 import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
@@ -30,7 +31,9 @@ export default function App() {
         <Route path="/playbook" element={<Playbook />} />
         <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="/logo" element={<LogoExport />} />
-        <Route path="/bumpsale" element={<Bumpsale />} />
+        <Route path="/bundle" element={<Bumpsale />} />
+        <Route path="/bumpsale" element={<Navigate to="/bundle" replace />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/complete" element={<Complete />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

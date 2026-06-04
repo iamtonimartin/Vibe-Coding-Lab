@@ -24,10 +24,10 @@ import {
   Crown,
 } from 'lucide-react';
 
-const SHARE_URL = 'https://thevibecodinglab.co/bumpsale';
-const SHARE_TEXT = 'Just locked in lifetime access to the Vibe Coding Lab Bumpsale. Worth £1,962. Same bundle whatever you pay, but the price climbs with every sale and it closes 11:59pm Thursday 4 June.';
+const SHARE_URL = 'https://thevibecodinglab.co/bundle';
+const SHARE_TEXT = 'Just locked in lifetime access to the Vibe Coding Lab bundle. Worth £1,962, yours for a one-off £197 or split it. It closes 11:30am Tuesday 9 June and then it is gone.';
 const SHARE_EMAIL_SUBJECT = 'You should see this before it closes';
-const SHARE_EMAIL_BODY = `I just locked in lifetime access via the Vibe Coding Lab Bumpsale. Same bundle whatever you pay, but the price climbs with every sale and the whole thing is gone after 11:59pm Thursday 4 June.\n\n${SHARE_URL}`;
+const SHARE_EMAIL_BODY = `I just locked in lifetime access to the Vibe Coding Lab bundle. Worth £1,962, yours for a one-off £197 or split into 2 x £99 or 3 x £66. The whole thing closes 11:30am Tuesday 9 June, then it comes off entirely.\n\n${SHARE_URL}`;
 
 type Status = 'now' | 'soon' | 'later';
 
@@ -39,9 +39,9 @@ const DELIVERABLES: {
 }[] = [
   {
     title: 'Vibe Coding Lab Premium',
-    when: '5 June',
+    when: 'Within 48 hours',
     status: 'now',
-    detail: "Your Premium upgrade invite lands on 5 June, the day after the Bumpsale closes. Standard members get bumped up; new members get a fresh login.",
+    detail: "Your Premium upgrade invite lands within 48 hours of your purchase. Standard members get bumped up; new members get a fresh login.",
   },
   {
     title: 'Claude OS',
@@ -69,9 +69,9 @@ const DELIVERABLES: {
   },
   {
     title: 'Relavo',
-    when: '5 June',
+    when: 'Within 48 hours',
     status: 'now',
-    detail: "Your Relavo account details land in your inbox on 5 June. Lifetime access locked in at the bundle tier.",
+    detail: "Your Relavo account details land in your inbox within 48 hours of your purchase. Lifetime access locked in at the bundle tier.",
   },
   {
     title: 'Zenitro',
@@ -327,7 +327,7 @@ export default function Complete() {
               Got a business bestie building with AI?
             </h2>
             <p className="text-base md:text-lg opacity-85 leading-relaxed mb-8 max-w-3xl">
-              The Bumpsale is open until 11:59pm Thursday 4 June. If you share it and someone you
+              The bundle is open until 11:30am Tuesday 9 June. If you share it and someone you
               know buys before the deadline, you'll get something in return.
             </p>
 
@@ -400,7 +400,7 @@ export default function Complete() {
               </div>
               <ol className="space-y-2 text-sm md:text-base opacity-85 leading-relaxed max-w-3xl">
                 {[
-                  'Share the Bumpsale link with whoever you think would love it.',
+                  'Share the bundle link with whoever you think would love it.',
                   'Ask them to mention your name on the next page when they buy, or email clientsupport@ascendz.co and tell me yourself.',
                   "I'll send your Calendly link (or VIP upgrade) as soon as their purchase is confirmed.",
                 ].map((step, i) => (
@@ -415,7 +415,7 @@ export default function Complete() {
             </div>
 
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-6">
-              <Link2 size={14} className="text-terracotta" /> thevibecodinglab.co/bumpsale
+              <Link2 size={14} className="text-terracotta" /> thevibecodinglab.co/bundle
             </div>
 
             <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
@@ -488,7 +488,7 @@ export default function Complete() {
                 Tell us who sent you.
               </h3>
               <p className="text-sm md:text-base opacity-80 leading-relaxed">
-                Drop the name of the person who sent you the Bumpsale and I'll book them in for
+                Drop the name of the person who sent you the bundle and I'll book them in for
                 their free 30-minute strategy call. They earn the reward, you make their day.
               </p>
             </div>
@@ -505,7 +505,7 @@ export default function Complete() {
                     Amazing! We have noted your referrer's details.
                   </p>
                   <p className="text-sm opacity-80 leading-relaxed mb-4">
-                    You can also refer someone before the Bumpsale closes and you're in for the
+                    You can also refer someone before the bundle closes and you're in for the
                     call. Three or more and you get the VIP upgrade.
                   </p>
                   <button
@@ -582,8 +582,8 @@ export default function Complete() {
             >
               clientsupport@ascendz.co
             </a>{' '}
-            and I'll personally sort it. Quick reminder that the Bumpsale model means every sale
-            counts toward the price for the next buyer, so refunds aren't possible. But if
+            and I'll personally sort it. You're also covered by a 7-day money-back guarantee, so if
+            it's not right for you, just email within 7 days and I'll refund you in full. If
             anything's missing or off, I want to know.
           </p>
           <Link
