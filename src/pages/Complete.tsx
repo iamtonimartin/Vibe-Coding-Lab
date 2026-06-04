@@ -89,6 +89,7 @@ const statusStyles: Record<Status, { dot: string; label: string }> = {
 
 export default function Complete() {
   const [copied, setCopied] = useState(false);
+  const [buyerName, setBuyerName] = useState('');
   const [referrerName, setReferrerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
   const [referralStatus, setReferralStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -106,7 +107,7 @@ export default function Complete() {
 
   const submitReferral = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!referrerName.trim()) return;
+    if (!buyerName.trim() || !referrerName.trim()) return;
     setReferralStatus('submitting');
     setReferralError(null);
     try {
@@ -114,6 +115,7 @@ export default function Complete() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          buyerName: buyerName.trim(),
           referrerName: referrerName.trim(),
           buyerEmail: buyerEmail.trim() || null,
         }),
@@ -510,6 +512,19 @@ export default function Complete() {
                 <form onSubmit={submitReferral} className="space-y-3">
                   <div>
                     <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1.5">
+                      Your name
+                    </label>
+                    <input
+                      type="text"
+                      value={buyerName}
+                      onChange={(e) => setBuyerName(e.target.value)}
+                      placeholder="Your name"
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-forest-green/15 bg-warm-cream focus:outline-none focus:border-terracotta focus:bg-white transition-colors text-base"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-1.5">
                       Who referred you?
                     </label>
                     <input
@@ -545,7 +560,7 @@ export default function Complete() {
                   </div>
                   <button
                     type="submit"
-                    disabled={referralStatus === 'submitting' || !referrerName.trim()}
+                    disabled={referralStatus === 'submitting' || !buyerName.trim() || !referrerName.trim()}
                     className="w-full inline-flex items-center justify-center gap-2 bg-terracotta text-white px-5 py-3 rounded-2xl text-sm font-bold uppercase tracking-widest hover:bg-burnt-orange hover:scale-[1.01] transition-all shadow-lg shadow-terracotta/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {referralStatus === 'submitting' ? 'Sending…' : 'Credit my referrer'}

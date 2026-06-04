@@ -194,13 +194,17 @@ app.post('/api/subscribe-playbook', async (req, res) => {
 // (visible in Railway logs) and forwards to REFERRAL_WEBHOOK_URL if configured
 // (e.g. a Zapier/Make/Slack webhook).
 app.post('/api/referral', async (req, res) => {
-  const { referrerName, buyerEmail } = req.body ?? {};
+  const { buyerName, referrerName, buyerEmail } = req.body ?? {};
 
+  if (!buyerName || typeof buyerName !== 'string' || !buyerName.trim()) {
+    return res.status(400).json({ error: 'buyerName is required.' });
+  }
   if (!referrerName || typeof referrerName !== 'string' || !referrerName.trim()) {
     return res.status(400).json({ error: 'referrerName is required.' });
   }
 
   const payload = {
+    buyerName: buyerName.trim(),
     referrerName: referrerName.trim(),
     buyerEmail: (typeof buyerEmail === 'string' && buyerEmail.trim()) || null,
     receivedAt: new Date().toISOString(),
