@@ -251,7 +251,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Frontend',
     category: 'Infrastructure and Deployment',
-    definition: 'The part of an application that users see and interact with. Everything visual — buttons, forms, layouts, colours.',
+    definition: 'The part of an application that users see and interact with. Everything visual: buttons, forms, layouts, colours.',
     example: 'The login page and dashboard of your Founder Co-Pilot are the frontend.',
   },
   {
@@ -720,7 +720,7 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
       },
       {
         name: 'Shadcn UI',
-        description: 'A collection of beautifully designed, accessible UI components built on top of Tailwind CSS. Not a traditional component library — you copy the components directly into your project and own them completely.',
+        description: 'A collection of beautifully designed, accessible UI components built on top of Tailwind CSS. Not a traditional component library. You copy the components directly into your project and own them completely.',
         freeTier: 'Free and open source.',
         bestFor: 'Building polished interfaces quickly using pre-built components like buttons, modals, forms and cards.',
         site: 'ui.shadcn.com',
@@ -1089,7 +1089,7 @@ export default function VibePlaybook() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
-        <title>The Vibe Coding Playbook — Tools, Models & Reference | Vibe Coding Lab</title>
+        <title>The Vibe Coding Playbook: Tools, Models & Reference | Vibe Coding Lab</title>
         <meta name="description" content="A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI." />
         <link rel="canonical" href="https://thevibecodinglab.co/vibeplaybook" />
       </Helmet>

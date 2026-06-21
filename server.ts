@@ -16,6 +16,7 @@ const KIT_API_KEY = process.env.KIT_API_KEY || '';
 const KIT_FORM_ID = process.env.KIT_FORM_ID || '';
 const KIT_IDEAS_FORM_ID = process.env.KIT_IDEAS_FORM_ID || '';
 const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
+const KIT_SECURE_FORM_ID = process.env.KIT_SECURE_FORM_ID || '';
 
 app.use(express.json());
 
@@ -193,6 +194,46 @@ app.post('/api/subscribe-playbook', async (req, res) => {
   }
 });
 
+// POST /api/subscribe-secure
+// Subscribes a user to the Secure Build Checklist Kit.com form
+app.post('/api/subscribe-secure', async (req, res) => {
+  const { firstName, email } = req.body;
+
+  if (!firstName || !email) {
+    return res.status(400).json({ error: 'firstName and email are required.' });
+  }
+
+  if (!KIT_API_KEY || !KIT_SECURE_FORM_ID) {
+    return res.status(500).json({ error: 'Kit.com credentials not configured on server.' });
+  }
+
+  try {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_SECURE_FORM_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: KIT_API_KEY,
+        first_name: firstName,
+        email: email,
+      }),
+    });
+
+    const kitBody = await response.json().catch(() => null);
+    console.log('Kit.com secure response:', response.status, JSON.stringify(kitBody));
+
+    if (!response.ok || kitBody?.error) {
+      const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
+      console.error(`Kit.com secure error ${response.status}:`, msg);
+      return res.status(response.ok ? 400 : response.status).json({ error: `Kit.com: ${msg}` });
+    }
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('Error calling Kit.com secure:', error);
+    return res.status(500).json({ error: 'Failed to subscribe.' });
+  }
+});
+
 // POST /api/referral
 // Captures a buyer crediting their referrer on the /complete page. Logs to stdout
 // (visible in Railway logs) and forwards to REFERRAL_WEBHOOK_URL if configured
@@ -247,7 +288,7 @@ async function startServer() {
       renderApp = ssrBundle.render;
       console.log('SSR enabled');
     } catch (e) {
-      console.warn('SSR bundle not found — serving SPA fallback:', (e as Error).message);
+      console.warn('SSR bundle not found, serving SPA fallback:', (e as Error).message);
     }
 
   const BASE_URL = 'https://thevibecodinglab.co';
@@ -256,7 +297,7 @@ async function startServer() {
   const routeMeta: Record<string, { title: string; description: string; canonical: string; image: string }> = {
     '/': {
       title: 'Vibe Coding Lab: Build AI-Powered Apps Without Code',
-      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab. Live sprints, community, tools and lifetime access.',
+      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab. Live sprints, community and tools, with a 7-day free trial.',
       canonical: `${BASE_URL}/`,
       image: `${BASE_URL}/og-image.jpg`,
     },
@@ -296,6 +337,12 @@ async function startServer() {
       canonical: `${BASE_URL}/bundle`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/resources': {
+      title: 'Free Resources for Building AI Apps Without Code | Vibe Coding Lab',
+      description: 'Free tools, guides and training to help you build and ship your first AI-powered app without code. The video series, app idea generator and the Vibe Coding Playbook.',
+      canonical: `${BASE_URL}/resources`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
   };
 
   // Known SPA routes (must mirror src/App.tsx). Anything outside this set is a 404.
@@ -313,6 +360,7 @@ async function startServer() {
     '/bundle',
     '/checkout',
     '/complete',
+    '/resources',
   ]);
 
   app.get('*', (req, res) => {

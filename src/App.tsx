@@ -8,6 +8,7 @@ import Ideas from './pages/Ideas';
 import IdeasAccess from './pages/IdeasAccess';
 import VibePlaybook from './pages/VibePlaybook';
 import Playbook from './pages/Playbook';
+import Resources from './pages/Resources';
 import Unsubscribe from './pages/Unsubscribe';
 import LogoExport from './pages/LogoExport';
 import Bumpsale from './pages/Bumpsale';
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/ideas-access" element={<IdeasAccess />} />
         <Route path="/vibeplaybook" element={<VibePlaybook />} />
         <Route path="/playbook" element={<Playbook />} />
+        <Route path="/resources" element={<Resources />} />
         <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="/logo" element={<LogoExport />} />
         <Route path="/bundle" element={<Bumpsale />} />

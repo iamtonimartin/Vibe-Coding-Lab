@@ -638,7 +638,7 @@ export default function IdeasAccess() {
         </div>
       </section>
 
-      {/* Filter intro — visually distinct section break */}
+      {/* Filter intro, visually distinct section break */}
       <section className="px-6 py-12 bg-sand/40 border-y border-forest-green/8">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Browse the Ideas</p>

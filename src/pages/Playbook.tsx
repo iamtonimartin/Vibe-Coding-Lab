@@ -16,7 +16,7 @@ export default function Playbook() {
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
         <title>Get the Vibe Playbook | Vibe Coding Lab</title>
-        <meta name="description" content="Access the Vibe Playbook — a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code." />
+        <meta name="description" content="Access the Vibe Playbook, a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code." />
         <link rel="canonical" href="https://thevibecodinglab.co/playbook" />
       </Helmet>
 

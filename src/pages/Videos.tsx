@@ -53,7 +53,7 @@ export default function Videos() {
               to="/"
               className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
             >
-              Get Lifetime Access
+              Start Free Trial
             </Link>
           </div>
         </div>
@@ -177,13 +177,11 @@ export default function Videos() {
           </h2>
           <div className="space-y-5 text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto text-left">
             <p className="font-bold">The best way to learn vibe coding is to actually build something. So that is exactly what we do.</p>
-            <p className="opacity-80">Three days. Live sessions. Me in the room answering your questions every step of the way.</p>
-            <p className="opacity-80">You will leave with your own Personal AI Command Centre. Ask it for marketing ideas, a recipe based on what is in your fridge, customer feedback analysed in seconds or a shopping list built from your meal plan. Whatever you need, whenever you need it. Built by you, for you.</p>
-            <p className="opacity-80">Plus you will have the skills to build whatever comes next.</p>
-            <p className="font-bold">Two ways to join:</p>
-            <p>🔥 <strong className="font-bold">Lifetime access at £197.</strong> <span className="opacity-80">Join before 11:59pm 31 March to lock in lifetime access.</span></p>
-            <p>💛 <strong className="font-bold">Monthly at £25/month ($33/month).</strong> <span className="opacity-80">Join now, cancel any time.</span></p>
-            <p className="opacity-80">Both options get you full access.</p>
+            <p className="opacity-80">Zero to Deployed. Build and deploy your first AI-powered app using vibe coding tools. No developers. No prior experience needed.</p>
+            <p className="opacity-80">Over 3 guided days I walk you through my exact workflow, from idea to brief to design to deployment. Then you build at your own pace until you ship.</p>
+            <p className="opacity-80">Follow along with my build or use your own idea. Either way you walk away with something real and live on the internet.</p>
+            <p className="font-bold">Your finish line is deployment. Let's go. 🚀</p>
+            <p className="opacity-80">It is all included in your membership: <strong className="font-bold text-white">$67/month with a 7-day free trial.</strong> Start now, cancel any time.</p>
           </div>
 
           <Link

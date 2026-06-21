@@ -14,8 +14,13 @@ import {
   Eye,
   Play,
   Lightbulb,
-  Sparkles
+  Gift,
+  Trophy,
+  Flame,
+  Target,
+  Clock
 } from 'lucide-react';
+import Footer from '../components/Footer';
 
 const FAQItem = ({ question, answer }: { question: string, answer: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,15 +81,12 @@ const GrainOverlay = () => (
 export default function Landing() {
   const [selectedImage, setSelectedImage] = useState<{ name: string, image: string } | null>(null);
 
-  const scrollToResources = () => {
-    document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
       <Helmet>
-        <title>Vibe Coding Lab — Build AI-Powered Apps Without Code</title>
-        <meta name="description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade. Built by Toni Martin." />
+        <title>Vibe Coding Lab: Build AI-Powered Apps Without Code</title>
+        <meta name="description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days. Built by Toni Martin." />
         <link rel="canonical" href="https://thevibecodinglab.co/" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Toni Martin" />
@@ -93,8 +95,8 @@ export default function Landing() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://thevibecodinglab.co/" />
         <meta property="og:site_name" content="Vibe Coding Lab" />
-        <meta property="og:title" content="Vibe Coding Lab — Build AI-Powered Apps Without Code" />
-        <meta property="og:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade." />
+        <meta property="og:title" content="Vibe Coding Lab: Build AI-Powered Apps Without Code" />
+        <meta property="og:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days." />
         <meta property="og:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -102,8 +104,8 @@ export default function Landing() {
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Vibe Coding Lab — Build AI-Powered Apps Without Code" />
-        <meta name="twitter:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Join free or upgrade." />
+        <meta name="twitter:title" content="Vibe Coding Lab: Build AI-Powered Apps Without Code" />
+        <meta name="twitter:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days." />
         <meta name="twitter:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
 
         {/* JSON-LD Structured Data */}
@@ -230,12 +232,12 @@ export default function Landing() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={scrollToResources}
+              <a
+                href="/resources"
                 className="w-full sm:w-auto bg-terracotta text-white px-8 py-4 rounded-xl text-base font-bold hover:bg-burnt-orange hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg shadow-terracotta/20"
               >
                 Explore Free Resources <ArrowRight />
-              </button>
+              </a>
               <a
                 href="#join"
                 className="w-full sm:w-auto border-2 border-forest-green text-forest-green px-8 py-4 rounded-xl text-base font-bold hover:bg-forest-green hover:text-white transition-all flex items-center justify-center gap-2"
@@ -247,102 +249,41 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Free Resources Section */}
+      {/* Free Resources teaser */}
       <Section id="resources" className="bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-6 leading-tight">
-              Start Here. Everything's Free.
-            </h2>
-            <p className="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed">
-              No commitment required. Pick the resource that fits where you are right now.
-            </p>
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
+            Start free
           </div>
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold mb-6 leading-tight">
+            Free resources to get you building.
+          </h2>
+          <p className="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed mb-10">
+            No commitment required. A video series, an app idea generator and the Vibe Coding
+            Playbook. All free.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             {[
-              {
-                icon: <Play size={26} />,
-                badge: "Free Video Series",
-                title: "How I Built My First AI App in a Week",
-                desc: "Watch the 3-part video series showing the exact tools, stack and process behind Relavo and Zenitro.",
-                cta: "Watch Free",
-                href: "/freetraining",
-                bg: "bg-forest-green text-white",
-                iconBg: "bg-white/10 text-white",
-                badgeBg: "bg-white/10 text-white",
-                btnBg: "bg-white text-forest-green hover:bg-warm-cream",
-              },
-              {
-                icon: <Lightbulb size={26} />,
-                badge: "Free Tool",
-                title: "Find Your App Idea",
-                desc: "Answer 6 questions and get an AI-generated app concept tailored to your expertise and goals.",
-                cta: "Generate My Idea",
-                href: "/app-idea",
-                bg: "bg-white text-forest-green border border-forest-green/5",
-                iconBg: "bg-terracotta/10 text-terracotta",
-                badgeBg: "bg-sand text-forest-green",
-                btnBg: "bg-terracotta text-white hover:bg-burnt-orange",
-              },
-              {
-                icon: <BookOpen size={26} />,
-                badge: "Free Guide",
-                title: "The Vibe Coding Playbook",
-                desc: "Everything you need to understand the language, tools and technology behind vibe coding. In plain English.",
-                cta: "Get the Playbook",
-                href: "/playbook",
-                bg: "bg-white text-forest-green border border-forest-green/5",
-                iconBg: "bg-terracotta/10 text-terracotta",
-                badgeBg: "bg-sand text-forest-green",
-                btnBg: "bg-terracotta text-white hover:bg-burnt-orange",
-              },
-              {
-                icon: <Sparkles size={26} />,
-                badge: "Free Resource",
-                title: "The Ideas Resource",
-                desc: "A curated resource to help you find, shape and validate your next AI app idea.",
-                cta: "Access Free",
-                href: "/ideas",
-                bg: "bg-forest-green text-white",
-                iconBg: "bg-white/10 text-white",
-                badgeBg: "bg-white/10 text-white",
-                btnBg: "bg-white text-forest-green hover:bg-warm-cream",
-              },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className={`p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col gap-6 ${card.bg}`}
+              { Icon: Play, label: "Free video series" },
+              { Icon: Lightbulb, label: "App idea generator" },
+              { Icon: BookOpen, label: "The Vibe Coding Playbook" },
+            ].map(({ Icon, label }) => (
+              <span
+                key={label}
+                className="inline-flex items-center gap-2 bg-sand text-forest-green text-sm font-bold px-4 py-2 rounded-full"
               >
-                <div className="flex items-start justify-between">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.iconBg}`}>
-                    {card.icon}
-                  </div>
-                  <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${card.badgeBg}`}>
-                    {card.badge}
-                  </span>
-                </div>
-                <div className="space-y-3 flex-1">
-                  <h3 className="text-xl md:text-2xl font-display font-bold leading-tight">
-                    {card.title}
-                  </h3>
-                  <p className="text-base md:text-lg leading-relaxed opacity-80">
-                    {card.desc}
-                  </p>
-                </div>
-                <a
-                  href={card.href}
-                  className={`inline-flex items-center gap-2 font-extrabold px-6 py-3 rounded-xl transition-all hover:scale-105 self-start ${card.btnBg}`}
-                >
-                  {card.cta} <ArrowRight size={18} />
-                </a>
-              </motion.div>
+                <Icon size={16} className="text-terracotta" /> {label}
+              </span>
             ))}
           </div>
+
+          <a
+            href="/resources"
+            className="inline-flex items-center gap-2 bg-terracotta text-white px-8 py-4 rounded-xl text-base font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20"
+          >
+            Explore all free resources <ArrowRight size={18} />
+          </a>
         </div>
       </Section>
 
@@ -401,7 +342,7 @@ export default function Landing() {
             <div className="absolute -inset-4 bg-sand rounded-[3rem] rotate-2 group-hover:rotate-0 transition-transform duration-500" />
             <img
               src="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg"
-              alt="Toni Martin — founder of Vibe Coding Lab, Digital Growth Architect and AI Consultant"
+              alt="Toni Martin, founder of Vibe Coding Lab, Digital Growth Architect and AI Consultant"
               className="relative rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-700 w-full aspect-[4/5] object-cover"
               referrerPolicy="no-referrer"
             />
@@ -437,7 +378,7 @@ export default function Landing() {
               Everything Inside the Community.
             </h2>
             <p className="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">
-              Join free and upgrade whenever you're ready.
+              It's all included, one membership. Start with a 7-day free trial.
             </p>
           </div>
 
@@ -511,6 +452,72 @@ export default function Landing() {
         </div>
       </Section>
 
+      {/* Section: The Member App */}
+      <Section className="bg-forest-green text-white overflow-hidden">
+        <GrainOverlay />
+        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-terracotta/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6">
+              <Trophy size={12} className="text-terracotta" /> The member app
+            </div>
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] mb-6 max-w-3xl mx-auto">
+              Most people buy a course and never finish it.{' '}
+              <span className="text-terracotta">We pay you to ship instead.</span>
+            </h2>
+            <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-3xl mx-auto">
+              Inside the community you get the Build Journey: your dashboard that turns learning into
+              real challenges, tracks every win and rewards you for actually doing the work. It is
+              built to keep you moving from day one.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-10">
+            {[
+              {
+                Icon: Target,
+                title: "Real challenges, not lessons",
+                body: "Every challenge is something you build and ship for real. Tick it off, earn the badge, move forward.",
+              },
+              {
+                Icon: Gift,
+                title: "We pay you to take action",
+                body: "Hit milestones and win real prizes, like a £5 gift card you can spend on a Starbucks or whatever you fancy. Actual rewards for actual progress.",
+              },
+              {
+                Icon: Flame,
+                title: "Streaks that keep you showing up",
+                body: "Log one thing a week and your streak grows. The build streak never resets, so showing up always counts.",
+              },
+              {
+                Icon: Trophy,
+                title: "Bonuses unlock as you go",
+                body: "Each challenge you complete unlocks the next bonus. The more you do, the more you get.",
+              },
+            ].map((f) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5 }}
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-[1.75rem] p-7 md:p-8"
+              >
+                <div className="w-11 h-11 rounded-xl bg-terracotta/20 text-terracotta flex items-center justify-center mb-5">
+                  <f.Icon size={22} strokeWidth={2.25} />
+                </div>
+                <h3 className="text-xl md:text-2xl font-display font-extrabold mb-3">{f.title}</h3>
+                <p className="text-sm md:text-base leading-relaxed opacity-80">{f.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-center text-sm md:text-base font-bold opacity-80">
+            Accountability built in, so the membership you join is the one you actually use.
+          </p>
+        </div>
+      </Section>
+
       {/* Section: Proof */}
       <Section className="bg-forest-green text-warm-cream">
         <div className="max-w-6xl mx-auto">
@@ -575,6 +582,73 @@ export default function Landing() {
         </div>
       </Section>
 
+      {/* Section: Your First 7 Days */}
+      <Section className="bg-sand/30 overflow-hidden">
+        <GrainOverlay />
+        <div className="max-w-4xl mx-auto relative">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest text-terracotta mb-4">
+              <Clock size={14} /> Your first 7 days
+            </div>
+            <h2 className="text-4xl md:text-6xl font-display font-extrabold leading-tight mb-6">
+              The trial isn't a tour. You ship something.
+            </h2>
+            <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto">
+              Full access from minute one. Here's how a week inside looks.
+            </p>
+          </div>
+
+          <div className="space-y-4 md:space-y-5 mb-12">
+            {[
+              {
+                day: "Day 1",
+                title: "Get in and get clear",
+                body: "Join the community, meet other builders and earn your first badge by getting clear on what you're going to build.",
+              },
+              {
+                day: "Days 2-3",
+                title: "Zero to Deployed",
+                body: "Follow the guided workflow from idea to brief to design to deployment. Build alongside me or run with your own idea.",
+              },
+              {
+                day: "By day 5",
+                title: "Ship something real",
+                body: "Get your first app or site live on the internet, drop the URL in the community and claim your first reward.",
+              },
+              {
+                day: "Day 7",
+                title: "Decide",
+                body: "Love it? Stay for $67/month, everything included. Not for you? Cancel in two clicks before the trial ends and you won't be charged.",
+              },
+            ].map((step, i) => (
+              <motion.div
+                key={step.day}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className="bg-white border border-forest-green/10 rounded-2xl p-5 md:p-7 flex items-start gap-4 md:gap-6"
+              >
+                <div className="shrink-0 text-xs md:text-sm font-black uppercase tracking-widest text-terracotta w-16 md:w-24 pt-1">
+                  {step.day}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-2xl font-display font-extrabold leading-tight mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm md:text-base leading-relaxed opacity-80">{step.body}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-center text-sm md:text-base opacity-70 max-w-2xl mx-auto">
+            You add a card to start the trial and get full access for 7 days. Cancel any time before
+            day 7 and you won't be charged. No long contracts, cancel whenever after that too.
+          </p>
+        </div>
+      </Section>
+
       {/* Section: Join the Community */}
       <Section id="join" className="bg-warm-cream overflow-hidden">
         <GrainOverlay />
@@ -584,29 +658,40 @@ export default function Landing() {
               Join the Community. Build Something Real.
             </h2>
             <p className="text-lg md:text-xl opacity-70 leading-relaxed">
-              Start free. Upgrade when you're ready. Cancel any time.
+              Everything included for one price. Start with a 7-day free trial, cancel any time.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {/* Standard — Free */}
+          <div className="max-w-lg mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0, duration: 0.5 }}
-              className="bg-white rounded-[2rem] border border-forest-green/8 shadow-sm flex flex-col p-8"
+              transition={{ duration: 0.5 }}
+              animate={{
+                boxShadow: ["0 0 0px rgba(194, 94, 68, 0)", "0 0 40px rgba(194, 94, 68, 0.15)", "0 0 0px rgba(194, 94, 68, 0)"]
+              }}
+              className="bg-forest-green text-white rounded-[2rem] shadow-2xl flex flex-col p-8 md:p-10 relative overflow-hidden"
             >
+              <div className="absolute top-4 right-4 bg-terracotta text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                7-day free trial
+              </div>
               <div className="mb-6">
-                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Standard</p>
-                <div className="text-4xl font-display font-black text-forest-green">$0<span className="text-base font-bold opacity-50">/month</span></div>
+                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Membership</p>
+                <div className="text-5xl font-display font-black">$67<span className="text-base font-bold opacity-50">/month</span></div>
+                <p className="text-sm font-medium opacity-70 mt-3">Everything included. Start with a 7-day free trial, cancel any time.</p>
               </div>
               <ul className="flex flex-col gap-3 flex-1 mb-8">
                 {[
                   "Join a growing community of founders building with AI",
                   "Vibe Coding 101: your foundation course for building AI apps without code",
+                  "Zero to Deployed: build and deploy your first AI-powered app, from idea to live",
+                  "Vibe Lab: hands-on training for Antigravity, Claude Code and more",
+                  "Vibe Tribe: weekly co-working session, drop in and build alongside the community",
+                  "Stuck? Let's Fix It: weekly support for your blockers, bugs and automations",
                   "Build Showcase: monthly call where members share what they have been building",
-                  "Command Centre Sprint: build your own AI command centre from scratch",
+                  "Access to all Vibed Apps including Relavo and every future tool we build",
+                  "Monthly members-only session",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm leading-snug">
                     <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
@@ -618,90 +703,15 @@ export default function Landing() {
                 href="https://www.skool.com/the-vibe-coding-lab-7172/about"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
-              >
-                Join Free →
-              </a>
-            </motion.div>
-
-            {/* Premium */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              animate={{
-                boxShadow: ["0 0 0px rgba(194, 94, 68, 0)", "0 0 40px rgba(194, 94, 68, 0.15)", "0 0 0px rgba(194, 94, 68, 0)"]
-              }}
-              className="bg-forest-green text-white rounded-[2rem] shadow-2xl flex flex-col p-8 relative overflow-hidden"
-            >
-              <div className="absolute top-4 right-4 bg-terracotta text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                Popular
-              </div>
-              <div className="mb-6">
-                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">Premium</p>
-                <div className="text-4xl font-display font-black">$19<span className="text-base font-bold opacity-50">/month</span></div>
-              </div>
-              <ul className="flex flex-col gap-3 flex-1 mb-8">
-                {[
-                  "Everything in Standard +",
-                  "Vibe Lab: hands-on training for Antigravity, Claude Code and more",
-                  "Vibe Tribe: weekly co-working session, drop in and build alongside the community",
-                  "Stuck? Let's Fix It: weekly support for your blockers, bugs and automations",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-snug">
-                    <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
-                    <span className="opacity-80">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="https://www.skool.com/the-vibe-coding-lab-7172/plans"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="block w-full bg-terracotta text-white px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-burnt-orange transition-all text-center shadow-lg shadow-terracotta/30"
               >
-                Join Premium →
-              </a>
-            </motion.div>
-
-            {/* VIP */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="bg-white rounded-[2rem] border border-forest-green/8 shadow-sm flex flex-col p-8"
-            >
-              <div className="mb-6">
-                <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-3">VIP</p>
-                <div className="text-4xl font-display font-black text-forest-green">$99<span className="text-base font-bold opacity-50">/month</span></div>
-              </div>
-              <ul className="flex flex-col gap-3 flex-1 mb-8">
-                {[
-                  "Everything in Premium +",
-                  "Access to all Vibed Apps including Relavo and every future tool we build",
-                  "Monthly VIP-only session exclusively for VIP members",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-snug">
-                    <Zap size={14} className="text-terracotta shrink-0 mt-0.5" fill="currentColor" />
-                    <span className="opacity-80">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="https://www.skool.com/the-vibe-coding-lab-7172/plans"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-sand text-forest-green px-6 py-3 rounded-xl text-sm font-extrabold hover:bg-forest-green hover:text-white transition-all text-center"
-              >
-                Join VIP →
+                Start your 7-day free trial →
               </a>
             </motion.div>
           </div>
 
           <p className="text-center mt-8 text-sm opacity-50 font-medium">
-            All paid plans billed monthly. Cancel any time.
+            Card required to start. Cancel before day 7 and you won't be charged. $67/month after that, cancel any time.
           </p>
         </div>
       </Section>
@@ -756,13 +766,13 @@ export default function Landing() {
                 href="#join"
                 className="inline-block bg-white text-terracotta px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-warm-cream hover:scale-105 transition-all shadow-2xl"
               >
-                Join Free →
+                Start your 7-day free trial →
               </a>
               <a
                 href="#join"
                 className="inline-block border-2 border-white/40 text-white px-10 py-5 rounded-2xl text-lg md:text-xl font-extrabold hover:bg-white/10 transition-all"
               >
-                See Paid Plans →
+                See what's included →
               </a>
             </div>
           </div>
@@ -777,19 +787,7 @@ export default function Landing() {
       </Section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-warm-cream border-t border-forest-green/5 text-center">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-2xl font-display font-extrabold tracking-tighter mb-8">
-            VIBE<span className="text-terracotta">CODING</span>LAB
-          </div>
-          <p className="text-lg font-bold opacity-60 max-w-2xl mx-auto leading-relaxed">
-            The Vibe Coding Lab is on Skool. Start free or join the community.
-          </p>
-          <div className="mt-12 pt-12 border-t border-forest-green/5 text-sm font-bold uppercase tracking-widest opacity-30">
-            © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

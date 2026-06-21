@@ -14,7 +14,7 @@ export default function OptIn() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
-        <title>Free Training — How to Build AI Apps Without Code | Vibe Coding Lab</title>
+        <title>Free Training: How to Build AI Apps Without Code | Vibe Coding Lab</title>
         <meta name="description" content="Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed." />
         <link rel="canonical" href="https://thevibecodinglab.co/freetraining" />
       </Helmet>
