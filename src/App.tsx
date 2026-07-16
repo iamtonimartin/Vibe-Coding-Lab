@@ -15,6 +15,8 @@ import Bumpsale from './pages/Bumpsale';
 import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
 import ArtOfTheAudit from './pages/ArtOfTheAudit';
+import SampleAuditReport, { AuditChapter } from './pages/SampleAuditReport';
+import AuditPrompts from './pages/AuditPrompts';
 import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
 
@@ -39,6 +41,9 @@ export default function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/complete" element={<Complete />} />
         <Route path="/artoftheaudit" element={<ArtOfTheAudit />} />
+        <Route path="/sampleauditreport" element={<SampleAuditReport />} />
+        <Route path="/sampleauditreport/:slug" element={<AuditChapter />} />
+        <Route path="/auditprompts" element={<AuditPrompts />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HelmetProvider>

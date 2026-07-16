@@ -349,7 +349,34 @@ async function startServer() {
       canonical: `${BASE_URL}/artoftheaudit`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/sampleauditreport': {
+      title: 'Sample Audit Report: Maple and Moss | Vibe Coding Lab',
+      description: 'A complete worked example of a systems audit report, in ten chapters. Fictional client, real findings. Keep the shape, swap in your client and write it in your own voice.',
+      canonical: `${BASE_URL}/sampleauditreport`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/auditprompts': {
+      title: 'The Three Audit Prompts | Vibe Coding Lab',
+      description: 'The three prompts from The Art of the Audit: prepare your questions, turn your notes into a draft report and find your first client. Copy and run.',
+      canonical: `${BASE_URL}/auditprompts`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
   };
+
+  // Sections of the sample report are real routes rather than anchors. These are
+  // listed rather than prefix-matched so an unknown slug still 404s properly.
+  const REPORT_CHAPTERS = [
+    'summary',
+    'context',
+    'what-we-looked-at',
+    'findings',
+    'risk',
+    'cost-of-standing-still',
+    'what-good-looks-like',
+    'roadmap',
+    'proposal',
+    'appendix',
+  ].map(c => `/sampleauditreport/${c}`);
 
   // Known SPA routes (must mirror src/App.tsx). Anything outside this set is a 404.
   const VALID_ROUTES = new Set([
@@ -368,11 +395,13 @@ async function startServer() {
     '/complete',
     '/resources',
     '/artoftheaudit',
+    '/sampleauditreport',
+    '/auditprompts',
   ]);
 
   app.get('*', (req, res) => {
     const meta = routeMeta[req.path];
-    const isKnownRoute = VALID_ROUTES.has(req.path);
+    const isKnownRoute = VALID_ROUTES.has(req.path) || REPORT_CHAPTERS.includes(req.path);
     let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
 
     // Inject server-side meta tags

@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { CSSProperties, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { QUESTIONS_PROMPT, REPORT_PROMPT, FIRST_CLIENT_PROMPT } from '../data/auditPrompts';
 
 // Deck-specific styling. Palette and type are the Vibe Coding Lab house system:
 // Outfit for display, Inter for everything else, terracotta on forest green and warm cream.
@@ -235,6 +236,10 @@ strong,b{color:var(--ink);font-weight:700}
 .tpl .tt{font-family:var(--display);font-weight:800;color:var(--ink);font-size:clamp(16px,1.6vw,19px);line-height:1.12;margin-bottom:6px;letter-spacing:-.01em}
 .tpl .tx{font-size:clamp(14px,1.4vw,15.5px);color:var(--body);line-height:1.45}
 .tpl .tf{margin-top:auto;padding-top:12px;font-family:var(--mono);font-size:11px;color:var(--terra);letter-spacing:.04em}
+.tpl-link{text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s}
+.tpl-link:hover{border-color:var(--terra);transform:translateY(-3px);box-shadow:0 18px 34px -22px rgba(14,31,22,.5)}
+.tpl-link .tgo{display:inline-block;transition:transform .2s}
+.tpl-link:hover .tgo{transform:translateX(4px)}
 .stack{display:flex;flex-direction:column;gap:11px;margin-top:6px;max-width:44em}
 .row{display:flex;gap:13px;align-items:flex-start;font-size:clamp(15px,1.5vw,17.5px)}
 .row .tk{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--terra);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:2px}
@@ -304,6 +309,25 @@ strong,b{color:var(--ink);font-weight:700}
 .mclose{position:fixed;top:clamp(22px,4vw,40px);right:clamp(22px,4vw,44px);background:none;border:1px solid var(--line-dark);color:var(--cream);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:20px}
 .mclose:hover{background:var(--terra);border-color:var(--terra)}
 @media (max-width:860px){.rail{display:none}.slide{padding-left:clamp(28px,6vw,110px)}}
+@media (max-width:720px){
+  /* The wordmark sits top-left, so the slide needs headroom to clear it. */
+  .slide{padding-top:56px;padding-bottom:88px;padding-left:22px;padding-right:22px}
+  .two{grid-template-columns:1fr}
+  .jobstrip{grid-template-columns:1fr;gap:6px}
+  .report .rbeat{grid-template-columns:1fr;gap:3px}
+  .lenses,.qgroups,.facts{grid-template-columns:1fr}
+  .myth{padding:14px 16px;gap:12px}
+  .terminal pre{max-height:none;font-size:11.5px;line-height:1.6}
+  .scroller{-webkit-overflow-scrolling:touch}
+  .controls{bottom:12px;right:12px;gap:6px}
+  .ctrl{width:38px;height:38px}
+  .hint{margin-top:22px}
+  .cover .cnum{font-size:clamp(56px,20vw,110px)}
+  .ghost{font-size:clamp(150px,46vw,300px)}
+}
+/* Touch devices get the swipe wording; pointer devices get the key. */
+.key-hint{display:inline}.swipe-hint{display:none}
+@media (hover:none) and (pointer:coarse){.key-hint{display:none}.swipe-hint{display:inline}}
 @media (max-width:720px){.styles,.quotes,.leave,.templates,.anatomy{grid-template-columns:1fr}.mrow{grid-template-columns:1fr;gap:5px}.slide{padding-bottom:92px}.rtable,.rtable tbody,.rtable tr,.rtable td,.rtable th{display:block}.rtable th{padding-top:8px}}
 @media (prefers-reduced-motion:reduce){.slide{transition:none}.slide.reveal .anim,.slide.reveal .pop{animation:none;opacity:1}.cursor{animation:none}}
 `;
@@ -312,34 +336,6 @@ strong,b{color:var(--ink);font-weight:700}
 const d = (delay: string): CSSProperties => ({ '--d': delay }) as CSSProperties;
 
 const pad = (n: number) => String(n).padStart(2, '0');
-
-// ─── PROMPTS ─────────────────────────────────────────────────────────────────
-
-const QUESTIONS_PROMPT = `You are an experienced consultant who prepares people to run listening-led business audits. You are especially good at finding the questions that get someone talking honestly about their real working day, because that is where the useful truth sits.
-
-The business is [what they do and roughly how big]. The founder believes the problem is [what they have told you].
-
-Give me a short set of open questions to ask the people who do the day-to-day work. Aim them at three things: the workarounds people quietly rely on, where the information they actually trust is kept and any gap between what leadership believes and what the team lives day to day. Group them so a conversation can flow, a few to set the scene, a few about the daily reality, one or two to close. Judge a good question by whether it gets someone describing what they actually do: "walk me through your morning" works, "rate the current process" does not.
-
-Keep them warm and conversational, the kind of thing I could ask over a cup of tea. If anything about this business is unusual enough to change which questions matter, ask me one or two things first, then write them.`;
-
-const REPORT_PROMPT = `You are an experienced operations consultant who writes clear, honest audit reports for non-technical business owners. You name the real problem plainly, you tie every issue to how it grows with the business, then you stay generous to the people while being straight about the systems.
-
-Here is what I have. The business is [what they do, size, where they are heading]. These are my observations from the day, plus the transcripts of the conversations I recorded: [paste your notes and transcripts]. The single most important thing I noticed is [the core gap or truth].
-
-Draft the report in this order: a one page summary that states the core truth in a sentence and lists the main findings, the business context, what I looked at and who I listened to, the findings, a risk table, the cost of doing nothing, what good looks like, a prioritised roadmap and a proposal. Write each finding in the same shape: what is happening today, then the workaround the team has built, then why it matters, then how it worsens as they grow. Keep every finding about the process rather than any person. Work only from what my notes actually support. Where they run out, mark a clear gap for me to fill rather than filling it yourself.
-
-Where someone has said something in their own words that makes the point better than a summary would, use their words rather than mine.
-
-Write it warm and plain and in my voice, lead with what matters most and flag any assumption you make so I can check it before it goes to the client.`;
-
-const FIRST_CLIENT_PROMPT = `You are a practical business development coach who helps new consultants land their first audit client from the people who already trust them rather than from cold outreach. You are encouraging and realistic.
-
-Here are the businesses and people I already have some relationship with: [list them, however rough].
-
-For each one, tell me three things: whether they look like a plausible first audit client and why, any sign of leaking time or money I might already have noticed and a warm, low pressure way I could open the conversation. Weigh someone who already knows me above a stranger. If my list looks thin, suggest a couple of everyday places I could look for a first client.
-
-Keep it warm, encouraging and practical. Give me openers I could actually say out loud rather than anything that reads like a sales script.`;
 
 // Renders a prompt, tinting anything in [square brackets] as a placeholder.
 function Terminal({ name, text }: { name: string; text: string }) {
@@ -962,7 +958,7 @@ const SLIDES: Slide[] = [
     body: (
       <>
         <div className="tag anim" style={d('.05s')}>
-          VIBE CODING LAB &middot; LIVE SESSION &middot; 90 MINUTES
+          VIBE CODING LAB &middot; LIVE SESSION
         </div>
         <h1 className="d anim" style={{ ...d('.16s'), marginTop: '.3em' }}>
           The Art of
@@ -988,7 +984,10 @@ const SLIDES: Slide[] = [
           ))}
         </div>
         <div className="hint anim" style={d('.72s')}>
-          Press <span className="key">&rarr;</span> to begin
+          <span className="key-hint">
+            Press <span className="key">&rarr;</span> to begin
+          </span>
+          <span className="swipe-hint">Swipe to begin</span>
         </div>
       </>
     ),
@@ -2205,32 +2204,48 @@ const SLIDES: Slide[] = [
         </p>
         <div className="templates anim" style={d('.2s')}>
           {[
-            [
-              '✎',
-              'The field guide',
-              'The whole method in your pocket, with the question bank and every prompt.',
-              'READ AND KEEP',
-            ],
-            [
-              '▣',
-              'The report template',
-              'The full Maple and Moss report. Keep the shape, swap in your client, write it in your voice.',
-              'FILL IN',
-            ],
-            [
-              '⌂',
-              'The three prompts',
-              'Prepare your questions, turn notes into a draft, find your first client.',
-              'COPY AND RUN',
-            ],
-          ].map(([ic, t, x, f]) => (
-            <div className="tpl" key={t}>
-              <div className="ti">{ic}</div>
-              <div className="tt">{t}</div>
-              <div className="tx">{x}</div>
-              <div className="tf">{f}</div>
-            </div>
-          ))}
+            {
+              ic: '✎',
+              t: 'The field guide',
+              x: 'The whole method in your pocket, with the question bank and every prompt.',
+              f: 'READ AND KEEP',
+            },
+            {
+              ic: '▣',
+              t: 'The report template',
+              x: 'The full Maple and Moss report, all ten chapters. Keep the shape, swap in your client, write it in your voice.',
+              f: 'OPEN THE REPORT',
+              to: '/sampleauditreport',
+            },
+            {
+              ic: '⌂',
+              t: 'The three prompts',
+              x: 'Prepare your questions, turn notes into a draft, find your first client.',
+              f: 'COPY AND RUN',
+              to: '/auditprompts',
+            },
+          ].map(({ ic, t, x, f, to }) => {
+            const inner = (
+              <>
+                <div className="ti">{ic}</div>
+                <div className="tt">{t}</div>
+                <div className="tx">{x}</div>
+                <div className="tf">
+                  {f}
+                  {to && <span className="tgo"> &rarr;</span>}
+                </div>
+              </>
+            );
+            return to ? (
+              <Link className="tpl tpl-link" key={t} to={to} target="_blank" rel="noopener">
+                {inner}
+              </Link>
+            ) : (
+              <div className="tpl" key={t}>
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </>
     ),
