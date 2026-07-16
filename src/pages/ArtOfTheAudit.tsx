@@ -2192,7 +2192,6 @@ const SLIDES: Slide[] = [
     tone: 'cream',
     body: (
       <>
-        <div className="shot anim">&#128248; It is all in your classroom</div>
         <div className="eyebrow anim" style={d('.04s')}>
           Your templates
         </div>
