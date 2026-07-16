@@ -22,12 +22,26 @@ body.aota-lock{overflow:hidden}
 #aota *{box-sizing:border-box}
 .stage{position:fixed;inset:0;overflow:hidden}
 .track{display:flex;height:100%;transition:transform .72s var(--ease);will-change:transform}
-.slide{position:relative;flex:0 0 100vw;height:100vh;height:100dvh;overflow:hidden;display:flex;align-items:center;padding:clamp(28px,4.5vw,60px) clamp(28px,6vw,110px) clamp(28px,4.5vw,60px) clamp(66px,10vw,168px)}
+.slide{position:relative;isolation:isolate;flex:0 0 100vw;height:100vh;height:100dvh;overflow:hidden;display:flex;align-items:center;padding:clamp(28px,4.5vw,60px) clamp(28px,6vw,110px) clamp(28px,4.5vw,60px) clamp(66px,10vw,168px)}
 .slide.cream{background:var(--cream);color:var(--body)}
 .slide.forest{background:radial-gradient(120% 120% at 80% 10%,var(--forest-2),var(--forest) 60%);color:var(--card-text)}
 .slide.terra{background:var(--terra);color:#fff1ea}
-.scroller{width:100%;max-height:100%;overflow-y:auto;padding:2px}
+/* House grain, same fractal noise the landing page uses. Multiply reads on the
+   light slides; the dark ones need overlay or the texture disappears into them. */
+.slide::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.slide.cream::after{opacity:.035;mix-blend-mode:multiply}
+.slide.forest::after{opacity:.07;mix-blend-mode:overlay}
+.slide.terra::after{opacity:.09;mix-blend-mode:overlay}
+.scroller{width:100%;max-height:100%;overflow-y:auto;padding:2px;position:relative;z-index:2}
 .wrap{width:100%;max-width:920px;margin:0 auto;position:relative;z-index:2}
+/* Oversized act numeral bleeding off the bottom-right of the section covers. */
+.ghost{position:absolute;z-index:0;right:clamp(-8px,2vw,40px);bottom:clamp(-24px,-2vw,8px);
+  font-family:var(--display);font-weight:800;font-size:clamp(180px,38vw,520px);line-height:.8;
+  letter-spacing:-.05em;pointer-events:none;user-select:none}
+.cream .ghost{color:rgba(14,31,22,.045)}
+.forest .ghost{color:rgba(237,231,222,.05)}
+.terra .ghost{color:rgba(255,255,255,.1)}
 .eyebrow{font-weight:700;font-size:clamp(11px,1.05vw,12.5px);letter-spacing:.22em;text-transform:uppercase;color:var(--terra);display:flex;align-items:center;gap:.7em;margin:0 0 clamp(14px,2vw,24px);flex-wrap:wrap}
 .eyebrow::before{content:"";width:28px;height:2px;background:currentColor;display:inline-block;flex:0 0 auto}
 .forest .eyebrow{color:var(--ph)}.terra .eyebrow{color:#ffe4da}
@@ -79,7 +93,7 @@ strong,b{color:var(--ink);font-weight:700}
 .controls-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .path{display:flex;flex-direction:column;margin-top:6px;max-width:48em}
 .pstep{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:14px 0;border-top:1px solid var(--line-dark);align-items:baseline}
-.pstep:first-child{border-top:none}
+.path>.build:first-child .pstep{border-top:none}
 .pstep .pn{font-family:var(--display);font-weight:800;color:var(--ph);font-size:clamp(22px,2.4vw,32px);line-height:1}
 .pstep .pt{font-family:var(--display);font-weight:800;color:#fff;font-size:clamp(16px,1.7vw,21px);letter-spacing:-.01em}
 .pstep .pd{color:rgba(237,231,222,.9);font-size:clamp(14.5px,1.5vw,16.5px);margin-top:2px}
@@ -103,7 +117,7 @@ strong,b{color:var(--ink);font-weight:700}
 .movement{display:flex;align-items:center;gap:12px;margin:clamp(14px,1.8vw,22px) 0 4px}
 .movement .ml{font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:10.5px;color:var(--ph);white-space:nowrap}
 .movement .mline{height:1px;background:var(--line-dark);flex:1}
-.movement:first-of-type{margin-top:6px}
+.path>.build:first-child>.movement{margin-top:6px}
 .cream .movement .ml{color:var(--terra)}.cream .movement .mline{background:var(--line)}
 .fic{display:inline-flex;align-items:center;gap:8px;background:rgba(194,94,68,.12);border:1px solid rgba(194,94,68,.35);color:var(--terra);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:14px}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:clamp(16px,2vw,24px)}
@@ -139,6 +153,10 @@ strong,b{color:var(--ink);font-weight:700}
 .quote{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--terra);border-radius:16px;padding:15px 17px}
 .quote .qn{font-weight:700;font-size:12.5px;color:var(--ink)}.quote .qr{font-size:12.5px;color:var(--body);margin-bottom:8px}
 .quote .qt{font-style:italic;font-size:clamp(14.5px,1.45vw,16px);line-height:1.45;color:var(--body)}
+.splitgrid .quotes{grid-template-columns:1fr;gap:12px;margin-top:0}
+.splitgrid .quote{padding:18px 22px;border-left-width:4px}
+.splitgrid .quote .qn{font-size:13.5px}
+.splitgrid .quote .qt{font-size:clamp(15px,1.55vw,18px);line-height:1.5}
 .reveal-box{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
 .reveal-box.show{grid-template-rows:1fr;margin-top:22px}.reveal-inner{overflow:hidden}
 .finding{display:grid;grid-template-columns:auto 1fr;gap:15px;padding:14px 0;border-top:1px solid var(--line)}.finding:first-child{border-top:none}
@@ -173,6 +191,23 @@ strong,b{color:var(--ink);font-weight:700}
 .rtable td{font-size:clamp(13.5px,1.35vw,15px);color:var(--body);padding:10px 12px 10px 0;border-top:1px solid var(--line);vertical-align:top;line-height:1.4}
 .donotdo{margin-top:14px;background:#fbeee8;border:1px solid rgba(194,94,68,.3);border-left:3px solid var(--terra);border-radius:16px;padding:14px 18px;font-size:clamp(14.5px,1.45vw,16px);color:var(--ink);line-height:1.5;max-width:44em}.donotdo b{color:var(--terra)}
 .caption{font-style:italic;color:var(--body);font-size:clamp(15px,1.6vw,19px);margin-top:14px;max-width:40em;text-wrap:pretty}
+.forest .caption,.terra .caption{color:rgba(237,231,222,.9)}
+.forest .ask,.terra .ask{color:#fff}
+/* Split composition: the deck's alternative to the standard single column. */
+.slide.split .wrap{max-width:1180px}
+.splitgrid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(20px,3.5vw,56px);align-items:center}
+.splitgrid>div{min-width:0}
+@media (max-width:900px){.splitgrid{grid-template-columns:1fr;gap:22px}}
+/* Elements that wait for a click rather than arriving with the slide. */
+.build{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.build.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.build{transition:none}}
+.more{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--terra);opacity:.75}
+.forest .more,.terra .more{color:var(--ph)}
+.more i{font-style:normal;animation:aota-nudge 1.4s ease-in-out infinite}
+@keyframes aota-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.more i{animation:none}}
 .anatomy{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px;margin-top:8px;max-width:52em}
 .arow{display:grid;grid-template-columns:auto 1fr;gap:13px;padding:9px 0;border-top:1px solid var(--line-dark);align-items:baseline}
 .arow .an{font-family:var(--mono);color:var(--ph);font-size:12px;font-weight:700}
@@ -240,7 +275,8 @@ strong,b{color:var(--ink);font-weight:700}
 .node.active .nd{background:var(--terra);border-color:var(--terra);transform:scale(1.5);box-shadow:0 0 0 5px rgba(194,94,68,.16)}
 .node.active .nl{opacity:1;transform:none;color:var(--terra)}.dark-ui .node.active .nl{color:var(--ph)}
 .controls{position:fixed;bottom:clamp(14px,2.2vw,26px);right:clamp(14px,2.4vw,30px);z-index:40;display:flex;align-items:center;gap:8px}
-.count{font-family:var(--mono);font-size:13px;color:var(--muted);margin-right:6px}.dark-ui .count{color:var(--ph)}
+.count{font-family:var(--mono);font-size:13px;color:var(--muted);margin-right:6px}
+@media (max-width:560px){.count .ca{display:none}}.dark-ui .count{color:var(--ph)}
 .ctrl{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.85);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:.18s;backdrop-filter:blur(6px)}
 .ctrl:hover{background:var(--terra);color:#fff;border-color:var(--terra)}
 .ctrl svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -840,6 +876,27 @@ function confetti() {
 // Lets a slide drive the deck it is sitting in.
 const DeckNav = createContext<(n: number) => void>(() => {});
 
+// How many build steps of the current slide have been revealed. A slide declaring
+// `steps: n` absorbs the next n forward presses before the deck moves on.
+const DeckStep = createContext(0);
+
+// Wraps one unit of a build so it fades in once the deck reaches `at`.
+function Build({ at, children }: { at: number; children: ReactNode }) {
+  const step = useContext(DeckStep);
+  return <div className={`build${step >= at ? ' on' : ''}`}>{children}</div>;
+}
+
+// The nudge that tells a presenter this slide has more to give before moving on.
+function More({ at, label }: { at: number; label: string }) {
+  const step = useContext(DeckStep);
+  if (step > at) return null;
+  return (
+    <div className="more">
+      {label} <i>&rarr;</i>
+    </div>
+  );
+}
+
 function GoSlide() {
   const go = useContext(DeckNav);
   return (
@@ -865,7 +922,19 @@ function GoSlide() {
 // ─── SLIDE DECK ──────────────────────────────────────────────────────────────
 
 type Tone = 'cream' | 'forest' | 'terra';
-type Slide = { title: string; act: number; tone: Tone; cover?: boolean; body: ReactNode };
+type Slide = {
+  title: string;
+  act: number;
+  tone: Tone;
+  cover?: boolean;
+  /** Uses the wide two-column composition rather than the standard single column. */
+  split?: boolean;
+  /** Oversized numeral bled off the bottom-right corner. */
+  ghost?: string;
+  /** Forward presses this slide absorbs to build itself before the deck advances. */
+  steps?: number;
+  body: ReactNode;
+};
 
 const ACTS: { label: string; slide: number }[] = [
   { label: 'Open', slide: 0 },
@@ -923,6 +992,7 @@ const SLIDES: Slide[] = [
     act: 1,
     tone: 'forest',
     cover: true,
+    ghost: '01',
     body: (
       <>
         <div className="cnum anim">01</div>
@@ -1144,6 +1214,7 @@ const SLIDES: Slide[] = [
     act: 2,
     tone: 'forest',
     cover: true,
+    ghost: '02',
     body: (
       <>
         <div className="cnum anim">02</div>
@@ -1160,6 +1231,7 @@ const SLIDES: Slide[] = [
     title: 'The framework',
     act: 2,
     tone: 'forest',
+    steps: 4,
     body: (
       <>
         <div className="eyebrow anim">My process</div>
@@ -1171,58 +1243,71 @@ const SLIDES: Slide[] = [
           That shape never changes, whatever the business and whatever you know best.
         </p>
         <div className="path anim" style={d('.28s')}>
-          <div className="movement">
-            <span className="ml">Set up</span>
-            <span className="mline" />
-          </div>
-          <div className="pstep">
-            <span className="pn">1</span>
-            <div>
-              <div className="pt">Scope the engagement</div>
-              <div className="pd">What you are looking at, who you will speak to, what they get.</div>
+          <Build at={0}>
+            <div className="movement">
+              <span className="ml">Set up</span>
+              <span className="mline" />
             </div>
-          </div>
-          <div className="movement">
-            <span className="ml">Take it in</span>
-            <span className="mline" />
-          </div>
-          <div className="pstep">
-            <span className="pn">2</span>
-            <div>
-              <div className="pt">Observe the work</div>
-              <div className="pd">How the business actually runs, not how it says it runs.</div>
-            </div>
-          </div>
-          <div className="pstep">
-            <span className="pn">3</span>
-            <div>
-              <div className="pt">Listen to the people</div>
-              <div className="pd">The right questions, to the right people. The real skill.</div>
-            </div>
-          </div>
-          <div className="movement">
-            <span className="ml">Make sense of it</span>
-            <span className="mline" />
-          </div>
-          <div className="pstep">
-            <span className="pn">4</span>
-            <div>
-              <div className="pt">Locate the gap</div>
-              <div className="pd">
-                Where what leadership believes and what the team lives diverge.
+            <div className="pstep">
+              <span className="pn">1</span>
+              <div>
+                <div className="pt">Scope the engagement</div>
+                <div className="pd">
+                  What you are looking at, who you will speak to, what they get.
+                </div>
               </div>
             </div>
-          </div>
-          <div className="pstep">
-            <span className="pn">5</span>
-            <div>
-              <div className="pt">Deliver the report</div>
-              <div className="pd">
-                Turn what you saw and heard into the written thing they own.
+          </Build>
+          <Build at={1}>
+            <div className="movement">
+              <span className="ml">Take it in</span>
+              <span className="mline" />
+            </div>
+            <div className="pstep">
+              <span className="pn">2</span>
+              <div>
+                <div className="pt">Observe the work</div>
+                <div className="pd">How the business actually runs, not how it says it runs.</div>
               </div>
             </div>
-          </div>
+          </Build>
+          <Build at={2}>
+            <div className="pstep">
+              <span className="pn">3</span>
+              <div>
+                <div className="pt">Listen to the people</div>
+                <div className="pd">The right questions, to the right people. The real skill.</div>
+              </div>
+            </div>
+          </Build>
+          <Build at={3}>
+            <div className="movement">
+              <span className="ml">Make sense of it</span>
+              <span className="mline" />
+            </div>
+            <div className="pstep">
+              <span className="pn">4</span>
+              <div>
+                <div className="pt">Locate the gap</div>
+                <div className="pd">
+                  Where what leadership believes and what the team lives diverge.
+                </div>
+              </div>
+            </div>
+          </Build>
+          <Build at={4}>
+            <div className="pstep">
+              <span className="pn">5</span>
+              <div>
+                <div className="pt">Deliver the report</div>
+                <div className="pd">
+                  Turn what you saw and heard into the written thing they own.
+                </div>
+              </div>
+            </div>
+          </Build>
         </div>
+        <More at={3} label="Build the moves" />
       </>
     ),
   },
@@ -1346,7 +1431,7 @@ const SLIDES: Slide[] = [
   {
     title: 'Step 2: Observe the work',
     act: 2,
-    tone: 'cream',
+    tone: 'forest',
     body: (
       <>
         <div className="eyebrow anim">
@@ -1619,14 +1704,23 @@ const SLIDES: Slide[] = [
     title: 'Step 3: What comes back',
     act: 2,
     tone: 'cream',
+    split: true,
+    steps: 2,
     body: (
-      <>
-        <div className="eyebrow anim">
-          My process<span className="stepc">3 &middot; Listen</span>
+      <div className="splitgrid">
+        <div>
+          <div className="eyebrow anim">
+            My process<span className="stepc">3 &middot; Listen</span>
+          </div>
+          <h2 className="anim" style={d('.05s')}>
+            So you ask. Here is what comes back
+          </h2>
+          <p className="note anim" style={{ ...d('.26s'), marginTop: '.4em' }}>
+            Nobody said the word AI once. None of this was in the brief. It only shows up when you
+            ask the right person and listen to the answer.
+          </p>
+          <More at={1} label="One at a time" />
         </div>
-        <h2 className="anim" style={d('.05s')}>
-          So you ask. Here is what comes back
-        </h2>
         <div className="quotes anim" style={d('.14s')}>
           {[
             [
@@ -1644,19 +1738,17 @@ const SLIDES: Slide[] = [
               'Accounts',
               '"I invoice by scrolling back through the photos. It takes days. I know I miss things."',
             ],
-          ].map(([n, r, q]) => (
-            <div className="quote" key={n}>
-              <div className="qn">{n}</div>
-              <div className="qr">{r}</div>
-              <div className="qt">{q}</div>
-            </div>
+          ].map(([n, r, q], k) => (
+            <Build at={k} key={n}>
+              <div className="quote">
+                <div className="qn">{n}</div>
+                <div className="qr">{r}</div>
+                <div className="qt">{q}</div>
+              </div>
+            </Build>
           ))}
         </div>
-        <p className="note anim" style={d('.26s')}>
-          Nobody said the word AI once. None of this was in the brief. It only shows up when you ask
-          the right person and listen to the answer.
-        </p>
-      </>
+      </div>
     ),
   },
   {
@@ -1678,7 +1770,7 @@ const SLIDES: Slide[] = [
   {
     title: 'When you do not know, say so',
     act: 2,
-    tone: 'cream',
+    tone: 'terra',
     body: (
       <>
         <div className="eyebrow anim">
@@ -1758,7 +1850,7 @@ const SLIDES: Slide[] = [
   {
     title: 'Step 5: Deliver the report',
     act: 2,
-    tone: 'cream',
+    tone: 'forest',
     body: (
       <>
         <div className="eyebrow anim">
@@ -1798,6 +1890,7 @@ const SLIDES: Slide[] = [
     act: 3,
     tone: 'forest',
     cover: true,
+    ghost: '03',
     body: (
       <>
         <div className="cnum anim">03</div>
@@ -1964,7 +2057,7 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
-  { title: 'Report: risk and the hard call', act: 3, tone: 'cream', body: <RiskSlide /> },
+  { title: 'Report: risk and the hard call', act: 3, tone: 'forest', body: <RiskSlide /> },
   {
     title: 'Report: the roadmap',
     act: 3,
@@ -2073,6 +2166,7 @@ const SLIDES: Slide[] = [
     act: 4,
     tone: 'forest',
     cover: true,
+    ghost: '04',
     body: (
       <>
         <div className="cnum anim">04</div>
@@ -2140,6 +2234,7 @@ const SLIDES: Slide[] = [
     act: 5,
     tone: 'forest',
     cover: true,
+    ghost: '05',
     body: (
       <>
         <div className="cnum anim">05</div>
@@ -2179,7 +2274,7 @@ const SLIDES: Slide[] = [
   {
     title: 'What you are actually pricing',
     act: 5,
-    tone: 'cream',
+    tone: 'forest',
     body: (
       <>
         <div className="eyebrow anim">Get paid</div>
@@ -2373,7 +2468,7 @@ const SLIDES: Slide[] = [
   {
     title: 'Two habits worth building',
     act: 5,
-    tone: 'cream',
+    tone: 'forest',
     body: (
       <>
         <div className="eyebrow anim">Get paid</div>
@@ -2725,13 +2820,35 @@ const SLIDES: Slide[] = [
 
 export default function ArtOfTheAudit() {
   const [i, setI] = useState(0);
+  const [step, setStep] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const total = SLIDES.length;
   const current = SLIDES[i];
 
-  const go = useCallback((n: number) => setI(((n % total) + total) % total), [total]);
-  const next = useCallback(() => go(i + 1), [go, i]);
-  const prev = useCallback(() => go(i - 1), [go, i]);
+  const go = useCallback(
+    (n: number) => {
+      const t = ((n % total) + total) % total;
+      setI(t);
+      setStep(0);
+    },
+    [total]
+  );
+
+  // Forward walks the current slide's build steps before moving on; backward
+  // unwinds them, and stepping back into a built slide finds it fully built.
+  const next = useCallback(() => {
+    if (step < (SLIDES[i].steps ?? 0)) setStep(step + 1);
+    else go(i + 1);
+  }, [go, i, step]);
+
+  const prev = useCallback(() => {
+    if (step > 0) setStep(step - 1);
+    else {
+      const t = (i - 1 + total) % total;
+      setI(t);
+      setStep(SLIDES[t].steps ?? 0);
+    }
+  }, [i, total, step]);
 
   useEffect(() => {
     document.body.classList.add('aota-lock');
@@ -2800,8 +2917,16 @@ export default function ArtOfTheAudit() {
 
   const lastAct = ACTS.length - 1;
 
+  // Position within the act, so a 21-slide act reads as progress rather than
+  // "slide 14 of 61". The rail fill creeps between nodes on the same basis.
+  const actSlides = SLIDES.filter(s => s.act === current.act);
+  const actFirst = SLIDES.findIndex(s => s.act === current.act);
+  const inAct = i - actFirst + 1;
+  const railPct = ((current.act + (inAct - 1) / actSlides.length) / lastAct) * 100;
+
   return (
     <DeckNav.Provider value={go}>
+    <DeckStep.Provider value={step}>
     <div
       id="aota"
       className={`${current.tone !== 'cream' ? 'dark-ui ' : ''}${current.tone === 'terra' ? 'terra-ui' : ''}`}
@@ -2825,8 +2950,11 @@ export default function ArtOfTheAudit() {
           {SLIDES.map((s, si) => (
             <section
               key={si}
-              className={`slide ${s.tone}${s.cover ? ' cover' : ''}${si === i ? ' reveal' : ''}`}
+              className={`slide ${s.tone}${s.cover ? ' cover' : ''}${s.split ? ' split' : ''}${
+                si === i ? ' reveal' : ''
+              }`}
             >
+              {s.ghost && <div className="ghost">{s.ghost}</div>}
               <div
                 className="scroller"
                 ref={el => {
@@ -2846,7 +2974,7 @@ export default function ArtOfTheAudit() {
 
       <div className="rail">
         <div className="railline" />
-        <div className="railfill" style={{ height: `${(current.act / lastAct) * 100}%` }} />
+        <div className="railfill" style={{ height: `${railPct}%` }} />
         {ACTS.map((a, ai) => (
           <button
             key={a.label}
@@ -2862,7 +2990,8 @@ export default function ArtOfTheAudit() {
 
       <div className="controls">
         <span className="count">
-          {pad(i + 1)} / {pad(total)}
+          <span className="ca">{ACTS[current.act].label} </span>
+          {pad(inAct)} / {pad(actSlides.length)}
         </span>
         <button className="ctrl" onClick={prev} aria-label="Previous">
           <svg viewBox="0 0 24 24">
@@ -2923,6 +3052,7 @@ export default function ArtOfTheAudit() {
         </div>
       </div>
     </div>
+    </DeckStep.Provider>
     </DeckNav.Provider>
   );
 }
