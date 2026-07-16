@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams, Navigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, ArrowUp } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ArrowUp, FileText } from 'lucide-react';
 
 const BASE = '/sampleauditreport';
+
+// Google Docs "/copy" opens the make-your-own-copy dialog rather than the doc,
+// so nobody lands on a read-only original and starts typing into it.
+const TEMPLATE_URL = 'https://docs.google.com/document/d/1KHylNBCZn24arChXNKleYIAMZZA4nP28/copy';
 
 // Same fractal noise the landing page and the audit deck use.
 const NOISE = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
@@ -141,16 +145,24 @@ function TopBar() {
           </Link>
           <Link
             to={`${BASE}/summary`}
-            className="hidden sm:block text-[13px] font-bold text-sand/75 hover:text-sand transition-colors"
+            className="hidden md:block text-[13px] font-bold text-sand/75 hover:text-sand transition-colors"
           >
             Summary
           </Link>
           <Link
             to={`${BASE}/proposal`}
+            className="hidden md:block text-[13px] font-bold text-sand/75 hover:text-sand transition-colors"
+          >
+            Proposal
+          </Link>
+          <a
+            href={TEMPLATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-terracotta text-white px-4 py-2 rounded-full text-[11px] md:text-xs font-bold uppercase tracking-wider hover:bg-burnt-orange transition-colors whitespace-nowrap"
           >
-            The proposal
-          </Link>
+            Copy the template
+          </a>
         </nav>
       </div>
     </div>
@@ -166,12 +178,22 @@ function Footer() {
           VIBE<span className="text-terracotta">CODING</span>LAB
         </div>
         <div className="italic text-sand/60 mt-1 mb-8">The Art of the Audit</div>
-        <Link
-          to="/artoftheaudit"
-          className="inline-flex items-center gap-2 bg-terracotta text-white px-6 py-3.5 rounded-full text-sm font-extrabold hover:bg-burnt-orange transition-colors"
-        >
-          Back to the session <ArrowRight className="w-4 h-4" />
-        </Link>
+        <div className="flex flex-wrap justify-center gap-3">
+          <a
+            href={TEMPLATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-terracotta text-white px-6 py-3.5 rounded-full text-sm font-extrabold hover:bg-burnt-orange transition-colors"
+          >
+            <FileText className="w-4 h-4" /> Make your own copy
+          </a>
+          <Link
+            to="/artoftheaudit"
+            className="inline-flex items-center gap-2 border border-white/25 text-sand px-6 py-3.5 rounded-full text-sm font-extrabold hover:border-white hover:text-white transition-colors"
+          >
+            Back to the session
+          </Link>
+        </div>
         <div className="h-px bg-white/10 my-9" />
         <div className="text-[13px] leading-relaxed text-sand/50">
           A fictional worked example, built for The Art of the Audit.
@@ -857,13 +879,21 @@ export default function SampleAuditReport() {
             ))}
           </div>
 
-          <div className="mt-9 md:mt-11">
+          <div className="mt-9 md:mt-11 flex flex-wrap items-center gap-x-6 gap-y-4">
             <Link
               to={`${BASE}/summary`}
               className="inline-flex items-center gap-2.5 bg-terracotta text-white px-6 md:px-7 py-4 rounded-full text-sm font-extrabold tracking-wide hover:bg-burnt-orange transition-colors"
             >
               Start reading <ArrowRight className="w-4 h-4" />
             </Link>
+            <a
+              href={TEMPLATE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sand/80 hover:text-white font-bold text-xs uppercase tracking-[0.1em] border-b border-white/35 hover:border-white pb-1 transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5" /> Make your own copy
+            </a>
           </div>
         </div>
       </header>
@@ -879,8 +909,9 @@ export default function SampleAuditReport() {
             reports are full of real client data and cannot be shared, so this one was built to
             behave exactly like a real one. Every name and number is invented. Every finding is one
             genuinely seen in real businesses.{' '}
-            <b className="font-extrabold text-terracotta">Use it as a template:</b> keep the shape,
-            swap in your client and write it in your own voice.
+            <b className="font-extrabold text-terracotta">Use it as a template:</b> take your own
+            copy of the Google Doc, keep the shape, swap in your client and write it in your own
+            voice.
           </p>
         </div>
       </div>
