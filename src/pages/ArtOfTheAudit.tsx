@@ -21,8 +21,16 @@ const CSS = `
 body.aota-lock{overflow:hidden}
 #aota *{box-sizing:border-box}
 .stage{position:fixed;inset:0;overflow:hidden}
-.track{display:flex;height:100%;transition:transform .72s var(--ease);will-change:transform}
-.slide{position:relative;isolation:isolate;flex:0 0 100vw;height:100vh;height:100dvh;overflow:hidden;display:flex;align-items:center;padding:clamp(28px,4.5vw,60px) clamp(28px,6vw,110px) clamp(28px,4.5vw,60px) clamp(66px,10vw,168px)}
+.track{position:absolute;inset:0}
+/* Slides stack and cross-dissolve. The outgoing one sits below the incoming one
+   and shows through it as it fades up. Visibility is delayed off the fade so a
+   departing slide stays painted for the duration, then stops taking hit-tests. */
+.slide{position:absolute;inset:0;isolation:isolate;overflow:hidden;display:flex;align-items:center;
+  padding:clamp(28px,4.5vw,60px) clamp(28px,6vw,110px) clamp(28px,4.5vw,60px) clamp(66px,10vw,168px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .5s var(--ease),visibility 0s linear .5s}
+.slide.reveal{opacity:1;visibility:visible;pointer-events:auto;z-index:2;
+  transition:opacity .5s var(--ease),visibility 0s linear 0s}
 .slide.cream{background:var(--cream);color:var(--body)}
 .slide.forest{background:radial-gradient(120% 120% at 80% 10%,var(--forest-2),var(--forest) 60%);color:var(--card-text)}
 .slide.terra{background:var(--terra);color:#fff1ea}
@@ -297,7 +305,7 @@ strong,b{color:var(--ink);font-weight:700}
 .mclose:hover{background:var(--terra);border-color:var(--terra)}
 @media (max-width:860px){.rail{display:none}.slide{padding-left:clamp(28px,6vw,110px)}}
 @media (max-width:720px){.styles,.quotes,.leave,.templates,.anatomy{grid-template-columns:1fr}.mrow{grid-template-columns:1fr;gap:5px}.slide{padding-bottom:92px}.rtable,.rtable tbody,.rtable tr,.rtable td,.rtable th{display:block}.rtable th{padding-top:8px}}
-@media (prefers-reduced-motion:reduce){.track{transition:none}.slide.reveal .anim,.slide.reveal .pop{animation:none;opacity:1}.cursor{animation:none}}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}.slide.reveal .anim,.slide.reveal .pop{animation:none;opacity:1}.cursor{animation:none}}
 `;
 
 // Animation delay helper for the staggered .anim entrances.
@@ -2946,7 +2954,7 @@ export default function ArtOfTheAudit() {
       </div>
 
       <div className="stage">
-        <div className="track" style={{ transform: `translateX(-${i * 100}vw)` }}>
+        <div className="track">
           {SLIDES.map((s, si) => (
             <section
               key={si}
