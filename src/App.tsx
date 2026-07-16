@@ -14,6 +14,7 @@ import LogoExport from './pages/LogoExport';
 import Bumpsale from './pages/Bumpsale';
 import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
+import ArtOfTheAudit from './pages/ArtOfTheAudit';
 import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
 
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/bumpsale" element={<Navigate to="/bundle" replace />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/complete" element={<Complete />} />
+        <Route path="/artoftheaudit" element={<ArtOfTheAudit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HelmetProvider>

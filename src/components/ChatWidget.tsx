@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 export default function ChatWidget() {
   const location = useLocation();
-  const isOptInPage = location.pathname === '/freetraining';
+  // The opt-in page and the full-screen audit deck are both kept free of the widget.
+  const isOptInPage = ['/freetraining', '/artoftheaudit'].includes(location.pathname);
 
   useEffect(() => {
     if (isOptInPage) {

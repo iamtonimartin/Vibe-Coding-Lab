@@ -343,6 +343,12 @@ async function startServer() {
       canonical: `${BASE_URL}/resources`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/artoftheaudit': {
+      title: 'The Art of the Audit | Vibe Coding Lab',
+      description: 'How to run a paid business audit start to finish: the five-step process, exactly what goes in the report and the prompts and templates you keep.',
+      canonical: `${BASE_URL}/artoftheaudit`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
   };
 
   // Known SPA routes (must mirror src/App.tsx). Anything outside this set is a 404.
@@ -361,6 +367,7 @@ async function startServer() {
     '/checkout',
     '/complete',
     '/resources',
+    '/artoftheaudit',
   ]);
 
   app.get('*', (req, res) => {
