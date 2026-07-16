@@ -41,11 +41,13 @@ h2{font-family:var(--display);font-weight:800;color:var(--ink);font-size:clamp(2
 .hl{color:var(--terra)}.forest .hl{color:var(--ph)}.terra .hl{color:var(--forest)}
 .lead{font-style:italic;font-size:clamp(17px,2.1vw,25px);color:var(--body);margin:clamp(16px,2.2vw,28px) 0 0;line-height:1.4;max-width:27em;text-wrap:pretty}
 .forest .lead{color:var(--card-text)}.terra .lead{color:#fff0ea}
-#aota p{margin:0 0 1em;max-width:42em;text-wrap:pretty}
+p{margin:0 0 1em;max-width:42em;text-wrap:pretty}
 .forest p{color:rgba(237,231,222,.85)}.terra p{color:#fff1ea}
 .big{font-size:clamp(18px,2.05vw,25px);line-height:1.42;color:var(--ink);max-width:30em;text-wrap:pretty}
 .forest .big,.terra .big{color:#fff}
-#aota strong,#aota b{color:var(--ink);font-weight:700}
+/* Element selectors stay unprefixed: every class-level override below (.punch b,
+   .forest strong, .donotdo b) must be able to win the cascade. */
+strong,b{color:var(--ink);font-weight:700}
 .forest strong,.forest b,.terra strong,.terra b{color:#fff}
 .note{font-style:italic;color:var(--body);font-size:clamp(15px,1.6vw,19px);margin-top:1.1em;max-width:38em;text-wrap:pretty}
 .forest .note{color:rgba(237,231,222,.9)}.terra .note{color:rgba(255,244,238,.94)}
