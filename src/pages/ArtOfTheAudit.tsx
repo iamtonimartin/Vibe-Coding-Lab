@@ -2209,6 +2209,7 @@ const SLIDES: Slide[] = [
               t: 'The field guide',
               x: 'The whole method in your pocket, with the question bank and every prompt.',
               f: 'READ AND KEEP',
+              href: 'https://drive.google.com/file/d/1mdy7ihxcUaQBjw_Nb_Do4SR7BBiOmuag/view?usp=drive_link',
             },
             {
               ic: '▣',
@@ -2224,7 +2225,7 @@ const SLIDES: Slide[] = [
               f: 'COPY AND RUN',
               to: '/auditprompts',
             },
-          ].map(({ ic, t, x, f, to }) => {
+          ].map(({ ic, t, x, f, to, href }) => {
             const inner = (
               <>
                 <div className="ti">{ic}</div>
@@ -2232,10 +2233,23 @@ const SLIDES: Slide[] = [
                 <div className="tx">{x}</div>
                 <div className="tf">
                   {f}
-                  {to && <span className="tgo"> &rarr;</span>}
+                  {(to || href) && <span className="tgo"> &rarr;</span>}
                 </div>
               </>
             );
+            // Everything opens in a new tab so the session never loses its place.
+            if (href)
+              return (
+                <a
+                  className="tpl tpl-link"
+                  key={t}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {inner}
+                </a>
+              );
             return to ? (
               <Link className="tpl tpl-link" key={t} to={to} target="_blank" rel="noopener">
                 {inner}
