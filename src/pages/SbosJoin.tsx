@@ -13,6 +13,9 @@ import {
   MONTHLY_URL,
   ROLLOUT,
   SUPPORT_EMAIL,
+  WIDGET_ORIGIN,
+  CHECKOUT_ORIGIN,
+  WIDGET_SCRIPT,
 } from '../components/sbos/config';
 import { useCountdown, pad } from '../components/sbos/useCountdown';
 import { useSeats, seatLabel } from '../components/sbos/useSeats';
@@ -45,8 +48,13 @@ export default function SbosJoin() {
           content={`Secure checkout for founding lifetime access to Service Business OS. £${FOUNDING_PRICE} once, or spread it over 3 or 10 payments.`}
         />
         <link rel="canonical" href="https://thevibecodinglab.co/sbos-join" />
-        <link rel="preconnect" href="https://tinder.thrivecart.com" />
-        <link rel="dns-prefetch" href="https://tinder.thrivecart.com" />
+        {/* preload, not prefetch: on this page the script is needed now, so
+            it should download in parallel with the app bundle instead of
+            waiting for hydration to append the tag. */}
+        <link rel="preconnect" href={WIDGET_ORIGIN} />
+        <link rel="preconnect" href={CHECKOUT_ORIGIN} />
+        <link rel="dns-prefetch" href={CHECKOUT_ORIGIN} />
+        <link rel="preload" as="script" href={WIDGET_SCRIPT} />
         {/* A checkout has nothing to offer search. Keep it out of the index. */}
         <meta name="robots" content="noindex, follow" />
       </Helmet>

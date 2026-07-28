@@ -36,6 +36,9 @@ import {
   MONTHLY_URL,
   STATUS,
   OG_IMAGE,
+  WIDGET_ORIGIN,
+  CHECKOUT_ORIGIN,
+  WIDGET_SCRIPT,
 } from '../components/sbos/config';
 import { useCountdown, pad } from '../components/sbos/useCountdown';
 import { useSeats, seatLabel } from '../components/sbos/useSeats';
@@ -695,8 +698,15 @@ export default function ServiceBusinessOS() {
           content={`A growing suite of focused, AI-powered tools for service businesses. Founding lifetime access for a one off £${FOUNDING_PRICE}, or spread it. Only ${SEATS_TOTAL} seats, then £${MONTHLY} a month.`}
         />
         <link rel="canonical" href="https://thevibecodinglab.co/sbos" />
-        <link rel="preconnect" href="https://tinder.thrivecart.com" />
-        <link rel="dns-prefetch" href="https://tinder.thrivecart.com" />
+        {/* The checkout lives one client-side navigation away, so warm both
+            ThriveCart origins here and pull the embed script into cache at idle
+            priority. By the time anyone clicks through, the expensive parts are
+            already done. */}
+        <link rel="preconnect" href={WIDGET_ORIGIN} />
+        <link rel="preconnect" href={CHECKOUT_ORIGIN} />
+        <link rel="dns-prefetch" href={WIDGET_ORIGIN} />
+        <link rel="dns-prefetch" href={CHECKOUT_ORIGIN} />
+        <link rel="prefetch" as="script" href={WIDGET_SCRIPT} />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Toni Martin" />
         <meta property="og:type" content="website" />

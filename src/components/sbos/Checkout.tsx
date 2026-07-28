@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock } from 'lucide-react';
-import { THRIVECART, THRIVECART_ACCOUNT } from './config';
+import { THRIVECART, THRIVECART_ACCOUNT, WIDGET_SCRIPT } from './config';
 
-const SCRIPT_SRC = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
 
 // Don't dismiss the loader before this, so the message never "flashes".
 const MIN_VISIBLE_MS = 600;
@@ -59,7 +58,7 @@ export default function Checkout() {
     document.getElementById(embedId)?.remove();
     const script = document.createElement('script');
     script.async = true;
-    script.src = SCRIPT_SRC;
+    script.src = WIDGET_SCRIPT;
     script.id = embedId;
     document.body.appendChild(script);
 

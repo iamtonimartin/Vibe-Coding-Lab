@@ -78,6 +78,19 @@ export const PLANS = [
 export const THRIVECART_ACCOUNT = 'tonimartin';
 
 /**
+ * Origins the checkout touches, for resource hints.
+ *
+ * WIDGET_ORIGIN serves the 335KB embed script. CHECKOUT_ORIGIN is the account
+ * subdomain the script builds the iframe from, and it is the expensive one:
+ * roughly 190ms of DNS and TLS that otherwise does not start until the script
+ * has downloaded and run. Warming both on /sbos means a click through to
+ * /sbos-join is a client-side navigation into an already-open connection.
+ */
+export const WIDGET_ORIGIN = 'https://tinder.thrivecart.com';
+export const CHECKOUT_ORIGIN = `https://${THRIVECART_ACCOUNT}.thrivecart.com`;
+export const WIDGET_SCRIPT = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
+
+/**
  * The single founding checkout, carrying all three payment options.
  *
  * It lives on its own page (/sbos-join) rather than inside the sales page,
