@@ -40,7 +40,7 @@ export default function SbosJoin() {
   const seatLine = seatLabel(seats);
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
+    <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white">
       <Helmet>
         <title>Join Service Business OS · Founding access</title>
         <meta

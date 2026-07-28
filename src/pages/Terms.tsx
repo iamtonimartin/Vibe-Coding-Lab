@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Mail, ArrowLeft } from 'lucide-react';
+import { Mail, ArrowLeft, ChevronDown } from 'lucide-react';
 
 /* ------------------------------------------------------------------ *
  * Terms and Conditions
@@ -90,8 +90,30 @@ export default function Terms() {
     return () => observer.disconnect();
   }, []);
 
+  const contents = (
+    <nav>
+      <ul className="space-y-1 border-l border-forest-green/15">
+        {SECTIONS.map((s) => (
+          <li key={s.id}>
+            <a
+              href={`#${s.id}`}
+              className={`block py-2 pl-4 -ml-px border-l text-sm leading-snug transition-colors ${
+                activeId === s.id
+                  ? 'border-terracotta text-terracotta font-bold'
+                  : 'border-transparent opacity-60 hover:opacity-100 hover:text-terracotta'
+              }`}
+            >
+              <span className="tabular-nums opacity-60 mr-1.5">{s.n}</span>
+              {s.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white scroll-smooth">
+    <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
         <title>Terms and Conditions | Ascendz Digital Limited</title>
         <meta
@@ -135,30 +157,26 @@ export default function Terms() {
       {/* BODY */}
       <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-16">
-          {/* Contents */}
+          {/* Contents.
+              On mobile this list is eleven items tall, a full screen of
+              navigation standing between the reader and clause 1, so it
+              collapses. On desktop it is a sticky sidebar in its own column
+              and costs the reader nothing, so it stays open. */}
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-4">
-              Contents
+            <details className="lg:hidden bg-white border border-forest-green/10 rounded-2xl px-5 py-4">
+              <summary className="cursor-pointer list-none flex items-center justify-between text-xs font-bold uppercase tracking-widest text-terracotta">
+                Contents
+                <ChevronDown size={16} className="shrink-0" />
+              </summary>
+              <div className="pt-4">{contents}</div>
+            </details>
+
+            <div className="hidden lg:block">
+              <div className="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-4">
+                Contents
+              </div>
+              {contents}
             </div>
-            <nav>
-              <ul className="space-y-1 border-l border-forest-green/15">
-                {SECTIONS.map((s) => (
-                  <li key={s.id}>
-                    <a
-                      href={`#${s.id}`}
-                      className={`block py-1.5 pl-4 -ml-px border-l text-sm leading-snug transition-colors ${
-                        activeId === s.id
-                          ? 'border-terracotta text-terracotta font-bold'
-                          : 'border-transparent opacity-60 hover:opacity-100 hover:text-terracotta'
-                      }`}
-                    >
-                      <span className="tabular-nums opacity-60 mr-1.5">{s.n}</span>
-                      {s.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
           </aside>
 
           {/* Clauses */}

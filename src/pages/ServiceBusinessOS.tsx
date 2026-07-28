@@ -96,11 +96,15 @@ const GrainOverlay = () => (
 
 const FAQItem = ({ question, answer }: { question: string; answer: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+  // The padding lives on the button, not the wrapper, so the whole row is
+  // tappable. On the wrapper it left a ~28px target on mobile, which is under
+  // the 44px guideline and fiddly to hit.
   return (
-    <div className="border-b border-forest-green/10 py-6">
+    <div className="border-b border-forest-green/10">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left group"
+        aria-expanded={isOpen}
+        className="w-full flex justify-between items-center text-left group py-6"
       >
         <h3 className="text-base md:text-xl font-bold group-hover:text-terracotta transition-colors pr-4">
           {question}
@@ -118,7 +122,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: ReactNode }) 
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="pt-4 pb-2 text-forest-green/80 leading-relaxed text-sm md:text-lg">
+            <div className="pb-6 text-forest-green/80 leading-relaxed text-sm md:text-lg">
               {answer}
             </div>
           </motion.div>
@@ -739,11 +743,11 @@ export default function ServiceBusinessOS() {
               </>
             ) : (
               <>
-                <span className="opacity-70">Founding lifetime</span>{' '}
+                <span className="opacity-70 hidden sm:inline">Founding lifetime</span>{' '}
                 <span className="text-terracotta">£{FOUNDING_PRICE} once</span>
-                <span className="opacity-50 hidden sm:inline tabular-nums">
+                <span className="opacity-50 tabular-nums">
                   {' '}
-                  · closes in {pad(days)}d {pad(hours)}:{pad(mins)}:{pad(secs)}
+                  · {pad(days)}d {pad(hours)}:{pad(mins)}:{pad(secs)}
                 </span>
                 <span className="opacity-50 hidden lg:inline"> · {SEATS_TOTAL} seats</span>
               </>
@@ -752,14 +756,14 @@ export default function ServiceBusinessOS() {
           {closed ? (
             <a
               href={MONTHLY_URL || '#'}
-              className="hidden sm:inline-block shrink-0 bg-terracotta hover:bg-burnt-orange text-white text-[11px] md:text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full transition-colors"
+              className="shrink-0 bg-terracotta hover:bg-burnt-orange text-white text-[10px] md:text-xs font-black uppercase tracking-widest px-3 md:px-4 py-2 rounded-full transition-colors"
             >
               Join monthly
             </a>
           ) : (
             <Link
               to={JOIN_PATH}
-              className="hidden sm:inline-block shrink-0 bg-terracotta hover:bg-burnt-orange text-white text-[11px] md:text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full transition-colors"
+              className="shrink-0 bg-terracotta hover:bg-burnt-orange text-white text-[10px] md:text-xs font-black uppercase tracking-widest px-3 md:px-4 py-2 rounded-full transition-colors"
             >
               Lock it in
             </Link>

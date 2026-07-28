@@ -26,7 +26,7 @@ export default function SbosUnsubscribed() {
   const closed = SOLD_OUT || expired;
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white flex flex-col">
+    <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
         <title>Unsubscribed · Service Business OS</title>
         <meta
