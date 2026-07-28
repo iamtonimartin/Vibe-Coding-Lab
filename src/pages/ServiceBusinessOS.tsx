@@ -10,6 +10,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Maximize2,
   Flame,
   Lock,
@@ -28,7 +29,6 @@ import {
   MONTHLY,
   SEATS_TOTAL,
   JOIN_PATH,
-  DEADLINE_LONG,
   DEADLINE_SHORT,
   SOLD_OUT,
   PLANS,
@@ -583,17 +583,14 @@ export default function ServiceBusinessOS() {
             or spread it: <span className="font-bold text-sand">3 × £175</span> or{' '}
             <span className="font-bold text-sand">10 × £55</span>
           </div>
+          {/* Two lines, not four. The old stack repeated the seat cap twice and
+              duplicated the guarantee, which already sits in the trust row
+              beside the headline. The countdown above covers "closes in". */}
           <div className="flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest text-terracotta mt-4 text-center">
             <Flame size={12} className="shrink-0" /> {seatLine}
           </div>
-          {hasGuarantee && (
-            <div className="flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest opacity-70 mt-3 text-center">
-              <ShieldCheck size={12} className="shrink-0" /> {GUARANTEE.days}-day money-back
-              guarantee
-            </div>
-          )}
-          <div className="text-[10px] text-center opacity-40 mt-3 leading-relaxed">
-            Closes {DEADLINE_LONG} UK, or when the {SEATS_TOTAL} seats are gone
+          <div className="text-[10px] text-center opacity-40 mt-3">
+            Closes 11:59pm {DEADLINE_SHORT} UK
           </div>
         </>
       )}
@@ -795,9 +792,21 @@ export default function ServiceBusinessOS() {
                 business life.
               </p>
 
-              <CTA size="xl" label="Lock in my founding seat" />
+              {/* Secondary, not a second button. The price card carries the one
+                  primary action in the hero; this sends the not-yet-convinced
+                  down to the tools instead of repeating the same CTA twice. */}
+              <a
+                href="#suite"
+                className="inline-flex items-center gap-2 text-base md:text-lg font-bold border-b-2 border-terracotta/40 hover:border-terracotta pb-1 transition-colors group"
+              >
+                See what you get
+                <ChevronDown
+                  size={18}
+                  className="text-terracotta group-hover:translate-y-0.5 transition-transform"
+                />
+              </a>
 
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-7 text-xs md:text-sm font-bold opacity-80">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 text-xs md:text-sm font-bold opacity-80">
                 <span className="inline-flex items-center gap-2">
                   <InfinityIcon size={14} className="text-terracotta" /> Pay once, no renewal
                 </span>
@@ -903,7 +912,7 @@ export default function ServiceBusinessOS() {
               </h3>
             </div>
             <div className="relative shrink-0">
-              <CTA label="See what you get" anchor="#join" />
+              <CTA label="Lock in my seat" />
             </div>
           </div>
         </div>
@@ -932,7 +941,7 @@ export default function ServiceBusinessOS() {
       </Section>
 
       {/* THE SUITE */}
-      <Section className="bg-warm-cream">
+      <Section className="bg-warm-cream" id="suite">
         <GrainOverlay />
         <div className="max-w-6xl mx-auto relative">
           <div className="text-center mb-12 md:mb-16">
