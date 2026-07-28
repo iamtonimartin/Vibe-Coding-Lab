@@ -9,6 +9,7 @@ import {
   SUPPORT_EMAIL,
 } from '../components/sbos/config';
 import { useCountdown } from '../components/sbos/useCountdown';
+import Brand from '../components/sbos/Brand';
 
 /* ------------------------------------------------------------------ *
  * Service Business OS · unsubscribed from the launch emails
@@ -39,7 +40,7 @@ export default function SbosUnsubscribed() {
       {/* Status bar */}
       <div className="bg-forest-green text-white border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between text-[10px] md:text-xs font-bold uppercase tracking-widest">
-          <span>Service Business OS</span>
+          <Brand />
           <span className="opacity-60">Email preferences updated</span>
         </div>
       </div>

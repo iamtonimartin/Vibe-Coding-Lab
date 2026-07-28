@@ -20,6 +20,7 @@ import {
 import { useCountdown, pad } from '../components/sbos/useCountdown';
 import { useSeats, seatLabel } from '../components/sbos/useSeats';
 import Checkout from '../components/sbos/Checkout';
+import Brand from '../components/sbos/Brand';
 
 /* ------------------------------------------------------------------ *
  * Service Business OS · checkout
@@ -68,6 +69,7 @@ export default function SbosJoin() {
           >
             <ArrowLeft size={14} /> Back to the details
           </Link>
+          <Brand className="hidden sm:flex" />
           <span className="flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-70">
             <Lock size={12} className="text-terracotta" /> Secure checkout
           </span>

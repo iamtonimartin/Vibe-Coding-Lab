@@ -19,6 +19,7 @@ import {
   MONTHLY,
 } from '../components/sbos/config';
 import Confetti from '../components/sbos/Confetti';
+import Brand from '../components/sbos/Brand';
 
 /* ------------------------------------------------------------------ *
  * Service Business OS · post-purchase page
@@ -100,7 +101,7 @@ export default function SbosSuccess() {
       {/* Status bar */}
       <div className="bg-forest-green text-white border-b border-white/10">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between text-[10px] md:text-xs font-bold uppercase tracking-widest">
-          <span>Service Business OS</span>
+          <Brand />
           <span className="flex items-center gap-2 text-white/70">
             <span className="w-2 h-2 rounded-full bg-terracotta animate-pulse" />
             Access granted

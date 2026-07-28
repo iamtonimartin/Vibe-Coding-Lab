@@ -35,12 +35,14 @@ import {
   GUARANTEE,
   MONTHLY_URL,
   STATUS,
+  ROLLOUT,
   OG_IMAGE,
   WIDGET_ORIGIN,
   CHECKOUT_ORIGIN,
   WIDGET_SCRIPT,
 } from '../components/sbos/config';
 import { useCountdown, pad } from '../components/sbos/useCountdown';
+import Brand from '../components/sbos/Brand';
 import { useSeats, seatLabel } from '../components/sbos/useSeats';
 
 /* ------------------------------------------------------------------ *
@@ -55,6 +57,9 @@ import { useSeats, seatLabel } from '../components/sbos/useSeats';
  * ------------------------------------------------------------------ */
 
 const YEAR_ONE = MONTHLY * 12;
+const THREE_YEARS = MONTHLY * 36;
+const SAVED_YEAR_ONE = YEAR_ONE - FOUNDING_PRICE;
+const SAVED_THREE_YEARS = THREE_YEARS - FOUNDING_PRICE;
 
 /* ------------------------------------------------------------------ *
  * Shared bits, matching the house style used on /bundle
@@ -778,9 +783,9 @@ export default function ServiceBusinessOS() {
         <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-terracotta/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-14 md:py-24 relative">
-          <div className="flex items-center justify-between text-[10px] md:text-xs font-bold uppercase tracking-widest pb-12 md:pb-16">
-            <span>Service Business OS</span>
-            <span className="flex items-center gap-2 opacity-70">
+          <div className="flex items-center justify-between gap-4 pb-10 md:pb-14">
+            <Brand size="lg" />
+            <span className="flex items-center gap-2 opacity-70 text-[10px] md:text-xs font-bold uppercase tracking-widest text-right">
               <span
                 className={`w-2 h-2 rounded-full ${closed ? 'bg-white/40' : 'bg-terracotta animate-pulse'}`}
               />
@@ -800,11 +805,36 @@ export default function ServiceBusinessOS() {
               </h1>
 
               <p className="text-lg md:text-xl font-medium opacity-80 leading-relaxed mb-9 max-w-2xl">
-                A growing suite of focused, AI-powered tools that quietly run the jobs your business
-                depends on. Your conversations, your support, your leads, your proposals. Get
-                founding lifetime access once, instead of paying every month for the rest of your
-                business life.
+                Service Business OS is five AI-powered tools under one membership, each running a
+                job your business depends on. Your conversations, your support, your leads, your
+                proposals, your content. Get founding lifetime access once, instead of paying every
+                month for the rest of your business life.
               </p>
+
+              {/* Named, in the hero. A reader could not say what software they
+                  were buying, so the five tools are listed before the fold
+                  rather than a scroll away. */}
+              <div className="mb-8">
+                <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
+                  Five tools. One membership. One price.
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {ROLLOUT.map((tool) => (
+                    <span
+                      key={tool.name}
+                      className="inline-flex items-center gap-2 bg-white/5 border border-white/15 rounded-full px-3.5 py-2 text-xs md:text-sm font-bold"
+                    >
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          tool.live ? 'bg-terracotta' : 'bg-white/30'
+                        }`}
+                      />
+                      {tool.name}
+                      <span className="opacity-40 font-medium hidden sm:inline">{tool.short}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
 
               {/* Secondary, not a second button. The price card carries the one
                   primary action in the hero; this sends the not-yet-convinced
@@ -1011,34 +1041,79 @@ export default function ServiceBusinessOS() {
             Own it. <span className="text-terracotta">Do not rent it.</span>
           </h2>
 
+          {/* A reader came away unsure whether they would be paying £97 a month.
+              The two cards read as options to choose between, so they are now
+              labelled by what they are: the price you avoid, and the price you
+              pay. */}
+          <p className="text-lg md:text-2xl leading-relaxed opacity-85 max-w-3xl mb-10 md:mb-12">
+            Service Business OS is <span className="font-bold text-terracotta">£{MONTHLY} a
+            month</span> from {DEADLINE_SHORT}. Founding members never pay it. You pay{' '}
+            <span className="font-bold text-terracotta">£{FOUNDING_PRICE} once</span> and that is
+            the last you spend on the software.
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div className="bg-white/5 backdrop-blur-sm border border-white/15 rounded-[1.5rem] p-7 md:p-9">
-              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-4">
-                Paying monthly
+              <div className="inline-flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60 mb-4">
+                <X size={13} strokeWidth={3} /> If you miss this
               </div>
               <div className="text-4xl md:text-5xl font-display font-black tabular-nums leading-none opacity-90">
                 £{MONTHLY}
                 <span className="text-lg md:text-xl font-bold opacity-50"> / month</span>
               </div>
               <p className="text-sm md:text-base opacity-70 leading-relaxed mt-4">
-                That is £{YEAR_ONE.toLocaleString()} a year. Every year. Forever. And the day you
-                stop paying, it all disappears.
+                That is <span className="font-bold">£{YEAR_ONE.toLocaleString()} a year</span>.
+                Every year. Forever. And the day you stop paying, it all disappears.
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-sm border border-terracotta rounded-[1.5rem] p-7 md:p-9">
-              <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-4">
-                Founding lifetime
+            <div className="bg-white/5 backdrop-blur-sm border-2 border-terracotta rounded-[1.5rem] p-7 md:p-9 relative">
+              <div className="absolute -top-3 left-7 bg-terracotta text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                Your price today
+              </div>
+              <div className="inline-flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-terracotta mb-4">
+                <Check size={13} strokeWidth={3} /> Founding lifetime
               </div>
               <div className="text-4xl md:text-5xl font-display font-black text-terracotta tabular-nums leading-none">
                 £{FOUNDING_PRICE}
                 <span className="text-lg md:text-xl font-bold opacity-70"> once</span>
               </div>
               <p className="text-sm md:text-base opacity-70 leading-relaxed mt-4">
-                Less than half a year of the monthly price and it is yours for life. It pays for
-                itself in about five months, then never costs you another penny.
+                Paid <span className="font-bold">once</span>. No monthly fee, no renewal, no second
+                invoice. It pays for itself in about five months, then never costs you another
+                penny.
               </p>
             </div>
+          </div>
+
+          {/* The saving, as a number rather than an implication */}
+          <div className="mt-6 bg-terracotta rounded-[1.5rem] p-7 md:p-9 text-center">
+            <div className="text-[10px] md:text-xs font-black uppercase tracking-widest opacity-80 mb-6">
+              What founding members keep
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+              <div>
+                <div className="text-4xl md:text-6xl font-display font-black tabular-nums leading-none">
+                  £{SAVED_YEAR_ONE.toLocaleString()}
+                </div>
+                <div className="text-xs md:text-sm font-bold opacity-90 mt-3">
+                  saved in year one alone
+                </div>
+              </div>
+              <div className="sm:border-l sm:border-white/25 sm:pl-8">
+                <div className="text-4xl md:text-6xl font-display font-black tabular-nums leading-none">
+                  £{SAVED_THREE_YEARS.toLocaleString()}
+                </div>
+                <div className="text-xs md:text-sm font-bold opacity-90 mt-3">
+                  saved over three years
+                </div>
+              </div>
+            </div>
+            <p className="text-xs md:text-sm opacity-80 mt-7 max-w-xl mx-auto leading-relaxed">
+              Against £{MONTHLY} a month, which is £{YEAR_ONE.toLocaleString()} a year and £
+              {THREE_YEARS.toLocaleString()} over three. And it keeps running after that, while
+              your £{FOUNDING_PRICE} never comes back around.
+            </p>
           </div>
         </div>
       </Section>
