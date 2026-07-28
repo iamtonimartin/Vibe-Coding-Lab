@@ -50,7 +50,12 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] md:text-xs font-bold uppercase tracking-widest opacity-50">
           <span>© 2026 Vibe Coding Lab by Ascendz. All rights reserved.</span>
-          <span>Build it. Ship it. Make it hold up.</span>
+          <div className="flex items-center gap-4">
+            <Link to="/terms" className="hover:text-terracotta hover:opacity-100 transition-colors">
+              Terms and conditions
+            </Link>
+            <span className="hidden md:inline">Build it. Ship it. Make it hold up.</span>
+          </div>
         </div>
       </div>
     </footer>

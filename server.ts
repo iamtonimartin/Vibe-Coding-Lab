@@ -24,6 +24,10 @@ app.use(express.json());
 // Keeps old links, emails and shares working.
 app.get('/bumpsale', (_req, res) => res.redirect(301, '/bundle'));
 
+// The terms page is linked from the ThriveCart checkouts. Catch the long form
+// of the URL server-side so a mistyped or legacy link never lands on a 404.
+app.get('/terms-and-conditions', (_req, res) => res.redirect(301, '/terms'));
+
 // POST /api/generate-idea
 // Proxies streaming OpenAI request server-side to keep API key secret
 app.post('/api/generate-idea', async (req, res) => {
@@ -274,6 +278,244 @@ app.post('/api/referral', async (req, res) => {
   return res.json({ success: true });
 });
 
+// ---------------------------------------------------------------------------
+// SERVICE BUSINESS OS — founding-seat counter (/sbos)
+//
+// Originally built for The Stack, which became Service Business OS. The offer
+// is the same shape (same ThriveCart product, same 40-seat cap) so the counter
+// carried over intact. The `stack:` Redis key prefix is kept deliberately:
+// renaming it would orphan the current count and every in-flight idempotency
+// marker.
+//
+// Founding access is capped at SEATS_TOTAL. The count is stored in Upstash
+// Redis and decremented by ThriveCart's webhook on each sale, so the number on
+// the page is live. Everything is idempotent on the order id, so ThriveCart's
+// webhook retries never double-count.
+//
+// Env: UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN (or KV_REST_API_*)
+//      THRIVECART_SECRET  — the webhook "secret word"
+//      STACK_ADMIN_TOKEN  — enables the admin correction endpoint
+// ---------------------------------------------------------------------------
+const SEATS_TOTAL = 40;
+// ThriveCart product ids that consume a founding seat.
+const SEATS_CONSUMING_PRODUCT_IDS = ['173'];
+const SEATS_SOLD_KEY = 'stack:seats:sold';
+
+let redisClient: import('@upstash/redis').Redis | null = null;
+let redisResolved = false;
+
+async function getRedis() {
+  if (redisResolved) return redisClient;
+  redisResolved = true;
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null; // not configured — endpoints degrade gracefully
+  const { Redis } = await import('@upstash/redis');
+  redisClient = new Redis({ url, token });
+  return redisClient;
+}
+
+async function getSeatsSold(): Promise<number> {
+  const redis = await getRedis();
+  if (!redis) return 0;
+  const sold = await redis.get<number>(SEATS_SOLD_KEY);
+  return typeof sold === 'number' ? sold : Number(sold ?? 0);
+}
+
+async function getSeatsRemaining(): Promise<number> {
+  const sold = await getSeatsSold();
+  return Math.max(0, Math.min(SEATS_TOTAL, SEATS_TOTAL - sold));
+}
+
+// GET /api/seats-remaining — read by the /sbos price card and /sbos-join
+app.get('/api/seats-remaining', async (_req, res) => {
+  const redis = await getRedis();
+  if (!redis) {
+    return res.json({
+      remaining: SEATS_TOTAL,
+      total: SEATS_TOTAL,
+      sold: 0,
+      live: false,
+    });
+  }
+  try {
+    const sold = await getSeatsSold();
+    return res.json({
+      remaining: Math.max(0, Math.min(SEATS_TOTAL, SEATS_TOTAL - sold)),
+      total: SEATS_TOTAL,
+      sold,
+      live: true,
+    });
+  } catch (err) {
+    console.error('seats-remaining failed:', (err as Error).message);
+    return res.json({ remaining: SEATS_TOTAL, total: SEATS_TOTAL, sold: 0, live: false });
+  }
+});
+
+// Flatten any payload shape (form-encoded or nested JSON) to a string map.
+function flattenPayload(
+  obj: unknown,
+  prefix = '',
+  out: Record<string, string> = {}
+) {
+  if (obj === null || obj === undefined) return out;
+  if (typeof obj !== 'object') {
+    out[prefix] = String(obj);
+    return out;
+  }
+  for (const [k, v] of Object.entries(obj as Record<string, unknown>)) {
+    const key = prefix ? `${prefix}.${k}` : k;
+    if (v !== null && typeof v === 'object') flattenPayload(v, key, out);
+    else out[key] = String(v);
+  }
+  return out;
+}
+
+// Collect every plausible product id from the payload.
+function collectProductIds(fields: Record<string, string>): string[] {
+  const ids = new Set<string>();
+  for (const [key, value] of Object.entries(fields)) {
+    const k = key.toLowerCase();
+    const looksLikeProductId =
+      k === 'base_product' ||
+      k.endsWith('product_id') ||
+      k.endsWith('product') ||
+      (k.includes('product') && k.endsWith('id'));
+    if (looksLikeProductId && /^\d+$/.test(value)) ids.add(value);
+  }
+  return [...ids];
+}
+
+const STACK_PURCHASE_EVENTS = new Set([
+  'order.success',
+  'order.success.bump',
+  'purchase',
+  'order_success',
+]);
+const STACK_REFUND_EVENTS = new Set([
+  'order.refund',
+  'order.refunded',
+  'refund',
+  'order.cancelled',
+]);
+
+// POST /api/thrivecart-webhook — decrements a seat per membership sale
+app.post(
+  '/api/thrivecart-webhook',
+  express.urlencoded({ extended: true }),
+  async (req, res) => {
+    const fields = flattenPayload(req.body ?? {});
+
+    const expected = process.env.THRIVECART_SECRET;
+    if (expected) {
+      const provided =
+        fields['thrivecart_secret'] ?? fields['secret'] ?? fields['secretword'];
+      if (provided !== expected) {
+        return res.status(401).json({ ok: false, error: 'bad secret' });
+      }
+    }
+
+    const event = (fields['event'] || '').toLowerCase();
+    const orderId =
+      fields['order_id'] ||
+      fields['invoice_id'] ||
+      fields['order.id'] ||
+      fields['order.invoice_id'] ||
+      fields['transaction_id'] ||
+      '';
+
+    const productIds = collectProductIds(fields);
+    const consumesSeat = productIds.some((id) =>
+      SEATS_CONSUMING_PRODUCT_IDS.includes(id)
+    );
+
+    if (!consumesSeat || !orderId) {
+      return res.json({ ok: true, counted: false, event, productIds });
+    }
+
+    const redis = await getRedis();
+    if (!redis) {
+      // Acknowledge so ThriveCart doesn't keep retrying.
+      return res.json({ ok: true, counted: false, reason: 'store not configured' });
+    }
+
+    try {
+      if (STACK_PURCHASE_EVENTS.has(event)) {
+        // SET NX returns null when the key already exists → already processed.
+        const marker = await redis.set(`stack:seats:order:${orderId}`, Date.now(), {
+          nx: true,
+        });
+        if (marker !== null) await redis.incr(SEATS_SOLD_KEY);
+        return res.json({
+          ok: true,
+          action: 'consumed',
+          orderId,
+          remaining: await getSeatsRemaining(),
+        });
+      }
+
+      if (STACK_REFUND_EVENTS.has(event)) {
+        const consumed = await redis.get(`stack:seats:order:${orderId}`);
+        if (consumed !== null && consumed !== undefined) {
+          const released = await redis.set(
+            `stack:seats:refund:${orderId}`,
+            Date.now(),
+            { nx: true }
+          );
+          if (released !== null && (await getSeatsSold()) > 0) {
+            await redis.decr(SEATS_SOLD_KEY);
+          }
+        }
+        return res.json({
+          ok: true,
+          action: 'released',
+          orderId,
+          remaining: await getSeatsRemaining(),
+        });
+      }
+
+      return res.json({ ok: true, action: 'ignored', event, orderId });
+    } catch (err) {
+      console.error('thrivecart-webhook failed:', (err as Error).message);
+      return res.status(500).json({ ok: false, error: 'counter update failed' });
+    }
+  }
+);
+
+// GET/POST /api/admin/seats?token=… — inspect or correct the seat count
+app.all('/api/admin/seats', async (req, res) => {
+  const token = process.env.STACK_ADMIN_TOKEN;
+  const provided = (req.query.token as string) || req.headers['x-admin-token'];
+  if (!token || provided !== token) {
+    return res.status(401).json({ ok: false, error: 'unauthorized' });
+  }
+  const redis = await getRedis();
+  if (!redis) {
+    return res.status(503).json({ ok: false, error: 'store not configured' });
+  }
+
+  if (req.method === 'POST') {
+    const { sold, remaining } = req.body ?? {};
+    let soldValue: number | undefined;
+    if (typeof sold === 'number') soldValue = sold;
+    else if (typeof remaining === 'number') soldValue = SEATS_TOTAL - remaining;
+    if (soldValue === undefined) {
+      return res
+        .status(400)
+        .json({ ok: false, error: 'provide { sold } or { remaining }' });
+    }
+    await redis.set(SEATS_SOLD_KEY, Math.max(0, Math.floor(soldValue)));
+  }
+
+  return res.json({
+    ok: true,
+    sold: await getSeatsSold(),
+    remaining: await getSeatsRemaining(),
+    total: SEATS_TOTAL,
+  });
+});
+
 // Serve Vite build in production
 async function startServer() {
   let renderApp: ((url: string) => string) | null = null;
@@ -361,6 +603,19 @@ async function startServer() {
       canonical: `${BASE_URL}/auditprompts`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/sbos': {
+      title: 'Service Business OS: own the software your business runs on',
+      description: 'A growing suite of focused, AI-powered tools for service businesses. Founding lifetime access for a one off £497, or spread it. Only 40 seats, then £97 a month.',
+      canonical: `${BASE_URL}/sbos`,
+      // Keep in step with OG_IMAGE in src/components/sbos/config.ts
+      image: `${BASE_URL}/sbos-og.jpg`,
+    },
+    '/terms': {
+      title: 'Terms and Conditions | Ascendz Digital Limited',
+      description: 'The terms and conditions governing the use of our website and the purchase of our digital products, services and subscriptions.',
+      canonical: `${BASE_URL}/terms`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
   };
 
   // Sections of the sample report are real routes rather than anchors. These are
@@ -397,6 +652,12 @@ async function startServer() {
     '/artoftheaudit',
     '/sampleauditreport',
     '/auditprompts',
+    // Service Business OS — founding launch
+    '/sbos',
+    '/sbos-join',
+    '/sbos-success',
+    '/sbos-unsubscribed',
+    '/terms',
   ]);
 
   app.get('*', (req, res) => {
