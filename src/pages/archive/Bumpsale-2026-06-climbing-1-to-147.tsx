@@ -23,8 +23,15 @@ import {
   Briefcase,
 } from 'lucide-react';
 
+/**
+ * ARCHIVED. This campaign closed at 11:59pm on 4 June 2026 and the page is kept
+ * only as a record of it. The bumpsale.co checkout link and its payment iframe
+ * have been removed on purpose: the page is publicly reachable at
+ * /archive/bumpsale, so it must not be able to take money. The buy buttons are
+ * left in place, looking exactly as they did, but they now open a note saying
+ * the offer has closed. Do not wire them back up without reopening the sale.
+ */
 const BUMPSALE_ID = '5VfAevuDxziJBFH98VAnWzdC';
-const CHECKOUT_URL = `https://app.bumpsale.co/bumpsales/${BUMPSALE_ID}/checkouts/new/`;
 const PRICE_CAP = 147;
 const DEADLINE = new Date('2026-06-04T23:59:00+01:00');
 
@@ -182,13 +189,11 @@ const BuyButton = ({
     variant === 'white'
       ? 'bg-white text-terracotta hover:bg-warm-cream shadow-2xl'
       : 'bg-terracotta text-white hover:bg-burnt-orange shadow-2xl shadow-terracotta/40';
+  // No href by design, see the archive note at the top of this file.
   return (
     <a
-      href={CHECKOUT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
       onClick={onClick}
-      className={`inline-block text-center ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
+      className={`inline-block text-center cursor-pointer ${colors} ${sizing} rounded-2xl font-extrabold hover:scale-105 transition-all ${className}`}
     >
       Buy now at {currentPrice} →
     </a>
@@ -806,58 +811,55 @@ const TOTAL_SLOTS = PRICE_CAP;
 
 export default function Bumpsale() {
   const [modal, setModal] = useState<{ title: string; body: ReactNode } | null>(null);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [orders, setOrders] = useState<number | null>(null);
   const [currentPrice, setCurrentPrice] = useState<string>('£1');
   const { days, hours, mins, secs, expired } = useCountdown();
 
+  // Fetched once, not polled. The sale is over, so there is nothing left to
+  // watch. It still runs so the page shows the numbers the campaign finished on
+  // rather than its opening £1.
   useEffect(() => {
     let cancelled = false;
-    const fetchState = () => {
-      fetch(`https://app.bumpsale.co/buttons/${BUMPSALE_ID}`)
-        .then((r) => r.json())
-        .then((d) => {
-          if (cancelled) return;
-          const bs = d?.bumpsale;
-          if (bs?.orders_count != null) setOrders(bs.orders_count);
-          if (bs?.current_price_formatted) setCurrentPrice(bs.current_price_formatted);
-        })
-        .catch(() => {});
-    };
-    fetchState();
-    const id = setInterval(fetchState, 15_000);
+    fetch(`https://app.bumpsale.co/buttons/${BUMPSALE_ID}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled) return;
+        const bs = d?.bumpsale;
+        if (bs?.orders_count != null) setOrders(bs.orders_count);
+        if (bs?.current_price_formatted) setCurrentPrice(bs.current_price_formatted);
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
-      clearInterval(id);
     };
   }, []);
 
+  // Was the checkout overlay. See the archive note at the top of this file.
   const openCheckout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setCheckoutOpen(true);
+    setModal({
+      title: 'This one has closed',
+      body: (
+        <>
+          <p>
+            The bundle ended at 11:59pm on Thursday 4 June 2026 and it is not on sale any
+            more. This page is kept as a record of how the campaign ran, so every button on
+            it is just for show.
+          </p>
+          <p>
+            For what is currently on offer, head to{' '}
+            <a
+              href="https://thevibecodinglab.co/bundle"
+              className="underline font-bold hover:opacity-70"
+            >
+              thevibecodinglab.co/bundle
+            </a>
+            .
+          </p>
+        </>
+      ),
+    });
   };
-
-  useEffect(() => {
-    const onMessage = (e: MessageEvent) => {
-      if (e.data === 'close' || e.data?.type === 'close') setCheckoutOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setCheckoutOpen(false);
-    };
-    window.addEventListener('message', onMessage);
-    window.addEventListener('keydown', onKey);
-    return () => {
-      window.removeEventListener('message', onMessage);
-      window.removeEventListener('keydown', onKey);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = checkoutOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [checkoutOpen]);
 
   const TimeCell = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
@@ -938,11 +940,12 @@ export default function Bumpsale() {
           name="description"
           content="The training, the community, the support and two AI tools you'll keep forever. Bumpsale starts at £1, caps at £147. Ends 11:59pm Thursday 4 June."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/bumpsale" />
-        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://thevibecodinglab.co/archive/bumpsale" />
+        {/* Archived campaign. It must never rank against the live /bundle offer. */}
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="Toni Martin" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://thevibecodinglab.co/bumpsale" />
+        <meta property="og:url" content="https://thevibecodinglab.co/archive/bumpsale" />
         <meta property="og:site_name" content="Vibe Coding Lab" />
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
@@ -1678,32 +1681,7 @@ export default function Bumpsale() {
         )}
       </AnimatePresence>
 
-      {/* Checkout overlay */}
-      <AnimatePresence>
-        {checkoutOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[2147483647] bg-forest-green/90 backdrop-blur-sm"
-          >
-            <button
-              onClick={() => setCheckoutOpen(false)}
-              className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white text-forest-green hover:bg-warm-cream flex items-center justify-center shadow-2xl transition-all"
-              aria-label="Close checkout"
-            >
-              <X size={20} strokeWidth={3} />
-            </button>
-            <iframe
-              src={CHECKOUT_URL}
-              title="Bumpsale checkout"
-              className="w-full h-full border-0 bg-white"
-              allow="payment"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* The checkout overlay lived here. See the archive note at the top of this file. */}
     </div>
   );
 }

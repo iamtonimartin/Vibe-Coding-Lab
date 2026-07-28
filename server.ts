@@ -616,6 +616,12 @@ async function startServer() {
       canonical: `${BASE_URL}/terms`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/archive/bumpsale': {
+      title: 'Archived: the June 2026 bundle campaign | Vibe Coding Lab',
+      description: 'A record of the June 2026 bundle bumpsale, kept for reference. The campaign closed on 4 June 2026 and nothing on the page is for sale.',
+      canonical: `${BASE_URL}/archive/bumpsale`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
   };
 
   // Sections of the sample report are real routes rather than anchors. These are
@@ -660,9 +666,22 @@ async function startServer() {
     '/terms',
   ]);
 
+  // Retired campaigns, reachable for reference only. They answer 200 rather than
+  // 404 so people can actually read them, but they must stay out of search. The
+  // page carries a noindex in its Helmet as well, this header is the copy that
+  // holds even before any JavaScript runs.
+  const ARCHIVED_ROUTES = new Set(['/archive/bumpsale']);
+
   app.get('*', (req, res) => {
     const meta = routeMeta[req.path];
-    const isKnownRoute = VALID_ROUTES.has(req.path) || REPORT_CHAPTERS.includes(req.path);
+    const isKnownRoute =
+      VALID_ROUTES.has(req.path) ||
+      ARCHIVED_ROUTES.has(req.path) ||
+      REPORT_CHAPTERS.includes(req.path);
+
+    if (ARCHIVED_ROUTES.has(req.path)) {
+      res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    }
     let html = readFileSync(join(distPath, 'index.html'), 'utf-8');
 
     // Inject server-side meta tags

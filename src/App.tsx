@@ -29,15 +29,17 @@ import ChatWidget from './components/ChatWidget';
 /**
  * Retired campaign pages, kept for reference only.
  *
- * These are lazy-loaded and mounted ONLY in dev, so they stay reachable on
- * localhost while never shipping a route on the live site. That matters: the
- * archived bumpsale still carries a working bumpsale.co checkout link for an
- * offer that closed on 4 June 2026, so it must not be publicly purchasable.
- * If one of these is ever brought back for real, neutralise its CTA first.
+ * Lazy-loaded, so they never weigh on the main bundle. The June bumpsale is
+ * now reachable in production too, on its own /archive URL, because people ask
+ * to see the campaign. Two things keep that safe and they must stay true: its
+ * checkout is neutralised (the offer closed on 4 June 2026, so the page must
+ * not be purchasable) and it is noindexed, so it cannot compete with the live
+ * /bundle offer in search. Bringing one of these back for real means restoring
+ * its CTA deliberately, not by accident.
  */
-const ArchivedBumpsale = import.meta.env.DEV
-  ? lazy(() => import('./pages/archive/Bumpsale-2026-06-climbing-1-to-147'))
-  : null;
+const ArchivedBumpsale = lazy(
+  () => import('./pages/archive/Bumpsale-2026-06-climbing-1-to-147')
+);
 
 export default function App() {
   return (
@@ -71,17 +73,16 @@ export default function App() {
         {/* Linked from the ThriveCart checkouts, so this URL must stay stable */}
         <Route path="/terms" element={<Terms />} />
         <Route path="/terms-and-conditions" element={<Navigate to="/terms" replace />} />
-        {/* Dev only. 404s in production, see ArchivedBumpsale above. */}
-        {import.meta.env.DEV && ArchivedBumpsale && (
-          <Route
-            path="/archive/bumpsale"
-            element={
-              <Suspense fallback={null}>
-                <ArchivedBumpsale />
-              </Suspense>
-            }
-          />
-        )}
+        {/* Retired campaign, viewable but not purchasable. See ArchivedBumpsale above. */}
+        <Route
+          path="/archive/bumpsale"
+          element={
+            <Suspense fallback={null}>
+              <ArchivedBumpsale />
+            </Suspense>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HelmetProvider>
