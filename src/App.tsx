@@ -18,10 +18,6 @@ import Complete from './pages/Complete';
 import ArtOfTheAudit from './pages/ArtOfTheAudit';
 import SampleAuditReport, { AuditChapter } from './pages/SampleAuditReport';
 import AuditPrompts from './pages/AuditPrompts';
-import ServiceBusinessOS from './pages/ServiceBusinessOS';
-import SbosJoin from './pages/SbosJoin';
-import SbosSuccess from './pages/SbosSuccess';
-import SbosUnsubscribed from './pages/SbosUnsubscribed';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
@@ -65,12 +61,8 @@ export default function App() {
         <Route path="/sampleauditreport" element={<SampleAuditReport />} />
         <Route path="/sampleauditreport/:slug" element={<AuditChapter />} />
         <Route path="/auditprompts" element={<AuditPrompts />} />
-        {/* Service Business OS — founding bumpsale */}
-        <Route path="/sbos" element={<ServiceBusinessOS />} />
-        <Route path="/sbos-join" element={<SbosJoin />} />
-        <Route path="/sbos-success" element={<SbosSuccess />} />
-        <Route path="/sbos-unsubscribed" element={<SbosUnsubscribed />} />
-        {/* Linked from the ThriveCart checkouts, so this URL must stay stable */}
+        {/* Ascendz-wide terms. A copy also lives on servicebusinessos.com, so
+            if you change one, change the other. */}
         <Route path="/terms" element={<Terms />} />
         <Route path="/terms-and-conditions" element={<Navigate to="/terms" replace />} />
         {/* Retired campaign, viewable but not purchasable. See ArchivedBumpsale above. */}

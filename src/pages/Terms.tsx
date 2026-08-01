@@ -58,7 +58,7 @@ const Clause = ({
     <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
       Clause {n}
     </div>
-    <h2 className="text-2xl md:text-4xl font-display font-extrabold leading-tight mb-5">
+    <h2 className="text-2xl md:text-4xl font-display font-extrabold leading-tight mb-5 text-balance">
       {title}
     </h2>
     <div className="space-y-5 text-base md:text-lg leading-relaxed opacity-80">{children}</div>
@@ -135,7 +135,7 @@ export default function Terms() {
             <ArrowLeft size={14} /> Back to site
           </Link>
 
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] tracking-tight mb-5">
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] tracking-tight mb-5 text-balance">
             Terms <span className="text-terracotta">and Conditions</span>
           </h1>
           <p className="text-base md:text-xl opacity-75 leading-relaxed max-w-2xl">
@@ -577,7 +577,7 @@ export default function Terms() {
                 <div className="text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
                   Contact
                 </div>
-                <h2 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-4">
+                <h2 className="text-2xl md:text-3xl font-display font-extrabold leading-tight mb-4 text-balance">
                   Questions about these terms?
                 </h2>
                 <p className="text-base md:text-lg opacity-75 leading-relaxed mb-6">

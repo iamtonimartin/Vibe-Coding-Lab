@@ -603,13 +603,6 @@ async function startServer() {
       canonical: `${BASE_URL}/auditprompts`,
       image: `${BASE_URL}/og-image.jpg`,
     },
-    '/sbos': {
-      title: 'Service Business OS: own the software your business runs on',
-      description: 'A growing suite of focused, AI-powered tools for service businesses. Founding lifetime access for a one off £497, or spread it. Only 40 seats, then £97 a month.',
-      canonical: `${BASE_URL}/sbos`,
-      // Keep in step with OG_IMAGE in src/components/sbos/config.ts
-      image: `${BASE_URL}/sbos-og.jpg`,
-    },
     '/terms': {
       title: 'Terms and Conditions | Ascendz Digital Limited',
       description: 'The terms and conditions governing the use of our website and the purchase of our digital products, services and subscriptions.',
@@ -658,11 +651,6 @@ async function startServer() {
     '/artoftheaudit',
     '/sampleauditreport',
     '/auditprompts',
-    // Service Business OS — founding launch
-    '/sbos',
-    '/sbos-join',
-    '/sbos-success',
-    '/sbos-unsubscribed',
     '/terms',
   ]);
 
