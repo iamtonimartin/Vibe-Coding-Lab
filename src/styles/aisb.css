@@ -1948,17 +1948,3 @@ html:has(.aisb) {
   border-radius: 0;
   overflow: visible;
 }
-
-/* The composition runs to the right edge of the viewport above 1000px.
-   Contained, it simply was not big enough: the whole point of the image is
-   that people can see what was built, and at column width the screens became
-   texture. This is worth roughly 40% more width than containing it.
-   Needs the minmax(0, ...) tracks above, or the image widens its own track and
-   the grid runs away with itself, and the overflow-x: clip on .aisb, since
-   100vw counts the scrollbar and can overshoot by a pixel or two. */
-@media (min-width: 1000px) {
-  .aisb .hero.hero-media .shot {
-    width: calc(100% + (100vw - min(100vw, 1120px)) / 2 + 32px);
-    max-width: none;
-  }
-}
