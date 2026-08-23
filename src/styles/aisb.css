@@ -1880,3 +1880,47 @@ html:has(.aisb) {
     align-items: stretch;
   }
 }
+
+/* Terracotta variant of the panel, used for the £9 guide on the resources hub.
+   It still sits below the forest green community panel in visual weight, which
+   keeps the free -> £9 -> £37 ladder readable, while giving the guide its own
+   colour rather than a third cream box.
+   .bestfor is terracotta by default and would be invisible here, so it and the
+   other muted text are overridden. The CTA inside uses .btn.forest: a
+   terracotta button on a terracotta panel would disappear. */
+.aisb .panel.terra {
+  /* Deliberately deeper than --terra (#c25e44). At the standard terracotta,
+     white body copy measures 4.22:1 and 93% white only 3.87:1, both under the
+     4.5:1 AA needs for text this size. The brand colour is fine for buttons
+     and small accents, where the bar is 3:1, but it cannot carry a panel of
+     body text. This darker mix keeps the terracotta identity and passes:
+     white 5.01:1, body 4.57:1, and the forest button on it 3.44:1. */
+  background: #b2533a;
+  color: #fff;
+  border: 0;
+}
+.aisb .panel.terra h2,
+.aisb .panel.terra .k,
+.aisb .panel.terra .bestfor {
+  color: #fff;
+}
+.aisb .panel.terra p {
+  color: rgba(255, 255, 255, 0.95);
+}
+.aisb .panel.terra .note {
+  /* 80% would drop this to 4.09:1, under AA for 13px text. */
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Hero with a screenshot carrying real weight. The default 1.05fr/0.95fr split
+   plus the tighter wrap-mid container left the image about 418px wide against
+   a five-line headline, so it read as lost in the space rather than as proof.
+   Giving the media column the larger share, and letting the headline run to
+   16ch so it settles into fewer lines, brings the two columns closer in height. */
+.aisb .hero.hero-media {
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 48px;
+}
+.aisb .hero.hero-media h1 {
+  max-width: 16ch;
+}

@@ -128,8 +128,8 @@ export default function Join() {
 
       <SalesNav cta={`Join for ${PRICE_DISPLAY}`} ctaHref="#join" />
 
-      <div className="wrap-mid">
-        <section className="hero">
+      <div className="wrap">
+        <section className="hero hero-media">
           <div>
             <div className="kick pill">For service business owners</div>
             <h1 className="serif">

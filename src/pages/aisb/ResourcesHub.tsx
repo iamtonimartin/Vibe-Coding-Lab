@@ -121,7 +121,7 @@ export default function ResourcesHub() {
         <div className="seclabel serif">Go further</div>
         <div className="seclabel-sub">Two ways to take it further, whenever you are ready.</div>
 
-        <div className="panel cream stepbox">
+        <div className="panel terra stepbox">
           <div>
             <div className="k">&pound;9 one-off</div>
             <h2 className="serif">The AI Build Standards</h2>
