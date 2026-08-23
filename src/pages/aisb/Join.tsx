@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { AisbPage, SalesNav, SimpleFooter } from '../../components/aisb/Layout';
 import { Shot, BrowserShot } from '../../components/aisb/ui';
-import { SKOOL_URL, PRICE_GBP_APPROX } from '../../config/external';
+import { SKOOL_URL, PRICE_DISPLAY, PRICE_CHARGED_NOTE } from '../../config/external';
 
 /**
  * The $47 community offer.
@@ -126,7 +126,7 @@ export default function Join() {
         <meta property="og:image" content="https://aiforservicebusinesses.co/og-image.jpg" />
       </Helmet>
 
-      <SalesNav cta="Join for $47" ctaHref="#join" />
+      <SalesNav cta={`Join for ${PRICE_DISPLAY}`} ctaHref="#join" />
 
       <div className="wrap-mid">
         <section className="hero">
@@ -141,12 +141,11 @@ export default function Join() {
             </p>
             <div className="cta-row">
               <a href="#join" className="btn">
-                Join for $47
+                Join for {PRICE_DISPLAY}
               </a>
             </div>
             <div className="pricetag">
-              One-time payment, and the price only rises from here. Skool bills in US dollars, so that is
-              roughly {PRICE_GBP_APPROX}.
+              One-time payment, {PRICE_CHARGED_NOTE}. The price only rises from here.
             </div>
           </div>
           {/* Deliberately not Toni: her photo does its real work further down,
@@ -312,13 +311,13 @@ export default function Join() {
           <p className="sub">Everything included, one payment. No subscription.</p>
           <div className="pcard">
             <div className="priceline">
-              <span className="n serif">$47</span>
+              <span className="n serif">{PRICE_DISPLAY}</span>
               <span className="once">one-time</span>
             </div>
             <div className="psub">
               Everything inside, for life. No monthly fee, no renewal.
               <br />
-              Skool bills in US dollars, so that is roughly {PRICE_GBP_APPROX} depending on the rate.
+              <span className="charged">{PRICE_CHARGED_NOTE}</span>
             </div>
             <ul>
               <li>Claude OS, the build-with-AI method</li>
@@ -332,7 +331,7 @@ export default function Join() {
               <li>Community and direct support from me</li>
             </ul>
             <a href={SKOOL_URL} className="btn" rel="noopener">
-              Join for $47
+              Join for {PRICE_DISPLAY}
             </a>
             <div className="note">Founding price. As the community grows and I add more, it only goes up.</div>
           </div>
@@ -363,7 +362,7 @@ export default function Join() {
             and you're in.
           </p>
           <a href={SKOOL_URL} className="btn" rel="noopener">
-            Join for $47
+            Join for {PRICE_DISPLAY}
           </a>
           <div className="price">Founding price. It only goes up from here.</div>
         </div>

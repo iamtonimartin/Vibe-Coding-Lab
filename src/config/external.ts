@@ -31,10 +31,17 @@ export const STRIPE_BUILD_STANDARDS_URL = 'https://buy.stripe.com/eVq5kDgy99416o
 export const hasStripeLink = STRIPE_BUILD_STANDARDS_URL.length > 0;
 
 /**
- * Skool bills in US dollars and gives no choice about it, so the sterling
- * figure is indicative only and drifts with the exchange rate. Sense-check it
- * whenever the rate moves noticeably; it is a courtesy to UK buyers, not a
- * quoted price.
+ * Community pricing.
+ *
+ * Skool bills in US dollars and gives no choice about it. The site leads with
+ * sterling because the audience is UK-leaning and mixing £ and $ in one
+ * pricing table reads badly, but the amount actually charged is the dollar
+ * one, so PRICE_CHARGED_NOTE must appear wherever PRICE_DISPLAY does. Showing
+ * a sterling figure without saying what leaves the account is not on.
+ *
+ * PRICE_DISPLAY drifts with the exchange rate. Sense-check it when the rate
+ * moves; it is indicative, not a quote.
  */
+export const PRICE_DISPLAY = '\u00a337';
 export const PRICE_USD = '$47';
-export const PRICE_GBP_APPROX = '\u00a337';
+export const PRICE_CHARGED_NOTE = 'charged as $47 by Skool';

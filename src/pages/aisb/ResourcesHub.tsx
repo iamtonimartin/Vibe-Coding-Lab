@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { AisbPage, TopNav, SiteFooter } from '../../components/aisb/Layout';
 import { Shot, resourceIcons } from '../../components/aisb/ui';
-import { PRICE_GBP_APPROX } from '../../config/external';
+import { PRICE_DISPLAY, PRICE_CHARGED_NOTE } from '../../config/external';
 
 export default function ResourcesHub() {
   return (
@@ -158,7 +158,7 @@ export default function ResourcesHub() {
             Join AI for Service Businesses
           </Link>
           <div className="note">
-            $47 one-time, roughly {PRICE_GBP_APPROX}. Founding price, it only goes up from here.
+            {PRICE_DISPLAY} one-time, {PRICE_CHARGED_NOTE}. Founding price, it only goes up from here.
           </div>
         </section>
       </div>

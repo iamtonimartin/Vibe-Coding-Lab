@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { AisbPage, SalesNav, SimpleFooter } from '../../components/aisb/Layout';
 import { Shot } from '../../components/aisb/ui';
-import { STRIPE_BUILD_STANDARDS_URL, hasStripeLink, SKOOL_URL, PRICE_GBP_APPROX } from '../../config/external';
+import { STRIPE_BUILD_STANDARDS_URL, hasStripeLink, SKOOL_URL, PRICE_DISPLAY, PRICE_CHARGED_NOTE } from '../../config/external';
 
 /**
  * The £9 prompt library, sold through a Stripe payment link.
@@ -193,11 +193,13 @@ export default function BuildStandards() {
             <div className="pcard">
               <span className="best">Best value</span>
               <div className="priceline">
-                <span className="n serif">$47</span>
+                <span className="n serif">{PRICE_DISPLAY}</span>
                 <span className="once">one-time</span>
               </div>
               <div className="psub">
-                Everything, for life. Roughly {PRICE_GBP_APPROX}, as Skool bills in US dollars.
+                Everything, for life.
+                <br />
+                <span className="charged">{PRICE_CHARGED_NOTE}</span>
               </div>
               <ul>
                 <li className="included">The AI Build Standards, included</li>

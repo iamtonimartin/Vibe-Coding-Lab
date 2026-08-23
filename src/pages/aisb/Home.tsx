@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { BLOG_URL, PRICE_GBP_APPROX } from '../../config/external';
+import { BLOG_URL, PRICE_DISPLAY, PRICE_CHARGED_NOTE } from '../../config/external';
 import { AisbPage, TopNav, SiteFooter } from '../../components/aisb/Layout';
 import { Shot } from '../../components/aisb/ui';
 
@@ -151,7 +151,9 @@ export default function Home() {
           <div className="k">Join the community</div>
           <h2 className="serif">Build something that changes your business this&nbsp;week.</h2>
           <p>The method, the tools and a community that builds properly. One payment, and you're in.</p>
-          <div className="price">$47 one-time, roughly {PRICE_GBP_APPROX}</div>
+          <div className="price">
+            {PRICE_DISPLAY} one-time &middot; {PRICE_CHARGED_NOTE}
+          </div>
           <Link to="/join" className="btn">
             See the full details
           </Link>
