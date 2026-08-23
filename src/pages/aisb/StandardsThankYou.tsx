@@ -36,7 +36,7 @@ export default function StandardsThankYou() {
           </p>
         </section>
 
-        <div className="formwrap">
+        <div className="formwrap formwrap-mid">
           <h2 className="serif">While you wait</h2>
           <div className="fsub">Two things worth doing now, so it does not go astray.</div>
           <ul className="painlist" style={{ marginTop: 0 }}>

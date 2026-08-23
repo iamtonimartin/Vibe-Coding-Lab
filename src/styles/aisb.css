@@ -1400,6 +1400,15 @@ html:has(.aisb) body {
   padding: 44px;
   box-shadow: 0 24px 60px rgba(14, 30, 23, 0.08);
 }
+/* On the opt-in pages the form is the last thing before the footer, so 52px
+   above it and nothing below is right. On the thank-you page it sits between
+   the header and the community panel, where the same values give 92px above
+   (40px of .optin padding plus this margin) and 10px below, so it reads as
+   adrift from what precedes it and jammed against what follows. */
+.aisb .formwrap.formwrap-mid {
+  margin-top: 10px;
+  margin-bottom: 46px;
+}
 .aisb .formwrap h2 {
   font-family: 'Fraunces', ui-serif, Georgia, serif;
   font-weight: 600;
