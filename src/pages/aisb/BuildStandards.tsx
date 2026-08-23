@@ -50,7 +50,7 @@ export default function BuildStandards() {
 
       <div className="wrap-mid">
         <section className="optin">
-          <div className="kick pill">&pound;9 &middot; Instant access</div>
+          <div className="kick pill">&pound;9 &middot; Sent to your inbox</div>
           <h1 className="serif wide">
             AI makes it look finished. <em>This makes sure it actually is.</em>
           </h1>
@@ -64,7 +64,7 @@ export default function BuildStandards() {
               Get the guide <span className="p">&pound;9</span>
             </a>
           </div>
-          <div className="pricetag">One-off payment. Instant access, yours to keep.</div>
+          <div className="pricetag">One-off payment. Sent straight to your inbox, yours to keep.</div>
         </section>
 
         <div className="preview preview-end">
@@ -181,7 +181,7 @@ export default function BuildStandards() {
                 Get the guide for &pound;9
               </a>
               <div className="note">
-                {hasStripeLink ? 'One-off payment. Instant access.' : 'Stripe payment link not connected yet.'}
+                {hasStripeLink ? 'One-off payment. Sent to your inbox.' : 'Stripe payment link not connected yet.'}
               </div>
             </div>
 
