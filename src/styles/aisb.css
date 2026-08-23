@@ -1948,3 +1948,19 @@ html:has(.aisb) {
   border-radius: 0;
   overflow: visible;
 }
+
+/* The composition grows past its column to the right, but deliberately stops
+   short of the viewport edge so there is still clear space beside it. Contained
+   it ended flush against the edge of the wrap and was too small to read; the
+   full bleed ran off the screen entirely. This is the middle: same left edge,
+   so its relationship to the text column does not move, roughly a quarter
+   wider, and always a margin of space on the right.
+   The min() caps the growth, or wide screens would keep feeding it width until
+   it dwarfed the text. Needs the minmax(0, ...) tracks above, or the image
+   widens its own grid track and the layout runs away. */
+@media (min-width: 1000px) {
+  .aisb .hero.hero-media .shot {
+    width: calc(100% + min(160px, ((100vw - min(100vw, 1120px)) / 2 + 32px) * 0.7));
+    max-width: none;
+  }
+}
