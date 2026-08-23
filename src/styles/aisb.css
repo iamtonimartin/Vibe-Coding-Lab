@@ -1710,3 +1710,59 @@ html:has(.aisb) {
 .aisb .desc {
   text-wrap: pretty;
 }
+
+/* ---------- two-option pricing ----------
+   Deliberately unbalanced. Two equally weighted columns cause paralysis, so
+   the guide stays light and the community card is filled forest green: it
+   carries more visual weight, which is what pulls people up rather than
+   leaving them to weigh two things that look the same. */
+.aisb .ptable {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  max-width: 920px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+.aisb .ptable .pcard,
+.aisb .ptable .pcard.light {
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.aisb .ptable .pcard ul {
+  flex: 1;
+}
+.aisb .ptable .pcard .btn {
+  margin-top: auto;
+}
+.aisb .pcard .best {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--terra);
+  color: #fff;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 30px;
+  white-space: nowrap;
+}
+.aisb .pcard .included {
+  color: var(--rose);
+  font-weight: 600;
+}
+.aisb .ptable .pcard.light .included {
+  color: var(--terra);
+}
+@media (max-width: 760px) {
+  .aisb .ptable {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

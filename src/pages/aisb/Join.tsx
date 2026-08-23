@@ -18,6 +18,11 @@ const INSIDE = [
     body: 'My system for turning AI into your build partner. The backbone of everything you’ll build.',
   },
   {
+    em: 'Build properly',
+    title: 'The AI Build Standards',
+    body: 'The eighteen prompts that hold a build to a professional standard. Sold separately, included here.',
+  },
+  {
     em: 'Win work',
     title: 'The Art of the Audit',
     body: 'The exact process I use to win consulting work with AI, ready for you to use.',
@@ -317,6 +322,7 @@ export default function Join() {
             </div>
             <ul>
               <li>Claude OS, the build-with-AI method</li>
+              <li>The AI Build Standards, sold separately at &pound;9</li>
               <li>The Art of the Audit</li>
               <li>Site Sprint and Ship Sprint</li>
               <li>A growing classroom, new content added regularly</li>

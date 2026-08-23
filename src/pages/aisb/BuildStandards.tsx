@@ -1,8 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { AisbPage, SalesNav, SimpleFooter } from '../../components/aisb/Layout';
 import { Shot } from '../../components/aisb/ui';
-import { STRIPE_BUILD_STANDARDS_URL, hasStripeLink } from '../../config/external';
+import { STRIPE_BUILD_STANDARDS_URL, hasStripeLink, SKOOL_URL, PRICE_GBP_APPROX } from '../../config/external';
 
 /**
  * The £9 prompt library, sold through a Stripe payment link.
@@ -161,40 +160,64 @@ export default function BuildStandards() {
 
       <span id="get" />
       <section>
-        <div className="wrap-mid" style={{ textAlign: 'center' }}>
-          <div className="pcard light">
-            <div className="priceline">
-              <span className="n serif">&pound;9</span>
-              <span className="once">one-off</span>
+        <div className="wrap" style={{ textAlign: 'center' }}>
+          <div className="sec-head">
+            <h2 className="serif">Two ways to get it.</h2>
+            <p>
+              Buy the standards on their own, or get them as part of the community along with the method behind them.
+            </p>
+          </div>
+
+          <div className="ptable">
+            <div className="pcard light">
+              <div className="priceline">
+                <span className="n serif">&pound;9</span>
+                <span className="once">one-off</span>
+              </div>
+              <div className="psub">The standards, on their own.</div>
+              <ul>
+                <li>Eighteen copy-paste build-and-audit prompts</li>
+                <li>Security, privacy, data, forms, accessibility, SEO and more</li>
+                <li>Built on the ICI framework for reliable results</li>
+                <li>Plain English, no jargon, no dev needed</li>
+                <li>Yours to keep, use it on everything you build</li>
+              </ul>
+              <a href={hasStripeLink ? STRIPE_BUILD_STANDARDS_URL : '#get'} className="btn forest" rel="noopener">
+                Get the guide for &pound;9
+              </a>
+              <div className="note">
+                {hasStripeLink ? 'One-off payment. Instant access.' : 'Stripe payment link not connected yet.'}
+              </div>
             </div>
-            <div className="psub">Instant access. Yours to keep, use it on everything you build.</div>
-            <ul>
-              <li>Eighteen copy-paste build-and-audit prompts</li>
-              <li>Security, privacy, data, forms, accessibility, SEO and more</li>
-              <li>Built on the ICI framework for reliable results</li>
-              <li>Plain English, no jargon, no dev needed</li>
-              <li>For websites, apps, tools, portals and digital products</li>
-            </ul>
-            <a href={hasStripeLink ? STRIPE_BUILD_STANDARDS_URL : '#get'} className="btn" rel="noopener">
-              Get the guide for &pound;9
-            </a>
-            <div className="note">
-              {hasStripeLink
-                ? 'One-off payment. Instant access.'
-                : 'Stripe payment link not connected yet.'}
+
+            <div className="pcard">
+              <span className="best">Best value</span>
+              <div className="priceline">
+                <span className="n serif">$47</span>
+                <span className="once">one-time</span>
+              </div>
+              <div className="psub">
+                Everything, for life. Roughly {PRICE_GBP_APPROX}, as Skool bills in US dollars.
+              </div>
+              <ul>
+                <li className="included">The AI Build Standards, included</li>
+                <li>Claude OS, the build-with-AI method</li>
+                <li>The Art of the Audit</li>
+                <li>Site Sprint and Ship Sprint</li>
+                <li>A growing classroom and weekly sessions</li>
+                <li>Community and direct support from me</li>
+              </ul>
+              <a href={SKOOL_URL} className="btn" rel="noopener">
+                Join the community
+              </a>
+              <div className="note">Founding price. It only goes up from here.</div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="xsell">
-        <div className="wrap-mid">
-          <h2 className="serif">Want to learn to build the whole thing, properly, from scratch?</h2>
-          <p>
-            The standards keep your builds honest. The community teaches you to build it all, safely and from the ground
-            up.
+          <p className="pricetag" style={{ maxWidth: '52ch', margin: '26px auto 0' }}>
+            The standards keep a build honest. The community teaches you the method behind them, so you know why each
+            prompt asks what it asks.
           </p>
-          <Link to="/join">Explore AI for Service Businesses &rarr;</Link>
         </div>
       </section>
 
