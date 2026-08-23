@@ -1,14 +1,14 @@
-# Vibe Coding Lab - Project Build Document
+# AI for Service Businesses - Project Build Document
 
 ## Project Overview
-**Vibe Coding Lab** is a high-energy educational platform and community designed to help entrepreneurs build and ship AI-powered products using no-code and AI-assisted development tools (Vibe Coding).
+**AI for Service Businesses** is a high-energy educational platform and community designed to help entrepreneurs build and ship AI-powered products using no-code and AI-assisted development tools (Vibe Coding).
 
 ### Core Pages
 - **Landing Page (`/`)**: High-conversion sales page with pricing, FAQ, and "Founding Lifetime Access" offer.
 - **Opt-In Page (`/opt-in`)**: Lead magnet page for a free video series ("How I Built My First AI App in a Week").
 - **App Idea Generator (`/app-idea`)**: Interactive tool that generates personalised AI app ideas based on user expertise and business energy.
 - **Videos Page (`/videos`)**: Video library for the free series and sprint recordings.
-- **Logo Assets (`/logo`)**: Brand assets and SVG source code for Vibe Coding Lab.
+- **Logo Assets (`/logo`)**: Brand assets and SVG source code for AI for Service Businesses.
 
 ---
 

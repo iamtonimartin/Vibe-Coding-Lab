@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
+import Logo from '../components/Logo';
 
 export default function Ideas() {
   const navigate = useNavigate();
@@ -40,16 +41,16 @@ export default function Ideas() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
-        <title>Discover Your AI App Idea | Vibe Coding Lab</title>
-        <meta name="description" content="Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from Vibe Coding Lab." />
-        <link rel="canonical" href="https://thevibecodinglab.co/ideas" />
+        <title>Discover Your AI App Idea | AI for Service Businesses</title>
+        <meta name="description" content="Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from AI for Service Businesses." />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/ideas" />
       </Helmet>
 
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="light" className="h-8 md:h-11" />
           </Link>
           <Link
             to="/"
@@ -181,7 +182,7 @@ export default function Ideas() {
       </main>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest border-t border-forest-green/5">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Loader2, Rocket, Copy, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import Logo from '../components/Logo';
 
 export default function AppIdeaGenerator() {
   const [formData, setFormData] = useState({
@@ -113,9 +114,9 @@ export default function AppIdeaGenerator() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta/20">
       <Helmet>
-        <title>AI App Idea Generator | Vibe Coding Lab</title>
+        <title>AI App Idea Generator | AI for Service Businesses</title>
         <meta name="description" content="Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals." />
-        <link rel="canonical" href="https://thevibecodinglab.co/app-idea" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/app-idea" />
       </Helmet>
       {/* Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
@@ -123,7 +124,7 @@ export default function AppIdeaGenerator() {
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="light" className="h-8 md:h-11" />
           </Link>
           <div className="flex items-center gap-3 md:gap-8">
             <Link 
@@ -317,7 +318,7 @@ export default function AppIdeaGenerator() {
                     className="inline-flex items-center gap-3 bg-terracotta text-white px-10 py-6 rounded-2xl text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-terracotta/30"
                   >
                     <Rocket size={28} />
-                    Ready to Build This? Join The Vibe Coding Lab
+                    Ready to Build This? Join AI for Service Businesses
                   </Link>
                 </motion.div>
               )}
@@ -327,7 +328,7 @@ export default function AppIdeaGenerator() {
       </main>
 
       <footer className="py-16 px-6 text-center opacity-40 text-sm font-bold uppercase tracking-widest">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

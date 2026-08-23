@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Play, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
 import Footer from '../components/Footer';
+import Logo from '../components/Logo';
 
 type Resource = {
   icon: React.ReactNode;
@@ -52,16 +53,16 @@ export default function Resources() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
       <Helmet>
-        <title>Free Resources for Building AI Apps Without Code | Vibe Coding Lab</title>
+        <title>Free Resources for Building AI Apps Without Code | AI for Service Businesses</title>
         <meta name="description" content="Free tools, guides and training to help you build and ship your first AI-powered app without code. Watch the series, find your idea and get the Vibe Coding Playbook." />
-        <link rel="canonical" href="https://thevibecodinglab.co/resources" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/resources" />
         <meta name="robots" content="index, follow" />
       </Helmet>
 
       {/* Nav */}
       <nav className="w-full px-4 md:px-6 py-5 flex items-center justify-between max-w-6xl mx-auto">
         <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter">
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="light" className="h-8 md:h-11" />
         </Link>
         <Link
           to="/#join"

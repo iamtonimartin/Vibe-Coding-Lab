@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import Logo from '../components/Logo';
 
 const GrainOverlay = () => (
   <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-50 overflow-hidden">
@@ -46,7 +47,7 @@ export default function Videos() {
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="light" className="h-8 md:h-11" />
           </Link>
           <div className="flex items-center gap-3 md:gap-8">
             <Link
@@ -189,7 +190,7 @@ export default function Videos() {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="inline-flex items-center gap-3 bg-terracotta text-white px-12 py-6 rounded-2xl text-2xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
           >
-            Join the Vibe Coding Lab <ArrowRight />
+            Join AI for Service Businesses <ArrowRight />
           </Link>
         </div>
       </Section>
@@ -197,9 +198,9 @@ export default function Videos() {
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-forest-green/5 text-center">
         <div className="text-xl font-display font-extrabold tracking-tighter mb-4">
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="light" className="h-10 md:h-12" />
         </div>
-        <p className="text-sm opacity-40">© 2026 Vibe Coding Lab by Ascendz | All Rights Reserved</p>
+        <p className="text-sm opacity-40">© 2026 AI for Service Businesses by Ascendz | All Rights Reserved</p>
       </footer>
     </div>
   );

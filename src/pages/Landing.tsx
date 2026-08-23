@@ -21,6 +21,7 @@ import {
   Clock
 } from 'lucide-react';
 import Footer from '../components/Footer';
+import Logo from '../components/Logo';
 
 const FAQItem = ({ question, answer }: { question: string, answer: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,17 +86,17 @@ export default function Landing() {
   return (
     <div className="min-h-screen selection:bg-terracotta selection:text-white bg-warm-cream text-forest-green overflow-x-hidden scroll-smooth">
       <Helmet>
-        <title>Vibe Coding Lab: Build AI-Powered Apps Without Code</title>
+        <title>AI for Service Businesses: Build AI-Powered Apps Without Code</title>
         <meta name="description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days. Built by Toni Martin." />
-        <link rel="canonical" href="https://thevibecodinglab.co/" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Toni Martin" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://thevibecodinglab.co/" />
-        <meta property="og:site_name" content="Vibe Coding Lab" />
-        <meta property="og:title" content="Vibe Coding Lab: Build AI-Powered Apps Without Code" />
+        <meta property="og:url" content="https://aiforservicebusinesses.co/" />
+        <meta property="og:site_name" content="AI for Service Businesses" />
+        <meta property="og:title" content="AI for Service Businesses: Build AI-Powered Apps Without Code" />
         <meta property="og:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days." />
         <meta property="og:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -104,7 +105,7 @@ export default function Landing() {
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Vibe Coding Lab: Build AI-Powered Apps Without Code" />
+        <meta name="twitter:title" content="AI for Service Businesses: Build AI-Powered Apps Without Code" />
         <meta name="twitter:description" content="Free resources, tools and a growing community to help you build your first AI-powered app without writing code. Try it free for 7 days." />
         <meta name="twitter:image" content="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg" />
 
@@ -114,20 +115,22 @@ export default function Landing() {
           "@graph": [
             {
               "@type": "WebSite",
-              "@id": "https://thevibecodinglab.co/#website",
-              "url": "https://thevibecodinglab.co/",
-              "name": "Vibe Coding Lab",
+              "@id": "https://aiforservicebusinesses.co/#website",
+              "url": "https://aiforservicebusinesses.co/",
+              "name": "AI for Service Businesses",
               "description": "Learn to build AI-powered apps without code. Free resources, community and live sessions.",
-              "publisher": { "@id": "https://thevibecodinglab.co/#organization" }
+              "publisher": { "@id": "https://aiforservicebusinesses.co/#organization" }
             },
             {
               "@type": "Organization",
-              "@id": "https://thevibecodinglab.co/#organization",
-              "name": "Vibe Coding Lab",
-              "url": "https://thevibecodinglab.co/",
+              "@id": "https://aiforservicebusinesses.co/#organization",
+              "name": "AI for Service Businesses",
+              "url": "https://aiforservicebusinesses.co/",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg"
+                "url": "https://aiforservicebusinesses.co/aisb-logo-lightbg.png",
+                "width": 2172,
+                "height": 724
               },
               "founder": {
                 "@type": "Person",
@@ -181,7 +184,7 @@ export default function Landing() {
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <div className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="light" className="h-8 md:h-11" />
           </div>
           <div className="flex items-center gap-3 md:gap-8">
             <a
@@ -305,7 +308,7 @@ export default function Landing() {
               The only thing standing between you and building is having the right method, the right tools and someone to show you exactly how it is done.
             </p>
             <p className="font-bold text-terracotta text-2xl md:text-3xl">
-              That is what The Vibe Coding Lab is for.
+              That is what AI for Service Businesses is for.
             </p>
           </div>
         </div>
@@ -342,7 +345,7 @@ export default function Landing() {
             <div className="absolute -inset-4 bg-sand rounded-[3rem] rotate-2 group-hover:rotate-0 transition-transform duration-500" />
             <img
               src="https://ascendz.co/wp-content/uploads/2026/03/Toni-Martin-The-Vibe-Coding-Lab.jpg"
-              alt="Toni Martin, founder of Vibe Coding Lab, Digital Growth Architect and AI Consultant"
+              alt="Toni Martin, founder of AI for Service Businesses, Digital Growth Architect and AI Consultant"
               className="relative rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-700 w-full aspect-[4/5] object-cover"
               referrerPolicy="no-referrer"
             />
@@ -359,7 +362,7 @@ export default function Landing() {
                 I build real AI-powered SaaS products using no-code AI tools. Not as a side project. As fully functional, deployed products that demonstrate exactly what is possible with these tools.
               </p>
               <p>
-                Relavo is my AI assistant builder. Zenitro is my diagnostic and quiz platform. Both built using the exact method I am teaching inside the Vibe Coding Lab.
+                Relavo is my AI assistant builder. Zenitro is my diagnostic and quiz platform. Both built using the exact method I am teaching inside AI for Service Businesses.
               </p>
               <p>
                 I build in public. I share every step. Inside this community you build alongside me.
@@ -741,7 +744,7 @@ export default function Landing() {
             />
             <FAQItem
               question="Will this still be relevant in six months?"
-              answer="Vibe coding is not a trend. It is a fundamental shift in how software gets built. The method works across web pages, tools, apps, automations and everything being built right now. The Vibe Coding Lab evolves as the space evolves and so will you."
+              answer="Vibe coding is not a trend. It is a fundamental shift in how software gets built. The method works across web pages, tools, apps, automations and everything being built right now. AI for Service Businesses evolves as the space evolves and so will you."
             />
           </div>
         </div>

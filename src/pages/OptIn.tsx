@@ -14,9 +14,9 @@ export default function OptIn() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
-        <title>Free Training: How to Build AI Apps Without Code | Vibe Coding Lab</title>
+        <title>Free Training: How to Build AI Apps Without Code | AI for Service Businesses</title>
         <meta name="description" content="Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed." />
-        <link rel="canonical" href="https://thevibecodinglab.co/freetraining" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/freetraining" />
       </Helmet>
       <div className="container mx-auto max-w-4xl px-6 py-16 flex-1 flex flex-col justify-center text-center">
         <motion.div
@@ -117,7 +117,7 @@ export default function OptIn() {
       </div>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

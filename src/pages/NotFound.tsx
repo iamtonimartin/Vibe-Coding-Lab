@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-forest-green text-white selection:bg-terracotta selection:text-white relative overflow-hidden">
       <Helmet>
-        <title>Page not found | Vibe Coding Lab</title>
+        <title>Page not found | AI for Service Businesses</title>
         <meta name="description" content="That page does not exist." />
         <meta name="robots" content="noindex, follow" />
       </Helmet>

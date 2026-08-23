@@ -24,10 +24,10 @@ import {
   Crown,
 } from 'lucide-react';
 
-const SHARE_URL = 'https://thevibecodinglab.co/bundle';
-const SHARE_TEXT = 'Just locked in lifetime access to the Vibe Coding Lab bundle. Worth £1,962, yours for a one-off £197 or split it. It closes 11:30am Tuesday 9 June and then it is gone.';
+const SHARE_URL = 'https://aiforservicebusinesses.co/bundle';
+const SHARE_TEXT = 'Just locked in lifetime access to the AI for Service Businesses bundle. Worth £1,962, yours for a one-off £197 or split it. It closes 11:30am Tuesday 9 June and then it is gone.';
 const SHARE_EMAIL_SUBJECT = 'You should see this before it closes';
-const SHARE_EMAIL_BODY = `I just locked in lifetime access to the Vibe Coding Lab bundle. Worth £1,962, yours for a one-off £197 or split into 2 x £99 or 3 x £66. The whole thing closes 11:30am Tuesday 9 June, then it comes off entirely.\n\n${SHARE_URL}`;
+const SHARE_EMAIL_BODY = `I just locked in lifetime access to the AI for Service Businesses bundle. Worth £1,962, yours for a one-off £197 or split into 2 x £99 or 3 x £66. The whole thing closes 11:30am Tuesday 9 June, then it comes off entirely.\n\n${SHARE_URL}`;
 
 type Status = 'now' | 'soon' | 'later';
 
@@ -38,7 +38,7 @@ const DELIVERABLES: {
   detail: string;
 }[] = [
   {
-    title: 'Vibe Coding Lab Premium',
+    title: 'AISB Premium',
     when: 'Within 48 hours',
     status: 'now',
     detail: "Your Premium upgrade invite lands within 48 hours of your purchase. Standard members get bumped up; new members get a fresh login.",
@@ -47,13 +47,13 @@ const DELIVERABLES: {
     title: 'Claude OS',
     when: 'Starts Tue 9 June',
     status: 'soon',
-    detail: "Four live build-alongs starting Tuesday 9 June, 11:30am-2:30pm UK (then 16, 23 and 30 June). Full schedule and joining link land inside VCL with your Premium access.",
+    detail: "Four live build-alongs starting Tuesday 9 June, 11:30am-2:30pm UK (then 16, 23 and 30 June). Full schedule and joining link land inside AISB with your Premium access.",
   },
   {
     title: 'The Site Sprint',
     when: 'Wed 10 June',
     status: 'soon',
-    detail: "One live session Wednesday 10 June, 1pm UK. Recording inside VCL if you can't make it.",
+    detail: "One live session Wednesday 10 June, 1pm UK. Recording inside AISB if you can't make it.",
   },
   {
     title: 'The Ship Sprint',
@@ -65,7 +65,7 @@ const DELIVERABLES: {
     title: 'The Art of the Audit Masterclass',
     when: 'Thu 16 July, 9:30am UK',
     status: 'later',
-    detail: "New bonus masterclass live Thursday 16 July at 9:30am UK. How to land £3,000+ day rate audits, the framework Toni runs onsite, and how to structure proposals that close six-figure engagements. Joining link inside VCL.",
+    detail: "New bonus masterclass live Thursday 16 July at 9:30am UK. How to land £3,000+ day rate audits, the framework Toni runs onsite, and how to structure proposals that close six-figure engagements. Joining link inside AISB.",
   },
   {
     title: 'Relavo',
@@ -137,7 +137,7 @@ export default function Complete() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
       <Helmet>
-        <title>You're in! | Vibe Coding Lab</title>
+        <title>You're in! | AI for Service Businesses</title>
         <meta name="description" content="Your bundle is confirmed. Here's what's coming and when." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
@@ -384,7 +384,7 @@ export default function Complete() {
                     Refer 3 or more people
                   </div>
                   <p className="text-base md:text-lg font-bold leading-tight">
-                    I'll upgrade you to VCL VIP for 12 months (worth almost £600).
+                    I'll upgrade you to AISB VIP for 12 months (worth almost £600).
                   </p>
                 </div>
               </div>
@@ -415,7 +415,7 @@ export default function Complete() {
             </div>
 
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-6">
-              <Link2 size={14} className="text-terracotta" /> thevibecodinglab.co/bundle
+              <Link2 size={14} className="text-terracotta" /> aiforservicebusinesses.co/bundle
             </div>
 
             <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
@@ -590,7 +590,7 @@ export default function Complete() {
             to="/"
             className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-terracotta hover:text-burnt-orange transition-colors"
           >
-            Back to Vibe Coding Lab <ArrowRight size={16} />
+            Back to AI for Service Businesses <ArrowRight size={16} />
           </Link>
         </div>
       </section>

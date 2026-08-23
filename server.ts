@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 dotenv.config();
 
@@ -18,7 +19,178 @@ const KIT_IDEAS_FORM_ID = process.env.KIT_IDEAS_FORM_ID || '';
 const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
 const KIT_SECURE_FORM_ID = process.env.KIT_SECURE_FORM_ID || '';
 
+/* ---------------------------------------------------------------------------
+ * POST /api/stripe-webhook — delivers a purchased product via Kit
+ *
+ * Why this exists rather than Kit's own Stripe app: Kit only listens to
+ * charge.succeeded, and a Stripe Charge carries no line items, so Kit cannot
+ * tell which product sold. Every sale arrives as the generic "Stripe Payment",
+ * which means any Stripe charge at all (an invoice, a consulting payment)
+ * would fire the product's delivery email.
+ *
+ * checkout.session.completed does identify the product, via `payment_link`.
+ * That is the whole reason for this endpoint.
+ *
+ * Note it is mounted ABOVE app.use(express.json()) and takes a raw body.
+ * Signature verification hashes the exact bytes Stripe sent, so a parsed and
+ * re-serialised body will never verify. Do not move this below the JSON
+ * parser.
+ *
+ * Env:
+ *   STRIPE_WEBHOOK_SECRET          whsec_... from the Stripe endpoint screen
+ *   STRIPE_PLINK_BUILD_STANDARDS   plink_... id of the AI Build Standards link
+ *   KIT_STANDARDS_FORM_ID          Kit form that delivers the guide
+ * ------------------------------------------------------------------------ */
+
+/** Stripe signs `${timestamp}.${rawBody}`. Reject anything older than this. */
+const STRIPE_TOLERANCE_SECONDS = 300;
+
+function verifyStripeSignature(raw: Buffer, header: string, secret: string): boolean {
+  const parts = Object.fromEntries(
+    header.split(',').map((kv) => kv.split('=', 2) as [string, string])
+  );
+  const timestamp = parts['t'];
+  if (!timestamp) return false;
+
+  // Replay window. Without this a captured request stays valid forever.
+  const age = Math.floor(Date.now() / 1000) - Number(timestamp);
+  if (!Number.isFinite(age) || Math.abs(age) > STRIPE_TOLERANCE_SECONDS) return false;
+
+  const expected = createHmac('sha256', secret)
+    .update(`${timestamp}.${raw.toString('utf8')}`)
+    .digest('hex');
+
+  // Stripe may send several v1 signatures during a secret rotation.
+  return header
+    .split(',')
+    .filter((kv) => kv.startsWith('v1='))
+    .map((kv) => kv.slice(3))
+    .some((sig) => {
+      const a = Buffer.from(sig, 'utf8');
+      const b = Buffer.from(expected, 'utf8');
+      return a.length === b.length && timingSafeEqual(a, b);
+    });
+}
+
+/** Which Kit form delivers which payment link. Add a line per new product. */
+function kitFormForPaymentLink(paymentLink: string | null): string | undefined {
+  const map: Record<string, string | undefined> = {
+    [process.env.STRIPE_PLINK_BUILD_STANDARDS ?? '']: process.env.KIT_STANDARDS_FORM_ID,
+  };
+  return paymentLink ? map[paymentLink] : undefined;
+}
+
+app.post(
+  '/api/stripe-webhook',
+  express.raw({ type: 'application/json' }),
+  async (req, res) => {
+    const secret = process.env.STRIPE_WEBHOOK_SECRET;
+    const signature = req.headers['stripe-signature'];
+
+    if (!secret) {
+      console.error('stripe-webhook: STRIPE_WEBHOOK_SECRET is not set');
+      return res.status(500).json({ ok: false });
+    }
+    if (typeof signature !== 'string' || !verifyStripeSignature(req.body as Buffer, signature, secret)) {
+      // Unverified means it did not come from Stripe. Say nothing useful.
+      return res.status(400).json({ ok: false });
+    }
+
+    let event: any;
+    try {
+      event = JSON.parse((req.body as Buffer).toString('utf8'));
+    } catch {
+      return res.status(400).json({ ok: false });
+    }
+
+    // Everything below answers 200 even when it does nothing. A non-2xx makes
+    // Stripe retry for days, and none of these cases get better on a retry.
+    if (event.type !== 'checkout.session.completed') return res.json({ ok: true, ignored: event.type });
+
+    const session = event.data?.object ?? {};
+    if (session.payment_status !== 'paid') {
+      return res.json({ ok: true, ignored: 'unpaid' });
+    }
+
+    const email: string | undefined = session.customer_details?.email ?? session.customer_email;
+    const name: string | undefined = session.customer_details?.name ?? undefined;
+    const paymentLink: string | null = session.payment_link ?? null;
+    const formId = kitFormForPaymentLink(paymentLink);
+
+    if (!formId) {
+      // The usual cause is a new product whose plink is not mapped yet. Logging
+      // the id is how you find it: buy once, read this line, add the mapping.
+      console.warn(`stripe-webhook: no Kit form mapped for payment_link ${paymentLink}. Nothing sent.`);
+      return res.json({ ok: true, ignored: 'unmapped-product' });
+    }
+    if (!email || !KIT_API_KEY) {
+      console.error('stripe-webhook: missing buyer email or KIT_API_KEY');
+      return res.json({ ok: true, ignored: 'missing-email-or-key' });
+    }
+
+    try {
+      const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: KIT_API_KEY,
+          email,
+          // Stripe gives a full name; Kit wants a first name.
+          first_name: name ? name.split(' ')[0] : undefined,
+        }),
+      });
+      const kitBody = await response.json().catch(() => null);
+      if (!response.ok || kitBody?.error) {
+        console.error('stripe-webhook: Kit rejected the subscribe', response.status, JSON.stringify(kitBody));
+      } else {
+        console.log(`stripe-webhook: subscribed ${email} to Kit form ${formId}`);
+      }
+    } catch (err) {
+      console.error('stripe-webhook: Kit call failed', (err as Error).message);
+    }
+
+    return res.json({ ok: true });
+  }
+);
+
 app.use(express.json());
+
+// Rebrand: Vibe Coding Lab became AI for Service Businesses and the site
+// moved to aiforservicebusinesses.co. The old domain stays registered and
+// pointed at this same Railway service, so every request arriving on it is
+// 301'd to the matching path on the new one. Preserves link equity and keeps
+// old emails, ThriveCart receipts and social bios working.
+//
+// The legacy redirect is OFF until LEGACY_REDIRECT=true is set in the Railway
+// variables. That ordering matters: deploying it while the new domain is
+// still unattached or mid-DNS-propagation would 301 every live visitor to a
+// domain that does not resolve yet, taking the site down. Deploy first,
+// attach and verify the new domain, then flip this on.
+const CANONICAL_HOST = 'aiforservicebusinesses.co';
+const LEGACY_HOSTS = new Set([
+  'thevibecodinglab.co',
+  'www.thevibecodinglab.co',
+]);
+const LEGACY_REDIRECT = process.env.LEGACY_REDIRECT === 'true';
+
+app.use((req, res, next) => {
+  // Railway terminates TLS at the edge, so req.protocol is always http here.
+  // The forwarded host is what the visitor actually typed.
+  const host = (req.headers['x-forwarded-host'] as string | undefined) || req.headers.host || '';
+  const hostname = host.split(':')[0].toLowerCase();
+
+  if (LEGACY_REDIRECT && LEGACY_HOSTS.has(hostname)) {
+    return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
+  }
+
+  // Consolidate www on the new domain, so there is a single canonical host.
+  // Safe to run always: it only fires once the www record points here.
+  if (hostname === `www.${CANONICAL_HOST}`) {
+    return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
+  }
+
+  next();
+});
 
 // Permanent redirect: the offer page moved from /bumpsale to /bundle.
 // Keeps old links, emails and shares working.
@@ -533,72 +705,102 @@ async function startServer() {
       console.warn('SSR bundle not found, serving SPA fallback:', (e as Error).message);
     }
 
-  const BASE_URL = 'https://thevibecodinglab.co';
+  const BASE_URL = 'https://aiforservicebusinesses.co';
 
   // Per-route meta overrides injected server-side so crawlers get correct tags without executing JS
   const routeMeta: Record<string, { title: string; description: string; canonical: string; image: string }> = {
     '/': {
-      title: 'Vibe Coding Lab: Build AI-Powered Apps Without Code',
-      description: 'Learn to build your own AI-powered app without writing code. Join the Vibe Coding Lab. Live sprints, community and tools, with a 7-day free trial.',
+      title: 'AI for Service Businesses: Build What Your Business Needs, With AI',
+      description: 'Learn to build the apps, sites and systems your service business needs with AI. No code, no developer. Free resources and a community for service business owners.',
       canonical: `${BASE_URL}/`,
       image: `${BASE_URL}/og-image.jpg`,
     },
+    '/join': {
+      title: 'Join AI for Service Businesses: Build What Your Business Needs, With AI',
+      description: 'Join the community where service business owners learn to build the apps, sites and systems they need with AI. One payment, everything included.',
+      canonical: `${BASE_URL}/join`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/resources/ai-build-playbook': {
+      title: 'The AI Build Playbook: Free Reference Guide | AI for Service Businesses',
+      description: 'A free plain-English reference to the language, tools and models behind building with AI. Glossary, file types, AI models and toolkit.',
+      canonical: `${BASE_URL}/resources/ai-build-playbook`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/resources/find-your-app-idea': {
+      title: 'Find Your App Idea: Free Quiz | AI for Service Businesses',
+      description: 'A free quiz that gives you a personalised idea for the first thing your service business should build with AI.',
+      canonical: `${BASE_URL}/resources/find-your-app-idea`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
+    '/resources/build-in-a-week': {
+      title: 'How I Built My First AI App in a Week: Free Video Series | AI for Service Businesses',
+      description: 'A free video series showing the exact tools, stack and process behind real, deployed AI products.',
+      canonical: `${BASE_URL}/resources/build-in-a-week`,
+      image: `${BASE_URL}/og-video-series.jpg`,
+    },
+    '/build-standards': {
+      title: 'The AI Build Standards: Build Websites, Apps and Tools Properly With AI',
+      description: 'A copy-paste prompt library, built on the ICI framework, to build and audit websites, apps and digital products with AI, properly.',
+      canonical: `${BASE_URL}/build-standards`,
+      image: `${BASE_URL}/og-image.jpg`,
+    },
     '/freetraining': {
-      title: 'Free Training: How to Build AI Apps Without Code | Vibe Coding Lab',
+      title: 'Free Training: How to Build AI Apps Without Code | AI for Service Businesses',
       description: 'Watch the free video series and discover how to build your first AI-powered app in a week using no-code AI tools. No technical experience needed.',
       canonical: `${BASE_URL}/freetraining`,
       image: `${BASE_URL}/og-video-series.jpg`,
     },
     '/ideas': {
-      title: 'Discover Your AI App Idea | Vibe Coding Lab',
-      description: 'Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from Vibe Coding Lab.',
+      title: 'Discover Your AI App Idea | AI for Service Businesses',
+      description: 'Not sure what to build? Get a personalised AI app idea based on your skills and goals. Free from AI for Service Businesses.',
       canonical: `${BASE_URL}/ideas`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/app-idea': {
-      title: 'AI App Idea Generator | Vibe Coding Lab',
+      title: 'AI App Idea Generator | AI for Service Businesses',
       description: 'Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals.',
       canonical: `${BASE_URL}/app-idea`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/vibeplaybook': {
-      title: 'The Vibe Coding Playbook: Tools, Models & Reference | Vibe Coding Lab',
-      description: 'A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI.',
+      title: 'The AI Build Playbook: Tools, Models and Reference | AI for Service Businesses',
+      description: 'A free plain-English reference to the language, tools and models behind building with AI. Glossary, file types, AI models and toolkit.',
       canonical: `${BASE_URL}/vibeplaybook`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/playbook': {
-      title: 'Get the Vibe Playbook | Vibe Coding Lab',
+      title: 'Get the Vibe Playbook | AI for Service Businesses',
       description: 'Access the Vibe Playbook, a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code.',
       canonical: `${BASE_URL}/playbook`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/bundle': {
-      title: 'The ultimate AI build bundle for non-technical founders | Vibe Coding Lab',
+      title: 'The ultimate AI build bundle for non-technical founders | AI for Service Businesses',
       description: 'Worth £1,962. Lifetime access for a one-off £197, or split into 2 × £99 or 3 × £66. Closes 11:30am Tuesday 9 June.',
       canonical: `${BASE_URL}/bundle`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/resources': {
-      title: 'Free Resources for Building AI Apps Without Code | Vibe Coding Lab',
-      description: 'Free tools, guides and training to help you build and ship your first AI-powered app without code. The video series, app idea generator and the Vibe Coding Playbook.',
+      title: 'Free Resources for Building With AI | AI for Service Businesses',
+      description: 'Free and low-cost resources to get you building with AI. Start with the quiz, the video series or the AI Build Playbook.',
       canonical: `${BASE_URL}/resources`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/artoftheaudit': {
-      title: 'The Art of the Audit | Vibe Coding Lab',
+      title: 'The Art of the Audit | AI for Service Businesses',
       description: 'How to run a paid business audit start to finish: the five-step process, exactly what goes in the report and the prompts and templates you keep.',
       canonical: `${BASE_URL}/artoftheaudit`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/sampleauditreport': {
-      title: 'Sample Audit Report: Maple and Moss | Vibe Coding Lab',
+      title: 'Sample Audit Report: Maple and Moss | AI for Service Businesses',
       description: 'A complete worked example of a systems audit report, in ten chapters. Fictional client, real findings. Keep the shape, swap in your client and write it in your own voice.',
       canonical: `${BASE_URL}/sampleauditreport`,
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/auditprompts': {
-      title: 'The Three Audit Prompts | Vibe Coding Lab',
+      title: 'The Three Audit Prompts | AI for Service Businesses',
       description: 'The three prompts from The Art of the Audit: prepare your questions, turn your notes into a draft report and find your first client. Copy and run.',
       canonical: `${BASE_URL}/auditprompts`,
       image: `${BASE_URL}/og-image.jpg`,
@@ -610,7 +812,7 @@ async function startServer() {
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/archive/bumpsale': {
-      title: 'Archived: the June 2026 bundle campaign | Vibe Coding Lab',
+      title: 'Archived: the June 2026 bundle campaign | AI for Service Businesses',
       description: 'A record of the June 2026 bundle bumpsale, kept for reference. The campaign closed on 4 June 2026 and nothing on the page is for sale.',
       canonical: `${BASE_URL}/archive/bumpsale`,
       image: `${BASE_URL}/og-image.jpg`,
@@ -635,6 +837,13 @@ async function startServer() {
   // Known SPA routes (must mirror src/App.tsx). Anything outside this set is a 404.
   const VALID_ROUTES = new Set([
     '/',
+    '/join',
+    '/resources/ai-build-playbook',
+    '/resources/find-your-app-idea',
+    '/resources/build-in-a-week',
+    '/build-standards',
+    '/build-standards/thank-you',
+    '/website-standards',
     '/freetraining',
     '/videos',
     '/app-idea',

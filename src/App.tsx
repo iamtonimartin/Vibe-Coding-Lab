@@ -1,15 +1,19 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import Landing from './pages/Landing';
-import OptIn from './pages/OptIn';
+import Home from './pages/aisb/Home';
+import Join from './pages/aisb/Join';
+import ResourcesHub from './pages/aisb/ResourcesHub';
+import OptInPlaybook from './pages/aisb/OptInPlaybook';
+import OptInQuiz from './pages/aisb/OptInQuiz';
+import OptInVideo from './pages/aisb/OptInVideo';
+import BuildStandards from './pages/aisb/BuildStandards';
+import StandardsThankYou from './pages/aisb/StandardsThankYou';
 import Videos from './pages/Videos';
 import AppIdeaGenerator from './pages/AppIdeaGenerator';
 import Ideas from './pages/Ideas';
 import IdeasAccess from './pages/IdeasAccess';
 import VibePlaybook from './pages/VibePlaybook';
-import Playbook from './pages/Playbook';
-import Resources from './pages/Resources';
 import Unsubscribe from './pages/Unsubscribe';
 import LogoExport from './pages/LogoExport';
 import Bumpsale from './pages/Bumpsale';
@@ -21,6 +25,7 @@ import AuditPrompts from './pages/AuditPrompts';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
 import ChatWidget from './components/ChatWidget';
+import ScrollToTop from './components/ScrollToTop';
 
 /**
  * Retired campaign pages, kept for reference only.
@@ -40,17 +45,33 @@ const ArchivedBumpsale = lazy(
 export default function App() {
   return (
     <HelmetProvider>
+      <ScrollToTop />
       <ChatWidget />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/freetraining" element={<OptIn />} />
+        {/* --- AI for Service Businesses pages (src/pages/aisb) --- */}
+        <Route path="/" element={<Home />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/resources" element={<ResourcesHub />} />
+        <Route path="/resources/ai-build-playbook" element={<OptInPlaybook />} />
+        <Route path="/resources/find-your-app-idea" element={<OptInQuiz />} />
+        <Route path="/resources/build-in-a-week" element={<OptInVideo />} />
+        <Route path="/build-standards" element={<BuildStandards />} />
+        <Route path="/build-standards/thank-you" element={<StandardsThankYou />} />
+        {/* The resources mockup linked this product as /website-standards. Keep
+            that URL alive, but /build-standards is the canonical one because it
+            matches the product's own name. */}
+        <Route path="/website-standards" element={<Navigate to="/build-standards" replace />} />
+
+        {/* Old lead-magnet URLs are live in emails and ads. They point at the
+            same magnet in its new home rather than 404ing. /ideas is NOT here:
+            that is the 70-ideas list, a different magnet from the quiz. */}
+        <Route path="/freetraining" element={<Navigate to="/resources/build-in-a-week" replace />} />
+        <Route path="/playbook" element={<Navigate to="/resources/ai-build-playbook" replace />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/app-idea" element={<AppIdeaGenerator />} />
         <Route path="/ideas" element={<Ideas />} />
         <Route path="/ideas-access" element={<IdeasAccess />} />
         <Route path="/vibeplaybook" element={<VibePlaybook />} />
-        <Route path="/playbook" element={<Playbook />} />
-        <Route path="/resources" element={<Resources />} />
         <Route path="/unsubscribe" element={<Unsubscribe />} />
         <Route path="/logo" element={<LogoExport />} />
         <Route path="/bundle" element={<Bumpsale />} />

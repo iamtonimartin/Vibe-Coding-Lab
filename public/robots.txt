@@ -5,4 +5,4 @@ Disallow: /ideas-access
 Disallow: /unsubscribe
 Disallow: /logo
 
-Sitemap: https://thevibecodinglab.co/sitemap.xml
+Sitemap: https://aiforservicebusinesses.co/sitemap.xml

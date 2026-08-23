@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Check, Copy } from 'lucide-react';
 import { AUDIT_PROMPTS, type AuditPrompt } from '../data/auditPrompts';
+import Logo from '../components/Logo';
 
 const NOISE = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
@@ -112,19 +113,19 @@ export default function AuditPrompts() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white">
       <Helmet>
-        <title>The Three Audit Prompts | Vibe Coding Lab</title>
+        <title>The Three Audit Prompts | AI for Service Businesses</title>
         <meta
           name="description"
           content="The three prompts from The Art of the Audit: prepare your questions, turn your notes into a draft report and find your first client. Copy and run."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/auditprompts" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/auditprompts" />
       </Helmet>
 
       {/* Nav */}
       <div className="sticky top-0 z-50 bg-forest-green/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-4xl mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-4">
           <Link to="/" className="font-display font-extrabold text-sand text-sm tracking-tight">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="dark" className="h-6 md:h-7" />
           </Link>
           <Link
             to="/artoftheaudit"
@@ -202,7 +203,7 @@ export default function AuditPrompts() {
         <Grain dark />
         <div className="relative max-w-4xl mx-auto px-5 md:px-8">
           <div className="font-display font-extrabold text-sand text-xl tracking-tight">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="dark" className="h-10 md:h-12" />
           </div>
           <div className="italic text-sand/60 mt-1 mb-8">The Art of the Audit</div>
           <div className="flex flex-wrap justify-center gap-3">

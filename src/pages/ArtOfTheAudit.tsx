@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { QUESTIONS_PROMPT, REPORT_PROMPT, FIRST_CLIENT_PROMPT } from '../data/auditPrompts';
 
-// Deck-specific styling. Palette and type are the Vibe Coding Lab house system:
+// Deck-specific styling. Palette and type are the AI for Service Businesses house system:
 // Outfit for display, Inter for everything else, terracotta on forest green and warm cream.
 const CSS = `
 #aota{
@@ -258,11 +258,10 @@ strong,b{color:var(--ink);font-weight:700}
 .chk .cb{width:22px;height:22px;border-radius:7px;border:2px solid var(--muted);flex:0 0 auto;margin-top:1px;position:relative;transition:.15s}
 .chk.on .cb{background:var(--terra);border-color:var(--terra)}.chk.on .cb::after{content:"";position:absolute;left:6px;top:1px;width:6px;height:12px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .chk .ct{font-size:clamp(15px,1.5vw,17px);color:var(--ink);line-height:1.4}.chk.on .ct{color:var(--body)}
-.wordmark{position:fixed;top:clamp(14px,2.2vw,24px);left:clamp(18px,3vw,42px);z-index:30;font-family:var(--display);font-weight:800;letter-spacing:-.05em;font-size:clamp(13px,1.3vw,16px);color:var(--ink);text-decoration:none;opacity:.75;transition:.2s}
-.wordmark:hover{opacity:1}
-.dark-ui .wordmark{color:var(--cream)}
-.wordmark span{color:var(--terra)}.dark-ui .wordmark span{color:var(--ph)}
-.terra-ui .wordmark{color:#fff}.terra-ui .wordmark span{color:var(--forest)}
+.deckback{position:fixed;top:clamp(14px,2.2vw,24px);left:clamp(18px,3vw,42px);z-index:30;font-family:var(--display);font-weight:700;letter-spacing:.01em;font-size:clamp(12px,1.2vw,14px);color:var(--ink);text-decoration:none;opacity:.5;transition:.2s}
+.deckback:hover{opacity:1}
+.dark-ui .deckback{color:var(--cream)}
+.terra-ui .deckback{color:#fff}
 .rail{position:fixed;left:clamp(18px,3vw,42px);top:50%;transform:translateY(-50%);height:min(60vh,540px);z-index:30}
 .railline{position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:rgba(140,150,135,.28)}.dark-ui .railline{background:rgba(237,231,222,.22)}
 .railfill{position:absolute;left:5px;top:6px;width:2px;background:var(--terra);height:0;transition:height .6s var(--ease)}
@@ -310,7 +309,7 @@ strong,b{color:var(--ink);font-weight:700}
 .mclose:hover{background:var(--terra);border-color:var(--terra)}
 @media (max-width:860px){.rail{display:none}.slide{padding-left:clamp(28px,6vw,110px)}}
 @media (max-width:720px){
-  /* The wordmark sits top-left, so the slide needs headroom to clear it. */
+  /* The back link sits top-left, so the slide needs headroom to clear it. */
   .slide{padding-top:56px;padding-bottom:88px;padding-left:22px;padding-right:22px}
   .two{grid-template-columns:1fr}
   .jobstrip{grid-template-columns:1fr;gap:6px}
@@ -958,7 +957,7 @@ const SLIDES: Slide[] = [
     body: (
       <>
         <div className="tag anim" style={d('.05s')}>
-          VIBE CODING LAB &middot; LIVE SESSION
+          AI FOR SERVICE BUSINESSES &middot; LIVE SESSION
         </div>
         <h1 className="d anim" style={{ ...d('.16s'), marginTop: '.3em' }}>
           The Art of
@@ -2968,12 +2967,12 @@ export default function ArtOfTheAudit() {
       className={`${current.tone !== 'cream' ? 'dark-ui ' : ''}${current.tone === 'terra' ? 'terra-ui' : ''}`}
     >
       <Helmet>
-        <title>The Art of the Audit | Vibe Coding Lab</title>
+        <title>The Art of the Audit | AI for Service Businesses</title>
         <meta
           name="description"
           content="How to run a paid business audit start to finish: the five-step process, exactly what goes in the report and the prompts and templates you keep."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/artoftheaudit" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/artoftheaudit" />
       </Helmet>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
@@ -3004,9 +3003,7 @@ export default function ArtOfTheAudit() {
         </div>
       </div>
 
-      <Link className="wordmark" to="/">
-        VIBE<span>CODING</span>LAB
-      </Link>
+      <Link className="deckback" to="/">&larr; Back</Link>
 
       <div className="rail">
         <div className="railline" />

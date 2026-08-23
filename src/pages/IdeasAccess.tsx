@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import Logo from '../components/Logo';
 
 type Idea = {
   name: string;
@@ -565,7 +566,7 @@ export default function IdeasAccess() {
       <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            VIBE<span className="text-terracotta">CODING</span>LAB
+            <Logo on="light" className="h-8 md:h-11" />
           </Link>
           <Link
             to="/"
@@ -778,7 +779,7 @@ export default function IdeasAccess() {
             Ready to Build One of These?
           </h2>
           <p className="text-xl md:text-2xl opacity-80 leading-relaxed max-w-2xl mx-auto">
-            Every tool on this list is buildable using vibe coding and no-code AI tools. No development team. No huge budget. Just you, the right method and the willingness to start. Join the Vibe Coding Lab and learn exactly how.
+            Every tool on this list is buildable using vibe coding and no-code AI tools. No development team. No huge budget. Just you, the right method and the willingness to start. Join AI for Service Businesses and learn exactly how.
           </p>
           <div className="flex flex-col items-center gap-4">
             <Link
@@ -786,14 +787,14 @@ export default function IdeasAccess() {
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="inline-flex items-center gap-3 bg-terracotta text-white px-10 py-5 rounded-2xl text-xl font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-terracotta/30"
             >
-              Join the Vibe Coding Lab <ArrowRight size={20} />
+              Join AI for Service Businesses <ArrowRight size={20} />
             </Link>
           </div>
         </div>
       </section>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest border-t border-forest-green/5">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );
