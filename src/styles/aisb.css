@@ -1849,6 +1849,11 @@ html:has(.aisb) {
 .aisb .panel.cream .k {
   color: var(--terra);
 }
+/* Just the product name in the accent, which is all that was wanted. Fine at
+   this size: terracotta on cream is 3.81:1, and AA asks 3.0 for large text. */
+.aisb .panel.cream h2 .hl {
+  color: var(--terra);
+}
 .aisb .stepbox {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1927,11 +1932,11 @@ html:has(.aisb) {
      bleeding screenshot below would widen its own track, which widens the
      grid, which widens the screenshot. That loop overflowed the page by
      746px at 1200px wide. */
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 48px;
 }
 .aisb .hero.hero-media h1 {
-  max-width: 16ch;
+  max-width: 18ch;
 }
 
 /* Above 1000px the hero screenshot breaks out of its column and runs to the

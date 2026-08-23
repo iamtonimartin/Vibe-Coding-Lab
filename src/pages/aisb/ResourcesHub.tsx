@@ -121,10 +121,12 @@ export default function ResourcesHub() {
         <div className="seclabel serif">Go further</div>
         <div className="seclabel-sub">Two ways to take it further, whenever you are ready.</div>
 
-        <div className="panel terra stepbox">
+        <div className="panel cream stepbox">
           <div>
             <div className="k">&pound;9 one-off</div>
-            <h2 className="serif">The AI Build Standards</h2>
+            <h2 className="serif">
+              The AI Build <span className="hl">Standards</span>
+            </h2>
             <p>
               Nineteen standards and twenty-six copy-paste prompts, built on the ICI framework, to build and audit
               websites, apps and digital products properly. Security, privacy, data, accessibility, SEO and more.
