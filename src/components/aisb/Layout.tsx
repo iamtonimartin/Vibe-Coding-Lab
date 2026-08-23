@@ -21,7 +21,7 @@ export function TopNav({ cta = 'Join', ctaHref = '/join' }: { cta?: string; ctaH
   return (
     <nav className="topnav">
       <div className="wrap">
-        <Link to="/">
+        <Link to="/" className="brand">
           <img src={LOGO_SRC} alt="AI for Service Businesses" className="logo" width={1938} height={263} />
         </Link>
         <div className="navlinks">
@@ -47,7 +47,7 @@ export function SalesNav({ cta, ctaHref }: { cta: string; ctaHref: string }) {
   return (
     <nav className="topnav">
       <div className="wrap-mid">
-        <Link to="/">
+        <Link to="/" className="brand">
           <img src={LOGO_SRC} alt="AI for Service Businesses" className="logo" width={1938} height={263} />
         </Link>
         <a className="joinbtn" href={ctaHref}>
@@ -63,7 +63,7 @@ export function SimpleNav() {
   return (
     <nav className="snav">
       <div className="wrap-mid">
-        <Link to="/">
+        <Link to="/" className="brand">
           <img src={LOGO_SRC} alt="AI for Service Businesses" className="logo" width={1938} height={263} />
         </Link>
       </div>

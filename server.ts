@@ -725,6 +725,12 @@ app.get('/standards', (req, res) => {
     return res.status(401).type('html').send(standardsGatePage());
   }
 
+  return sendGuide(res, `Licensed to ${escapeHtml(email)} for their own use. Please do not share or republish it.`);
+});
+
+// Naming who it belongs to costs nothing and makes passing the file around feel
+// less anonymous than it otherwise would.
+function sendGuide(res: express.Response, licenceLine: string) {
   let html: string;
   try {
     html = readFileSync(GUIDE_FILE, 'utf8');
@@ -735,17 +741,45 @@ app.get('/standards', (req, res) => {
       .type('html')
       .send(`<p>The guide could not be loaded. Please email ${SUPPORT_EMAIL_ADDR} and I will sort it out.</p>`);
   }
-
-  // Naming the licence holder costs nothing and makes passing the file around
-  // feel less anonymous than it otherwise would.
   const licence =
     `<div style="max-width:900px;margin:0 auto;padding:26px 32px 40px;font-family:'Outfit',sans-serif;` +
     `font-size:12.5px;color:#6d6a5f;border-top:1px solid rgba(14,30,23,.12)">` +
-    `The AI Build Standards. Licensed to ${escapeHtml(email)} for their own use. ` +
-    `Please do not share or republish it.</div>`;
-  html = html.replace('</body>', licence + '</body>');
+    `The AI Build Standards. ${licenceLine}</div>`;
+  return res.type('html').send(html.replace('</body>', licence + '</body>'));
+}
 
-  return res.type('html').send(html);
+// ---------------------------------------------------------------------------
+// The members' copy: same guide, no email gate.
+//
+// AISB members have already paid, so making them prove a £9 purchase they
+// never made would be daft. Instead the secret is in the path, and the whole
+// point of holding it in an env var is that it can be ROTATED: if the link
+// escapes Skool, change STANDARDS_MEMBER_KEY and every copy of the old link
+// dies at once. A hard-coded random URL could never be taken back.
+//
+// A wrong or missing key returns 404, not 403, so probing tells you nothing
+// about whether a members' route exists at all.
+// ---------------------------------------------------------------------------
+app.get('/standards/members/:key', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  res.setHeader('Cache-Control', 'private, no-store');
+
+  const expected = process.env.STANDARDS_MEMBER_KEY || '';
+  const supplied = String(req.params.key || '');
+  const ok =
+    expected.length > 0 &&
+    supplied.length === expected.length &&
+    timingSafeEqual(Buffer.from(supplied), Buffer.from(expected));
+
+  if (!ok) {
+    if (!expected) console.warn('standards/members: STANDARDS_MEMBER_KEY is not set, so this route is closed');
+    return res.status(404).type('html').send('<h1>404</h1><p>Not found.</p>');
+  }
+
+  return sendGuide(
+    res,
+    'Shared with members of AI for Service Businesses. Please keep it inside the community rather than passing it on.'
+  );
 });
 
 

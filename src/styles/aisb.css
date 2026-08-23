@@ -136,16 +136,36 @@ html:has(.aisb) body {
   height: 80px;
   gap: 20px;
 }
-/* Matches the size the old nav used (h-8 / h-11). 30px read as timid against
-   the rest of the page. If this changes, the sticky offsets below and the
-   playbook tab bar have to move with it. */
-.aisb .topnav .logo {
-  height: 34px;
+/* The logo is 7.37:1, so at 34px tall it renders 251px wide. On a 360px phone,
+   once padding and the CTA are taken out, only ~182px is left for it. The nav
+   is a flexbox, so rather than overflow the browser was squashing the logo
+   horizontally to make it fit. That is why it looked distorted, and why it
+   looked DIFFERENT between navs: SimpleNav has no CTA competing for the space,
+   so it never squashed, while TopNav and SalesNav did.
+   Two things are needed together. flex: 0 0 auto stops it being squashed, and
+   the heights below are chosen to actually fit, or it would simply overflow
+   instead. Sizes are shared by all three navs so they cannot drift apart. */
+.aisb .brand {
+  display: block;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+.aisb .topnav .logo,
+.aisb .snav .logo {
+  height: 28px;
   width: auto;
+  max-width: 100%;
   display: block;
 }
+@media (min-width: 480px) {
+  .aisb .topnav .logo,
+  .aisb .snav .logo {
+    height: 32px;
+  }
+}
 @media (min-width: 768px) {
-  .aisb .topnav .logo {
+  .aisb .topnav .logo,
+  .aisb .snav .logo {
     height: 44px;
   }
 }
@@ -187,6 +207,20 @@ html:has(.aisb) body {
   .aisb .navlinks {
     gap: 16px;
   }
+  /* Every pixel the button gives back is a pixel the logo can use. */
+  .aisb .navlinks a.joinbtn,
+  .aisb .topnav a.joinbtn {
+    padding: 9px 16px;
+    font-size: 14.5px;
+  }
+  .aisb .topnav .wrap,
+  .aisb .topnav .wrap-mid {
+    height: 64px;
+    gap: 14px;
+  }
+  .aisb .snav {
+    padding: 18px 0;
+  }
 }
 
 /* Stripped-back nav for opt-in pages: logo only, nothing to click away to. */
@@ -197,16 +231,7 @@ html:has(.aisb) body {
   display: flex;
   align-items: center;
 }
-.aisb .snav .logo {
-  height: 34px;
-  width: auto;
-  display: block;
-}
-@media (min-width: 768px) {
-  .aisb .snav .logo {
-    height: 44px;
-  }
-}
+
 
 /* ---------- buttons ---------- */
 .aisb .btn {
@@ -1553,9 +1578,15 @@ html:has(.aisb) body {
   background: var(--paper2);
 }
 
-/* In-page anchors (#join, #get) sit under the 80px sticky nav without this. */
+/* In-page anchors (#join, #get) sit under the sticky nav without this. The
+   nav is 64px on mobile and 80px above 768px, so the offset follows it. */
 .aisb [id] {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 84px;
+}
+@media (min-width: 768px) {
+  .aisb [id] {
+    scroll-margin-top: 100px;
+  }
 }
 
 /* Smooth only for anchor jumps within a page. Route changes are handled by
