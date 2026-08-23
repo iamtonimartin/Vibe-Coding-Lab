@@ -1949,11 +1949,22 @@ html:has(.aisb) {
    edge of the screen, and a rounded corner half off-screen looks like a
    mistake rather than a decision. */
 @media (min-width: 1000px) {
-  .aisb .hero.hero-media .browser {
+  .aisb .hero.hero-media .browser,
+  .aisb .hero.hero-media .shot {
     width: calc(100% + (100vw - min(100vw, 1120px)) / 2 + 32px);
     max-width: none;
     border-right: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
+}
+
+/* The hero composition already carries its own window frames and shadows, so
+   the default .shot frame would wrap a frame around frames. */
+.aisb .shot.bare {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
 }

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { AisbPage, SalesNav, SimpleFooter } from '../../components/aisb/Layout';
-import { Shot, BrowserShot } from '../../components/aisb/ui';
+import { Shot } from '../../components/aisb/ui';
 import { SKOOL_URL, PRICE_DISPLAY, PRICE_CHARGED_NOTE } from '../../config/external';
 
 /**
@@ -148,14 +148,19 @@ export default function Join() {
               One-time payment, {PRICE_CHARGED_NOTE}. The price only rises from here.
             </div>
           </div>
-          {/* Deliberately not Toni: her photo does its real work further down,
-              next to the "I don't teach things I haven't done" claim. Up here
-              the job is proof of the outcome, and the Assistants grid is the
-              one Relavo screen that stays legible at hero size while showing
-              assistants a service business would recognise as its own. */}
-          <BrowserShot
-            src="/relavo-assistants.png"
-            alt="Relavo, showing AI assistants built for a retreat, a studio and a nutrition programme"
+          {/* Three products rather than one screen. The headline promises
+              apps, sites and systems, plural, and a single admin panel from one
+              product cannot carry that. Relavo stays largest because its
+              assistant names are the part a service owner recognises as their
+              own world. Advoro and Zenitro are there for range, and Zenitro is
+              framed as a document rather than a browser window because that is
+              what it is: the report the tools produce.
+              Deliberately not Toni: her photo does its real work further down,
+              next to the "I don't teach things I haven't done" claim. */}
+          <Shot
+            className="bare"
+            src="/hero-builds.jpg"
+            alt="Three tools built with AI: Relavo's assistants, Advoro's revenue dashboard and a Zenitro diagnostic report"
             loading="eager"
           />
         </section>
