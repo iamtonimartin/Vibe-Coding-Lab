@@ -494,6 +494,262 @@ app.post('/api/referral', async (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// The AI Build Standards: the gated guide
+//
+// The guide lives in private/, NOT public/, so it is never served statically
+// and the URL on its own fetches nothing. Access is checked server-side on
+// every request, which is the part a shared link cannot carry.
+//
+// Kit is already the purchaser list: the Stripe webhook subscribes every buyer
+// to KIT_STANDARDS_FORM_ID, so membership of that form IS proof of purchase.
+// That means no database and no new source of truth to keep in sync.
+//
+// This is a deterrent, not DRM. Someone can pass on their own email address,
+// and anyone who opens the guide can read its source. For a £9 product that is
+// the right trade: it stops casual link sharing dead without punishing buyers.
+// ---------------------------------------------------------------------------
+const KIT_API_SECRET = process.env.KIT_API_SECRET || '';
+// Falls back to the Stripe webhook secret so this works without another
+// variable. Rotating that secret just signs everyone out, and they re-enter
+// their email once.
+const STANDARDS_SECRET = process.env.STANDARDS_ACCESS_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '';
+const GUIDE_FILE = join(__dirname, 'private/the-ai-build-standards.html');
+const ACCESS_COOKIE = 'aisb_standards';
+const ACCESS_MAX_AGE = 60 * 60 * 24 * 365;
+const SUPPORT_EMAIL_ADDR = 'clientsupport@ascendz.co';
+
+function normaliseEmail(value: unknown): string {
+  return String(value ?? '').trim().toLowerCase();
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)
+  );
+}
+
+function signEmail(email: string): string {
+  return createHmac('sha256', STANDARDS_SECRET).update(normaliseEmail(email)).digest('hex').slice(0, 32);
+}
+
+function readAccessCookie(req: express.Request): string | null {
+  if (!STANDARDS_SECRET) return null;
+  const jar = req.headers.cookie || '';
+  const hit = jar
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(ACCESS_COOKIE + '='));
+  if (!hit) return null;
+  const [encoded, signature] = decodeURIComponent(hit.slice(ACCESS_COOKIE.length + 1)).split('.');
+  if (!encoded || !signature) return null;
+  let email: string;
+  try {
+    email = Buffer.from(encoded, 'base64url').toString('utf8');
+  } catch {
+    return null;
+  }
+  const expected = signEmail(email);
+  if (signature.length !== expected.length) return null;
+  if (!timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null;
+  return email;
+}
+
+// Cached so a burst of page loads does not page through Kit every time.
+let purchaserCache: { at: number; emails: Set<string> } | null = null;
+const PURCHASER_TTL_MS = 5 * 60 * 1000;
+
+// true = bought it, false = did not, null = we could not tell. The caller must
+// treat null as "try again later" rather than as a refusal, so a Kit outage
+// never looks to a paying customer like their purchase was rejected.
+async function hasBoughtStandards(email: string): Promise<boolean | null> {
+  const standardsFormId = process.env.KIT_STANDARDS_FORM_ID || '';
+  if (!KIT_API_SECRET || !standardsFormId) {
+    console.error('standards-access: KIT_API_SECRET or KIT_STANDARDS_FORM_ID not set, cannot verify buyers');
+    return null;
+  }
+  const now = Date.now();
+  if (!purchaserCache || now - purchaserCache.at > PURCHASER_TTL_MS) {
+    const emails = new Set<string>();
+    try {
+      for (let page = 1; page <= 40; page++) {
+        const url =
+          `https://api.convertkit.com/v3/forms/${standardsFormId}/subscriptions` +
+          `?api_secret=${encodeURIComponent(KIT_API_SECRET)}&subscriber_state=active&page=${page}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.error(`standards-access: Kit lookup failed ${response.status}`);
+          return null;
+        }
+        const body: any = await response.json();
+        const subs: any[] = body?.subscriptions ?? [];
+        for (const sub of subs) {
+          const found = sub?.subscriber?.email_address;
+          if (found) emails.add(normaliseEmail(found));
+        }
+        if (subs.length === 0 || page >= (body?.total_pages ?? 1)) break;
+      }
+    } catch (error) {
+      console.error('standards-access: Kit lookup threw:', error);
+      return null;
+    }
+    purchaserCache = { at: now, emails };
+  }
+  return purchaserCache.emails.has(normaliseEmail(email));
+}
+
+// Guessing buyer email addresses should be slow and boring.
+const accessAttempts = new Map<string, { count: number; first: number }>();
+const ATTEMPT_WINDOW_MS = 10 * 60 * 1000;
+const ATTEMPT_LIMIT = 12;
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const record = accessAttempts.get(ip);
+  if (!record || now - record.first > ATTEMPT_WINDOW_MS) {
+    accessAttempts.set(ip, { count: 1, first: now });
+    return false;
+  }
+  record.count += 1;
+  return record.count > ATTEMPT_LIMIT;
+}
+
+app.post('/api/standards-access', async (req, res) => {
+  const email = normaliseEmail(req.body?.email);
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ error: 'Please enter the email address you used at checkout.' });
+  }
+  if (rateLimited(req.ip || 'unknown')) {
+    return res.status(429).json({ error: 'Too many attempts. Please wait a few minutes, then try again.' });
+  }
+  if (!STANDARDS_SECRET) {
+    console.error('standards-access: no STANDARDS_ACCESS_SECRET or STRIPE_WEBHOOK_SECRET, cannot sign access');
+    return res.status(500).json({ error: `Access is not set up correctly. Please email ${SUPPORT_EMAIL_ADDR}.` });
+  }
+
+  const bought = await hasBoughtStandards(email);
+  if (bought === null) {
+    return res.status(503).json({
+      error: `We could not check your access just now. Please try again shortly, or email ${SUPPORT_EMAIL_ADDR}.`,
+    });
+  }
+  if (!bought) {
+    return res.status(403).json({
+      error: `We cannot find a purchase for that address. Use the email you paid with, or email ${SUPPORT_EMAIL_ADDR}.`,
+    });
+  }
+
+  const value = Buffer.from(email, 'utf8').toString('base64url') + '.' + signEmail(email);
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
+  res.setHeader(
+    'Set-Cookie',
+    `${ACCESS_COOKIE}=${encodeURIComponent(value)}; Max-Age=${ACCESS_MAX_AGE}; Path=/; HttpOnly; SameSite=Lax${secure}`
+  );
+  console.log(`standards-access: granted to ${email}`);
+  return res.json({ ok: true });
+});
+
+function standardsGatePage(): string {
+  return `<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>The AI Build Standards</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:#f7f3ec;color:#464646;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+.top{padding:24px 32px;border-bottom:1px solid rgba(14,30,23,.12)}
+.top img{height:34px;display:block}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+.box{width:100%;max-width:520px;text-align:center}
+.kick{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#c25e44;background:#ece3d3;padding:7px 15px;border-radius:30px;margin-bottom:22px}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(29px,5vw,42px);line-height:1.1;letter-spacing:-.02em;color:#163024;margin-bottom:16px}
+h1 em{color:#c25e44;font-style:italic}
+p.lead{font-size:17px;margin-bottom:30px;text-wrap:pretty}
+form{display:flex;flex-direction:column;gap:12px;text-align:left}
+label{font-size:13px;font-weight:600;color:#163024}
+input{width:100%;padding:15px 17px;border:1px solid rgba(14,30,23,.2);border-radius:11px;background:#fffdf8;font-family:'Outfit',sans-serif;font-size:16px;color:#163024}
+input:focus{outline:2px solid #c25e44;outline-offset:1px;border-color:#c25e44}
+button{width:100%;padding:16px 22px;border:0;border-radius:30px;background:#c25e44;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s}
+button:hover{background:#cf5a2f}
+button:disabled{opacity:.6;cursor:default}
+.err{display:none;background:#fbeae5;border:1px solid #e3b5a6;color:#8d3a24;padding:13px 16px;border-radius:11px;font-size:14.5px;text-wrap:pretty}
+.err.show{display:block}
+.fine{font-size:13.5px;color:#6d6a5f;margin-top:22px;text-wrap:pretty}
+.fine a{color:#c25e44}
+</style></head><body>
+<header class="top"><img src="/aisb-logo-lightbg.png" alt="AI for Service Businesses"></header>
+<main><div class="box">
+  <div class="kick">Members only</div>
+  <h1>The AI Build <em>Standards.</em></h1>
+  <p class="lead">Enter the email address you used at checkout and I will open the guide for you. You only need to do this once on this device.</p>
+  <form id="f" novalidate>
+    <div class="err" id="e"></div>
+    <label for="email">Your purchase email</label>
+    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.co.uk" required>
+    <button type="submit" id="b">Open the guide</button>
+  </form>
+  <p class="fine">Not bought it yet? <a href="/build-standards">Have a look at what is inside.</a><br>Trouble getting in? Email <a href="mailto:${SUPPORT_EMAIL_ADDR}">${SUPPORT_EMAIL_ADDR}</a>.</p>
+</div></main>
+<script>
+var f=document.getElementById('f'),b=document.getElementById('b'),e=document.getElementById('e');
+f.addEventListener('submit',async function(ev){
+  ev.preventDefault();
+  e.classList.remove('show');
+  b.disabled=true;b.textContent='Checking...';
+  try{
+    var r=await fetch('/api/standards-access',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('email').value})});
+    var d=await r.json().catch(function(){return {};});
+    if(r.ok&&d.ok){location.reload();return;}
+    e.textContent=d.error||'Something went wrong. Please try again.';
+    e.classList.add('show');
+  }catch(err){
+    e.textContent='Could not reach the server. Please check your connection and try again.';
+    e.classList.add('show');
+  }
+  b.disabled=false;b.textContent='Open the guide';
+});
+</script>
+</body></html>`;
+}
+
+app.get('/standards', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  res.setHeader('Cache-Control', 'private, no-store');
+
+  const email = readAccessCookie(req);
+  if (!email) {
+    return res.status(401).type('html').send(standardsGatePage());
+  }
+
+  let html: string;
+  try {
+    html = readFileSync(GUIDE_FILE, 'utf8');
+  } catch (error) {
+    console.error('standards: could not read the guide file:', error);
+    return res
+      .status(500)
+      .type('html')
+      .send(`<p>The guide could not be loaded. Please email ${SUPPORT_EMAIL_ADDR} and I will sort it out.</p>`);
+  }
+
+  // Naming the licence holder costs nothing and makes passing the file around
+  // feel less anonymous than it otherwise would.
+  const licence =
+    `<div style="max-width:900px;margin:0 auto;padding:26px 32px 40px;font-family:'Outfit',sans-serif;` +
+    `font-size:12.5px;color:#6d6a5f;border-top:1px solid rgba(14,30,23,.12)">` +
+    `The AI Build Standards. Licensed to ${escapeHtml(email)} for their own use. ` +
+    `Please do not share or republish it.</div>`;
+  html = html.replace('</body>', licence + '</body>');
+
+  return res.type('html').send(html);
+});
+
+
+// ---------------------------------------------------------------------------
 // SERVICE BUSINESS OS — founding-seat counter (/sbos)
 //
 // Originally built for The Stack, which became Service Business OS. The offer

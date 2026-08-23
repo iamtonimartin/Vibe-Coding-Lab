@@ -4,5 +4,6 @@ Disallow: /videos
 Disallow: /ideas-access
 Disallow: /unsubscribe
 Disallow: /logo
+Disallow: /standards
 
 Sitemap: https://aiforservicebusinesses.co/sitemap.xml

@@ -70,14 +70,9 @@ export default function BuildStandards() {
         <div className="preview">
           <Shot
             className="ratio-16-10"
-            placeholder={
-              <>
-                Guide preview image goes here
-                <br />
-                (a shot of the guide or a sample prompt &middot; ~16:10)
-              </>
-            }
-            alt="The AI Build Standards preview"
+            src="/build-standards-preview.jpg"
+            alt="Inside The AI Build Standards: the security standard and its build prompt"
+            loading="eager"
           />
         </div>
       </div>
