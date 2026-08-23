@@ -1675,3 +1675,38 @@ html:has(.aisb) {
 .aisb .hover\:bg-burnt-orange:hover {
   background-color: var(--terra2);
 }
+
+/* ---------- legacy page repairs ----------
+   Three regressions introduced by moving carried-over pages into .aisb, fixed
+   here rather than in each page.
+
+   1. Colour. Those pages used to set text-forest-green on their outer div.
+      Dropping it left everything inheriting .aisb's --body (#464646), a warm
+      grey that reads brown next to terracotta. Restoring --ink on the wrapper
+      means headings and copy go back to forest green, while explicit utilities
+      like text-white on dark panels still win.
+
+   2. Paragraphs. .aisb zeroes p margins because the new components space
+      themselves with flex gap. Terms has 52 bare <p> tags relying on default
+      margins, so zeroing them ran the whole document together. Adjacent
+      margins collapse, so this does not double up inside space-y containers.
+
+   3. Orphans. text-wrap: pretty keeps a single word off its own final line. */
+.aisb.legacy {
+  color: var(--ink);
+}
+.aisb.legacy p {
+  margin-block: 0 1em;
+}
+.aisb.legacy p:last-child {
+  margin-bottom: 0;
+}
+
+/* Applies everywhere, not just legacy pages: no paragraph should end on a
+   lone orphan word. */
+.aisb p,
+.aisb li,
+.aisb .lead,
+.aisb .desc {
+  text-wrap: pretty;
+}

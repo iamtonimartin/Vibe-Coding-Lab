@@ -1087,7 +1087,7 @@ export default function VibePlaybook() {
   const setTab = (id: string) => setSearchParams({ tab: id });
 
   return (
-    <div className="aisb scroll-smooth">
+    <div className="aisb legacy scroll-smooth">
       <Helmet>
         <title>The AI Build Playbook: Tools, Models and Reference | AI for Service Businesses</title>
         <meta name="description" content="A free plain-English reference to the language, tools and models behind building with AI. Glossary, file types, AI models and toolkit." />

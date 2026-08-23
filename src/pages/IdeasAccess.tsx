@@ -557,7 +557,7 @@ export default function IdeasAccess() {
       : `Showing ${filtered.length} of ${ideas.length} ideas`;
 
   return (
-    <div className="aisb min-h-screen scroll-smooth">
+    <div className="aisb legacy min-h-screen scroll-smooth">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>

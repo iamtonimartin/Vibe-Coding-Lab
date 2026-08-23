@@ -112,7 +112,7 @@ export default function AppIdeaGenerator() {
   }, [result, status]);
 
   return (
-    <div className="aisb min-h-screen selection:bg-terracotta/20">
+    <div className="aisb legacy min-h-screen selection:bg-terracotta/20">
       <Helmet>
         <title>AI App Idea Generator | AI for Service Businesses</title>
         <meta name="description" content="Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals." />

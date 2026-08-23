@@ -114,7 +114,7 @@ export default function Terms() {
   );
 
   return (
-    <div className="aisb min-h-screen overflow-x-hidden scroll-smooth">
+    <div className="aisb legacy min-h-screen overflow-x-hidden scroll-smooth">
       <Helmet>
         <title>Terms and Conditions | Ascendz Digital Limited</title>
         <meta
