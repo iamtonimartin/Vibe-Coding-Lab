@@ -1,6 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { SiteFooter } from '../components/aisb/Layout';
 import { Mail, ArrowLeft, ChevronDown } from 'lucide-react';
 
 /* ------------------------------------------------------------------ *
@@ -113,7 +114,7 @@ export default function Terms() {
   );
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
+    <div className="aisb min-h-screen overflow-x-hidden scroll-smooth">
       <Helmet>
         <title>Terms and Conditions | Ascendz Digital Limited</title>
         <meta
@@ -634,6 +635,7 @@ export default function Terms() {
           </main>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 }

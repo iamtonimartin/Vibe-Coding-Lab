@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
-import Logo from '../components/Logo';
+import { TopNav, LineFooter } from '../components/aisb/Layout';
 
 type Idea = {
   name: string;
@@ -557,29 +557,16 @@ export default function IdeasAccess() {
       : `Showing ${filtered.length} of ${ideas.length} ideas`;
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
+    <div className="aisb min-h-screen scroll-smooth">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-          <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            <Logo on="light" className="h-8 md:h-11" />
-          </Link>
-          <Link
-            to="/"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
-          >
-            Get Lifetime Access
-          </Link>
-        </div>
-      </nav>
+      <TopNav cta="Join the community" />
 
       {/* Header */}
-      <section className="pt-36 pb-16 px-6">
+      <section className="pt-16 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -792,10 +779,7 @@ export default function IdeasAccess() {
           </div>
         </div>
       </section>
-
-      <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest border-t border-forest-green/5">
-        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
-      </footer>
+      <LineFooter />
     </div>
   );
 }

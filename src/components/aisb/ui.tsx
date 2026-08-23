@@ -75,6 +75,16 @@ export const resourceIcons = {
       <polygon points="6 3 20 12 6 21 6 3" />
     </svg>
   ),
+  list: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <line x1="3" y1="6" x2="3.01" y2="6" />
+      <line x1="3" y1="12" x2="3.01" y2="12" />
+      <line x1="3" y1="18" x2="3.01" y2="18" />
+    </svg>
+  ),
   shield: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z" />

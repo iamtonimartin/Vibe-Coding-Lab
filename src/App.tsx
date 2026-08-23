@@ -8,10 +8,10 @@ import OptInPlaybook from './pages/aisb/OptInPlaybook';
 import OptInQuiz from './pages/aisb/OptInQuiz';
 import OptInVideo from './pages/aisb/OptInVideo';
 import BuildStandards from './pages/aisb/BuildStandards';
+import OptInIdeas from './pages/aisb/OptInIdeas';
 import StandardsThankYou from './pages/aisb/StandardsThankYou';
 import Videos from './pages/Videos';
 import AppIdeaGenerator from './pages/AppIdeaGenerator';
-import Ideas from './pages/Ideas';
 import IdeasAccess from './pages/IdeasAccess';
 import VibePlaybook from './pages/VibePlaybook';
 import Unsubscribe from './pages/Unsubscribe';
@@ -69,7 +69,7 @@ export default function App() {
         <Route path="/playbook" element={<Navigate to="/resources/ai-build-playbook" replace />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/app-idea" element={<AppIdeaGenerator />} />
-        <Route path="/ideas" element={<Ideas />} />
+        <Route path="/ideas" element={<OptInIdeas />} />
         <Route path="/ideas-access" element={<IdeasAccess />} />
         <Route path="/vibeplaybook" element={<VibePlaybook />} />
         <Route path="/unsubscribe" element={<Unsubscribe />} />

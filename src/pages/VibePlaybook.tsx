@@ -1116,7 +1116,7 @@ export default function VibePlaybook() {
       </motion.div>
 
       {/* Sticky Tab Bar */}
-      <div className="sticky top-[72px] z-40 bg-[#f7f3ec]/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
+      <div className="sticky top-[80px] z-40 bg-[#f7f3ec]/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
         <div className="max-w-5xl mx-auto">
           <div className="flex justify-start sm:justify-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {TABS.map(tab => (

@@ -16,6 +16,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const KIT_API_KEY = process.env.KIT_API_KEY || '';
 const KIT_FORM_ID = process.env.KIT_FORM_ID || '';
 const KIT_IDEAS_FORM_ID = process.env.KIT_IDEAS_FORM_ID || '';
+const KIT_QUIZ_FORM_ID = process.env.KIT_QUIZ_FORM_ID || '';
 const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
 const KIT_SECURE_FORM_ID = process.env.KIT_SECURE_FORM_ID || '';
 
@@ -286,6 +287,48 @@ app.post('/api/subscribe-ideas', async (req, res) => {
     return res.json({ success: true });
   } catch (error) {
     console.error('Error calling Kit.com ideas:', error);
+    return res.status(500).json({ error: 'Failed to subscribe.' });
+  }
+});
+
+// POST /api/subscribe-quiz
+// Subscribes a user to the app idea quiz Kit.com form.
+// Separate from subscribe-ideas on purpose: the quiz and the 70-ideas list are
+// different magnets, and sharing one form puts people in the wrong sequence.
+app.post('/api/subscribe-quiz', async (req, res) => {
+  const { firstName, email } = req.body;
+
+  if (!firstName || !email) {
+    return res.status(400).json({ error: 'firstName and email are required.' });
+  }
+
+  if (!KIT_API_KEY || !KIT_QUIZ_FORM_ID) {
+    return res.status(500).json({ error: 'Kit.com credentials not configured on server.' });
+  }
+
+  try {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_QUIZ_FORM_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: KIT_API_KEY,
+        first_name: firstName,
+        email: email,
+      }),
+    });
+
+    const kitBody = await response.json().catch(() => null);
+    console.log('Kit.com quiz response:', response.status, JSON.stringify(kitBody));
+
+    if (!response.ok || kitBody?.error) {
+      const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
+      console.error(`Kit.com quiz error ${response.status}:`, msg);
+      return res.status(response.ok ? 400 : response.status).json({ error: `Kit.com: ${msg}` });
+    }
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('Error calling Kit.com quiz:', error);
     return res.status(500).json({ error: 'Failed to subscribe.' });
   }
 });

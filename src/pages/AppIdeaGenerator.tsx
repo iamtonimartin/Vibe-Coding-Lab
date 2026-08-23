@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Loader2, Rocket, Copy, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import Logo from '../components/Logo';
+import { TopNav, LineFooter } from '../components/aisb/Layout';
 
 export default function AppIdeaGenerator() {
   const [formData, setFormData] = useState({
@@ -112,7 +112,7 @@ export default function AppIdeaGenerator() {
   }, [result, status]);
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta/20">
+    <div className="aisb min-h-screen selection:bg-terracotta/20">
       <Helmet>
         <title>AI App Idea Generator | AI for Service Businesses</title>
         <meta name="description" content="Answer 6 quick questions and get a personalised AI-powered app idea built around your skills, interests and goals." />
@@ -120,22 +120,7 @@ export default function AppIdeaGenerator() {
       </Helmet>
       {/* Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-
-      <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-          <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter shrink-0">
-            <Logo on="light" className="h-8 md:h-11" />
-          </Link>
-          <div className="flex items-center gap-3 md:gap-8">
-            <Link 
-              to="/"
-              className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
-            >
-              Get Lifetime Access
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <TopNav cta="Join the community" />
 
       <main className="max-w-3xl mx-auto px-6 py-20 relative z-10">
         <header className="text-center mb-16">
@@ -326,10 +311,7 @@ export default function AppIdeaGenerator() {
           )}
         </AnimatePresence>
       </main>
-
-      <footer className="py-16 px-6 text-center opacity-40 text-sm font-bold uppercase tracking-widest">
-        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
-      </footer>
+      <LineFooter />
     </div>
   );
 }

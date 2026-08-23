@@ -133,13 +133,21 @@ html:has(.aisb) body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 72px;
+  height: 80px;
   gap: 20px;
 }
+/* Matches the size the old nav used (h-8 / h-11). 30px read as timid against
+   the rest of the page. If this changes, the sticky offsets below and the
+   playbook tab bar have to move with it. */
 .aisb .topnav .logo {
-  height: 30px;
+  height: 34px;
   width: auto;
   display: block;
+}
+@media (min-width: 768px) {
+  .aisb .topnav .logo {
+    height: 44px;
+  }
 }
 .aisb .navlinks {
   display: flex;
@@ -190,9 +198,14 @@ html:has(.aisb) body {
   align-items: center;
 }
 .aisb .snav .logo {
-  height: 30px;
+  height: 34px;
   width: auto;
   display: block;
+}
+@media (min-width: 768px) {
+  .aisb .snav .logo {
+    height: 44px;
+  }
 }
 
 /* ---------- buttons ---------- */
@@ -1532,9 +1545,9 @@ html:has(.aisb) body {
   background: var(--paper2);
 }
 
-/* In-page anchors (#join, #get) sit under the 72px sticky nav without this. */
+/* In-page anchors (#join, #get) sit under the 80px sticky nav without this. */
 .aisb [id] {
-  scroll-margin-top: 92px;
+  scroll-margin-top: 100px;
 }
 
 /* Smooth only for anchor jumps within a page. Route changes are handled by
@@ -1622,4 +1635,43 @@ html:has(.aisb) {
   font-size: 14px;
   line-height: 1.5;
   background: var(--paper2);
+}
+
+/* ---------- bridge layer ----------
+   Pages carried over from the Vibe Coding Lab build are styled with Tailwind
+   utilities bound to the old theme. Rewriting every class string on a 800-line
+   page is a lot of risk for no visual gain, because the two palettes are within
+   a couple of percent of each other. These rules remap the handful that matter
+   so a carried-over page wrapped in .aisb picks up the new type and colour.
+
+   Specificity note: .aisb .font-display is (0,2,0) and beats Tailwind's
+   .font-extrabold (0,1,0), which is what lets the weight override stick.
+
+   This is transitional. As each page is properly rebuilt, its reliance on this
+   layer should disappear. */
+.aisb .font-display {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.aisb .bg-warm-cream {
+  background-color: var(--paper);
+}
+.aisb .bg-sand {
+  background-color: var(--paper2);
+}
+.aisb .bg-forest-green {
+  background-color: var(--forest);
+}
+.aisb .text-forest-green {
+  color: var(--ink);
+}
+.aisb .text-terracotta {
+  color: var(--terra);
+}
+.aisb .bg-terracotta {
+  background-color: var(--terra);
+}
+.aisb .hover\:bg-burnt-orange:hover {
+  background-color: var(--terra2);
 }

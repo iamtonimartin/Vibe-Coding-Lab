@@ -55,7 +55,7 @@ export default function OptInQuiz() {
         />
 
         <OptInForm
-          endpoint="/api/subscribe-ideas"
+          endpoint="/api/subscribe-quiz"
           heading="Get your app idea."
           sub="Pop your details in and start the quiz."
           submitLabel="Find my app idea"

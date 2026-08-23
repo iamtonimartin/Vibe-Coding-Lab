@@ -38,7 +38,7 @@ export default function ResourcesHub() {
       <div className="wrap">
         <section>
           <div className="seclabel serif">Start free</div>
-          <div className="seclabel-sub">Three ways in. Grab whichever fits, no commitment.</div>
+          <div className="seclabel-sub">Four ways in. Grab whichever fits, no commitment.</div>
 
           <div className="feature">
             <div className="content">
@@ -76,6 +76,24 @@ export default function ResourcesHub() {
               <div className="ract">
                 <Link to="/resources/find-your-app-idea" className="btn small">
                   Take the quiz &rarr;
+                </Link>
+              </div>
+            </div>
+
+            <div className="rcard">
+              <div className="rtop">
+                <div className="ricon">{resourceIcons.list}</div>
+                <div className="rbadge">Free list</div>
+              </div>
+              <h3 className="serif">70 AI Tools You Could Build</h3>
+              <p className="desc">
+                Seventy ideas across fourteen industries, filtered by niche and tool type, each with a clear
+                monetisation angle.
+              </p>
+              <div className="bestfor">Best if you want to browse until something clicks.</div>
+              <div className="ract">
+                <Link to="/ideas" className="btn small">
+                  Browse the ideas &rarr;
                 </Link>
               </div>
             </div>
