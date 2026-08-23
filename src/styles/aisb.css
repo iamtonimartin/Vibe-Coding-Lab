@@ -52,10 +52,9 @@ html:has(.aisb) body {
   line-height: 1.65;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  /* The hero screenshot bleeds to the viewport edge using 100vw, which counts
-     the scrollbar, so it can overshoot by a few pixels and raise a horizontal
-     scrollbar. clip, not hidden: hidden would make this a scroll container and
-     break the sticky nav inside it. */
+  /* A blanket guard so no single wide element can raise a horizontal
+     scrollbar across the whole site. clip, not hidden: hidden would make this
+     a scroll container and break the sticky nav inside it. */
   overflow-x: clip;
 }
 
@@ -1939,25 +1938,6 @@ html:has(.aisb) {
   max-width: 18ch;
 }
 
-/* Above 1000px the hero screenshot breaks out of its column and runs to the
-   right edge of the viewport.
-   At 545px it was rendering at 30% of its native 1800px, which made the
-   assistant names illegible and defeated the point of showing a real product.
-   Bleeding it right buys roughly 35% more width without taking a single pixel
-   from the headline, which is the trade the column ratio could not make.
-   The right-hand corners and border are dropped because they now sit off the
-   edge of the screen, and a rounded corner half off-screen looks like a
-   mistake rather than a decision. */
-@media (min-width: 1000px) {
-  .aisb .hero.hero-media .browser,
-  .aisb .hero.hero-media .shot {
-    width: calc(100% + (100vw - min(100vw, 1120px)) / 2 + 32px);
-    max-width: none;
-    border-right: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
 
 /* The hero composition already carries its own window frames and shadows, so
    the default .shot frame would wrap a frame around frames. */
