@@ -67,7 +67,7 @@ export default function BuildStandards() {
           <div className="pricetag">One-off payment. Instant access, yours to keep.</div>
         </section>
 
-        <div className="preview">
+        <div className="preview preview-end">
           <Shot
             className="ratio-16-10"
             src="/build-standards-preview.jpg"

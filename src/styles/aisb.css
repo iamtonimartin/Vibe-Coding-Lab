@@ -1311,6 +1311,14 @@ html:has(.aisb) body {
   aspect-ratio: 16 / 10;
   box-shadow: 0 26px 60px rgba(14, 30, 23, 0.12);
 }
+/* The opt-in pages follow the preview with bullets, so 8px underneath is
+   right there. Where it is the last thing before a full-bleed section the
+   same 8px reads as the image being clipped, so it needs room of its own
+   and less of a gap above the price line it follows. */
+.aisb .preview.preview-end {
+  margin-top: 26px;
+  margin-bottom: 60px;
+}
 .aisb .bullets {
   max-width: 820px;
   margin: 44px auto 0;
