@@ -16,7 +16,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const KIT_API_KEY = process.env.KIT_API_KEY || '';
 const KIT_FORM_ID = process.env.KIT_FORM_ID || '';
 const KIT_IDEAS_FORM_ID = process.env.KIT_IDEAS_FORM_ID || '';
-const KIT_QUIZ_FORM_ID = process.env.KIT_QUIZ_FORM_ID || '';
+const KIT_APP_IDEA_FORM_ID = process.env.KIT_APP_IDEA_FORM_ID || '';
 const KIT_PLAYBOOK_FORM_ID = process.env.KIT_PLAYBOOK_FORM_ID || '';
 const KIT_SECURE_FORM_ID = process.env.KIT_SECURE_FORM_ID || '';
 
@@ -291,23 +291,23 @@ app.post('/api/subscribe-ideas', async (req, res) => {
   }
 });
 
-// POST /api/subscribe-quiz
-// Subscribes a user to the app idea quiz Kit.com form.
-// Separate from subscribe-ideas on purpose: the quiz and the 70-ideas list are
+// POST /api/subscribe-app-idea
+// Subscribes a user to the app idea generator Kit.com form.
+// Separate from subscribe-ideas on purpose: the generator and the 70-ideas list are
 // different magnets, and sharing one form puts people in the wrong sequence.
-app.post('/api/subscribe-quiz', async (req, res) => {
+app.post('/api/subscribe-app-idea', async (req, res) => {
   const { firstName, email } = req.body;
 
   if (!firstName || !email) {
     return res.status(400).json({ error: 'firstName and email are required.' });
   }
 
-  if (!KIT_API_KEY || !KIT_QUIZ_FORM_ID) {
+  if (!KIT_API_KEY || !KIT_APP_IDEA_FORM_ID) {
     return res.status(500).json({ error: 'Kit.com credentials not configured on server.' });
   }
 
   try {
-    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_QUIZ_FORM_ID}/subscribe`, {
+    const response = await fetch(`https://api.convertkit.com/v3/forms/${KIT_APP_IDEA_FORM_ID}/subscribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -318,17 +318,17 @@ app.post('/api/subscribe-quiz', async (req, res) => {
     });
 
     const kitBody = await response.json().catch(() => null);
-    console.log('Kit.com quiz response:', response.status, JSON.stringify(kitBody));
+    console.log('Kit.com app idea response:', response.status, JSON.stringify(kitBody));
 
     if (!response.ok || kitBody?.error) {
       const msg = kitBody?.error || kitBody?.message || 'Kit.com request failed';
-      console.error(`Kit.com quiz error ${response.status}:`, msg);
+      console.error(`Kit.com app idea error ${response.status}:`, msg);
       return res.status(response.ok ? 400 : response.status).json({ error: `Kit.com: ${msg}` });
     }
 
     return res.json({ success: true });
   } catch (error) {
-    console.error('Error calling Kit.com quiz:', error);
+    console.error('Error calling Kit.com app idea:', error);
     return res.status(500).json({ error: 'Failed to subscribe.' });
   }
 });
@@ -771,8 +771,8 @@ async function startServer() {
       image: `${BASE_URL}/og-image.jpg`,
     },
     '/resources/find-your-app-idea': {
-      title: 'Find Your App Idea: Free Quiz | AI for Service Businesses',
-      description: 'A free quiz that gives you a personalised idea for the first thing your service business should build with AI.',
+      title: 'Find Your App Idea: Free Idea Generator | AI for Service Businesses',
+      description: 'A free generator that gives you a personalised idea for the first thing your service business should build with AI.',
       canonical: `${BASE_URL}/resources/find-your-app-idea`,
       image: `${BASE_URL}/og-image.jpg`,
     },
@@ -826,7 +826,7 @@ async function startServer() {
     },
     '/resources': {
       title: 'Free Resources for Building With AI | AI for Service Businesses',
-      description: 'Free and low-cost resources to get you building with AI. Start with the quiz, the video series or the AI Build Playbook.',
+      description: 'Free and low-cost resources to get you building with AI. Start with the idea generator, the video series or the AI Build Playbook.',
       canonical: `${BASE_URL}/resources`,
       image: `${BASE_URL}/og-image.jpg`,
     },

@@ -3,19 +3,19 @@ import { AisbPage, SimpleNav, LineFooter } from '../../components/aisb/Layout';
 import { Shot, Bullets } from '../../components/aisb/ui';
 import OptInForm from '../../components/aisb/OptInForm';
 
-export default function OptInQuiz() {
+export default function OptInAppIdea() {
   return (
     <AisbPage>
       <Helmet>
-        <title>Find Your App Idea: Free Quiz | AI for Service Businesses</title>
+        <title>Find Your App Idea: Free Idea Generator | AI for Service Businesses</title>
         <meta
           name="description"
-          content="A free quiz that gives you a personalised idea for the first thing your service business should build with AI."
+          content="A free generator that gives you a personalised idea for the first thing your service business should build with AI."
         />
         <link rel="canonical" href="https://aiforservicebusinesses.co/resources/find-your-app-idea" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://aiforservicebusinesses.co/resources/find-your-app-idea" />
-        <meta property="og:title" content="Find Your App Idea: Free Quiz" />
+        <meta property="og:title" content="Find Your App Idea: Free Idea Generator" />
         <meta property="og:image" content="https://aiforservicebusinesses.co/og-image.jpg" />
       </Helmet>
 
@@ -55,9 +55,9 @@ export default function OptInQuiz() {
         />
 
         <OptInForm
-          endpoint="/api/subscribe-quiz"
+          endpoint="/api/subscribe-app-idea"
           heading="Get your app idea."
-          sub="Pop your details in and start the quiz."
+          sub="Pop your details in and I'll take you straight to the generator."
           submitLabel="Find my app idea"
           redirectTo="/app-idea"
           finePrint="You'll also get occasional emails about building with AI and what I'm working on inside AI for Service Businesses. No spam, unsubscribe any time."

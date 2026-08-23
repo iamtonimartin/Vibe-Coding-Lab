@@ -82,8 +82,8 @@ export default function Home() {
               <div className="k">Start free</div>
               <h3 className="serif">Free resources</h3>
               <p>
-                Get a feel for how this works, no commitment. Start with the quiz that tells you exactly what to build
-                first.
+                Get a feel for how this works, no commitment. Start with the idea generator that tells you exactly what to
+                build first.
               </p>
               <Link to="/resources">Explore resources &rarr;</Link>
             </div>

@@ -4,9 +4,9 @@ import { Shot, Bullets } from '../../components/aisb/ui';
 import OptInForm from '../../components/aisb/OptInForm';
 
 /**
- * The 70-ideas lead magnet. Distinct from the app idea quiz: this one hands
- * over a browsable list, the quiz gives you one personalised idea. They feed
- * different Kit forms so subscribers land in the right sequence.
+ * The 70-ideas lead magnet. Distinct from the app idea generator: this one
+ * hands over a browsable list, the generator gives you one personalised idea.
+ * They feed different Kit forms so subscribers land in the right sequence.
  */
 export default function OptInIdeas() {
   return (

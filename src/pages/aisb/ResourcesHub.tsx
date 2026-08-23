@@ -11,7 +11,7 @@ export default function ResourcesHub() {
         <title>Free Resources for Building With AI | AI for Service Businesses</title>
         <meta
           name="description"
-          content="Free and low-cost resources to get you building with AI. Start with the quiz, the video series or the AI Build Playbook."
+          content="Free and low-cost resources to get you building with AI. Start with the idea generator, the video series or the AI Build Playbook."
         />
         <link rel="canonical" href="https://aiforservicebusinesses.co/resources" />
         <meta property="og:type" content="website" />
@@ -75,7 +75,7 @@ export default function ResourcesHub() {
               <div className="bestfor">Best if you want to build but aren't sure what yet.</div>
               <div className="ract">
                 <Link to="/resources/find-your-app-idea" className="btn small">
-                  Take the quiz &rarr;
+                  Generate my idea &rarr;
                 </Link>
               </div>
             </div>

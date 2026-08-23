@@ -5,7 +5,7 @@ import Home from './pages/aisb/Home';
 import Join from './pages/aisb/Join';
 import ResourcesHub from './pages/aisb/ResourcesHub';
 import OptInPlaybook from './pages/aisb/OptInPlaybook';
-import OptInQuiz from './pages/aisb/OptInQuiz';
+import OptInAppIdea from './pages/aisb/OptInAppIdea';
 import OptInVideo from './pages/aisb/OptInVideo';
 import BuildStandards from './pages/aisb/BuildStandards';
 import OptInIdeas from './pages/aisb/OptInIdeas';
@@ -53,7 +53,7 @@ export default function App() {
         <Route path="/join" element={<Join />} />
         <Route path="/resources" element={<ResourcesHub />} />
         <Route path="/resources/ai-build-playbook" element={<OptInPlaybook />} />
-        <Route path="/resources/find-your-app-idea" element={<OptInQuiz />} />
+        <Route path="/resources/find-your-app-idea" element={<OptInAppIdea />} />
         <Route path="/resources/build-in-a-week" element={<OptInVideo />} />
         <Route path="/build-standards" element={<BuildStandards />} />
         <Route path="/build-standards/thank-you" element={<StandardsThankYou />} />
@@ -64,7 +64,7 @@ export default function App() {
 
         {/* Old lead-magnet URLs are live in emails and ads. They point at the
             same magnet in its new home rather than 404ing. /ideas is NOT here:
-            that is the 70-ideas list, a different magnet from the quiz. */}
+            that is the 70-ideas list, a different magnet from the idea generator. */}
         <Route path="/freetraining" element={<Navigate to="/resources/build-in-a-week" replace />} />
         <Route path="/playbook" element={<Navigate to="/resources/ai-build-playbook" replace />} />
         <Route path="/videos" element={<Videos />} />
