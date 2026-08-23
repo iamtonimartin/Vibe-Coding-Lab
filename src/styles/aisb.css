@@ -1964,3 +1964,33 @@ html:has(.aisb) {
     max-width: none;
   }
 }
+
+
+/* ---------- video rows (/videos) ----------
+   The players sit in the wider of the two .split columns, so the layout runs
+   text-then-player, player-then-text, text-then-player down the page.
+   Forest, not paper, behind the iframe: it is what Vimeo fades up from, so a
+   cream box would flash pale before the poster frame arrives. */
+.aisb .vidframe {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--forest);
+  box-shadow: 0 24px 60px rgba(14, 30, 23, 0.1);
+}
+.aisb .vidframe iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* Stacked on a phone, the player would come before its own title on the
+   flipped rows. Nobody wants to meet a video before they know what it is. */
+@media (max-width: 760px) {
+  .aisb .split .vidframe {
+    order: 2;
+  }
+}

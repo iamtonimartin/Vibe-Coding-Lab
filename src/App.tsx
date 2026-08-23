@@ -10,7 +10,7 @@ import OptInVideo from './pages/aisb/OptInVideo';
 import BuildStandards from './pages/aisb/BuildStandards';
 import OptInIdeas from './pages/aisb/OptInIdeas';
 import StandardsThankYou from './pages/aisb/StandardsThankYou';
-import Videos from './pages/Videos';
+import Videos from './pages/aisb/Videos';
 import AppIdeaGenerator from './pages/AppIdeaGenerator';
 import IdeasAccess from './pages/IdeasAccess';
 import VibePlaybook from './pages/VibePlaybook';
