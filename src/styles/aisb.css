@@ -798,9 +798,12 @@ html:has(.aisb) body {
   max-width: 54ch;
   margin: 0 auto;
 }
+/* Two across, not three. There are exactly ten cards, so two columns give five
+   even rows with no orphan sitting on its own at the end. The container keeps
+   its width, so each card simply gets wider. */
 .aisb .inside-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
 }
 .aisb .icard {
@@ -829,11 +832,8 @@ html:has(.aisb) body {
   font-size: 15px;
   color: var(--body);
 }
-@media (max-width: 860px) {
-  .aisb .inside-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+/* 860px used to drop this from three columns to two. The base is two now, so
+   that step has nothing left to do and only the single-column one remains. */
 @media (max-width: 560px) {
   .aisb .inside-grid {
     grid-template-columns: 1fr;
