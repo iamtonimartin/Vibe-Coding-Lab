@@ -90,7 +90,7 @@ export default function BuildStandards() {
           </p>
           <p>
             None of that means you shouldn't build with AI. Quite the opposite. It means getting better at telling AI
-            what "built properly" actually means. That's what The AI Build Standards are for: eighteen focused prompts
+            what "built properly" actually means. That's what The AI Build Standards are for: twenty-six focused prompts
             that hold your build to a professional standard, one area at a time, in plain English.
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function BuildStandards() {
           <div className="sec-head">
             <h2 className="serif">What's inside.</h2>
             <p>
-              Eighteen copy-paste prompts, each built on my ICI framework, each holding one part of your build to a
+              Twenty-six copy-paste prompts, each built on my ICI framework, each holding one part of your build to a
               proper standard and telling you exactly what to improve. Use the ones that fit what you're building.
             </p>
           </div>
@@ -171,7 +171,7 @@ export default function BuildStandards() {
               </div>
               <div className="psub">The standards, on their own.</div>
               <ul>
-                <li>Eighteen copy-paste build-and-audit prompts</li>
+                <li>Nineteen standards, twenty-six copy-paste prompts</li>
                 <li>Security, privacy, data, forms, accessibility, SEO and more</li>
                 <li>Built on the ICI framework for reliable results</li>
                 <li>Plain English, no jargon, no dev needed</li>

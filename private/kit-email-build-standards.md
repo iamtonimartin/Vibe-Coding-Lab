@@ -41,7 +41,7 @@ and file away.
 
 ### What you have just got your hands on
 
-Nineteen standards. Twenty-seven copy-paste prompts.
+Nineteen standards. Twenty-six copy-paste prompts.
 
 Every one of them built on the ICI framework, so your AI coding tool knows
 exactly who it is being, what to inspect and how to report back to you in plain

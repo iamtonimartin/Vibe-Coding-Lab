@@ -20,7 +20,7 @@ const INSIDE = [
   {
     em: 'Build properly',
     title: 'The AI Build Standards',
-    body: 'The eighteen prompts that hold a build to a professional standard. Sold separately, included here.',
+    body: 'The twenty-six prompts that hold a build to a professional standard. Sold separately, included here.',
   },
   {
     em: 'Win work',

@@ -40,8 +40,8 @@ export default function ResourcesHub() {
           <div className="seclabel serif">Start free</div>
           <div className="seclabel-sub">Four ways in. Grab whichever fits, no commitment.</div>
 
-          <div className="feature">
-            <div className="content">
+          <div className="rgrid">
+            <div className="rcard">
               <div className="rtop">
                 <div className="ricon">{resourceIcons.book}</div>
                 <div className="rbadge">Free guide &middot; Start here</div>
@@ -58,10 +58,7 @@ export default function ResourcesHub() {
                 </Link>
               </div>
             </div>
-            <Shot src="/vibe-playbook-cover.jpg" alt="The AI Build Playbook" />
-          </div>
 
-          <div className="rgrid">
             <div className="rcard">
               <div className="rtop">
                 <div className="ricon">{resourceIcons.bulb}</div>
@@ -120,34 +117,29 @@ export default function ResourcesHub() {
       </div>
 
       <div className="wrap">
-        <section>
-          <div className="seclabel serif">Go a step further</div>
-          <div className="seclabel-sub">A low-cost resource for when you're ready to build properly.</div>
-          <div className="rgrid">
-            <div className="rcard paidcard">
-              <div className="rtop">
-                <div className="ricon">{resourceIcons.shield}</div>
-                <div className="rbadge paid">&pound;9 &middot; Paid</div>
-              </div>
-              <h3 className="serif">The AI Build Standards</h3>
-              <p className="desc">
-                Eighteen copy-paste prompts, built on the ICI framework, to build and audit websites, apps and digital
-                products properly. Security, privacy, data, accessibility, SEO and more.
-              </p>
-              <div className="bestfor">Best if you've built something and want it to hold up properly.</div>
-              <div className="ract paidrow">
-                <span className="price">&pound;9</span>
-                <Link to="/build-standards" className="btn small forest">
-                  Get the guide &rarr;
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+        <section className="further">
+        <div className="seclabel serif">Go further</div>
+        <div className="seclabel-sub">Two ways to take it further, whenever you are ready.</div>
 
-      <div className="wrap panelwrap">
-        <section className="panel center">
+        <div className="panel cream stepbox">
+          <div>
+            <div className="k">&pound;9 one-off</div>
+            <h2 className="serif">The AI Build Standards</h2>
+            <p>
+              Nineteen standards and twenty-six copy-paste prompts, built on the ICI framework, to build and audit
+              websites, apps and digital products properly. Security, privacy, data, accessibility, SEO and more.
+            </p>
+            <p className="bestfor">Best if you have built something and want it to hold up properly.</p>
+          </div>
+          <div className="stepact">
+            <Link to="/build-standards" className="btn forest">
+              Get the guide &pound;9
+            </Link>
+            <div className="note">Sent to your inbox, yours to keep.</div>
+          </div>
+        </div>
+
+        <div className="panel center">
           <div className="k">Ready to actually build?</div>
           <h2 className="serif">The free resources get you started. The community gets you finished.</h2>
           <p>
@@ -160,6 +152,7 @@ export default function ResourcesHub() {
           <div className="note">
             {PRICE_DISPLAY} one-time, {PRICE_CHARGED_NOTE}. Founding price, it only goes up from here.
           </div>
+        </div>
         </section>
       </div>
 
