@@ -285,7 +285,11 @@ export default function Join() {
               week.
             </p>
           </div>
-          <Shot className="ratio-16-10" src="/aisb-skool.jpg" alt="Inside the AI for Service Businesses community" />
+          <Shot
+              className="ratio-16-10"
+              src="/aisb-classroom.jpg"
+              alt="The AI for Service Businesses classroom: Start Here, Zero to Deployed, Claude OS, The AI Build Standards, The Site Sprint and The Ship Sprint"
+            />
         </section>
       </div>
 
