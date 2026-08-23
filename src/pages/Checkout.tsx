@@ -13,7 +13,7 @@ const TC_SCRIPT_SRC = '//tinder.thrivecart.com/embed/v2/thrivecart.js';
 const HOSTED_CHECKOUT_URL = 'https://store.ascendz.co/vcl-special/';
 
 const INCLUDED = [
-  'Vibe Coding Lab Premium, lifetime access',
+  'AISB Premium, lifetime access',
   'Claude OS, four live build-alongs',
   'The Site Sprint, live',
   'The Ship Sprint, two live workshops',
@@ -74,8 +74,8 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green selection:bg-terracotta selection:text-white">
       <Helmet>
-        <title>Checkout | Vibe Coding Lab</title>
-        <meta name="description" content="Lifetime access to the Vibe Coding Lab bundle. One payment of £197, or split it." />
+        <title>Checkout | AI for Service Businesses</title>
+        <meta name="description" content="Lifetime access to the AI for Service Businesses bundle. One payment of £197, or split it." />
         <meta name="robots" content="noindex, nofollow" />
         {/* Warm up the connection to ThriveCart so the embed loads faster */}
         <link rel="preconnect" href="https://tinder.thrivecart.com" />

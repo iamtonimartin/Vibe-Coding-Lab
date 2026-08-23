@@ -469,7 +469,7 @@ const BundleVisual = ({ kind, accent, heroImage, scrollImage, title }: { kind: V
         </div>
       );
 
-    case 'community': // VCL Premium: community feed
+    case 'community': // AISB Premium: community feed
       return (
         <div className={`${wrap} grid grid-cols-2 gap-2`}>
           {[0, 1, 2, 3].map((i) => (
@@ -573,26 +573,26 @@ const BundleVisual = ({ kind, accent, heroImage, scrollImage, title }: { kind: V
 const READY_BUNDLE: BundleItem[] = [
   {
     index: '01',
-    title: 'Vibe Coding Lab Premium',
+    title: 'AISB Premium',
     tag: 'Lifetime access',
     worth: '£180/year',
     worthValue: 180,
     icon: <Lock />,
     accent: 'forest',
     kind: 'community',
-    images: ['/vcl-skool.jpg'],
+    images: ['/aisb-skool.jpg'],
     paragraphs: [
       "You'll never build alone.",
-      "VCL is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders) and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
-      "You also get access to the VCL community and a library of vibe coding resources that grows every week.",
+      "AISB is the community for founders building with AI. Inside Premium, you get the Vibe Lab (hands-on training for the tools Toni actually uses, including Antigravity and Claude Code), Vibe Tribe (weekly co-working where you build alongside other founders) and Stuck? Let's Fix It (weekly drop-in support for when something breaks at 11pm and you have no idea why).",
+      "You also get access to the AISB community and a library of vibe coding resources that grows every week.",
       "The community is the difference between \"I tried for two hours and gave up\" and \"someone showed me the fix in three minutes.\"",
     ],
-    cta: 'See inside VCL',
+    cta: 'See inside AISB',
     modal: {
-      title: 'Vibe Coding Lab Premium',
+      title: 'AISB Premium',
       body: (
         <>
-          <ImageGallery images={['/vcl-skool.jpg']} title="VCL Premium" />
+          <ImageGallery images={['/aisb-skool.jpg']} title="AISB Premium" />
           <p>
             The community for founders building with AI. Vibe Lab training, weekly Vibe Tribe
             co-working, Stuck? Let's Fix It weekly support. All yours, lifetime.
@@ -670,7 +670,7 @@ const READY_BUNDLE: BundleItem[] = [
     paragraphs: [
       "Stop paying for landing pages you could ship in an afternoon.",
       "One live session. Build and deploy a real landing page or funnel with AI, from blank page to live URL. The skill that turns \"I need to brief a designer for this campaign\" into \"I'll just ship it this weekend.\"",
-      "Live with Toni Wednesday 10 June, 1pm UK. Recording included in your VCL access.",
+      "Live with Toni Wednesday 10 June, 1pm UK. Recording included in your AISB access.",
     ],
     cta: 'See sites built with vibe coding',
     modal: {
@@ -706,8 +706,8 @@ const READY_BUNDLE: BundleItem[] = [
     images: ['/ship-sprint.jpg'],
     paragraphs: [
       "Ship your first real app or tool. The kind that runs in your business or that you can sell.",
-      "Two live workshops, hosted inside VCL. Build and deploy a real app or tool with AI. Something that streamlines a part of your business, replaces a SaaS subscription you keep paying for, or becomes a product you can put a price on. By the end, you have a working, deployed app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
-      "Live with Toni Tuesday 7 July and Thursday 9 July, 10am UK. Recordings included in your VCL access.",
+      "Two live workshops, hosted inside AISB. Build and deploy a real app or tool with AI. Something that streamlines a part of your business, replaces a SaaS subscription you keep paying for, or becomes a product you can put a price on. By the end, you have a working, deployed app and the exact repeatable process Toni uses to build the products clients pay premium rates to commission.",
+      "Live with Toni Tuesday 7 July and Thursday 9 July, 10am UK. Recordings included in your AISB access.",
     ],
   },
 ];
@@ -881,17 +881,17 @@ export default function Bumpsale() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green overflow-x-hidden selection:bg-terracotta selection:text-white scroll-smooth">
       <Helmet>
-        <title>The ultimate AI build bundle for non-technical founders | Vibe Coding Lab</title>
+        <title>The ultimate AI build bundle for non-technical founders | AI for Service Businesses</title>
         <meta
           name="description"
           content="The training, the community, the support and two AI tools you'll keep forever. Lifetime access for a one-off £197, or split it. Closes 11:30am Tuesday 9 June."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/bundle" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/bundle" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Toni Martin" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://thevibecodinglab.co/bundle" />
-        <meta property="og:site_name" content="Vibe Coding Lab" />
+        <meta property="og:url" content="https://aiforservicebusinesses.co/bundle" />
+        <meta property="og:site_name" content="AI for Service Businesses" />
         <meta property="og:title" content="The ultimate AI build bundle for non-technical founders" />
         <meta
           property="og:description"
@@ -932,7 +932,7 @@ export default function Bumpsale() {
             className="text-center"
           >
             <div className="inline-flex items-center gap-2 bg-terracotta/20 border border-terracotta/40 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8">
-              <Flame size={12} className="text-terracotta" /> A Vibe Coding Lab lifetime deal
+              <Flame size={12} className="text-terracotta" /> An AI for Service Businesses lifetime deal
             </div>
 
             <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.05] tracking-tight mb-6 max-w-4xl mx-auto">
@@ -1120,7 +1120,7 @@ export default function Bumpsale() {
                 <p className="text-sm md:text-base leading-relaxed opacity-80">
                   Claude OS, The Site Sprint and The Ship Sprint are all included in the bundle.
                   Each one stands on its own. Come to everything, come to some, come to one. You
-                  decide what's useful for you. Every session is recorded and lives inside VCL, so
+                  decide what's useful for you. Every session is recorded and lives inside AISB, so
                   missing a live one isn't the end of the world.
                 </p>
               </div>
@@ -1215,7 +1215,7 @@ export default function Bumpsale() {
               </div>
               <p className="text-xs md:text-sm opacity-60 italic">
                 Already bought? This is yours automatically. The masterclass is Thursday 16 July
-                at 9:30am UK. Joining link inside VCL.
+                at 9:30am UK. Joining link inside AISB.
               </p>
             </div>
           </motion.div>
@@ -1275,7 +1275,7 @@ export default function Bumpsale() {
                 £{READY_VALUE.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm opacity-70 mt-2">
-                VCL Premium, Claude OS, The Site Sprint, The Ship Sprint. Live programme starts
+                AISB Premium, Claude OS, The Site Sprint, The Ship Sprint. Live programme starts
                 Tuesday 9 June.
               </div>
             </div>
@@ -1353,7 +1353,7 @@ export default function Bumpsale() {
                   "You've watched the vibe coding movement happen and you want a way in",
                   'You want to actually use Claude properly, not just chat to it',
                   'You want lifetime access to two AI products you can use across your own work and your clients',
-                  'You want to lock in lifetime VCL Premium access at a one-off price',
+                  'You want to lock in lifetime AISB Premium access at a one-off price',
                 ].map((line, i) => (
                   <li key={i} className="flex gap-3">
                     <Check size={20} className="text-terracotta shrink-0 mt-1" strokeWidth={3} />
@@ -1376,7 +1376,7 @@ export default function Bumpsale() {
                 {[
                   "You're looking for done-for-you services",
                   "You don't want to actually build anything",
-                  "You're a VCL VIP lifetime deal holder, you already have access to Relavo and Zenitro through your LTD",
+                  "You're an AISB VIP lifetime deal holder, you already have access to Relavo and Zenitro through your LTD",
                 ].map((line, i) => (
                   <li key={i} className="flex gap-3">
                     <X size={20} className="text-terracotta shrink-0 mt-1" strokeWidth={3} />
@@ -1403,7 +1403,7 @@ export default function Bumpsale() {
               <span className="text-terracotta">This is built so that doesn't happen.</span>
             </h2>
             <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-3xl mx-auto">
-              The Build Journey is your dashboard inside VCL. It turns the whole bundle into a set of
+              The Build Journey is your dashboard inside AISB. It turns the whole bundle into a set of
               real challenges, tracks every win, and rewards you for actually doing the work. Most
               bundles bank on you not using them. This one is designed to get you building from day one.
             </p>
@@ -1500,7 +1500,7 @@ export default function Bumpsale() {
           <div className="bg-white border border-forest-green/10 rounded-[2rem] p-8 md:p-10">
             <ul className="space-y-5">
               {[
-                { label: 'VCL Premium access', detail: 'emailed within 48 hours of purchase.' },
+                { label: 'AISB Premium access', detail: 'emailed within 48 hours of purchase.' },
                 { label: 'Claude OS', detail: 'first live session Tuesday 9 June, 11:30am UK. Full schedule sent on access.' },
                 { label: 'The Site Sprint', detail: 'live Wednesday 10 June, 1pm UK.' },
                 { label: 'The Ship Sprint', detail: 'live Tuesday 7 July and Thursday 9 July, 10am UK.' },
@@ -1519,7 +1519,7 @@ export default function Bumpsale() {
               ))}
             </ul>
             <p className="text-sm md:text-base opacity-70 mt-6 pt-6 border-t border-forest-green/10">
-              All sessions recorded and stored inside VCL.
+              All sessions recorded and stored inside AISB.
             </p>
           </div>
         </div>
@@ -1543,7 +1543,7 @@ export default function Bumpsale() {
             />
             <FAQItem
               question="Can I miss the live sessions and still get value?"
-              answer="Yes. Every session is recorded and available inside VCL. Some sessions may suit you more than others, come to the ones you want."
+              answer="Yes. Every session is recorded and available inside AISB. Some sessions may suit you more than others, come to the ones you want."
             />
             <FAQItem
               question="Can I split the payment?"
@@ -1554,12 +1554,12 @@ export default function Bumpsale() {
               answer="Yes. You're covered by a 7-day money-back guarantee. Get in, come to the first session, start a challenge, and if it's not right for you within 7 days just email us and we'll refund you in full."
             />
             <FAQItem
-              question="I'm already in VCL. Should I still buy this?"
-              answer="If you're a VCL VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or a free Standard member, this is a way to lock in lifetime Premium access, Claude OS and both SaaS products at one shot."
+              question="I'm already in AISB. Should I still buy this?"
+              answer="If you're an AISB VIP lifetime member, you already have access to Relavo and Zenitro, so this isn't for you. If you're on a paid monthly plan or a free Standard member, this is a way to lock in lifetime Premium access, Claude OS and both SaaS products at one shot."
             />
             <FAQItem
               question="When does Claude OS start?"
-              answer="Tuesday 9 June, 11:30am-2:30pm UK. Four live sessions across the following four weeks (16, 23 and 30 June). Full schedule visible inside VCL within 48 hours of your purchase."
+              answer="Tuesday 9 June, 11:30am-2:30pm UK. Four live sessions across the following four weeks (16, 23 and 30 June). Full schedule visible inside AISB within 48 hours of your purchase."
             />
             <FAQItem
               question="I've never built anything before. Will I be lost?"
@@ -1607,7 +1607,7 @@ export default function Bumpsale() {
           </div>
 
           <div className="mt-12 text-xs md:text-sm opacity-50 font-medium">
-            Built and hosted by Vibe Coding Lab.
+            Built and hosted by AI for Service Businesses.
           </div>
         </div>
       </Section>

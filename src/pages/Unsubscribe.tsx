@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import Logo from '../components/Logo';
 
 export default function Unsubscribe() {
   return (
@@ -11,10 +12,10 @@ export default function Unsubscribe() {
       {/* Wordmark */}
       <div className="w-full px-6 py-6 text-center">
         <a
-          href="https://thevibecodinglab.co"
+          href="https://aiforservicebusinesses.co"
           className="text-2xl font-display font-extrabold tracking-tighter"
         >
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="light" className="h-10 md:h-12" />
         </a>
       </div>
 
@@ -32,10 +33,10 @@ export default function Unsubscribe() {
 
           <div className="space-y-6 text-lg md:text-xl leading-relaxed opacity-80 mb-12">
             <p>
-              You will not receive any more emails about the Vibe Coding Lab. You will still stay on the list for other updates, insights, tips and resources that could support your business.
+              You will not receive any more emails about AI for Service Businesses. You will still stay on the list for other updates, insights, tips and resources that could support your business.
             </p>
             <p>
-              If you ever change your mind or want to explore the Vibe Coding Lab in the future, you will be more than welcome back.
+              If you ever change your mind or want to explore AI for Service Businesses in the future, you will be more than welcome back.
             </p>
             <p>
               In the meantime, thanks for sticking around. I appreciate you.
@@ -44,13 +45,13 @@ export default function Unsubscribe() {
 
           <div className="text-base opacity-50 leading-snug">
             <p className="font-bold">Toni</p>
-            <p>Creator of Vibe Coding Lab | Founder of Ascendz</p>
+            <p>Creator of AI for Service Businesses | Founder of Ascendz</p>
           </div>
         </motion.div>
       </div>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
-const SKOOL_URL = 'https://www.skool.com/the-vibe-coding-lab-7172/about';
+import { SKOOL_URL } from '../config/external';
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr] gap-10 mb-12">
           <div>
             <div className="text-2xl font-display font-extrabold tracking-tighter mb-4">
-              VIBE<span className="text-terracotta">CODING</span>LAB
+              <Logo on="dark" className="h-10 md:h-12" />
             </div>
             <p className="opacity-70 leading-relaxed max-w-xs">
               Build and ship real AI-powered apps without code, securely. Start with a 7-day free
@@ -49,7 +50,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] md:text-xs font-bold uppercase tracking-widest opacity-50">
-          <span>© 2026 Vibe Coding Lab by Ascendz. All rights reserved.</span>
+          <span>© 2026 AI for Service Businesses by Ascendz. All rights reserved.</span>
           <div className="flex items-center gap-4">
             <Link to="/terms" className="hover:text-terracotta hover:opacity-100 transition-colors">
               Terms and conditions

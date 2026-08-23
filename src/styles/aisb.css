@@ -1,0 +1,1625 @@
+/* ============================================================================
+   AI for Service Businesses design system.
+   ----------------------------------------------------------------------------
+   Every rule is scoped under .aisb on purpose. The older deck pages
+   (ArtOfTheAudit, SampleAuditReport, AuditPrompts) inject their own global
+   <style> blocks that already define .wrap, .btn, .shot, .note and .lead, so
+   an unscoped system here would collide in both directions. Scoping keeps the
+   two worlds apart until the last old page is retired.
+   ========================================================================== */
+
+:root {
+  --aisb-paper: #f7f3ec;
+  --aisb-paper2: #efe9dd;
+  --aisb-paper3: #ece3d3;
+  --aisb-card: #fffdf8;
+  --aisb-forest: #0e1e17;
+  --aisb-forest-deep: #091712;
+  --aisb-ink: #163024;
+  --aisb-body: #464646;
+  --aisb-terra: #c25e44;
+  --aisb-terra2: #cf5a2f;
+  --aisb-rose: #e8a08a; /* the warm accent used on forest-green panels */
+  --aisb-muted: #6d6a5f;
+  --aisb-line: rgba(14, 30, 23, 0.14);
+}
+
+/* The page ground has to reach past the app root, or overscroll shows the
+   older warm-cream body behind it. */
+html:has(.aisb) body {
+  background: var(--aisb-paper);
+}
+
+.aisb {
+  --paper: var(--aisb-paper);
+  --paper2: var(--aisb-paper2);
+  --paper3: var(--aisb-paper3);
+  --card: var(--aisb-card);
+  --forest: var(--aisb-forest);
+  --forest-deep: var(--aisb-forest-deep);
+  --ink: var(--aisb-ink);
+  --body: var(--aisb-body);
+  --terra: var(--aisb-terra);
+  --terra2: var(--aisb-terra2);
+  --rose: var(--aisb-rose);
+  --muted: var(--aisb-muted);
+  --line: var(--aisb-line);
+
+  background: var(--paper);
+  color: var(--body);
+  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.aisb *,
+.aisb *::before,
+.aisb *::after {
+  box-sizing: border-box;
+}
+
+.aisb .serif {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+}
+
+.aisb h1,
+.aisb h2,
+.aisb h3,
+.aisb h4 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.aisb p,
+.aisb ul,
+.aisb ol,
+.aisb figure {
+  margin: 0;
+}
+
+.aisb a {
+  color: inherit;
+}
+
+.aisb :focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- layout ---------- */
+.aisb .wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.aisb .wrap-mid {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.aisb .wrap-narrow {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.aisb section {
+  padding: 74px 0;
+}
+@media (max-width: 640px) {
+  .aisb .wrap,
+  .aisb .wrap-mid,
+  .aisb .wrap-narrow {
+    padding: 0 22px;
+  }
+  .aisb section {
+    padding: 52px 0;
+  }
+}
+
+/* ---------- nav ---------- */
+.aisb .topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(247, 243, 236, 0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.aisb .topnav .wrap,
+.aisb .topnav .wrap-mid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 72px;
+  gap: 20px;
+}
+.aisb .topnav .logo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+.aisb .navlinks {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+.aisb .navlinks a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--ink);
+  opacity: 0.82;
+}
+.aisb .navlinks a:hover {
+  opacity: 1;
+  color: var(--terra);
+}
+.aisb .navlinks a.joinbtn,
+.aisb .topnav a.joinbtn {
+  background: var(--terra);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 40px;
+  font-weight: 600;
+  opacity: 1;
+  white-space: nowrap;
+}
+.aisb .navlinks a.joinbtn:hover,
+.aisb .topnav a.joinbtn:hover {
+  background: var(--terra2);
+  color: #fff;
+}
+@media (max-width: 760px) {
+  .aisb .navlinks a:not(.joinbtn) {
+    display: none;
+  }
+  .aisb .navlinks {
+    gap: 16px;
+  }
+}
+
+/* Stripped-back nav for opt-in pages: logo only, nothing to click away to. */
+.aisb .snav {
+  padding: 26px 0;
+}
+.aisb .snav .wrap-mid {
+  display: flex;
+  align-items: center;
+}
+.aisb .snav .logo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+/* ---------- buttons ---------- */
+.aisb .btn {
+  background: var(--terra);
+  color: #fff;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 17px 34px;
+  border-radius: 44px;
+  font-size: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.aisb .btn:hover {
+  transform: translateY(-2px);
+  background: var(--terra2);
+}
+.aisb .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.aisb .btn.forest {
+  background: var(--forest);
+}
+.aisb .btn.forest:hover {
+  background: var(--forest-deep);
+}
+.aisb .btn.small {
+  padding: 13px 26px;
+  font-size: 15px;
+}
+.aisb .btn .p {
+  background: rgba(255, 255, 255, 0.22);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.aisb .btn-ghost {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 17px;
+  border-bottom: 2px solid var(--terra);
+  padding-bottom: 3px;
+}
+.aisb .kick {
+  font-weight: 600;
+  color: var(--terra);
+  letter-spacing: 0.02em;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.aisb .kick.pill {
+  display: inline-block;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
+  background: var(--paper3);
+  padding: 8px 16px;
+  border-radius: 30px;
+  margin-bottom: 26px;
+}
+
+/* ---------- image slots ---------- */
+.aisb .shot {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: 0 24px 60px rgba(14, 30, 23, 0.1);
+}
+.aisb .shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* .ph is the "still to supply" state: dashed, flat, obviously a placeholder. */
+.aisb .shot.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
+  border-style: dashed;
+  box-shadow: none;
+  background: var(--paper2);
+  line-height: 1.5;
+}
+.aisb .shot.frame {
+  border-radius: 22px;
+  box-shadow: 0 30px 70px rgba(14, 30, 23, 0.14);
+}
+.aisb .ratio-16-10 {
+  aspect-ratio: 16 / 10;
+}
+.aisb .ratio-4-5 {
+  aspect-ratio: 4 / 5;
+}
+
+/* ---------- hero (home + join) ---------- */
+.aisb .hero {
+  padding: 64px 0 72px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 56px;
+  align-items: center;
+}
+.aisb .hero h1 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(38px, 5vw, 66px);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+.aisb .hero h1 em {
+  font-style: italic;
+  color: var(--terra);
+  font-weight: 500;
+}
+.aisb .hero p.lead {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 46ch;
+  margin-bottom: 32px;
+}
+.aisb .cta-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.aisb .underline-note {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.aisb .hero .heroimg {
+  align-self: stretch;
+  min-height: 400px;
+}
+@media (max-width: 820px) {
+  .aisb .hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 44px 0 52px;
+  }
+  .aisb .hero .heroimg {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .aisb .hero h1 {
+    max-width: none;
+  }
+}
+
+/* ---------- intro band ---------- */
+.aisb .band {
+  background: var(--paper3);
+  border-top: 1px solid rgba(14, 30, 23, 0.08);
+  border-bottom: 1px solid rgba(14, 30, 23, 0.08);
+}
+.aisb .band h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 24ch;
+  margin-bottom: 22px;
+}
+.aisb .band h2 b {
+  font-weight: 600;
+  color: var(--terra);
+  font-style: italic;
+}
+.aisb .band p {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 60ch;
+}
+
+/* ---------- three routes (home) ---------- */
+.aisb .routes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.aisb .route {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.aisb .route .k {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--terra);
+  margin-bottom: 14px;
+}
+.aisb .route h3 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 23px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.aisb .route p {
+  font-size: 15.5px;
+  color: var(--body);
+  margin-bottom: 22px;
+}
+.aisb .route a {
+  margin-top: auto;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--terra);
+  font-size: 15px;
+}
+.aisb .route a:hover {
+  color: var(--terra2);
+}
+@media (max-width: 800px) {
+  .aisb .routes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- forest panels (ethics, ICI, tease) ---------- */
+.aisb .panel {
+  background: var(--forest);
+  color: var(--paper);
+  border-radius: 28px;
+  padding: 66px 58px;
+}
+.aisb .panel .tag {
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--rose);
+  margin-bottom: 18px;
+}
+.aisb .panel h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4.2vw, 50px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  max-width: 16ch;
+}
+.aisb .panel h2 em {
+  font-style: italic;
+  color: var(--rose);
+}
+.aisb .panel p {
+  font-size: 18px;
+  color: rgba(247, 243, 236, 0.85);
+  max-width: 62ch;
+  margin-bottom: 16px;
+}
+.aisb .panel p.kicker {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-style: italic;
+  font-size: 21px;
+  color: var(--paper);
+  max-width: 52ch;
+  margin-top: 6px;
+}
+.aisb .panel a.inline {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--rose);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(232, 160, 138, 0.5);
+  padding-bottom: 2px;
+}
+.aisb .panel.center {
+  text-align: center;
+  padding: 70px 40px;
+}
+.aisb .panel.center h2,
+.aisb .panel.center p {
+  margin-left: auto;
+  margin-right: auto;
+}
+.aisb .panel.center h2 {
+  font-weight: 600;
+  max-width: 22ch;
+  margin-bottom: 16px;
+}
+.aisb .panel.center p {
+  max-width: 46ch;
+  margin-bottom: 30px;
+}
+.aisb .panel .k {
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--rose);
+  margin-bottom: 16px;
+}
+.aisb .panel .price {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-size: 20px;
+  color: var(--rose);
+  margin-bottom: 26px;
+}
+.aisb .panel .note {
+  font-size: 13px;
+  color: rgba(247, 243, 236, 0.6);
+  margin-top: 16px;
+}
+.aisb .panelwrap {
+  padding: 10px 0 74px;
+}
+@media (max-width: 640px) {
+  .aisb .panel {
+    padding: 44px 26px;
+    border-radius: 22px;
+  }
+  .aisb .panel.center {
+    padding: 48px 24px;
+  }
+}
+
+/* ---------- single testimonial strip ---------- */
+.aisb .pstrip {
+  text-align: center;
+}
+.aisb .pstrip .q {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.3;
+  color: var(--ink);
+  max-width: 24ch;
+  margin: 0 auto 20px;
+}
+.aisb .pstrip .who {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 15px;
+}
+.aisb .pstrip .who span {
+  color: var(--muted);
+  font-weight: 400;
+}
+.aisb .pstrip .more {
+  margin-top: 26px;
+}
+.aisb .pstrip .more a {
+  color: var(--terra);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  border-bottom: 2px solid rgba(194, 94, 68, 0.4);
+  padding-bottom: 2px;
+}
+.aisb .divide {
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- footer ---------- */
+.aisb footer.sitefoot {
+  background: var(--forest-deep);
+  color: rgba(247, 243, 236, 0.6);
+  padding: 48px 0;
+}
+.aisb footer.sitefoot .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+.aisb footer.sitefoot .flinks {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+.aisb footer.sitefoot a {
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.aisb footer.sitefoot a:hover {
+  opacity: 1;
+  color: var(--rose);
+}
+.aisb footer.simplefoot {
+  background: var(--forest-deep);
+  color: rgba(247, 243, 236, 0.55);
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+}
+.aisb footer.simplefoot a {
+  color: var(--rose);
+  text-decoration: none;
+}
+/* Opt-in pages sit on paper, so their footer is a hairline rather than a slab. */
+.aisb footer.linefoot {
+  margin-top: 70px;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.aisb footer.linefoot a {
+  color: var(--terra);
+  text-decoration: none;
+}
+
+/* ---------- join: pain list ---------- */
+.aisb .pain-sec {
+  background: var(--paper3);
+  border-top: 1px solid rgba(14, 30, 23, 0.08);
+  border-bottom: 1px solid rgba(14, 30, 23, 0.08);
+}
+.aisb .pain h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 19ch;
+  margin-bottom: 20px;
+}
+.aisb .pain h2 em {
+  font-style: italic;
+  color: var(--terra);
+}
+.aisb .pain .intro {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 58ch;
+}
+.aisb .painlist {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(14, 30, 23, 0.16);
+}
+.aisb .painlist li {
+  position: relative;
+  padding: 23px 0 23px 48px;
+  border-bottom: 1px solid rgba(14, 30, 23, 0.16);
+  font-size: 20px;
+  color: var(--ink);
+  max-width: 66ch;
+  line-height: 1.5;
+}
+.aisb .painlist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 26px;
+  height: 2px;
+  background: var(--terra);
+}
+.aisb .painline {
+  margin-top: 38px;
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-style: italic;
+  font-size: 23px;
+  color: var(--ink);
+  max-width: 47ch;
+  line-height: 1.35;
+}
+.aisb .painline b {
+  color: var(--terra);
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .aisb .painlist li {
+    font-size: 18px;
+    padding-left: 38px;
+  }
+  .aisb .painlist li::before {
+    width: 20px;
+    top: 32px;
+  }
+}
+
+/* ---------- centred statement ---------- */
+.aisb .stmt {
+  text-align: center;
+}
+.aisb .stmt h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(30px, 4.4vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin: 0 auto 24px;
+}
+.aisb .stmt h2 b {
+  font-weight: 600;
+  color: var(--terra);
+  font-style: italic;
+}
+.aisb .stmt p {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 58ch;
+  margin: 0 auto;
+}
+
+/* ---------- join: what's inside grid ---------- */
+.aisb .inside-sec {
+  background: var(--paper2);
+}
+.aisb .sec-head {
+  text-align: center;
+  margin-bottom: 44px;
+}
+.aisb .sec-head h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 46px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.aisb .sec-head h2 em {
+  font-style: italic;
+  color: var(--terra);
+}
+.aisb .sec-head p {
+  color: var(--body);
+  font-size: 18px;
+  max-width: 54ch;
+  margin: 0 auto;
+}
+.aisb .inside-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.aisb .icard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+}
+.aisb .icard .em {
+  color: var(--terra);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+.aisb .icard h3 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 9px;
+}
+.aisb .icard p {
+  font-size: 15px;
+  color: var(--body);
+}
+@media (max-width: 860px) {
+  .aisb .inside-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .aisb .inside-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- founder / community split ---------- */
+.aisb .split {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 52px;
+  align-items: center;
+}
+.aisb .split.flip {
+  grid-template-columns: 1.05fr 0.95fr;
+}
+.aisb .split h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(26px, 3.6vw, 42px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.aisb .split h2 em {
+  font-style: italic;
+  color: var(--terra);
+}
+.aisb .split p {
+  font-size: 17.5px;
+  color: var(--body);
+  margin-bottom: 15px;
+  max-width: 52ch;
+}
+.aisb .split p b {
+  color: var(--ink);
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .aisb .split,
+  .aisb .split.flip {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
+/* ---------- testimonials ---------- */
+.aisb .proof {
+  background: var(--paper2);
+}
+.aisb .tgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.aisb .tcard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.aisb .tcard .tlead {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.28;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+.aisb .tcard .tbody {
+  font-size: 15.5px;
+  color: var(--body);
+  margin-bottom: 22px;
+}
+.aisb .tcard .who {
+  margin-top: auto;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 15px;
+}
+@media (max-width: 860px) {
+  .aisb .tgrid {
+    grid-template-columns: 1fr;
+  }
+  .aisb .tcard {
+    padding: 28px;
+  }
+}
+
+/* ---------- pricing ---------- */
+.aisb .pricing {
+  background: var(--forest);
+  color: var(--paper);
+  text-align: center;
+}
+.aisb .pricing h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 52px);
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  max-width: 20ch;
+  margin: 0 auto 14px;
+}
+.aisb .pricing .sub {
+  color: rgba(247, 243, 236, 0.8);
+  font-size: 18px;
+  margin-bottom: 42px;
+}
+.aisb .pcard {
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--forest-deep);
+  border: 1px solid rgba(247, 243, 236, 0.16);
+  border-radius: 24px;
+  padding: 46px;
+  text-align: left;
+}
+.aisb .pcard .priceline {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.aisb .pcard .priceline .n {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 76px;
+  color: var(--paper);
+  line-height: 1;
+}
+.aisb .pcard .priceline .once {
+  font-size: 16px;
+  color: var(--rose);
+  font-weight: 500;
+}
+.aisb .pcard .psub {
+  text-align: center;
+  color: rgba(247, 243, 236, 0.7);
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+.aisb .pcard ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+.aisb .pcard li {
+  padding: 11px 0 11px 30px;
+  position: relative;
+  color: rgba(247, 243, 236, 0.92);
+  font-size: 16px;
+  border-top: 1px solid rgba(247, 243, 236, 0.1);
+}
+.aisb .pcard li:first-child {
+  border-top: none;
+}
+.aisb .pcard li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--terra2);
+  font-weight: 700;
+}
+.aisb .pcard .btn {
+  width: 100%;
+}
+.aisb .pcard .note {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(247, 243, 236, 0.6);
+  margin-top: 16px;
+}
+/* Light variant, used on the £9 guide page. */
+.aisb .pcard.light {
+  background: var(--card);
+  border: 1.5px solid var(--terra);
+  box-shadow: 0 24px 60px rgba(14, 30, 23, 0.08);
+  max-width: 520px;
+  padding: 46px;
+}
+.aisb .pcard.light .priceline .n {
+  color: var(--ink);
+  font-size: 64px;
+}
+.aisb .pcard.light .priceline .once {
+  color: var(--terra);
+  font-weight: 600;
+  font-size: 15px;
+}
+.aisb .pcard.light .psub {
+  color: var(--muted);
+  margin-bottom: 26px;
+}
+.aisb .pcard.light li {
+  color: var(--body);
+  border-top-color: var(--line);
+  padding-left: 30px;
+}
+.aisb .pcard.light li::before {
+  color: var(--terra);
+}
+.aisb .pcard.light .note {
+  color: var(--muted);
+}
+@media (max-width: 560px) {
+  .aisb .pcard,
+  .aisb .pcard.light {
+    padding: 32px 24px;
+  }
+  .aisb .pcard .priceline .n {
+    font-size: 58px;
+  }
+}
+
+/* ---------- FAQ ---------- */
+.aisb .faq details {
+  border-bottom: 1px solid var(--line);
+}
+.aisb .faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 24px 40px 24px 0;
+  position: relative;
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+}
+.aisb .faq summary::-webkit-details-marker {
+  display: none;
+}
+.aisb .faq summary::after {
+  content: '+';
+  position: absolute;
+  right: 4px;
+  top: 20px;
+  font-size: 26px;
+  color: var(--terra);
+  line-height: 1;
+}
+.aisb .faq details[open] summary::after {
+  content: '–';
+}
+.aisb .faq .ans {
+  padding: 0 40px 24px 0;
+  color: var(--body);
+  font-size: 16.5px;
+  max-width: 64ch;
+}
+
+/* ---------- final CTA ---------- */
+.aisb .final {
+  text-align: center;
+  padding: 64px 0;
+}
+.aisb .final h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(32px, 4.6vw, 56px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 18ch;
+  margin: 0 auto 18px;
+}
+.aisb .final p {
+  font-size: 18px;
+  color: var(--body);
+  max-width: 46ch;
+  margin: 0 auto 32px;
+}
+.aisb .final .price {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 20px;
+}
+
+/* ---------- resources hub ---------- */
+.aisb .rhero {
+  padding: 74px 0 20px;
+  text-align: center;
+}
+.aisb .rhero h1 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(40px, 5.4vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+  margin: 0 auto 22px;
+  color: var(--ink);
+}
+.aisb .rhero h1 em {
+  font-style: italic;
+  color: var(--terra);
+  font-weight: 500;
+}
+.aisb .rhero p {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 54ch;
+  margin: 0 auto;
+}
+.aisb .seclabel {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.aisb .seclabel-sub {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+.aisb .feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.aisb .feature .content {
+  padding: 44px 42px;
+  display: flex;
+  flex-direction: column;
+}
+.aisb .rtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.aisb .ricon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--paper3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.aisb .ricon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--terra);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.aisb .rbadge {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 30px;
+  background: var(--paper3);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.aisb .rbadge.paid {
+  background: var(--terra);
+  color: #fff;
+}
+.aisb .feature h3 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 30px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.aisb .feature p.desc {
+  font-size: 16.5px;
+  color: var(--body);
+  margin-bottom: 14px;
+  max-width: 44ch;
+}
+.aisb .bestfor {
+  font-size: 14px;
+  color: var(--terra);
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+.aisb .ract {
+  margin-top: auto;
+}
+.aisb .feature .shot {
+  border-radius: 0;
+  border: none;
+  border-left: 1px solid var(--line);
+  box-shadow: none;
+  min-height: 340px;
+  background: var(--paper3);
+}
+.aisb .feature .shot.ph {
+  border-left: 1px dashed var(--line);
+}
+.aisb .rgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.aisb .rcard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 34px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.aisb .rcard h3 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 23px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.aisb .rcard p.desc {
+  font-size: 15.5px;
+  color: var(--body);
+  margin-bottom: 14px;
+}
+.aisb .rcard.paidcard {
+  border-color: var(--terra);
+  border-width: 1.5px;
+  background: #fffaf4;
+}
+.aisb .paidrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.aisb .paidrow .price {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .aisb .feature {
+    grid-template-columns: 1fr;
+  }
+  .aisb .feature .content {
+    padding: 32px 26px;
+  }
+  .aisb .feature .shot {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .aisb .rgrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- opt-in pages ---------- */
+.aisb .optin {
+  padding: 48px 0 40px;
+  text-align: center;
+}
+.aisb .optin h1 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(38px, 5.2vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+  margin: 0 auto 22px;
+  color: var(--ink);
+}
+.aisb .optin h1 em {
+  font-style: italic;
+  color: var(--terra);
+  font-weight: 500;
+}
+.aisb .optin .lead {
+  font-size: 20px;
+  color: var(--body);
+  max-width: 50ch;
+  margin: 0 auto;
+}
+.aisb .preview {
+  margin: 44px auto 8px;
+  max-width: 820px;
+}
+.aisb .preview .shot {
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 26px 60px rgba(14, 30, 23, 0.12);
+}
+.aisb .bullets {
+  max-width: 820px;
+  margin: 44px auto 0;
+}
+.aisb .bgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+.aisb .bitem {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.aisb .bitem .tick {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--terra);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.aisb .bitem .tick svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--terra);
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.aisb .bitem p {
+  font-size: 16.5px;
+  color: var(--body);
+}
+.aisb .bitem p b {
+  color: var(--ink);
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .aisb .bgrid {
+    grid-template-columns: 1fr;
+  }
+}
+.aisb .formwrap {
+  max-width: 560px;
+  margin: 52px auto 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 44px;
+  box-shadow: 0 24px 60px rgba(14, 30, 23, 0.08);
+}
+.aisb .formwrap h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.aisb .formwrap .fsub {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 26px;
+}
+.aisb .optform {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.aisb .optform input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--paper);
+  outline: none;
+}
+.aisb .optform input:focus {
+  border-color: var(--terra);
+  background: #fff;
+}
+.aisb .optform input::placeholder {
+  color: var(--muted);
+}
+.aisb .optform button {
+  width: 100%;
+  background: var(--terra);
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 17px;
+  padding: 17px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.aisb .optform button:hover:not(:disabled) {
+  background: var(--terra2);
+  transform: translateY(-1px);
+}
+.aisb .optform button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.aisb .formerr {
+  color: #b3302a;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.aisb .finenote {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 18px auto 0;
+  max-width: 44ch;
+  line-height: 1.55;
+}
+@media (max-width: 560px) {
+  .aisb .formwrap {
+    padding: 30px 22px;
+  }
+}
+
+/* ---------- build standards specifics ---------- */
+.aisb .prob {
+  background: var(--paper3);
+  border-top: 1px solid rgba(14, 30, 23, 0.08);
+  border-bottom: 1px solid rgba(14, 30, 23, 0.08);
+}
+.aisb .prob h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 20ch;
+  margin-bottom: 20px;
+}
+.aisb .prob h2 em {
+  font-style: italic;
+  color: var(--terra);
+}
+.aisb .prob p {
+  font-size: 18.5px;
+  color: var(--body);
+  max-width: 60ch;
+  margin-bottom: 16px;
+}
+.aisb .prob p:last-child {
+  margin-bottom: 0;
+}
+.aisb .igrid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.aisb .igrid2 .icard h3 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+.aisb .igrid2 .icard p {
+  font-size: 15.5px;
+}
+@media (max-width: 700px) {
+  .aisb .igrid2 {
+    grid-template-columns: 1fr;
+  }
+}
+.aisb .xsell {
+  text-align: center;
+  background: var(--paper2);
+}
+.aisb .xsell h2 {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 36px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 24ch;
+  margin: 0 auto 14px;
+}
+.aisb .xsell p {
+  font-size: 17px;
+  color: var(--body);
+  max-width: 48ch;
+  margin: 0 auto 26px;
+}
+.aisb .xsell a {
+  color: var(--terra);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(194, 94, 68, 0.4);
+  padding-bottom: 2px;
+}
+.aisb .pricetag {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aisb * {
+    transition: none !important;
+    animation: none !important;
+  }
+  .aisb .btn:hover {
+    transform: none;
+  }
+}
+
+/* The £9 guide page uses a centred hero rather than the split one. */
+.aisb .optin .cta-row {
+  justify-content: center;
+}
+.aisb .optin h1.wide {
+  max-width: 20ch;
+}
+.aisb .soft {
+  background: var(--paper2);
+}
+
+/* In-page anchors (#join, #get) sit under the 72px sticky nav without this. */
+.aisb [id] {
+  scroll-margin-top: 92px;
+}
+
+/* Smooth only for anchor jumps within a page. Route changes are handled by
+   ScrollToTop, which overrides this with an instant jump. */
+html:has(.aisb) {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.aisb) {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- heading rhythm ----------
+   Headings were inheriting the body's 1.65 line-height, which is right for
+   paragraphs and far too airy for display type. These are the defaults; the
+   large display headings above set their own tighter values and still win on
+   specificity. */
+.aisb h1,
+.aisb h2 {
+  line-height: 1.15;
+}
+.aisb h3,
+.aisb h4 {
+  line-height: 1.25;
+}
+/* Display-size headings that wrap to two lines want it tighter still. */
+.aisb .split h2,
+.aisb .sec-head h2,
+.aisb .pricing h2,
+.aisb .xsell h2 {
+  line-height: 1.08;
+}
+.aisb .seclabel {
+  line-height: 1.2;
+}
+.aisb .seclabel-sub {
+  line-height: 1.5;
+}
+
+/* ---------- browser frame ----------
+   A laptop mockup would spend half its height on a keyboard and shrink the
+   screenshot to nothing. A browser bar costs ~40px and signals "real product
+   on the web" just as well. Height is left to the image so screenshots keep
+   their natural aspect instead of being cropped to a number. */
+.aisb .browser {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: 0 30px 70px rgba(14, 30, 23, 0.14);
+}
+.aisb .browser .bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--line);
+}
+.aisb .browser .bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(14, 30, 23, 0.18);
+  display: block;
+}
+.aisb .browser img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.aisb .browser.ph {
+  border-style: dashed;
+  box-shadow: none;
+}
+.aisb .browser .phbody {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--paper2);
+}

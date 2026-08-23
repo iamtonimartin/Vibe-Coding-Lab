@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
+import Logo from '../components/Logo';
 
 export default function Playbook() {
   const navigate = useNavigate();
@@ -15,18 +16,18 @@ export default function Playbook() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
-        <title>Get the Vibe Playbook | Vibe Coding Lab</title>
+        <title>Get the Vibe Playbook | AI for Service Businesses</title>
         <meta name="description" content="Access the Vibe Playbook, a free resource packed with tools, frameworks and reference guides for building AI-powered apps without code." />
-        <link rel="canonical" href="https://thevibecodinglab.co/playbook" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/playbook" />
       </Helmet>
 
       {/* Wordmark */}
       <div className="w-full px-6 py-6 text-center">
         <a
-          href="https://thevibecodinglab.co"
+          href="https://aiforservicebusinesses.co"
           className="text-2xl font-display font-extrabold tracking-tighter"
         >
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="light" className="h-10 md:h-12" />
         </a>
       </div>
 
@@ -127,7 +128,7 @@ export default function Playbook() {
                 {loading ? 'Sending...' : 'Send Me the Playbook'}
               </button>
               <p className="text-sm font-bold opacity-40 mt-4">
-                You will also receive occasional emails about vibe coding, building with AI and what we are working on inside the Vibe Coding Lab. No spam, unsubscribe any time.
+                You will also receive occasional emails about vibe coding, building with AI and what we are working on inside AI for Service Businesses. No spam, unsubscribe any time.
               </p>
             </form>
           </div>
@@ -135,7 +136,7 @@ export default function Playbook() {
       </div>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

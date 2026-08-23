@@ -120,7 +120,7 @@ export default function Terms() {
           name="description"
           content="The terms and conditions governing the use of our website and the purchase of our digital products, services and subscriptions."
         />
-        <link rel="canonical" href="https://thevibecodinglab.co/terms" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/terms" />
         <meta name="robots" content="index, follow" />
       </Helmet>
 

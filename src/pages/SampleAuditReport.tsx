@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, ArrowUp, FileText } from 'lucide-react';
+import Logo from '../components/Logo';
 
 const BASE = '/sampleauditreport';
 
@@ -134,7 +135,7 @@ function TopBar() {
     <div className="sticky top-0 z-50 bg-forest-green/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-5xl mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-4">
         <Link to={BASE} className="font-display font-extrabold text-sand text-sm tracking-tight">
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="dark" className="h-6 md:h-7" />
         </Link>
         <nav className="flex items-center gap-5 md:gap-6">
           <Link
@@ -175,7 +176,7 @@ function Footer() {
       <Grain dark />
       <div className="relative max-w-5xl mx-auto px-5 md:px-8">
         <div className="font-display font-extrabold text-sand text-xl tracking-tight">
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="dark" className="h-10 md:h-12" />
         </div>
         <div className="italic text-sand/60 mt-1 mb-8">The Art of the Audit</div>
         <div className="flex flex-wrap justify-center gap-3">
@@ -755,9 +756,9 @@ export function AuditChapter() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
-        <title>{`${ch.label} | Maple and Moss Audit Report | Vibe Coding Lab`}</title>
+        <title>{`${ch.label} | Maple and Moss Audit Report | AI for Service Businesses`}</title>
         <meta name="description" content={ch.blurb} />
-        <link rel="canonical" href={`https://thevibecodinglab.co${BASE}/${ch.slug}`} />
+        <link rel="canonical" href={`https://aiforservicebusinesses.co${BASE}/${ch.slug}`} />
       </Helmet>
 
       <TopBar />
@@ -827,12 +828,12 @@ export default function SampleAuditReport() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white">
       <Helmet>
-        <title>Sample Audit Report: Maple and Moss | Vibe Coding Lab</title>
+        <title>Sample Audit Report: Maple and Moss | AI for Service Businesses</title>
         <meta
           name="description"
           content="A complete worked example of a systems audit report, in ten chapters. Fictional client, real findings. Keep the shape, swap in your client and write it in your own voice."
         />
-        <link rel="canonical" href={`https://thevibecodinglab.co${BASE}`} />
+        <link rel="canonical" href={`https://aiforservicebusinesses.co${BASE}`} />
       </Helmet>
 
       <TopBar />

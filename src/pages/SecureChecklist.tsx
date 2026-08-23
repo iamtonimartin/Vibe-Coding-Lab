@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck, Inbox } from 'lucide-react';
+import Logo from '../components/Logo';
 
 const WHAT_YOU_GET: string[] = [
   'The Critical 5: the handful of checks behind almost every vibe-coded leak.',
@@ -21,15 +22,15 @@ export default function SecureChecklist() {
   return (
     <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
       <Helmet>
-        <title>The Secure Build Checklist | Vibe Coding Lab</title>
+        <title>The Secure Build Checklist | AI for Service Businesses</title>
         <meta name="description" content="A free field guide to ship AI-built apps that hold up. 5 critical checks, 6 build areas and a copy-paste review prompt that catches the mistakes behind almost every vibe-coded leak." />
-        <link rel="canonical" href="https://thevibecodinglab.co/secure-checklist" />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/secure-checklist" />
       </Helmet>
 
       {/* Wordmark */}
       <div className="w-full px-6 py-6 text-center">
         <Link to="/" className="text-2xl font-display font-extrabold tracking-tighter">
-          VIBE<span className="text-terracotta">CODING</span>LAB
+          <Logo on="light" className="h-10 md:h-12" />
         </Link>
       </div>
 
@@ -126,7 +127,7 @@ export default function SecureChecklist() {
                   </button>
                   <p className="text-sm font-bold opacity-40 mt-4">
                     You will also receive occasional emails about building securely with AI and what we
-                    are working on inside the Vibe Coding Lab. No spam, unsubscribe any time.
+                    are working on inside AI for Service Businesses. No spam, unsubscribe any time.
                   </p>
                 </form>
               </div>
@@ -136,7 +137,7 @@ export default function SecureChecklist() {
       </div>
 
       <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
+        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
       </footer>
     </div>
   );

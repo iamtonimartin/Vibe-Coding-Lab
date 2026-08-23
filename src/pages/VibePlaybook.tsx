@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Search, ExternalLink } from 'lucide-react';
+import { TopNav, LineFooter } from '../components/aisb/Layout';
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -33,7 +34,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Cursor',
     category: 'Building and Development',
-    definition: 'An AI-powered code editor that sits on top of your existing development environment. Popular in the vibe coding community for its ability to understand and edit large codebases through conversation.',
+    definition: 'An AI-powered code editor that sits on top of your existing development environment. Popular with people building with AI for its ability to understand and edit large codebases through conversation.',
     example: 'Asking Cursor to find and fix all the places in your project where a variable name is used incorrectly.',
   },
   {
@@ -70,7 +71,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: 'IDE (Integrated Development Environment)',
     category: 'Building and Development',
     definition: 'A software application that gives you everything you need to build in one place. Think of it as your workshop. It typically includes a code editor, file manager and tools to run and test your project.',
-    example: 'Antigravity IDE is the IDE we use inside the Vibe Coding Lab.',
+    example: 'Antigravity IDE is the IDE we use inside AI for Service Businesses.',
   },
   {
     term: 'Local and Localhost',
@@ -88,12 +89,12 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: 'MCP (Model Context Protocol)',
     category: 'Building and Development',
     definition: 'An open standard developed by Anthropic that allows AI models to connect to external tools, data sources and services in a consistent way. Think of it as a universal plug socket for AI integrations.',
-    example: 'Using MCP to connect Claude to your Google Calendar so it can check your schedule and suggest when to focus on deep work. Antigravity IDE supports MCP connections, allowing your vibe coded apps to integrate with a wide range of external services.',
+    example: 'Using MCP to connect Claude to your Google Calendar so it can check your schedule and suggest when to focus on deep work. Antigravity IDE supports MCP connections, allowing your AI-built apps to integrate with a wide range of external services.',
   },
   {
     term: 'React',
     category: 'Building and Development',
-    definition: 'A popular JavaScript library for building user interfaces. It lets you build reusable components, pieces of UI that you can combine to create full applications. Most modern web apps built with vibe coding tools use React under the hood.',
+    definition: 'A popular JavaScript library for building user interfaces. It lets you build reusable components, pieces of UI that you can combine to create full applications. Most modern web apps built with AI tools use React under the hood.',
     example: 'Antigravity IDE frequently generates React-based projects. If you see files ending in .jsx or .tsx you are likely working in a React project.',
   },
   {
@@ -112,7 +113,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: 'Stack and Tech Stack',
     category: 'Building and Development',
     definition: 'The combination of tools, languages and platforms used to build an application.',
-    example: 'The Vibe Coding Lab tech stack is Google AI Studio, Antigravity IDE and Claude Code.',
+    example: 'The AI for Service Businesses tech stack is Google AI Studio, Antigravity IDE and Claude Code.',
   },
   {
     term: 'Tailwind CSS',
@@ -135,7 +136,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Vibe Coding',
     category: 'Building and Development',
-    definition: 'Building real, functional software using AI tools and natural language rather than writing traditional code. You describe what you want, the AI builds it, you refine and ship it.',
+    definition: 'Building software by describing what you want to AI in plain language, rather than writing every line of code yourself. It is one way of building with AI, and the term you will often hear for it.',
     example: 'Typing build me a lead capture form that saves responses to a database into Google AI Studio and getting working code back.',
   },
   // AI and Models
@@ -203,7 +204,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: 'System Prompt',
     category: 'AI and Models',
     definition: 'A set of instructions given to an AI model before the conversation begins that shapes how it behaves throughout. Used to give the AI a persona, rules or context.',
-    example: 'You are a helpful assistant for the Vibe Coding Lab. Always respond in British English and never use em dashes.',
+    example: 'You are a helpful assistant for AI for Service Businesses. Always respond in British English and never use em dashes.',
   },
   {
     term: 'Token',
@@ -293,7 +294,7 @@ const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Supabase',
     category: 'Infrastructure and Deployment',
-    definition: 'An open source database platform that is beginner friendly and works well with vibe coded apps. It handles user authentication, data storage and real time updates.',
+    definition: 'An open source database platform that is beginner friendly and works well with apps built with AI. It handles user authentication, data storage and real time updates.',
     example: 'Using Supabase to store your Founder Co-Pilot users so their tasks and knowledge base persist between sessions.',
   },
   {
@@ -378,13 +379,13 @@ const FILE_TYPE_SECTIONS: FileSection[] = [
         ext: '.html',
         name: 'HTML',
         description: 'The foundation of every web page. HTML stands for HyperText Markup Language and it defines the structure and content of a page. Headings, paragraphs, buttons, images and forms are all created with HTML.',
-        whenToUse: 'For simple static web pages, landing pages and content that does not need dynamic functionality. The sales page and opt-in page on thevibecodinglab.co are HTML files.',
+        whenToUse: 'For simple static web pages, landing pages and content that does not need dynamic functionality. The sales page and opt-in page on aiforservicebusinesses.co are HTML files.',
       },
       {
         ext: '.css',
         name: 'CSS',
         description: 'Cascading Style Sheets. CSS controls how your HTML looks. Colours, fonts, spacing, layouts and animations are all handled by CSS.',
-        whenToUse: 'Alongside HTML to style your pages. CSS is often embedded directly inside HTML files in vibe coded projects rather than as a separate file.',
+        whenToUse: 'Alongside HTML to style your pages. CSS is often embedded directly inside HTML files in projects built with AI rather than as a separate file.',
       },
       {
         ext: '.js',
@@ -432,7 +433,7 @@ const FILE_TYPE_SECTIONS: FileSection[] = [
         ext: '.json',
         name: 'JSON',
         description: 'JavaScript Object Notation. A lightweight format for storing and exchanging structured data. Looks like a list of labelled values.',
-        whenToUse: 'For configuration files, storing data and sending information between a frontend and a backend or API. You will encounter JSON constantly in vibe coded projects.',
+        whenToUse: 'For configuration files, storing data and sending information between a frontend and a backend or API. You will encounter JSON constantly in projects built with AI.',
       },
       {
         ext: 'package-lock.json and yarn.lock',
@@ -527,7 +528,7 @@ const AI_PROVIDERS: AIProvider[] = [
         name: 'Claude Sonnet 4.6',
         description: 'The daily driver, preferred over Sonnet 4.5 by many developers, delivering near-Opus-level intelligence at Sonnet pricing. Fast, reliable and handles the vast majority of tasks without compromise.',
         pricing: '$3 per million input tokens, $15 per million output tokens.',
-        bestFor: 'Most everyday coding tasks, content generation, building features. This should be your default for most vibe coding work.',
+        bestFor: 'Most everyday coding tasks, content generation, building features. This should be your default for most AI build work.',
       },
       {
         name: 'Claude Haiku 4.5',
@@ -563,7 +564,7 @@ const AI_PROVIDERS: AIProvider[] = [
       },
       {
         name: 'Gemini 2.5 Flash',
-        description: 'The proven, stable workhorse. Excellent free tier in Google AI Studio makes it the natural starting point for most vibe coders.',
+        description: 'The proven, stable workhorse. Excellent free tier in Google AI Studio makes it the natural starting point for most people building with AI.',
         pricing: '$0.30 per million input tokens, $2.50 per million output tokens.',
         bestFor: 'Getting started, prototyping and any project where you want a stable, well-tested model.',
       },
@@ -642,7 +643,7 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
         weUseThis: true,
         description: 'The most popular deployment platform for modern web apps. Connects directly to GitHub and deploys automatically every time you push an update. Excellent free tier and extremely fast global content delivery.',
         freeTier: 'Yes. Generous hobby tier for personal projects.',
-        bestFor: 'Deploying Next.js apps and any frontend project. The go-to choice for most vibe coded projects.',
+        bestFor: 'Deploying Next.js apps and any frontend project. The go-to choice for most projects built with AI.',
         site: 'vercel.com',
       },
       {
@@ -677,7 +678,7 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
         weUseThis: true,
         description: 'A visual automation platform that connects apps and services through drag and drop workflows called scenarios. No code required. Extremely powerful for automating repetitive business processes.',
         freeTier: 'Yes. 1,000 operations per month on the free plan.',
-        bestFor: 'Connecting your apps together, automating workflows and triggering actions based on events. Used extensively inside the Vibe Coding Lab for membership automation.',
+        bestFor: 'Connecting your apps together, automating workflows and triggering actions based on events. Used extensively inside AI for Service Businesses for membership automation.',
         site: 'make.com',
       },
       {
@@ -703,7 +704,7 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
         name: 'Stripe',
         description: 'The industry standard payment processing platform. Handles one-time payments, subscriptions, invoicing and much more. Excellent documentation and developer experience.',
         freeTier: 'No monthly fee. Charges a percentage per transaction (typically 1.4% plus 20p for European cards).',
-        bestFor: 'Any app that needs to take payments. The default choice for most vibe coded products.',
+        bestFor: 'Any app that needs to take payments. The default choice for most products built with AI.',
         site: 'stripe.com',
       },
     ],
@@ -734,7 +735,7 @@ const TOOLKIT_SECTIONS: ToolSection[] = [
         name: 'GitHub',
         description: 'The most widely used platform for storing and managing code repositories. Connects directly to Vercel, Railway and most other deployment platforms for automatic deployments.',
         freeTier: 'Yes. Unlimited public and private repositories on the free plan.',
-        bestFor: 'Storing your project code, tracking changes and enabling automatic deployments. Essential for any serious vibe coded project.',
+        bestFor: 'Storing your project code, tracking changes and enabling automatic deployments. Essential for any serious project built with AI.',
         site: 'github.com',
       },
     ],
@@ -767,19 +768,18 @@ function FreeTierPill({ text }: { text: string }) {
 
 function PlaybookCTA() {
   return (
-    <div className="bg-forest-green text-warm-cream px-8 py-16 md:px-16 md:py-24 text-center">
-      <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6 leading-tight">
-        Ready to Build?
+    <div className="panel center" style={{ borderRadius: 0, padding: '70px 40px' }}>
+      <h2 className="serif" style={{ fontWeight: 600, fontSize: 'clamp(30px,4.2vw,50px)', lineHeight: 1.06, letterSpacing: '-0.02em', marginBottom: '18px' }}>
+        Ready to build?
       </h2>
-      <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl mx-auto mb-10">
-        The Vibe Playbook is just the starting point. Join the Vibe Coding Lab to put this knowledge into practice, access real AI-powered tools and build alongside a community of entrepreneurs who are done watching from the sidelines.
+      <p style={{ fontSize: '18px', opacity: 0.85, maxWidth: '46ch', margin: '0 auto 30px' }}>
+        The AI Build Playbook is just the starting point. Join AI for Service Businesses to put this knowledge into
+        practice, access real AI-powered tools and build alongside a community of service owners who are done watching
+        from the sidelines.
       </p>
-      <a
-        href="https://thevibecodinglab.co"
-        className="inline-flex items-center bg-terracotta text-white px-10 py-5 rounded-2xl text-lg font-extrabold hover:bg-burnt-orange hover:scale-105 transition-all shadow-2xl shadow-black/20"
-      >
-        Join the Vibe Coding Lab
-      </a>
+      <Link to="/join" className="btn">
+        Join AI for Service Businesses
+      </Link>
     </div>
   );
 }
@@ -807,7 +807,7 @@ function GlossaryTab() {
     <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-10 leading-relaxed">
-        Every term you will encounter on your vibe coding journey, explained in plain English with real examples. Search for a term or filter by category.
+        Every term you will encounter as you build with AI, explained in plain English with real examples. Search for a term or filter by category.
       </p>
 
       {/* Search + Filter row */}
@@ -869,7 +869,7 @@ function FileTypesTab() {
     <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-12 leading-relaxed">
-        Every file you encounter when vibe coding belongs to a category. Understanding what each file type does and when you will encounter it removes a lot of the mystery from building. Use this as a quick reference when you see an unfamiliar extension in your project.
+        Every file you encounter when building with AI belongs to a category. Understanding what each file type does and when you will meet it removes a lot of the mystery from building. Use this as a quick reference when you see an unfamiliar extension in your project.
       </p>
       {FILE_TYPE_SECTIONS.map(section => (
         <div key={section.heading} className="mb-14">
@@ -902,7 +902,7 @@ function AIModelsTab() {
     <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-8 leading-relaxed">
-        Every time your app calls an AI model it uses tokens and every token costs money. Understanding which models exist, what they are good at and how much they cost is one of the most important skills you will develop as a vibe coder. Use the cheapest model that can do the job well enough. Save the powerful models for tasks that genuinely need them.
+        Every time your app calls an AI model it uses tokens and every token costs money. Understanding which models exist, what they are good at and how much they cost is one of the most important skills you will develop when building with AI. Use the cheapest model that can do the job well enough and save the powerful models for tasks that genuinely need them.
       </p>
 
       {/* Disclaimer */}
@@ -1012,7 +1012,7 @@ function ToolkitTab() {
     <>
     <div className="max-w-5xl mx-auto px-6 py-12">
       <p className="text-xl opacity-80 mb-12 leading-relaxed">
-        A growing reference of the tools that power modern vibe coded projects. What each one does, whether it has a free tier and what it is best used for. Tools marked with a We Use This badge are ones we actively use inside the Vibe Coding Lab.
+        A growing reference of the tools that power modern AI builds. What each one does, whether it has a free tier and what it is best used for. Tools marked with a We Use This badge are ones we actively use inside AI for Service Businesses.
       </p>
       {TOOLKIT_SECTIONS.map(section => (
         <div key={section.heading} className="mb-14">
@@ -1087,49 +1087,36 @@ export default function VibePlaybook() {
   const setTab = (id: string) => setSearchParams({ tab: id });
 
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white scroll-smooth">
+    <div className="aisb scroll-smooth">
       <Helmet>
-        <title>The Vibe Coding Playbook: Tools, Models & Reference | Vibe Coding Lab</title>
-        <meta name="description" content="A comprehensive reference guide to the tools, AI models and concepts behind vibe coding. Your go-to resource for building with no-code AI." />
-        <link rel="canonical" href="https://thevibecodinglab.co/vibeplaybook" />
+        <title>The AI Build Playbook: Tools, Models and Reference | AI for Service Businesses</title>
+        <meta name="description" content="A free plain-English reference to the language, tools and models behind building with AI. Glossary, file types, AI models and toolkit." />
+        <link rel="canonical" href="https://aiforservicebusinesses.co/vibeplaybook" />
       </Helmet>
 
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-warm-cream/80 backdrop-blur-md border-b border-forest-green/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-          <Link to="/" className="text-lg md:text-2xl font-display font-extrabold tracking-tighter">
-            VIBE<span className="text-terracotta">CODING</span>LAB
-          </Link>
-          <Link
-            to="/"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="bg-terracotta text-white px-4 md:px-6 py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-burnt-orange hover:scale-105 transition-all shadow-lg shadow-terracotta/20 whitespace-nowrap"
-          >
-            Get Lifetime Access
-          </Link>
-        </div>
-      </nav>
+      {/* This is a free opt-in resource now, so the CTA is "join the community"
+          rather than the old "Get Lifetime Access", which belonged to a paid
+          product and made a free guide look like a locked one. */}
+      <TopNav cta="Join the community" />
 
-      {/* Page Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="pt-32 pb-12 px-6 text-center"
+        className="wrap-mid"
       >
-        <div className="inline-block bg-sand px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-6">
-          Handy Resource
-        </div>
-        <h1 className="text-4xl md:text-7xl font-display font-extrabold leading-[0.95] tracking-tighter mb-6">
-          The Vibe Playbook
-        </h1>
-        <p className="text-xl md:text-2xl font-medium opacity-80 max-w-2xl mx-auto leading-relaxed">
-          Everything you need to understand the language, tools and technology behind vibe coding. Use this as your reference guide as you build.
-        </p>
+        <section className="optin">
+          <div className="kick pill">Free resource</div>
+          <h1 className="serif">The AI Build Playbook</h1>
+          <p className="lead">
+            Everything you need to understand the language, tools and models behind building with AI. Use this as your
+            reference guide as you build.
+          </p>
+        </section>
       </motion.div>
 
       {/* Sticky Tab Bar */}
-      <div className="sticky top-[65px] z-40 bg-warm-cream/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
+      <div className="sticky top-[72px] z-40 bg-[#f7f3ec]/95 backdrop-blur-md border-b border-forest-green/8 px-6 py-3">
         <div className="max-w-5xl mx-auto">
           <div className="flex justify-start sm:justify-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {TABS.map(tab => (
@@ -1157,10 +1144,7 @@ export default function VibePlaybook() {
         {activeTab === 'toolkit' && <ToolkitTab />}
       </div>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest border-t border-forest-green/5">
-        © 2026 Vibe Coding Lab by Ascendz | All Rights Reserved
-      </footer>
+      <LineFooter />
     </div>
   );
 }
