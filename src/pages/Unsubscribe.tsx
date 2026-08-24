@@ -1,58 +1,51 @@
-import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
-import Logo from '../components/Logo';
+import { AisbPage, SimpleNav, LineFooter } from '../components/aisb/Layout';
 
+/**
+ * Where the unsubscribe link in the emails lands.
+ *
+ * The logo and nothing else: they have just stepped away from the emails, so
+ * this is not the moment to put the whole site and a Join button in front of
+ * them. Say it is done, say they are welcome back, stop talking.
+ */
 export default function Unsubscribe() {
   return (
-    <div className="min-h-screen bg-warm-cream text-forest-green font-sans selection:bg-terracotta selection:text-white flex flex-col">
+    <AisbPage>
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
+        <title>You are all set | AI for Service Businesses</title>
       </Helmet>
 
-      {/* Wordmark */}
-      <div className="w-full px-6 py-6 text-center">
-        <a
-          href="https://aiforservicebusinesses.co"
-          className="text-2xl font-display font-extrabold tracking-tighter"
-        >
-          <Logo on="light" className="h-10 md:h-12" />
-        </a>
-      </div>
+      <SimpleNav />
 
-      {/* Main content */}
-      <div className="flex-1 flex items-center justify-center px-6 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-[680px]"
-        >
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-8 tracking-tight">
-            You are all set.
+      {/* Centred in what is left of the viewport, so a page this short does not
+          leave its footer stranded halfway up the screen. */}
+      <div
+        className="wrap-narrow"
+        style={{ display: 'flex', alignItems: 'center', minHeight: 'calc(100vh - 230px)' }}
+      >
+        <section className="optin" style={{ width: '100%', padding: '40px 0 60px' }}>
+          <div className="kick pill">Preferences updated</div>
+          <h1 className="serif">
+            You are <em>all set.</em>
           </h1>
-
-          <div className="space-y-6 text-lg md:text-xl leading-relaxed opacity-80 mb-12">
-            <p>
-              You will not receive any more emails about AI for Service Businesses. You will still stay on the list for other updates, insights, tips and resources that could support your business.
-            </p>
-            <p>
-              If you ever change your mind or want to explore AI for Service Businesses in the future, you will be more than welcome back.
-            </p>
-            <p>
-              In the meantime, thanks for sticking around. I appreciate you.
-            </p>
-          </div>
-
-          <div className="text-base opacity-50 leading-snug">
-            <p className="font-bold">Toni</p>
-            <p>Creator of AI for Service Businesses | Founder of Ascendz</p>
-          </div>
-        </motion.div>
+          <p className="lead">
+            You will not receive any more emails about AI for Service Businesses. You will still stay on the list for
+            other updates, insights, tips and resources that could support your business.
+          </p>
+          <p className="lead" style={{ marginTop: '20px' }}>
+            If you ever change your mind or want to explore AI for Service Businesses in the future, you will be more
+            than welcome back. In the meantime, thanks for sticking around. I appreciate you.
+          </p>
+          <p className="finenote" style={{ marginTop: '38px' }}>
+            <b style={{ color: 'var(--ink)' }}>Toni</b>
+            <br />
+            Creator of AI for Service Businesses &middot; Founder of Ascendz
+          </p>
+        </section>
       </div>
 
-      <footer className="py-8 px-6 text-center opacity-40 text-xs font-bold uppercase tracking-widest">
-        © 2026 AI for Service Businesses by Ascendz | All Rights Reserved
-      </footer>
-    </div>
+      <LineFooter />
+    </AisbPage>
   );
 }
